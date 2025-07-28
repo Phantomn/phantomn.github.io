@@ -1,0 +1,8 @@
+section:
+  name: 최신 게시물
+  id: recent-posts
+  enable: true
+  weight: 7
+  showOnNavbar: true
+  numShow: 4
+  showMoreButton: false

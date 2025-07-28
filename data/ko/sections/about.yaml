@@ -1,0 +1,82 @@
+# 섹션 정보
+section:
+  name: 소개
+  id: about
+  enable: true
+  weight: 1
+  showOnNavbar: true
+  template: sections/about.html
+
+# 당신의 직책
+designation: 소프트웨어 엔지니어
+# 당신의 회사 정보
+company:
+  name: 예시 회사
+  url: "https://www.example.com"
+
+# 당신의 이력서. 이 파일 경로는 "static" 디렉토리에 상대적이어야 합니다.
+resume: "files/resume.pdf"
+
+# 당신에 대한 요약
+summary: '저는 x년 경력의 열정적인 소프트웨어 엔지니어입니다. GO를 사용하여 [Kubernetes](https://kubernetes.io/)용 OSS 도구를 구축했습니다. 제 도구는 사람들이 Kubernetes에 워크로드를 배포하는 데 도움이 됩니다. 때때로 테마 작성과 같은 재미있는 프로젝트를 합니다.'
+
+# 당신의 소셜 링크
+# 원하는 만큼 추가하세요. 아이콘은 font-awesome을 사용하세요.
+socialLinks:
+- name: 이메일
+  icon: "fas fa-envelope"
+  url: "example@gmail.com"
+
+- name: 깃허브
+  icon: "fab fa-github"
+  url: "https://www.github.com/example"
+
+- name: 스택오버플로우
+  icon: "fab fa-stack-overflow"
+  url: "#"
+
+- name: 링크드인
+  icon: "fab fa-linkedin"
+  url: "#"
+
+- name: 트위터
+  icon: "fab fa-twitter"
+  url: "#"
+
+- name: 페이스북
+  icon: "fab fa-facebook"
+  url: "#"
+
+# 당신의 배지를 보여주세요
+# https://www.credly.com에서 검증 가능한 인증서를 보여줄 수 있습니다.
+# 특정 기술에 대한 전문성 수준을 나타내는 원형 막대를 보여줄 수도 있습니다.
+badges:
+- type: certification
+  name: 공인 쿠버네티스 보안 전문가
+  url: "https://www.credly.com/org/the-linux-foundation/badge/exam-developer-certified-kubernetes-security-specialist"
+  badge: "https://images.credly.com/size/680x680/images/f4bf92ed-8985-40b2-bc07-2f9308780854/kubernetes-security-specialist-logo-examdev.png"
+
+- type: certification
+  name: Istio 및 IBM Cloud Kubernetes 서비스
+  url: "https://www.credly.com/org/the-linux-foundation/badge/exam-developer-certified-kubernetes-security-specialist"
+  badge: "https://images.credly.com/size/680x680/images/8d34d489-84bf-4861-a4a0-9e9d68318c5c/Beyond_basics_of_Istio_on_Cloud_v2.png"
+
+- type: certification
+  name: 인공지능 및 머신러닝
+  url: "https://www.credly.com/org/grupo-bancolombia/badge/artificial-intelligence-and-machine-learning"
+  badge: "https://images.credly.com/size/680x680/images/e027514f-9d07-4b29-862f-fe21a8aaebf1/ae.png"
+
+- type: soft-skill-indicator
+  name: 리더십
+  percentage: 85
+  color: blue
+
+- type: soft-skill-indicator
+  name: 팀워크
+  percentage: 90
+  color: yellow
+
+- type: soft-skill-indicator
+  name: 성실성
+  percentage: 85
+  color: orange

@@ -1,0 +1,17 @@
+section:
+  name: Achievements
+  id: achievements
+  enable: true
+  weight: 8
+  showOnNavbar: true
+
+achievements:
+- title: Award for Innovation
+  image: /images/achievements/award-innovation.png
+  summary: "Received an award for innovative contributions to open-source software development."
+- title: Certified Kubernetes Administrator
+  image: /images/achievements/cka.png
+  summary: "Successfully passed the Certified Kubernetes Administrator (CKA) exam."
+- title: Published Research Paper
+  image: /images/achievements/research-paper.png
+  summary: "Published a research paper on distributed systems in a peer-reviewed journal."

@@ -22,7 +22,7 @@
 {{ $authorImage:= resources.Get $authorImage}}
 
 {{ if and $authorImage (and (ne $authorImage.MediaType.SubType "svg") ( ne $authorImage.MediaType.SubType "gif")) }}
-  {{ $authorImage = $authorImage.Fit "120x120" }}
+  {{ $authorImage = $authorImage.Fit "240x240" }}
 {{ end }}
 
 {{/*  return the author image link  */}}

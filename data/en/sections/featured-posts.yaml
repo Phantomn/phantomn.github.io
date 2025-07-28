@@ -1,0 +1,9 @@
+section:
+  name: Featured Posts
+  id: featured-posts
+  enable: true
+  weight: 6
+  showOnNavbar: true
+
+posts:
+  - introduction

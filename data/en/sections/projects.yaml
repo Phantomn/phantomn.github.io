@@ -1,0 +1,47 @@
+section:
+  name: Projects
+  id: projects
+  enable: true
+  weight: 5
+  showOnNavbar: true
+
+buttons:
+- name: All
+  filter: all
+- name: Web
+  filter: web
+- name: Mobile
+  filter: mobile
+- name: Desktop
+  filter: desktop
+
+projects:
+- name: Project Alpha
+  logo: /images/projects/project-alpha.png
+  role: Lead Developer
+  timeline: Jan 2023 - Present
+  repo: your-github-username/project-alpha
+  summary: "Developed a full-stack web application for task management using React and Node.js."
+  tags:
+  - web
+  - react
+  - nodejs
+- name: Project Beta
+  logo: /images/projects/project-beta.png
+  role: Mobile Developer
+  timeline: Mar 2022 - Dec 2022
+  url: "https://www.projectbeta.com"
+  summary: "Built a cross-platform mobile application with Flutter for expense tracking."
+  tags:
+  - mobile
+  - flutter
+- name: Project Gamma
+  logo: /images/projects/project-gamma.png
+  role: Software Engineer
+  timeline: Sep 2021 - Feb 2022
+  repo: your-github-username/project-gamma
+  summary: "Created a desktop application for data visualization using Python and PyQt."
+  tags:
+  - desktop
+  - python
+  - pyqt

@@ -1,0 +1,35 @@
+section:
+  name: 경험
+  id: experiences
+  enable: true
+  weight: 3
+  showOnNavbar: true
+
+experiences:
+- company:
+    name: 예시 회사 A
+    url: "https://www.examplea.com"
+    location: 뉴욕
+    logo: /images/experiences/company-a.png
+    overview: 예시 회사 A는 클라우드 솔루션 전문 선도 기술 기업입니다.
+  positions:
+  - designation: 선임 소프트웨어 엔지니어
+    start: 2022년 1월
+    responsibilities:
+    - Go를 사용하여 확장 가능한 마이크로서비스 개발을 주도했습니다.
+    - CI/CD 파이프라인을 설계하고 구현했습니다.
+    - 주니어 개발자들을 멘토링했습니다.
+- company:
+    name: 예시 회사 B
+    url: "https://www.exampleb.com"
+    location: 샌프란시스코
+    logo: /images/experiences/company-b.png
+    overview: 예시 회사 B는 AI 기반 데이터 분석 플랫폼에 중점을 둡니다.
+  positions:
+  - designation: 소프트웨어 엔지니어
+    start: 2019년 6월
+    end: 2021년 12월
+    responsibilities:
+    - 데이터 처리 파이프라인을 개발하고 유지 관리했습니다.
+    - 새로운 기능 설계에 기여했습니다.
+    - 여러 부서 팀과 협력했습니다.

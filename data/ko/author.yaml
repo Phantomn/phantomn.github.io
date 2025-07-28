@@ -1,0 +1,20 @@
+# 당신에 대한 정보
+name: "Phantomn"
+nickname: "Phantomn"
+# 당신의 이름 앞에 표시될 인사말. 제공되지 않으면 "안녕하세요! 저는"으로 기본 설정됩니다.
+greeting: "안녕하세요! 저는"
+image: "images/author/phantomn.png"
+# 연락처 정보를 제공하세요. 푸터에 사용됩니다.
+contactInfo:
+  email: "your-email@example.com"
+  phone: "+0123456789"
+  github: your-github-username
+  linkedin: your-linkedin-username
+
+# 당신이 하는 일에 대한 요약
+summary:
+  - 저는 개발자입니다.
+  - 저는 데브옵스입니다.
+  - 저는 서버를 좋아합니다.
+  - 저는 오픈소스 프로젝트에 참여합니다.
+  - 저는 재미있는 프로젝트를 하는 것을 좋아합니다.

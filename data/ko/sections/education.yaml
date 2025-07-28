@@ -1,0 +1,26 @@
+section:
+  name: 학력
+  id: education
+  enable: true
+  weight: 4
+  showOnNavbar: true
+
+degrees:
+- name: 컴퓨터 과학 석사
+  icon: fa-graduation-cap
+  timeframe: 2017-2019
+  institution:
+    name: 예시 대학교
+    url: "https://www.example-university.com"
+    logo: /images/education/university.png
+  grade:
+    scale: GPA
+    achieved: 3.8
+    outOf: 4
+- name: 소프트웨어 공학 학사
+  icon: fa-graduation-cap
+  timeframe: 2013-2017
+  institution:
+    name: 기술 연구소
+    url: "https://www.example-institute.com"
+    logo: /images/education/institute.png

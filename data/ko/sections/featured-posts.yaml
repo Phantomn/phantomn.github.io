@@ -1,0 +1,9 @@
+section:
+  name: 주요 게시물
+  id: featured-posts
+  enable: true
+  weight: 6
+  showOnNavbar: true
+
+posts:
+  - introduction

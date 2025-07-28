@@ -4,12 +4,13 @@
 
 @import 'include-media/dist/_include-media';
 
-// The Mulish font, we use font-weight 300 - 700
-@import '@fontsource/mulish/300';
-@import '@fontsource/mulish/index'; // 400
-@import '@fontsource/mulish/500';
-@import '@fontsource/mulish/600';
-@import '@fontsource/mulish/700';
+// The Pretendard font
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/PretendardVariable.woff2') format('woff2');
+}
 
 @import './variables';
 @import './mixins';

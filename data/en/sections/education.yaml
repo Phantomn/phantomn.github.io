@@ -1,0 +1,26 @@
+section:
+  name: Education
+  id: education
+  enable: true
+  weight: 4
+  showOnNavbar: true
+
+degrees:
+- name: Master of Science in Computer Science
+  icon: fa-graduation-cap
+  timeframe: 2017-2019
+  institution:
+    name: University of Example
+    url: "https://www.example-university.com"
+    logo: /images/education/university.png
+  grade:
+    scale: GPA
+    achieved: 3.8
+    outOf: 4
+- name: Bachelor of Science in Software Engineering
+  icon: fa-graduation-cap
+  timeframe: 2013-2017
+  institution:
+    name: Institute of Technology
+    url: "https://www.example-institute.com"
+    logo: /images/education/institute.png

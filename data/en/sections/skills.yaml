@@ -1,0 +1,27 @@
+# section information
+section:
+  name: Skills
+  id: skills
+  enable: true
+  weight: 2
+  showOnNavbar: true
+
+# Your Skills.
+# Give a summary of you each skill in the summary section.
+skills:
+- name: Kubernetes
+  logo: /images/sections/skills/kubernetes.png
+  summary: "Capable of deploying, managing application on Kubernetes. Experienced in writing Kubernetes controllers for CRDs."
+  url: "https://kubernetes.io/"
+- name: Go
+  logo: /images/sections/skills/go.png
+  summary: "Proficient in Go programming language for backend development and system programming."
+  url: "https://golang.org/"
+- name: Python
+  logo: /images/sections/skills/python.png
+  summary: "Experienced in Python for scripting, data analysis, and web development."
+  url: "https://www.python.org/"
+- name: Docker
+  logo: /images/sections/skills/docker.png
+  summary: "Skilled in containerization using Docker for application deployment and management."
+  url: "https://www.docker.com/"

@@ -1,0 +1,35 @@
+section:
+  name: Experiences
+  id: experiences
+  enable: true
+  weight: 3
+  showOnNavbar: true
+
+experiences:
+- company:
+    name: Example Company A
+    url: "https://www.examplea.com"
+    location: New York
+    logo: /images/experiences/company-a.png
+    overview: Example Company A is a leading tech company specializing in cloud solutions.
+  positions:
+  - designation: Senior Software Engineer
+    start: Jan 2022
+    responsibilities:
+    - Led the development of scalable microservices using Go.
+    - Designed and implemented CI/CD pipelines.
+    - Mentored junior developers.
+- company:
+    name: Example Company B
+    url: "https://www.exampleb.com"
+    location: San Francisco
+    logo: /images/experiences/company-b.png
+    overview: Example Company B focuses on AI-driven data analytics platforms.
+  positions:
+  - designation: Software Engineer
+    start: Jun 2019
+    end: Dec 2021
+    responsibilities:
+    - Developed and maintained data processing pipelines.
+    - Contributed to the design of new features.
+    - Collaborated with cross-functional teams.

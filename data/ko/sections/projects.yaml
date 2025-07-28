@@ -1,0 +1,47 @@
+section:
+  name: 프로젝트
+  id: projects
+  enable: true
+  weight: 5
+  showOnNavbar: true
+
+buttons:
+- name: 전체
+  filter: all
+- name: 웹
+  filter: web
+- name: 모바일
+  filter: mobile
+- name: 데스크톱
+  filter: desktop
+
+projects:
+- name: 프로젝트 알파
+  logo: /images/projects/project-alpha.png
+  role: 리드 개발자
+  timeline: 2023년 1월 - 현재
+  repo: your-github-username/project-alpha
+  summary: "React 및 Node.js를 사용하여 작업 관리를 위한 풀스택 웹 애플리케이션을 개발했습니다."
+  tags:
+  - 웹
+  - react
+  - nodejs
+- name: 프로젝트 베타
+  logo: /images/projects/project-beta.png
+  role: 모바일 개발자
+  timeline: 2022년 3월 - 2022년 12월
+  url: "https://www.projectbeta.com"
+  summary: "Flutter로 크로스 플랫폼 모바일 애플리케이션을 구축하여 지출을 추적했습니다."
+  tags:
+  - 모바일
+  - flutter
+- name: 프로젝트 감마
+  logo: /images/projects/project-gamma.png
+  role: 소프트웨어 엔지니어
+  timeline: 2021년 9월 - 2022년 2월
+  repo: your-github-username/project-gamma
+  summary: "Python 및 PyQt를 사용하여 데이터 시각화를 위한 데스크톱 애플리케이션을 만들었습니다."
+  tags:
+  - 데스크톱
+  - python
+  - pyqt

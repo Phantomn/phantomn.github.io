@@ -1,0 +1,27 @@
+# 섹션 정보
+section:
+  name: 기술
+  id: skills
+  enable: true
+  weight: 2
+  showOnNavbar: true
+
+# 당신의 기술.
+# 각 기술에 대한 요약을 summary 섹션에 제공하세요.
+skills:
+- name: 쿠버네티스
+  logo: /images/sections/skills/kubernetes.png
+  summary: "쿠버네티스에 애플리케이션을 배포하고 관리할 수 있습니다. CRD용 쿠버네티스 컨트롤러 작성 경험이 있습니다."
+  url: "https://kubernetes.io/"
+- name: Go
+  logo: /images/sections/skills/go.png
+  summary: "백엔드 개발 및 시스템 프로그래밍을 위한 Go 프로그래밍 언어에 능숙합니다."
+  url: "https://golang.org/"
+- name: Python
+  logo: /images/sections/skills/python.png
+  summary: "스크립팅, 데이터 분석 및 웹 개발을 위한 Python 경험이 있습니다."
+  url: "https://www.python.org/"
+- name: Docker
+  logo: /images/sections/skills/docker.png
+  summary: "애플리케이션 배포 및 관리를 위한 Docker 컨테이너화에 능숙합니다."
+  url: "https://www.docker.com/"
