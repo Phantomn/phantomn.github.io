@@ -39,12 +39,10 @@ jobs:
         with:
           hugo-version: 'latest'
           extended: true
+      - name: Install dependencies
+        run: npm install
       - name: Build with Hugo
         run: hugo --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
-      - name: Install PostCSS
-        run: npm install postcss postcss-cli autoprefixer
-      - name: Run Autoprefixer
-        run: npm run autoprefixer
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
