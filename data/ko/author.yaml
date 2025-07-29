@@ -1,20 +1,20 @@
-# 당신에 대한 정보
+# some information about you
 name: "Phantomn"
 nickname: "Phantomn"
-# 당신의 이름 앞에 표시될 인사말. 제공되지 않으면 "안녕하세요! 저는"으로 기본 설정됩니다.
-greeting: "안녕하세요! 저는"
+# greeting message before your name. it will default to "Hi! I am" if not provided
+greeting: "Hi, I am"
 image: "images/author/phantomn.png"
-# 연락처 정보를 제공하세요. 푸터에 사용됩니다.
+# give your some contact information. they will be used in the footer
 contactInfo:
-  email: "your-email@example.com"
-  phone: "+0123456789"
-  github: your-github-username
-  linkedin: your-linkedin-username
+  email: "newbiepwner@kakao.com"
+  phone: "askme"
+  github: phantomn
+  linkedin: ph4nt0m
 
-# 당신이 하는 일에 대한 요약
+# some summary about what you do
 summary:
-  - 저는 개발자입니다.
-  - 저는 데브옵스입니다.
-  - 저는 서버를 좋아합니다.
-  - 저는 오픈소스 프로젝트에 참여합니다.
-  - 저는 재미있는 프로젝트를 하는 것을 좋아합니다.
+  - 저는 취약점 연구원, 개발자 및 AI 자동화 전문가입니다
+  - 사이버 보안 분야에 집중하며, 특히 퍼징, 임베디드 시스템(PLC, HMI) 및 IEC 62443-4-2 준수 자동화에 전문성을 보유하고 있습니다
+  - n8n, LLMs(OpenAI, Gemini, Claude), Supabase 및 PostgreSQL을 활용해 AI 통합 시스템을 설계 및 개발합니다
+  - AI 강화형 대시보드와 RAG 기반 에이전트를 구축하여 보안 작업의 지식 검색 및 분류를 최적화합니다
+  - 시뮬레이션 주식 거래, 기술/가젯/부동산 관련 블로그 작성, 전자상거래 소싱 자동화에도 참여하고 있습니다

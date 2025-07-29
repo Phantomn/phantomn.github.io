@@ -6,15 +6,15 @@ greeting: "Hi, I am"
 image: "images/author/phantomn.png"
 # give your some contact information. they will be used in the footer
 contactInfo:
-  email: "your-email@example.com"
-  phone: "+0123456789"
-  github: your-github-username
-  linkedin: your-linkedin-username
+  email: "newbiepwner@kakao.com"
+  phone: "askme"
+  github: phantomn
+  linkedin: ph4nt0m
 
 # some summary about what you do
 summary:
-  - I am a Developer
-  - I am a Devops
-  - I love servers
-  - I work on open-source projects
-  - I love to work with some fun projects
+  - I am a Vulnerability Researcher, Developer, and AI Automation Specialist
+  - I focus on cybersecurity, especially fuzzing, embedded systems (PLC, HMI), and IEC 62443-4-2 compliance automation
+  - I design and develop AI-integrated systems using n8n, LLMs (OpenAI, Gemini, Claude), Supabase, and PostgreSQL
+  - I build AI-enhanced dashboards and RAG-based agents to optimize knowledge search and triage for security tasks
+  - I also engage in simulation stock trading, blogging about tech/gadgets/real estate, and automating sourcing for e-commerce

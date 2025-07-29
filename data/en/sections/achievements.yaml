@@ -6,12 +6,13 @@ section:
   showOnNavbar: true
 
 achievements:
-- title: Award for Innovation
-  image: /images/achievements/award-innovation.png
-  summary: "Received an award for innovative contributions to open-source software development."
-- title: Certified Kubernetes Administrator
-  image: /images/achievements/cka.png
-  summary: "Successfully passed the Certified Kubernetes Administrator (CKA) exam."
-- title: Published Research Paper
-  image: /images/achievements/research-paper.png
-  summary: "Published a research paper on distributed systems in a peer-reviewed journal."
+- title: 16 CVEs about Kernel Exploit with FileSystem Fuzzer Best of the Best 8th (Jul 2019 ~ Mar 2020)
+  image: images/achievements/bob_bi_solid.jpg
+  summary: "Linux kernel filesystem driver fuzzing & exploit"
+- title: 5 CVEs about IoT Embedded Device Bug Hunting Coresecurity (Apr 2024 ~ May 2024)
+  image: images/achievements/Common_Vulnerabilities_and_Exposures_logo.svg.png
+  summary: "Router Remote Code Execution"
+
+- title: Achilles Level 2 Certification & Testing (Jul 2024 ~ Mar 2025)
+  image: images/achievements/achilles.png
+  summary: "Achilles Certification for LS ELECTRIC"

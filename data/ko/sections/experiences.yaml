@@ -1,5 +1,5 @@
 section:
-  name: 경험
+  name: Experiences
   id: experiences
   enable: true
   weight: 3
@@ -7,29 +7,31 @@ section:
 
 experiences:
 - company:
-    name: 예시 회사 A
-    url: "https://www.examplea.com"
-    location: 뉴욕
-    logo: /images/experiences/company-a.png
-    overview: 예시 회사 A는 클라우드 솔루션 전문 선도 기술 기업입니다.
+    name: CoreSecurity
+    url: "https://coresec.co.kr/"
+    location: South Korea
+    logo: images/experiences/coresec.png
+    overview: OT/ICS 및 IoT 보안 전문 기업으로 다양한 스마트 인프라 환경의 취약점 분석 및 대응 기술을 개발합니다.
   positions:
-  - designation: 선임 소프트웨어 엔지니어
-    start: 2022년 1월
+  - designation: Vulnerability Researcher
+    start: 2021년 6월
     responsibilities:
-    - Go를 사용하여 확장 가능한 마이크로서비스 개발을 주도했습니다.
-    - CI/CD 파이프라인을 설계하고 구현했습니다.
-    - 주니어 개발자들을 멘토링했습니다.
+    - IoT 스마트 빌딩 환경 내 임베디드 장치의 N-day Exploitation 수행
+    - 스마트 빌딩 IoT 장비의 취약점 탐지 기술 개발
+    - 라우터, NAS, CCTV 대상 Exploit 및 정보수집 도구 개발
+    - OT/ICS 환경에서의 사고 시나리오 개발 및 현장 모의침투 테스트 수행
+    - 산업제어시스템 보안 표준인 IEC 62443 분석
+    - 다양한 기업 대상 현장 침투 테스트 다수 수행
+
 - company:
-    name: 예시 회사 B
-    url: "https://www.exampleb.com"
-    location: 샌프란시스코
-    logo: /images/experiences/company-b.png
-    overview: 예시 회사 B는 AI 기반 데이터 분석 플랫폼에 중점을 둡니다.
+    name: A3Security
+    url: "https://a3sc.co.kr/"
+    location: South Korea
+    logo: images/experiences/a3sc.png
+    overview: A3Security는 정보보호 전문업체로 모의해킹을 수행했습니다.
   positions:
-  - designation: 소프트웨어 엔지니어
-    start: 2019년 6월
-    end: 2021년 12월
+  - designation: 웹/앱 모의해킹
+    start: 2020년 6월
+    end: 2021년 6월
     responsibilities:
-    - 데이터 처리 파이프라인을 개발하고 유지 관리했습니다.
-    - 새로운 기능 설계에 기여했습니다.
-    - 여러 부서 팀과 협력했습니다.
+    - 금융권 포함 총 12개 사이트의 웹/모바일 모의침투 테스트 수행

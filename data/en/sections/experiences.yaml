@@ -7,29 +7,31 @@ section:
 
 experiences:
 - company:
-    name: Example Company A
-    url: "https://www.examplea.com"
-    location: New York
-    logo: /images/experiences/company-a.png
-    overview: Example Company A is a leading tech company specializing in cloud solutions.
+    name: CoreSecurity
+    url: "https://coresec.co.kr/"
+    location: South Korea
+    logo: images/experiences/coresec.png
+    overview: As a specialist in OT/ICS and IoT security, we develop vulnerability analysis and response technologies for various smart infrastructure environments.
   positions:
-  - designation: Senior Software Engineer
-    start: Jan 2022
+  - designation: Vulnerability Researcher
+    start: Jun 2021
     responsibilities:
-    - Led the development of scalable microservices using Go.
-    - Designed and implemented CI/CD pipelines.
-    - Mentored junior developers.
+    - Performing N-day exploitation of embedded devices in an IoT smart building environment
+    - Developing vulnerability detection technology for smart building IoT devices
+    - Developing exploit and information gathering tools targeting routers, NAS, and CCTV
+    - Developing incident scenarios in OT/ICS environments and conducting on-site penetration tests
+    - Analysis of IEC 62443, an industrial control system security standard
+    - Conducted numerous on-site penetration tests for various companies
+
 - company:
-    name: Example Company B
-    url: "https://www.exampleb.com"
-    location: San Francisco
-    logo: /images/experiences/company-b.png
-    overview: Example Company B focuses on AI-driven data analytics platforms.
+    name: A3Security
+    url: "https://a3sc.co.kr/"
+    location: South Korea
+    logo: images/experiences/a3sc.png
+    overview: An information security specialist company that performed penetration testing.
   positions:
-  - designation: Software Engineer
-    start: Jun 2019
-    end: Dec 2021
+  - designation: Web/Mobile Penetration Tester
+    start: Jun 2020
+    end: Jun 2021
     responsibilities:
-    - Developed and maintained data processing pipelines.
-    - Contributed to the design of new features.
-    - Collaborated with cross-functional teams.
+    - Performed web/mobile penetration testing on a total of 12 sites, including financial institutions

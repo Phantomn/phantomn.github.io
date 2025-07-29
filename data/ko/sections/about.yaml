@@ -1,55 +1,55 @@
-# 섹션 정보
+# section information
 section:
-  name: 소개
+  name: About
   id: about
   enable: true
   weight: 1
   showOnNavbar: true
   template: sections/about.html
 
-# 당신의 직책
-designation: 소프트웨어 엔지니어
-# 당신의 회사 정보
+# your designation
+designation: Security Engineer
+# your company information
 company:
-  name: 예시 회사
-  url: "https://www.example.com"
+  name: CoreSecurity
+  url: "https://www.coresec.co.kr"
 
-# 당신의 이력서. 이 파일 경로는 "static" 디렉토리에 상대적이어야 합니다.
+# your resume. this file path should be relative to you "static" directory
 resume: "files/resume.pdf"
 
 # 당신에 대한 요약
-summary: '저는 x년 경력의 열정적인 소프트웨어 엔지니어입니다. GO를 사용하여 [Kubernetes](https://kubernetes.io/)용 OSS 도구를 구축했습니다. 제 도구는 사람들이 Kubernetes에 워크로드를 배포하는 데 도움이 됩니다. 때때로 테마 작성과 같은 재미있는 프로젝트를 합니다.'
+summary: '저는 사이버 보안 자동화 및 AI 시스템 설계 분야에서 경험이 풍부한 열정적인 취약점 연구원 겸 개발자입니다. 임베디드 시스템(예: PLC, HMI)을 위한 오픈소스 도구와 퍼저를 개발했으며, [IEC 62443-4-2](https://www.isa.org/standards-and-publications/isa-standards/iec-62443) 표준에 부합하도록 설계했습니다. 또한 [n8n](https://n8n.io/)을 활용한 자동화 워크플로우를 설계하고 맞춤형 RAG 파이프라인을 구축합니다. 때로는 난독화된 스크립트 역공학이나 구조화된 지식 시스템 구축과 같은 재미있는 프로젝트에도 참여합니다.'
 
-# 당신의 소셜 링크
-# 원하는 만큼 추가하세요. 아이콘은 font-awesome을 사용하세요.
+# your social links
+# give as many as you want. use font-awesome for the icons.
 socialLinks:
-- name: 이메일
+- name: Email
   icon: "fas fa-envelope"
-  url: "example@gmail.com"
+  url: "newbiepwnere@kakao.com"
 
-- name: 깃허브
+- name: Github
   icon: "fab fa-github"
-  url: "https://www.github.com/example"
+  url: "https://www.github.com/phantomn"
 
-- name: 스택오버플로우
+- name: Stackoverflow
   icon: "fab fa-stack-overflow"
   url: "#"
 
-- name: 링크드인
+- name: LinkedIn
   icon: "fab fa-linkedin"
-  url: "#"
+  url: "https://www.linkedin.com/in/ph4nt0m/"
 
-- name: 트위터
+- name: Twitter
   icon: "fab fa-twitter"
-  url: "#"
+  url: "https://x.com/Ph4nt0mm"
 
-- name: 페이스북
+- name: Facebook
   icon: "fab fa-facebook"
-  url: "#"
+  url: "https://www.facebook.com/Ph4ntomn"
 
-# 당신의 배지를 보여주세요
-# https://www.credly.com에서 검증 가능한 인증서를 보여줄 수 있습니다.
-# 특정 기술에 대한 전문성 수준을 나타내는 원형 막대를 보여줄 수도 있습니다.
+# Show your badges
+# You can show your verifiable certificates from https://www.credly.com.
+# You can also show a circular bar indicating the level of expertise on a certain skill
 badges:
 - type: certification
   name: 공인 쿠버네티스 보안 전문가
@@ -67,16 +67,16 @@ badges:
   badge: "https://images.credly.com/size/680x680/images/e027514f-9d07-4b29-862f-fe21a8aaebf1/ae.png"
 
 - type: soft-skill-indicator
-  name: 리더십
+  name: Leadership
   percentage: 85
   color: blue
 
 - type: soft-skill-indicator
-  name: 팀워크
+  name: Team Work
   percentage: 90
   color: yellow
 
 - type: soft-skill-indicator
-  name: 성실성
+  name: Hard Working
   percentage: 85
   color: orange

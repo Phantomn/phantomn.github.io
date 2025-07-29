@@ -1,17 +1,18 @@
 section:
-  name: 업적
+  name: Achievements
   id: achievements
   enable: true
   weight: 8
   showOnNavbar: true
 
 achievements:
-- title: 혁신상
-  image: /images/achievements/award-innovation.png
-  summary: "오픈소스 소프트웨어 개발에 대한 혁신적인 기여로 상을 받았습니다."
-- title: 공인 쿠버네티스 관리자
-  image: /images/achievements/cka.png
-  summary: "공인 쿠버네티스 관리자(CKA) 시험에 성공적으로 합격했습니다."
-- title: 연구 논문 발표
-  image: /images/achievements/research-paper.png
-  summary: "동료 심사를 거친 저널에 분산 시스템에 대한 연구 논문을 발표했습니다."
+- title: 16 CVEs about Kernel Exploit with FileSystem Fuzzer Best of the Best 8th (Jul 2019 ~ Mar 2020)
+  image: images/achievements/bob_bi_solid.jpg
+  summary: "Linux kernel filesystem driver fuzzing & exploit"
+- title: 5 CVEs about IoT Embedded Device Bug Hunting Coresecurity (Apr 2024 ~ May 2024)
+  image: images/achievements/Common_Vulnerabilities_and_Exposures_logo.svg.png
+  summary: "Router Remote Code Execution"
+
+- title: Achilles Level 2 Certification & Testing (Jul 2024 ~ Mar 2025)
+  image: images/achievements/achilles.png
+  summary: "Achilles Certification for LS ELECTRIC"
