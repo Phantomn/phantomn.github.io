@@ -1,27 +1,88 @@
-# 섹션 정보
+# section information
 section:
-  name: 기술
+  name: Skills
   id: skills
   enable: true
   weight: 2
   showOnNavbar: true
 
-# 당신의 기술.
-# 각 기술에 대한 요약을 summary 섹션에 제공하세요.
+# Your Skills.
+# Give a summary of your each skill in the summary section.
 skills:
-- name: 쿠버네티스
-  logo: /images/sections/skills/kubernetes.png
-  summary: "쿠버네티스에 애플리케이션을 배포하고 관리할 수 있습니다. CRD용 쿠버네티스 컨트롤러 작성 경험이 있습니다."
-  url: "https://kubernetes.io/"
-- name: Go
-  logo: /images/sections/skills/go.png
-  summary: "백엔드 개발 및 시스템 프로그래밍을 위한 Go 프로그래밍 언어에 능숙합니다."
-  url: "https://golang.org/"
 - name: Python
   logo: /images/sections/skills/python.png
-  summary: "스크립팅, 데이터 분석 및 웹 개발을 위한 Python 경험이 있습니다."
+  summary: |-
+    - Advanced scripting & automation (Fabric, Invoke, Ansible)
+    - Data analysis
+    - Security tooling & PoC 작성 (pwntools, angr, scapy)
   url: "https://www.python.org/"
+
+- name: C/C++
+  logo: /images/sections/skills/cpp.png
+  summary: |-
+    - Low-level 개발: ARM Cortex-A9(Zynq)·x86 Bare-metal
+    - Linux kernel module·Device Driver 패치 및 빌드
+    - QEMU device emulation, u-boot/BusyBox 포팅
+    - Exploit development(ROP, ret2libc, Stack-pivot)
+    - Static 분석을 위한 LLVM Pass 작성
+  url: "https://isocpp.org/"
+
 - name: Docker
   logo: /images/sections/skills/docker.png
-  summary: "애플리케이션 배포 및 관리를 위한 Docker 컨테이너화에 능숙합니다."
+  summary: |-
+    - 멀티-스테이지 빌드 & BuildKit 최적화
+    - docker-compose.yml + .env 관리, secret mount
+    - WSL2 연동, DinD CI ( GitHub Actions / GitLab Runner )
+    - 이미지 경량화(Alpine, distroless) 및 SBOM 생성 (Syft)
+    - Container Security Scan(Trivy, Snyk) 자동화
   url: "https://www.docker.com/"
+
+- name: Linux
+  logo: /images/sections/skills/linux.png
+  summary: |-
+    - Distro: Debian/Ubuntu, Arch, Yocto-based Embedded
+    - Cross-compile toolchain(GLIBC 2.17, musl) & BusyBox custom
+    - Kernel debugging(ftrace, kprobes, eBPF) · System hardening(SELinux, AppArmor)
+    - Network stack 튜닝( tc, iptables/nftables, WireGuard )
+    - Shell & Automation(Bash, Zsh, tmux, systemd-unit 작성)
+  url: "https://www.kernel.org/"
+
+- name: Reverse Engineering
+  logo: /images/sections/skills/reverse.png
+  summary: |-
+    - Tools: IDA Pro, Ghidra, Binary Ninja, Radare2, Cutter
+    - Static/Dynamic Analysis, ELF/PE symbol recovery, FLIRT signature 제작
+    - Lua/Python bytecode deobfuscation(Luadec patches, pyobfuscate bypass)
+    - Firmware carving, DTS/DTC 수정, U-Boot 분석
+    - Frida/GDB/QEMU User-mode로 Syscall Tracing, API Hooking
+  url: "https://en.wikipedia.org/wiki/Reverse_engineering"
+
+- name: Vulnerability Research
+  logo: /images/sections/skills/vulnerability.png
+  summary: |-
+    - Coverage-guided Fuzzer(libFuzzer + AFL++, Honggfuzz) 구현
+    - PLC/ICS Protocol( Modbus-TCP, LS GLOFA ) 변이 엔진 설계
+    - Privilege Escalation(LPE, SUDO,CVE-2024-xxxx) PoC 및 Mitigation
+    - IEC 62443-4-2 SL1/SL2 시험 자동화 도구 + Triage Dashboard(Vue + Supabase)
+    - CVE & Advisory 작성 / 사내 CERT 연계 Disclosure 경험
+  url: "https://owasp.org/"
+
+- name: PostgreSQL & Supabase
+  logo: /images/sections/skills/postgresql.png
+  summary: |-
+    - Schema design & Row-Level Security(RLS) 정책 작성
+    - Vector Store(pgvector) + RAG 챗봇 검색 최적화
+    - Logical Replication & Partitioning( time-series )
+    - Supabase Auth/Storage edge-function ( Deno ) 작성
+    - 자동화 파이프라인(SQL migrations, psql scripts, cron triggers)
+  url: "https://www.postgresql.org/"
+
+- name: LLM Automation (OpenAI, Gemini, Claude)
+  logo: /images/sections/skills/llm.png
+  summary: |-
+    - Multi-agent A2A Framework 설계(n8n prompt-ops, structured output)
+    - Retrieval-Augmented Generation(RAG) with Supabase / pgvector
+    - Function calling, JSON-schema tool dev, streaming UI( React + SSE )
+    - Prompt engineering for cybersecurity use-cases( log analysis, exploit summary )
+    - Cost optimization( batching, compression, cache ) + Model benchmarking
+  url: "https://openai.com/"

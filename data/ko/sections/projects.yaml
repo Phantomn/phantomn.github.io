@@ -1,47 +1,275 @@
 section:
-  name: 프로젝트
+  name: Projects
   id: projects
   enable: true
   weight: 5
   showOnNavbar: true
 
+# 버튼 → 필터로 쓰일 포괄 카테고리
 buttons:
-- name: 전체
+- name: All
   filter: all
-- name: 웹
-  filter: web
-- name: 모바일
-  filter: mobile
-- name: 데스크톱
-  filter: desktop
+- name: Consulting
+  filter: consulting
+- name: Research
+  filter: research
+- name: Development
+  filter: development
 
 projects:
-- name: 프로젝트 알파
-  logo: /images/projects/project-alpha.png
-  role: 리드 개발자
-  timeline: 2023년 1월 - 현재
-  repo: your-github-username/project-alpha
-  summary: "React 및 Node.js를 사용하여 작업 관리를 위한 풀스택 웹 애플리케이션을 개발했습니다."
+# ────────────────────────────── 2025 ──────────────────────────────
+- name: Achilles Level 2 Certification & Testing
+  logo: /images/projects/achilles-level2.png
+  role: Lead Security Consultant
+  timeline: Jul 2024 - Mar 2025
+  summary: "Executed Achilles Level 2 certification tests for OT devices, validating protocol robustness and compliance."
   tags:
-  - 웹
-  - react
-  - nodejs
-- name: 프로젝트 베타
-  logo: /images/projects/project-beta.png
-  role: 모바일 개발자
-  timeline: 2022년 3월 - 2022년 12월
-  url: "https://www.projectbeta.com"
-  summary: "Flutter로 크로스 플랫폼 모바일 애플리케이션을 구축하여 지출을 추적했습니다."
+  - consulting
+  - certification
+  - ot
+  - 2025
+
+- name: Medical Device Security Certification Consulting
+  logo: /images/projects/medical-device-cert.png
+  role: Principal Consultant
+  timeline: Jun 2024 - Mar 2025
+  summary: "Provided end-to-end cyber-safety consulting for medical devices, including threat modeling and regulatory documentation."
   tags:
-  - 모바일
-  - flutter
-- name: 프로젝트 감마
-  logo: /images/projects/project-gamma.png
-  role: 소프트웨어 엔지니어
-  timeline: 2021년 9월 - 2022년 2월
-  repo: your-github-username/project-gamma
-  summary: "Python 및 PyQt를 사용하여 데이터 시각화를 위한 데스크톱 애플리케이션을 만들었습니다."
+  - consulting
+  - medical
+  - certification
+  - 2025
+
+# ────────────────────────────── 2024 ──────────────────────────────
+- name: Medical Device FDA Security Consulting
+  logo: /images/projects/fda-consult.png
+  role: Security Consultant
+  timeline: Mar 2024 - Dec 2024
+  summary: "Assisted manufacturers in meeting FDA cyber-security guidance for connected medical devices."
   tags:
-  - 데스크톱
+  - consulting
+  - medical
+  - fda
+  - 2024
+
+- name: Smart Ship Infrastructure Vulnerability Analysis & Security Tech Development
+  logo: /images/projects/smart-ship.png
+  role: OT/ICS Researcher
+  timeline: Jul 2024 - Nov 2024
+  summary: "Performed vulnerability analysis of maritime OT networks and developed tailored defensive technologies."
+  tags:
+  - research
+  - ot
+  - maritime
+  - 2024
+
+- name: HW Supply-Chain Security & Chip Integrity Verification Tech Development
+  logo: /images/projects/hw-supplychain.png
+  role: Research Engineer
+  timeline: Jun 2024 - Dec 2024
+  summary: "Researched side-channel and invasive analysis techniques to verify semiconductor integrity across the supply chain."
+  tags:
+  - research
+  - hardware
+  - security
+  - 2024
+
+- name: Cloud-based Cyber Training Ground Construction & K-SDL Development
+  logo: /images/projects/cyber-range.png
+  role: Technical Lead
+  timeline: Jun 2024 - Dec 2024
+  summary: "Built a scalable cloud cyber-range and developed the Korean Secure Development Lifecycle (K-SDL) curriculum."
+  tags:
+  - development
+  - cloud
+  - training
+  - devsecops
+  - 2024
+
+- name: IoT Embedded Device Bug Hunting (5 CVEs)
+  logo: /images/projects/iot-bughunt.png
+  role: Vulnerability Researcher
+  timeline: Apr 2024 - May 2024
+  repo: https://github.com/ymkyu/CVE
+  summary: "Discovered and responsibly disclosed 5 CVEs in commercial IoT devices through protocol fuzzing."
+  tags:
+  - research
+  - fuzzing
+  - iot
+  - cve
+  - 2024
+
+# ────────────────────────────── 2023 ──────────────────────────────
+- name: LS Electric Threat Modeling Consulting for Automation Equipment
+  logo: /images/projects/lselectric-tm.png
+  role: Threat Modeling Lead
+  timeline: Mar 2023 - Nov 2023
+  summary: "Developed STRIDE-based threat models and mitigation matrices for PLC & HMI product lines."
+  tags:
+  - consulting
+  - threat-modeling
+  - ot
+  - 2023
+
+# ────────────────────────────── 2022 ──────────────────────────────
+- name: IoT Incident Investigation Tool Development
+  logo: /images/projects/iot-forensics.png
+  role: Software Engineer
+  timeline: Aug 2022 - Dec 2022
+  summary: "Built a Python-based toolkit to acquire, parse, and analyze artefacts from compromised IoT devices."
+  tags:
+  - development
+  - forensics
   - python
-  - pyqt
+  - iot
+  - 2022
+
+- name: Smart Building IoT Device Vulnerability Detection Tech Development (2nd Year)
+  logo: /images/projects/smart-building.png
+  role: Lead Researcher
+  timeline: Jan 2022 - Oct 2022
+  summary: "Enhanced ML-driven fingerprinting and anomaly detection engines for smart-building IoT networks."
+  tags:
+  - research
+  - iot
+  - smart-building
+  - 2022
+
+# ────────────────────────────── 2021 ──────────────────────────────
+- name: KEPCO Practical Cyber-Security Training System Enhancement
+  logo: /images/projects/kepco-range.png
+  role: OT Security Engineer
+  timeline: Jun 2021 - Mar 2025
+  summary: "Upgraded an ICS cyber-range for KEPCO, adding realistic attack/defense scenarios and automated scoring."
+  tags:
+  - development
+  - ot
+  - training
+  - kepco
+  - 2021
+
+- name: C2021 Event Hosting
+  logo: /images/projects/c2021.png
+  role: Organizer
+  timeline: May 2021 - Dec 2021
+  summary: "Planned and hosted Korea’s premier convergence-security conference, featuring live CTF and workshops."
+  tags:
+  - community
+  - 2021
+
+- name: SBI Savings Bank Digital Platform & Open Banking Security Review
+  logo: /images/projects/sbi-review.png
+  role: Pentester
+  timeline: Mar 2021 - May 2021
+  summary: "Conducted web/mobile pentesting and secure-coding review for the bank’s open-banking APIs."
+  tags:
+  - consulting
+  - pentest
+  - finance
+  - web
+  - mobile
+  - 2021
+
+- name: HKMC Business System Continuous Penetration Testing
+  logo: /images/projects/hkmc-cpt.png
+  role: Pentester
+  timeline: Jan 2021 - Feb 2021
+  summary: "Delivered continuous penetration testing service for HKMC’s enterprise systems."
+  tags:
+  - consulting
+  - pentest
+  - enterprise
+  - 2021
+
+# ────────────────────────────── 2020 ──────────────────────────────
+- name: KOFIA Electronic-Finance Infra Vulnerability Assessment
+  logo: /images/projects/kofia-assessment.png
+  role: Security Analyst
+  timeline: Nov 2020 - Dec 2020
+  summary: "Performed network, web, and mobile assessments across critical trading infrastructure."
+  tags:
+  - consulting
+  - pentest
+  - finance
+  - 2020
+
+- name: KT Giga Genie Terminal Penetration Testing
+  logo: /images/projects/kt-genie.png
+  role: IoT Pentester
+  timeline: Oct 2020
+  summary: "Identified firmware and API vulnerabilities in smart-speaker terminals."
+  tags:
+  - consulting
+  - pentest
+  - iot
+  - 2020
+
+- name: KTH Daekyo Integrated Education Platform Penetration Testing
+  logo: /images/projects/daekyo-edu.png
+  role: Web Pentester
+  timeline: Sep 2020
+  summary: "Assessed authentication and business-logic flaws in an ed-tech SaaS platform."
+  tags:
+  - consulting
+  - pentest
+  - web
+  - education
+  - 2020
+
+- name: UNTAC Security Review & Penetration Testing
+  logo: /images/projects/untac.png
+  role: Security Consultant
+  timeline: Jul 2020 - Sep 2020
+  summary: "Provided holistic security assessment for UN Technology & Communication Agency infrastructure."
+  tags:
+  - consulting
+  - pentest
+  - 2020
+
+- name: Finding Vulnerabilities Using CodeQL (Stealien Security Leader 1st)
+  logo: /images/projects/codeql.png
+  role: Research Trainee
+  timeline: Sep 2020 - Dec 2020
+  summary: "Automated static-analysis queries to uncover zero-days with GitHub CodeQL."
+  tags:
+  - research
+  - codeql
+  - static-analysis
+  - 2020
+
+# ────────────────────────────── 2019 ──────────────────────────────
+- name: Kernel Exploit with FileSystem Fuzzer (16 CVEs)
+  logo: /images/projects/kernel-fuzz.png
+  role: Lead Fuzzer
+  timeline: Jul 2019 - Mar 2020
+  repo: https://github.com/bobfuzzer/CVE
+  summary: "Developed a coverage-guided filesystem-driver fuzzer for Linux kernel; disclosed 16 CVE-class vulnerabilities."
+  tags:
+  - research
+  - fuzzing
+  - kernel
+  - cve
+  - 2019
+
+- name: KNU Notification Crawler Development
+  logo: /images/projects/knu-crawler.png
+  role: Full-Stack Developer
+  timeline: Sep 2019 - Nov 2019
+  summary: "Created a crawler and web dashboard to aggregate university notices in real-time."
+  tags:
+  - development
+  - web
+  - crawler
+  - 2019
+
+# ────────────────────────────── 2018 ──────────────────────────────
+- name: Keyword-Based News Crawler Development
+  logo: /images/projects/news-crawler.png
+  role: Developer
+  timeline: Jul 2018
+  summary: "Built a Python crawler that delivers keyword-filtered news via chatbot notifications."
+  tags:
+  - development
+  - python
+  - crawler
+  - 2018
