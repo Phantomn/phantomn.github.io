@@ -3,25 +3,25 @@
 other = "Home"
 
 [posts]
-other = "게시글"
+other = "Posts"
 
 [toc_heading]
-other = "목차"
+other = "Table of Contents"
 
 [tags]
-other = "태그"
+other = "Tags"
 
 [categories]
-other = "카테고리"
+other = "Categories"
 
 [at]
 other = "at"
 
 [resume]
-other = "이력서"
+other = "Resume"
 
 [navigation]
-other = "바로가기"
+other = "Navigation"
 
 [contact_me]
 other = "Contact me:"
@@ -42,22 +42,22 @@ other = "이메일을 입력하세요"
 other = "이메일 주소를 입력하면이 웹 사이트의 뉴스 레터 수신에 동의하는 것입니다."
 
 [submit]
-other = "제출"
+other = "Submit"
 
 [hugoAttributionText]
 other = "Powered by"
 
 [prev]
-other = "이전"
+other = "Prev"
 
 [next]
-other = "다음"
+other = "Next"
 
 # [share_on]
 # other = "Share on"
 
 [improve_this_page]
-other = "이 페이지를 개선"
+other = "Improve this page"
 
 [out_of]
 other = "out of"
@@ -66,25 +66,25 @@ other = "out of"
 other = "Publications"
 
 [taken_courses]
-other = "이수 과목"
+other = "Taken Courses"
 
 [course_name]
-other = "과목명"
+other = "Course Name"
 
 [total_credit]
-other = "총 수익"
+other = "Total Credit"
 
 [obtained_credit]
-other = "획득한 수익"
+other = "Obtained Credit"
 
 [extracurricular_activities]
-other = "기타 활동"
+other = "Extracurricular Activities"
 
 [show_more]
-other = "더보기"
+other = "More"
 
 [show_less]
-other = "간단히보기"
+other = "Show Less"
 
 # [responsibilities]
 # other = "Responsibilities:"
@@ -111,16 +111,16 @@ other = "간단히보기"
 # other = "The page you are looking for is not there yet."
 
 [more]
-other = "더"
+other = "More"
 
 [view_certificate]
-other = "인증서보기"
+other = "View Certificate"
 
 [notes]
-other = "메모"
+other = "Notes"
 
 [disclaimer_text]
-other = "책임 고지"
+other = "Disclaimer"
 
 [search]
-other = "찾다"
+other = "Search"

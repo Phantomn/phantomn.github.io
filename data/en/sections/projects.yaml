@@ -18,6 +18,18 @@ buttons:
 
 projects:
 # ────────────────────────────── 2025 ──────────────────────────────
+- name: CCDCOE Locked Shields 2025 6th
+  logo: /images/projects/Nato-CCDCOE-logo.png
+  role: Blue Team Member
+  timeline: Apr 2025
+  summary: "Participated as a member of the South Korea-Canada joint team in the world's largest live-fire cyber defense exercise, achieving 6th place while defending national IT systems and critical infrastructure against thousands of simulated attacks."
+  tags:
+  - research
+  - cyber-exercise
+  - blue-team
+  - DFIR
+  - 2025
+
 - name: Achilles Level 2 Certification & Testing
   logo: /images/projects/achilles-level2.png
   role: Lead Security Consultant
