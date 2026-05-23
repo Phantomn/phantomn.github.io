@@ -1,7 +1,7 @@
 ---
 title: "Pwnable.kr — leg, passcode, horcruxes Writeup"
 date: 2019-05-23
-description: "ARM PC calculation quirk (leg), GOT overwrite via scanf (passcode), and ROP chain construction (horcruxes) on pwnable.kr"
+description: "pwnable.kr 풀이: ARM PC 계산 특성(leg), scanf를 통한 GOT 덮어쓰기(passcode), ROP 체인 구성(horcruxes)"
 tags: ["pwnable.kr", "pwn", "ARM", "ROP", "GOT", "writeup"]
 categories: ["CTF"]
 platform: "ctf"

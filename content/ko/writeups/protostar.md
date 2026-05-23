@@ -1,7 +1,7 @@
 ---
 title: "Protostar Wargame Writeup"
 date: 2019-01-01
-description: "Protostar wargame solutions: stack buffer overflow, format string bugs, heap exploitation, and network challenges"
+description: "Protostar 워게임 풀이: 스택 버퍼 오버플로우, 포맷 스트링 버그, 힙 익스플로잇, 네트워크 문제"
 tags: ["Protostar", "pwn", "buffer-overflow", "format-string", "heap", "wargame"]
 platform: "wargame"
 category: "pwn"

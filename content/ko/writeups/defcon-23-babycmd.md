@@ -1,7 +1,7 @@
 ---
 title: "DEF CON 23 CTF Qualifier: babycmd"
 date: 2015-05-15
-description: "DEF CON 23 babycmd writeup: command injection via blacklist bypass, 64-bit Linux binary, shell escaping techniques"
+description: "DEF CON 23 babycmd 풀이: 블랙리스트 우회를 통한 명령 인젝션, 64비트 Linux 바이너리, 셸 탈출 기법"
 tags: ["DEF CON", "CTF", "command-injection", "pwn", "64-bit", "bypass"]
 platform: "ctf"
 category: "pwn"

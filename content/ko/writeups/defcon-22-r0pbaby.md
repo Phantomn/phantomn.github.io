@@ -1,7 +1,7 @@
 ---
 title: "DEF CON 22 CTF Qualifier: r0pbaby"
 date: 2014-05-16
-description: "DEF CON 22 CTF qualifier r0pbaby writeup: 64-bit ROP chain construction via shared library base leak, PLT/GOT traversal, and system() call"
+description: "DEF CON 22 CTF 예선 r0pbaby 풀이: 공유 라이브러리 베이스 릭, PLT/GOT 탐색을 이용한 64비트 ROP 체인 구성 및 system() 호출"
 tags: ["DEF CON", "CTF", "ROP", "64-bit", "pwn", "PLT", "GOT", "libc"]
 platform: "ctf"
 category: "pwn"
