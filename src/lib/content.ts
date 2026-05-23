@@ -163,6 +163,9 @@ const CATEGORY_NAMES: Record<string, string> = {
   blueteam: "Blue Team",
   redteam: "Red Team",
   web: "Web Security",
+  pwn: "Pwn",
+  reversing: "Reversing",
+  misc: "Misc",
 };
 
 /**
