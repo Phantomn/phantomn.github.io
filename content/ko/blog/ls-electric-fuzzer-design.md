@@ -1,7 +1,7 @@
 ---
-title: "Fuzzer Design for LS Electric PLC Protocol Analysis"
+title: "LS Electric PLC 프로토콜 분석을 위한 퍼저 설계"
 date: 2022-01-15
-description: "A comprehensive approach to black-box fuzzing of LS Electric PLC systems using XGT protocol analysis, featuring automated mutation strategies, crash triage, and monitoring infrastructure for vulnerability discovery in industrial control systems."
+description: "XGT 프로토콜 분석을 기반으로 한 LS Electric PLC 시스템의 블랙박스 퍼징 설계 초안. 자동화된 뮤테이션 전략, 크래시 트리아지, 산업 제어 시스템 취약점 발견을 위한 모니터링 인프라를 다룬다."
 tags: ["fuzzing", "PLC", "ICS", "OT", "embedded", "LS-Electric", "protocol", "vulnerability-research"]
 categories: ["Research"]
 authors:
@@ -10,195 +10,190 @@ authors:
     image: "https://github.com/Phantomn.png"
 ---
 
-## Introduction
+## 1. 소개
 
-Operational Technology (OT) and Industrial Control Systems (ICS) play a critical role in monitoring and controlling production facilities and processes in industrial environments. Traditionally, OT/ICS systems operated in isolated, closed-network environments. However, with Industry 4.0 and the acceleration of digital transformation in manufacturing, the convergence of OT/ICS and IT systems is rapidly advancing.
+OT(Operational Technology)와 ICS(Industrial Control System)는 산업 현장에서 생산 설비와 프로세스를 모니터링하고 제어하는 기술을 아우르는 개념이다. 전통적으로 OT/ICS 시스템은 폐쇄적인 네트워크 환경에서 독립적으로 운영되어 왔다. 그러나 Industry 4.0, 스마트 팩토리 등 제조업의 디지털 전환이 가속화되면서, OT/ICS 시스템과 IT 시스템의 융합이 진행되고 있다.
 
-Legacy OT/ICS systems comprised specialized hardware and software such as PLCs (Programmable Logic Controllers), DCS (Distributed Control Systems), and SCADA (Supervisory Control and Data Acquisition) systems with limited functionality. Today, with the advancement of Industrial Internet of Things (IIoT) technology, OT/ICS systems are becoming increasingly intelligent and connected. Sensors and actuators are networked together, enabling real-time data collection and analysis. This facilitates real-time equipment monitoring, predictive maintenance, and process optimization, significantly enhancing manufacturing efficiency and flexibility.
+과거의 OT/ICS 시스템은 PLC(Programmable Logic Controller), DCS(Distributed Control System), SCADA(Supervisory Control and Data Acquisition) 등 특수 목적의 하드웨어와 소프트웨어로 구성되었으며, 제한된 기능을 수행했다. 그러나 최근에는 산업용 IoT(Industrial Internet of Things, IIoT) 기술의 발전으로 OT/ICS 시스템이 지능화, 연결화 되는 추세다. 센서, 액추에이터 등 다양한 산업용 디바이스들이 네트워크로 연결되고, 실시간으로 데이터를 수집 및 분석할 수 있게 되었다. 이를 통해 설비의 상태를 실시간으로 모니터링하고, 예지 보전(Predictive Maintenance)을 수행하며, 공정을 최적화하는 등 제조 운영의 효율성과 유연성을 크게 향상시킬 수 있다.
 
-With integration of advanced ICT technologies—edge computing, cloud, big data, and AI—OT/ICS systems are becoming smarter. Large-scale industrial data can now be effectively stored, processed, and analyzed, and machine learning techniques enable predictive failure detection and automated parameter optimization. Thus, OT/ICS systems are evolving beyond simple control functions to become intelligent platforms supporting data-driven decision-making on the manufacturing floor.
+나아가 엣지 컴퓨팅, 클라우드, 빅데이터, AI 등 첨단 ICT 기술과의 접목을 통해 OT/ICS 시스템은 더욱 스마트해지고 있다. 대규모의 산업 데이터를 효과적으로 저장, 처리, 분석할 수 있는 인프라가 구축되고, 머신러닝 기술을 활용해 설비 고장을 사전에 예측하거나 공정 파라미터를 자동으로 최적화하는 등 혁신적인 서비스가 가능해지고 있다. 이처럼 OT/ICS 시스템은 ICT 기술과의 융합을 통해 단순 제어 기능을 넘어, 제조 현장의 데이터를 기반으로 지능적인 의사결정을 지원하는 플랫폼으로 진화하고 있다.
 
-## Background and Research Motivation
+## 2. 배경 및 연구 동기
 
-PLCs are essential devices in industrial automation systems, widely deployed across manufacturing, energy, infrastructure, and other sectors. According to Market Research Guru, the global PLC market was valued at $47.75 billion in 2022 and is projected to reach $264.55 million by 2028.
+PLC는 산업 자동화 시스템에서 핵심적인 역할을 수행하는 제어 장치로, 제조업, 에너지, 인프라 등 다양한 분야에서 폭넓게 활용되고 있다. 시장 조사 전문 기관인 Market Research Guru에 따르면 2022년 PLC의 세계 시장 규모는 4,775억 달러로 평가되었으며 2028년에는 2억 6,455만 달러에 이를 것으로 예측된다.
 
-However, as the number of deployed PLC devices increases, security vulnerabilities pose growing risks. Claroty's Team82 research group demonstrated critical vulnerabilities in OPC-UA (Open Platform Communications Universal Architecture)—a universal protocol for synchronizing OT devices—earning $98,500 in prize money at Pwn2Own Miami 2023. Additionally, security firm NSFOCUS presented fuzzing results on the S7CommPlus_TLS protocol used in Siemens PLCs at BlackHat, highlighting ongoing security concerns.
+그러나 PLC 디바이스 수의 증가와 더불어 보안 취약점으로 인한 문제도 지속해서 제기되고 있다. OT/ICS 전문 보안 기업인 Claroty의 Team82 연구팀은 다양한 OT 장치를 동기화하는 데 사용되는 범용 프로토콜인 OPC-UA(Open Platform Communications Universal Architecture)의 심각한 취약점을 2023 Pwn2Own 마이애미에서 공개하여 총 98,500 달러의 상금을 받았다. 또한 보안 전문 기업인 NSFOCUS는 PLC 제조업체인 Siemens의 PLC에서 사용되는 S7CommPlus_TLS 프로토콜을 퍼징하여 BlackHat에서 발표하였다.
 
-In response to escalating OT/ICS security threats, organizations are increasingly adopting the IEC-62443 international standard for Industrial Automation and Control Systems (IACS) cybersecurity. IEC-62443 provides security requirements and guidelines for control systems, networks, and devices in industrial environments, enhancing organizations' ability to respond to cyber threats. Many manufacturers are pursuing IEC-62443 certification to improve product competitiveness and security. PLCs are a key application target, requiring design compliance with IEC-62443-4-2 product security requirements and adherence to IEC-62443-3-3 patch management guidelines.
+이처럼 PLC에 대한 보안 취약점을 여러 기업에서 지속적으로 제기하고 있으며, 효율적인 취약점 탐지 방법 또한 연구되고 있다. 더 나아가 OT/ICS의 보안 위협이 증가함에 따라 여러 기업에서 **IEC-62443** 국제 표준을 지키려 노력하고 있다. IEC-62443은 산업 자동화 및 제어 시스템(IACS)의 사이버 보안을 다루는 국제 표준으로, 산업 환경에서 사용되는 제어 시스템, 네트워크, 장치 등의 보안 요구 사항과 가이드라인을 제공하여 사이버 보안 위협 대응 능력을 향상시키는 것을 목표로 한다. 많은 제조사들은 제품의 수출 경쟁력과 보안성을 위해 IEC-62443 인증을 받으려 노력하고 있다. PLC 역시 IEC-62443-4-2의 제품 보안 요구 사항을 기반으로 설계하거나, IEC-62443-3-3의 패치 관리 지침에 따라 발견된 취약점을 신속히 보완해야 한다.
 
-**Fuzzing** offers a systematic approach to automated vulnerability discovery. This technique injects randomly generated inputs into target software to trigger abnormal behavior or vulnerabilities. By identifying unexpected exceptions and security flaws, fuzzing enables continuous testing and security review throughout the Software Development Life Cycle (SDLC), allowing early detection and remediation of vulnerabilities.
+**퍼징(Fuzzing)**은 자동화된 취약점 발견에 대한 체계적인 접근 방법을 제공한다. 이 기법은 대상 소프트웨어에 무작위로 생성된 입력 값을 주입하여 비정상적인 동작이나 취약점을 유발한다. 이를 통해 개발자가 예상하지 못한 예외 상황이나 보안 취약점을 효과적으로 식별하여, SDLC(Software Development Life Cycle) 전 과정에 걸쳐 지속적인 테스팅과 보안 검토를 수행함으로써 취약점을 조기에 발견하고 대응할 수 있다.
 
-However, PLCs present unique challenges. Manufacturers typically restrict access to internal structure, operational details, source code, and other critical information. This prevents white-box fuzzing approaches that analyze internal structure and generate informed inputs. Instead, we must rely on black-box fuzzing—generating random inputs without knowledge of internal implementation. While less efficient than white-box approaches, black-box fuzzing can still effectively discover potential vulnerabilities when focused on critical communication functionality.
+하지만 PLC의 경우 제조사에 의해 내부 구조, 동작 원리, 소스 코드 등 많은 정보가 제한되어 있기 때문에, 소프트웨어의 내부 구조를 분석하여 입력 값을 생성하는 **화이트박스 퍼징**은 불가능하다. 따라서 내부 구조나 소스 코드 없이 입력 값을 무작위로 생성하여 테스트하는 **블랙박스 퍼징**에 의존할 수밖에 없으며, 화이트박스 퍼징보다 효율성이 떨어지는 것은 피할 수 없다.
 
-LS Electric PLCs support multiple communication protocols: XGT (proprietary), RAPIEnet (standard), Modbus (universal), and OPC-UA, all managed through the XG5000 software suite. This research focuses on designing a systematic fuzzer to test the XGT protocol implementation and discover potential vulnerabilities in these PLC systems.
+LS Electric PLC는 자체 개발한 XGT 프로토콜을 비롯하여 표준 프로토콜인 RAPIEnet, 범용 프로토콜인 Modbus, OPC-UA 등 다양한 프로토콜을 지원한다. 이 프로토콜들을 관리하기 위해 XG5000 소프트웨어를 사용한다. 본 연구는 XGT 프로토콜 구현을 테스트하고 PLC 시스템의 잠재적 취약점을 발견하기 위한 체계적인 퍼저 설계에 초점을 맞춘다.
 
-## Fuzzer Architecture and Design
+## 3. 설계
 
-A PLC fuzzer consists of three main components: **Input**, **Fuzzer Engine**, and **Output**.
+PLC 퍼저를 개발하기 위해서는 각 단계별 설계가 필요하다. 퍼저는 크게 **입력**, **퍼저 엔진**, **출력** 이렇게 세 가지로 구성된다.
 
-### 3.1 Environment Setup
+### 3.0 환경 구성
 
-To operate the fuzzer, the PLC environment must be properly configured. The setup requires:
-- PLC device (e.g., XGI-CPUZ)
-- Base module
-- Power supply module
-- XG5000 software
+퍼저를 구동하기 위해 PLC 환경을 설정해야 한다. PLC를 구동시키기 위해 다음이 필요하다:
 
-The XGI-CPUZ model has integrated communication modules, eliminating the need for external communication modules.
+- PLC 디바이스 (예: XGI-CPUZ)
+- 기본 베이스 모듈
+- 전원 모듈
+- XG5000 소프트웨어
 
-#### System Initialization and Reset
+XGI-CPUZ의 경우 통신 모듈이 자체 내장되어 있어 별도의 외부 통신 모듈이 필요하지 않다.
 
-A critical aspect of fuzzing is returning the PLC to a known state after each test. In NSFOCUS's research, a Power Control Unit (PCU) managed PLC power cycling. The XGI-CPUZ includes an internal Power Backup Module (PBM) that enables warm restart functionality without full power cycle.
+#### 시스템 초기화 및 리셋
 
-![PLC Setup Configuration](/images/blog/ls-electric-fuzzer/setup.png)
+퍼징의 핵심적인 측면은 각 테스트 후 PLC를 알려진 상태로 되돌리는 것이다. NSFOCUS의 연구에서는 PCU(Power Control Unit)가 PLC의 전원을 제어했다. XGI-CPUZ의 경우 PLC 디바이스 내부에 PBM(Power Backup Module)이 존재한다. 따라서 퍼지 테스팅 후 **웜 리스타트(Warm Restart)** 기능을 사용하여 전원을 종료하고, 사용자가 정한 데이터 및 사용자 프로그램에 따라 다시 PLC를 구동한다.
 
-After fuzz testing, warm restart:
-- Terminates power cleanly
-- Reinitializes default, initialization, and retained variables
-- Restores the PLC to the baseline state
-- Prepares for the next test cycle
+웜 리스타트 실행 시:
+- 전원을 정상적으로 종료한다
+- 디폴트, 초기화 및 리테인 등의 변수를 초기화한다
+- PLC를 기준 상태로 복원한다
+- 다음 테스트 사이클을 위해 준비한다
 
-![PLC Warm Restart Process](/images/blog/ls-electric-fuzzer/restart.png)
+### 3.1 입력 생성
 
-### 3.2 Input Generation
+퍼저에 입력할 데이터는 PLC에게 전송할 XGT 프로토콜의 패킷 파일이다. 이 과정은 다음과 같다:
 
-The fuzzer receives XGT protocol packet files as input. The process involves:
+1. **시드 수집**: 정상 PLC 동작에서 합법적인 XGT 프로토콜 패킷을 캡처 (뮤테이션 기반)
+2. **뮤테이션**: 시드 패킷에 뮤테이션 전략 적용
+3. **프로토콜 수정**: 뮤테이션 후 XGT 특화 프로토콜 요구사항 재계산
 
-1. **Seed Collection**: Capture legitimate XGT protocol packets from normal PLC operations (mutation base)
-2. **Mutation**: Apply mutation strategies to seed packets
-3. **Protocol Repair**: Fix XGT-specific protocol requirements after mutation
+#### XGT 프로토콜 헤더 구조
 
-#### XGT Protocol Header Structure
+XGT 프로토콜은 Header와 Command + Data로 나뉜다. Header의 구조는 다음과 같다:
 
-The XGT protocol consists of a Header followed by Command and Data sections:
-
-| Field | Size (Bytes) | Content |
-|-------|--------------|---------|
+| 항목 | 크기(Byte) | 내용 |
+|------|-----------|------|
 | Company ID | 10 | "LSIS-GLOFA" (ASCII: 4C 47 49 53 2D 47 4C 4F 46 41) |
-| PLC Info | 2 | CPU type, redundancy status, operation status, system state |
-| CPU Info | 1 | Series identification (XGK: 0xA0, XGB: 0xB0, XGI: 0xA4, XGR: 0xA8) |
-| Source of Frame | 1 | Direction (Client→Server: 0x33, Server→Client: 0x11) |
-| Invoke ID | 2 | Frame sequencing ID (echoed in response) |
-| Length | 2 | Command structure byte size |
-| Ethernet Position | 1 | Module slot and base numbers |
-| Reserved (BCC) | 1 | 0x00; Byte sum checksum for integrity |
+| PLC Info | 2 | 클라이언트→서버: 무시(0x00) / 서버→클라이언트: CPU 종류, 이중화 상태, 동작 상태, 시스템 상태 |
+| CPU Info | 1 | 시리즈 식별 (XGK: 0xA0, XGB(MK): 0xB0, XGI: 0xA4, XGB(IEC): 0xB4, XGR: 0xA8) |
+| Source of Frame | 1 | 방향 (클라이언트→서버: 0x33, 서버→클라이언트: 0x11) |
+| Invoke ID | 2 | 프레임 간의 순서를 구별하기 위한 ID (응답 프레임에 이 번호를 붙여 보내줌) |
+| Length | 2 | 명령어 구조 바이트 크기 |
+| 이더넷 위치 | 1 | Bit0~3: 이더넷 모듈의 슬롯(Slot) 번호 / Bit4~7: 이더넷 모듈의 베이스(Base) 번호 |
+| 예약 2(BCC) | 1 | 0x00: 예약 영역 (Application Header의 Byte Sum) |
 
-**Critical implementation details**:
-- The Data field undergoes mutation while the Header remains relatively stable
-- After mutation, Length and BCC (Block Check Character) must be recalculated to maintain protocol integrity
-- Seed packets should focus on specific PLC functionality rather than comprehensive coverage
+**구현상 핵심 사항**:
+- Data 필드를 뮤테이션하고 Header는 비교적 안정적으로 유지한다
+- 뮤테이션 후 프로토콜 무결성을 유지하기 위해 Length와 BCC(Block Check Character)를 반드시 재계산해야 한다
+- 시드 패킷은 포괄적인 커버리지보다 특정 PLC 기능에 초점을 맞춰야 한다
 
-### 3.3 Fuzzer Engine
+### 3.2 퍼저 엔진
 
-The fuzzer engine employs a feedback-driven mutation strategy:
+퍼저 엔진에서 중요한 것은 어느 부분을 어떻게 뮤테이션할 것인지에 대한 전략이다.
 
-#### Mutation Strategy
+#### 뮤테이션 전략
 
-Two primary fuzzing algorithms are leveraged:
+두 가지 주요 퍼징 알고리즘을 활용한다:
 
 **AFL (American Fuzzy Lop)**:
-- Uses genetic algorithms for input generation
-- Implements coverage-guided fuzzing
-- Maintains code coverage metrics
-- Tracks control flow changes
-- Identifies unique crashes through instrumentation
-- Gradually expands the testing space
+- 입력 생성을 위한 유전 알고리즘 사용
+- 커버리지 가이드 퍼징 구현
+- 코드 커버리지 메트릭 유지
+- 제어 흐름 변화 추적
+- 인스트루멘테이션을 통한 유니크 크래시 식별
+- 점진적으로 테스트 공간을 확장
 
 **Radamsa**:
-- Originally developed for software stress testing
-- Employs completely random mutation
-- Useful for discovering edge cases and unexpected behaviors
-- Complements AFL's coverage-guided approach
+- 소프트웨어 부하 테스트를 위해 개발된 도구
+- 완전 랜덤 뮤테이션 적용
+- 엣지 케이스와 예상치 못한 동작 발견에 유용
+- AFL의 커버리지 가이드 접근을 보완
 
-**Hybrid Approach**: Combine both algorithms to achieve comprehensive fuzzing coverage—AFL for targeted exploration of high-coverage paths, Radamsa for discovering unexpected failure modes.
+**하이브리드 접근법**: 두 알고리즘을 결합하여 포괄적인 퍼징 커버리지를 달성한다. AFL은 높은 커버리지 경로의 타겟 탐색에, Radamsa는 예상치 못한 실패 모드 발견에 활용한다.
 
-#### Fuzzing Workflow
+#### 퍼징 워크플로우
 
-1. **Packet Generation**: Create XGT packets with appropriate headers for each command type
-2. **Mutation**: Apply AFL/Radamsa mutation strategies to test cases
-3. **Protocol Repair**: Parse mutated packets and recalculate Length and BCC fields
-4. **Transmission**: Send test case to PLC
-5. **Status Monitoring**: Check PLC operational status
-6. **Response Handling**:
-   - **Normal**: Record successful test, proceed to next case
-   - **Abnormal**: Log crash details, generate crash file, trigger PLC restart
-7. **Recovery**: Initialize PLC to baseline state via warm restart
-8. **Iteration**: Continue with next mutation cycle
+1. **패킷 생성**: 각 명령 유형에 맞는 XGT 헤더를 생성하여 패킷 구성
+2. **뮤테이션**: AFL/Radamsa 뮤테이션 전략을 테스트 케이스에 적용
+3. **프로토콜 수정**: 뮤테이션된 패킷을 파싱하여 Length와 BCC 필드 재계산
+4. **전송**: 테스트 케이스를 PLC에 전송
+5. **상태 모니터링**: PLC 동작 상태 확인
+6. **응답 처리**:
+   - **정상**: 성공적인 테스트 기록, 다음 케이스 진행
+   - **비정상**: 크래시 상세 정보 기록, 크래시 파일 생성, PLC 리스타트 트리거
+7. **복구**: 웜 리스타트를 통해 PLC를 기준 상태로 초기화
+8. **반복**: 다음 뮤테이션 사이클 진행
 
-### 3.4 Output and Crash Analysis
+### 3.3 출력 및 크래시 분석
 
-#### Crash Collection and Triage
+#### 크래시 수집 및 트리아지
 
-When fuzz testing discovers a crash, the output system captures:
-- Triggering input packet
-- PLC state information
-- Timestamp and context
+퍼지 테스팅 중 크래시가 발견되면 출력 시스템이 다음을 캡처한다:
+- 트리거 입력 패킷
+- PLC 상태 정보
+- 타임스탬프 및 컨텍스트
 
-**Triage Process**: Crashes are analyzed and classified by severity:
-- **Denial of Service (DoS)**: Highest priority—causes PLC unavailability
-- **Memory Corruption**: Potential code execution vector
-- **Logic Errors**: May cause incorrect control behavior
+**트리아지 프로세스**: 크래시를 심각도에 따라 분류한다:
+- **서비스 거부(DoS)**: 최고 우선순위 — PLC 사용 불가 상태 유발
+- **메모리 손상**: 잠재적인 코드 실행 벡터
+- **로직 오류**: 잘못된 제어 동작 유발 가능
 
-#### Data Storage and Monitoring
+#### 데이터 저장 및 모니터링
 
-Triaged crashes are stored in a database for centralized management. A web-based monitoring dashboard provides:
+트리아지된 크래시는 중앙 집중식 관리를 위해 데이터베이스에 저장된다. 웹 기반 모니터링 대시보드를 통해 다음을 제공한다:
 
-- Real-time fuzzer status
-- Crash count and trends
-- Severity distribution
-- Affected protocol commands
-- Time-series analytics
+- 실시간 퍼저 상태
+- 크래시 수 및 추세
+- 심각도 분포
+- 영향받은 프로토콜 명령
+- 시계열 분석
 
-![Fuzzer Architecture and Workflow](/images/blog/ls-electric-fuzzer/architecture.png)
+전체 퍼저 워크플로우:
+1. **패킷 생성**: 타겟 XGT 명령에 맞는 헤더 구성
+2. **요청 전송**: 네트워크를 통해 PLC에 테스트 케이스 전송
+3. **응답 캡처**: PLC 응답 수신 및 리스타트 시퀀스 시작
+4. **피드백 학습**: 퍼저가 응답 데이터로부터 학습하여 커버리지 향상
+5. **반복**: 발견된 크래시를 기반으로 뮤테이션 전략 개선
 
-The complete fuzzer workflow:
-1. **Packet Generation**: Build headers for target XGT commands
-2. **Request Transmission**: Send test cases to PLC via network
-3. **Response Capture**: PLC responds and begins restart sequence
-4. **Feedback Learning**: Fuzzer learns from response data to improve coverage
-5. **Iteration**: Refine mutation strategy based on discovered crashes
+## 4. 구현 고려사항
 
-## Implementation Considerations
+### 커버리지 전략
 
-### Coverage Strategy
+포괄적인 프로토콜 커버리지보다 고영향 기능에 집중한다:
+- 장치 읽기/쓰기 작업
+- 구성 명령
+- 진단 쿼리
+- 상태 관리 기능
 
-Rather than attempting comprehensive protocol coverage, focus on high-impact functionality:
-- Device read/write operations
-- Configuration commands
-- Diagnostic queries
-- State management functions
+이렇게 집중된 접근 방식은 컴퓨팅 제약 내에서 취약점 발견 효율을 극대화한다.
 
-This focused approach maximizes vulnerability discovery efficiency within computational constraints.
+### 프로토콜 특화 최적화
 
-### Protocol-Specific Optimization
+XGT 프로토콜 구현에는 세심한 처리가 필요하다:
+- **Length 필드**: Command + Data 크기를 정확히 반영해야 함
+- **BCC 계산**: Application Header에 대한 Byte-sum 체크섬
+- **Invoke ID**: 요청-응답 상관관계를 위해 중요
+- **명령 변형**: 다른 명령들은 각각 다른 Data 구조를 가짐
 
-XGT protocol implementation requires careful handling:
-- **Length Field**: Must accurately reflect Command + Data size
-- **BCC Calculation**: Byte-sum checksum across application header
-- **Invoke ID**: Critical for request-response correlation
-- **Command Variants**: Different commands have distinct Data structures
+뮤테이션 전반에 걸쳐 프로토콜 유효성을 유지하기 위한 자동화된 패킷 파싱 및 수정 메커니즘이 필수적이다.
 
-Automated packet parsing and repair mechanisms are essential to maintain protocol validity across mutations.
+### 상태 관리
 
-### State Management
+PLC 상태는 퍼징 효율성에 직접 영향을 미친다:
+- 특정 명령은 특정 동작 상태에서만 유효할 수 있다
+- 상태 전환을 통해 숨겨진 코드 경로를 발견할 수 있다
+- 웜 리스타트는 테스트 사이에 결정론적 리셋을 보장한다
 
-PLC state directly affects fuzzing effectiveness:
-- Certain commands may only be valid in specific operational states
-- State transitions can reveal hidden code paths
-- Warm restart ensures deterministic reset between tests
+## 5. 결론
 
-## Conclusion
+LS Electric PLC 시스템, 특히 XGT 프로토콜의 체계적인 퍼징은 OT/ICS 보안 향상을 위한 중요한 단계다. 제어된 환경 내에서 유전적 뮤테이션과 완전 랜덤 뮤테이션 전략을 조합하면 달리는 숨겨져 있을 수 있는 잠재적 취약점을 체계적으로 발견할 수 있다.
 
-The systematic fuzzing of LS Electric PLC systems—particularly the XGT protocol—represents a critical step toward improving OT/ICS security. By employing a combination of genetic and random mutation strategies within a controlled environment, this approach can systematically discover potential vulnerabilities that might otherwise remain hidden.
+이 퍼저의 블랙박스 특성은 실질적인 제약을 인정하면서도, 집중된 테스팅을 통해 포괄적인 프로토콜 커버리지를 제공한다. 자동화된 크래시 트리아지와 중앙 집중식 모니터링의 통합은 효율적인 취약점 관리와 우선순위 기반 수정을 가능하게 한다.
 
-The black-box nature of this fuzzer acknowledges practical constraints while still providing comprehensive protocol coverage through focused testing. The integration of automated crash triage and centralized monitoring enables efficient vulnerability management and remediation prioritization.
+산업 시스템이 점점 더 연결되고 인프라에 중요해짐에 따라, 이 퍼저와 같은 체계적인 보안 검증 접근 방식은 현대 OT/ICS 보안 실천과 IEC-62443 준수 이니셔티브의 필수 구성요소다.
 
-As industrial systems become increasingly connected and critical to infrastructure, systematic security validation approaches like this fuzzer are essential components of modern OT/ICS security practices and IEC-62443 compliance initiatives.
+## 6. 향후 연구 방향
 
-## Future Research Directions
-
-- Extension to additional LS Electric protocols (RAPIEnet, Modbus)
-- Implementation of differential fuzzing against protocol specifications
-- Integration of symbolic execution for constraint solving
-- Development of exploit generation from crash artifacts
-- Cross-vendor protocol comparison and standardization efforts
+- 추가 LS Electric 프로토콜(RAPIEnet, Modbus)로의 확장
+- 프로토콜 명세에 대한 차등 퍼징 구현
+- 제약 조건 해결을 위한 심볼릭 실행 통합
+- 크래시 아티팩트로부터의 익스플로잇 생성 개발
+- 크로스 벤더 프로토콜 비교 및 표준화 연구

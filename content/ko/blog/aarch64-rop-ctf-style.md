@@ -1,7 +1,7 @@
 ---
-title: "ROP-ing on AArch64: The CTF Style"
+title: "AArch64에서 ROP하기: CTF 스타일"
 date: 2020-02-10
-description: "AArch64 calling conventions, link register abuse, and ROP chain construction for CTF-style exploitation"
+description: "AArch64 호출 규약, Link Register 제어, CTF 스타일 익스플로잇을 위한 ROP 체인 구성 실습"
 tags: ["AArch64", "ARM64", "ROP", "pwn", "CTF", "exploit"]
 categories: ["Research"]
 authors:
@@ -10,91 +10,91 @@ authors:
     image: "https://github.com/Phantomn.png"
 ---
 
-## Introduction
+## 소개
 
-This is a practical exercise in performing ROP exploitation on AArch64, coming entirely from an x86/x64 background.
+이것은 완전히 x86/x64 배경에서 출발해 AArch64 ROP를 실습한 기록이다.
 
-We are people who have not touched anything outside of x86/x64 exploitation. Since none of us had previous experience exploiting AArch64, we couldn't find much documentation on how to approach it. The methods and techniques we used are probably not the best practices, but we learned a lot in the process.
+우리는 x86/x64 이외의 아키텍처를 거의 건드리지 않았다. AArch64 익스플로잇 경험이 전혀 없었기 때문에 관련 문서를 찾기도 어려웠다. 사용한 방법과 기술이 최선은 아닐 수 있지만, 그 과정에서 많은 것을 배웠다.
 
-### AArch64 Basics
+### AArch64 기초
 
-Before diving into the challenge, let's quickly review the fundamentals. I'll do my best to explain everything to the extent of my understanding.
+챌린지에 들어가기 전에 기본 개념을 빠르게 살펴보자.
 
-#### Registers
+#### 레지스터
 
-AArch64 has 31 general-purpose registers, x0 through x30. Since it's a 64-bit architecture, all registers are 64 bits. However, you can access the lower 32 bits of registers using the w prefix (e.g., w0, w1).
+AArch64에는 31개의 범용 레지스터 x0~x30이 있다. 64비트 아키텍처이므로 모든 레지스터는 64비트다. 단, `w` 접두사(예: w0, w1)를 사용하면 각 레지스터의 하위 32비트에 접근할 수 있다.
 
-There's also a 32nd register known as the zero register (xzr or zero). This serves multiple purposes but in certain contexts is used as sp (stack pointer), with sp being an alias to it.
+`xzr` 또는 zero 레지스터라고 불리는 32번째 레지스터도 있다. 다용도로 쓰이지만 특정 상황에서는 `sp`(스택 포인터) 별칭으로 동작한다.
 
-#### Basic Instructions
+#### 기본 명령어
 
-**mov instruction:**
+**mov 명령어:**
 ```assembly
-mov x0, x1      ; Move value from x1 to x0
-mov x1, 0x4141  ; Move immediate value 0x4141 to x1
+mov x0, x1      ; x1의 값을 x0으로 이동
+mov x1, 0x4141  ; 즉시값 0x4141을 x1로 이동
 ```
 
-**str/ldr instructions (Store and Load Register):**
-These fundamentally store and load registers at a given pointer location.
+**str/ldr 명령어 (Store and Load Register):**
+주어진 포인터 위치에서 레지스터를 저장하거나 로드한다.
 ```assembly
-str x0, [x29]   ; Store x0 to address in x29
-ldr x0, [x29]   ; Load value from address in x29 to x0
+str x0, [x29]   ; x0을 x29 주소에 저장
+ldr x0, [x29]   ; x29 주소의 값을 x0에 로드
 
-stp/ldp - store/load a pair of registers
-stp x29, x30, [sp]  ; Store x29 to sp, x30 to sp+8
+stp/ldp - 레지스터 쌍 저장/로드
+stp x29, x30, [sp]  ; sp에 x29를, sp+8에 x30을 저장
 ```
 
-**bl/blr instructions (Branch Link):**
-Similar to call in x86, these jump to a subroutine and store the return address in x30 (Link Register).
+**bl/blr 명령어 (Branch Link):**
+x86의 `call`과 유사하다. 서브루틴으로 점프하며 리턴 주소를 x30(Link Register)에 저장한다.
 ```assembly
-blr x0  ; Call subroutine at address in x0
+blr x0  ; x0에 저장된 주소의 서브루틴을 호출
 ```
 
-**b/br instructions (Branch):**
-Similar to jmp in x86, these perform unconditional jumps.
+**b/br 명령어 (Branch):**
+x86의 `jmp`와 유사하다. 무조건 점프를 수행한다.
 ```assembly
-br x0   ; Jump to address in x0
+br x0   ; x0에 저장된 주소로 점프
 ```
 
-**ret instruction:**
-Unlike x86 where the return address is on the stack, AArch64's ret instruction retrieves the return address from the x30 register.
+**ret 명령어:**
+x86에서는 리턴 주소가 스택에 있지만, AArch64의 `ret`는 x30 레지스터에서 리턴 주소를 찾아 점프한다.
 
-#### Indexing Modes
+#### 인덱싱 모드
 
-Unlike x86, AArch64's load/store instructions support three different indexing modes for offsets:
+x86과 달리 AArch64의 load/store 명령어는 오프셋 인덱싱을 위한 세 가지 모드를 지원한다.
 
-**Direct offset:** `[base, #offset]` - Index offset directly without modifying the base
+**직접 오프셋 (Direct offset):** `[base, #offset]` — 오프셋을 직접 인덱스하고 base는 변경하지 않음
 ```assembly
-ldr x0, [sp, 0x10]  ; Load from sp+0x10
+ldr x0, [sp, 0x10]  ; sp+0x10 주소의 값을 x0에 로드
 ```
 
-**Pre-indexed:** `[base, #offset]!` - Same as direct offset, except base + offset is written back to base
+**전위 인덱스 (Pre-indexed):** `[base, #offset]!` — 직접 오프셋과 동일하지만, base + offset이 base에 다시 기록됨
 ```assembly
-ldr x0, [sp, 0x10]! ; Load from sp+0x10, then increment sp by 0x10
+ldr x0, [sp, 0x10]! ; sp+0x10의 값을 x0에 로드한 후 sp를 0x10 증가
 ```
 
-**Post-indexed:** `[base], #offset` - Use base directly, then write base + offset back to base
+**후위 인덱스 (Post-indexed):** `[base], #offset` — base를 그대로 사용한 뒤 base + offset을 base에 기록
 ```assembly
-ldr x0, [sp], 0x10  ; Load from sp, then increment sp by 0x10
+ldr x0, [sp], 0x10  ; sp의 값을 x0에 로드한 후 sp를 0x10 증가
 ```
 
-#### Stack and Calling Conventions
+#### 스택과 호출 규약
 
-**Registers x0 through x7 are used to pass parameters to subroutines.** Additional parameters are passed on the stack.
+**레지스터 x0~x7은 서브루틴에 파라미터를 전달하는 데 사용된다.** 추가 파라미터는 스택으로 전달된다.
 
-**The return address is stored in x30** (also called LR - Link Register), but during nested subroutine calls it is preserved on the stack.
+**리턴 주소는 x30에 저장된다** (LR이라고도 함). 단, 중첩 서브루틴 호출 시에는 스택에 보존된다.
 
-**The x29 register (also called FP - Frame Pointer)** is equivalent to ebp in x86. All local variables in the stack are accessed relative to x29, and like x86, it holds a pointer to the previous stack frame.
+**x29 레지스터(FP — Frame Pointer)**는 x86의 ebp에 해당한다. 스택의 로컬 변수는 모두 x29를 기준으로 접근하며, x86과 마찬가지로 이전 스택 프레임에 대한 포인터를 보유한다.
 
-One interesting difference is that in x86, ebp is always at the bottom of the current stack frame with ret right below it. However, in AArch64, x29 appears to be stored at an optimal location relative to local variables. In minimal test cases, it's always stored at the top of the stack (with the preserved x30), and local variables below it—essentially the opposite layout compared to x86.
+흥미로운 차이점이 하나 있다. x86에서는 ebp가 항상 현재 스택 프레임의 하단에, 그 바로 아래에 리턴 주소가 위치한다. 그런데 AArch64에서는 x29(보존된 x30과 함께)가 스택의 상단에 저장되고, 로컬 변수들이 그 아래에 위치한다. x86과 비교해 배치가 반대다.
 
-## The Challenge
+## 챌린지
 
-The challenge runs on Ubuntu 18.04 AArch64 in a chrooted environment.
+챌린지는 Ubuntu 18.04 AArch64 환경에서 chroot로 실행된다.
 
-The challenge binary is provided along with its libc and a placeholder flag file. Since the challenge runs in a chroot, we cannot obtain a shell, so we must execute an open/read/write ROP chain.
+챌린지 바이너리, libc, placeholder 플래그 파일이 함께 제공된다. chroot 환경이므로 쉘은 얻을 수 없고, open/read/write ROP 체인을 실행해야 한다.
 
-The first requirement is setting up the environment. You need to download an AArch64 Ubuntu server image. Unfortunately, ARM doesn't run on typical VMs, so your options are limited to emulating with QEMU or using an ARM64 EC2 instance. Since AWS is out of reach, we can match the library paths and execute directly:
+첫 번째로 환경을 설정해야 한다. AArch64 우분투 서버 이미지를 다운로드해야 하는데, ARM은 일반 VM에서 돌아가지 않는다. QEMU로 에뮬레이팅하거나 ARM64 EC2 인스턴스를 사용하는 방법밖에 없다. AWS가 여의치 않다면, lib 경로를 맞춰서 직접 실행하는 방법도 있다.
 
 ```bash
 ➜  lib git:(master) ✗ ls
@@ -108,9 +108,9 @@ export LD_LIBRARY_PATH=$CTF_HOME/lib
 ➜  challenge git:(master) ✗ source ~/.profile
 ```
 
-After this setup, the binary runs naturally.
+이 설정 이후에는 바이너리가 자연스럽게 실행된다.
 
-### Part 1 - The Heap Vulnerability
+### Part 1 - 힙 취약점
 
 ```
 Not Yet Another Note Challenge...
@@ -122,7 +122,7 @@ Not Yet Another Note Challenge...
 5. quit
 ```
 
-A familiar note challenge prompt appears. A quick exploration reveals an integer underflow in the alloc function, leading to heap overflow in the edit function.
+힙 챌린지에서 익숙한 노트 프롬프트가 뜬다. 조금 살펴보면 alloc 함수에서 정수 언더플로가 발견되고, 이로 인해 edit 함수에서 힙 오버플로가 발생한다.
 
 ```c
 __int64 do_add()
@@ -177,21 +177,21 @@ __int64 do_edit()
 }
 ```
 
-By inputting 0 as the length in alloc, a valid heap chunk is allocated but -1 bytes are read. Since the read uses unsigned semantics, -1 becomes 0xffffffffffffffff, which causes a read error.
+alloc에서 len으로 0을 입력하면 유효한 힙 청크가 할당되지만 -1 바이트를 읽으려 한다. read는 unsigned 의미론을 사용하므로 -1이 0xffffffffffffffff가 되어 큰 값을 읽을 수 없어 오류가 발생한다.
 
-When a read error occurs, the return value (-1 for errors) is stored in the size member of the global chunk structure. In the edit function, size is used as an unsigned short, so -1 becomes 0xffff, causing overflow.
+read 오류가 발생하면 반환값(-1)이 전역 청크 구조체의 size 멤버에 저장된다. edit 함수에서 size는 unsigned short로 사용되므로 -1은 0xffff가 되어 오버플로가 발생한다.
 
-This post focuses on ROP exploitation, and AArch64 heaps work nearly identically to x86, so we'll skip the heap exploitation details:
+이 포스트는 ROP에 집중하며, AArch64의 힙은 x86과 거의 동일하게 작동하므로 힙 익스 부분은 요약만 한다.
 
-- Since there is no free(), we trigger a leak by overwriting the freed top_chunk size in the next allocation
-- The server uses libc 2.27, which supports tcache, making arbitrary allocation easier. We can overwrite the top_chunk's FD to achieve this
-- First, leak the libc address, then use it to obtain a chunk near the environment to leak a stack address, and finally allocate a chunk near the return address (saved x30 register) to write our ROP chain
+- `free()`가 없으므로, 다음 할당 시 해제된 top_chunk의 크기를 덮어써서 leak을 트리거
+- 서버가 libc 2.27을 사용하므로 tcache를 활용할 수 있어 임의 할당이 더 쉬움. top_chunk의 FD를 덮어써서 달성
+- 먼저 libc 주소를 leak하고, 이를 이용해 환경 근처에서 청크를 얻어 스택 주소를 leak. 마지막으로 리턴 주소(저장된 x30) 근처에 청크를 할당해 ROP 체인 작성
 
-### Part 2 - The ROP Chain
+### Part 2 - ROP 체인
 
-Now comes the interesting part: finding gadgets. How do we find ROP gadgets on AArch64?
+이제 흥미로운 부분인 가젯 찾기로 넘어간다. AArch64에서 ROP 가젯을 어떻게 찾을까?
 
-Fortunately, ropper supports AArch64. But what types of gadgets exist on AArch64, and how do we use them?
+다행히 ropper는 AArch64를 지원한다. 그런데 AArch64에는 어떤 종류의 가젯이 있고, 어떻게 활용할 수 있을까?
 
 ```
 ➜  lib git:(master) ✗ ROPgadget --binary libc.so.6 | more
@@ -203,64 +203,65 @@ Gadgets information
 0x000000000009166c : add sp, sp, #0x20 ; csel x0, x0, x1, gt ; ret
 0x0000000000082ab4 : add sp, sp, #0x20 ; ret
 0x00000000000b8a18 : add sp, sp, #0x20 ; ret ; cbnz w2, #0xb8a5c ; ...
-[... many more gadgets ...]
+[... 많은 가젯들 ...]
 ```
 
-Most of these gadgets are useless because ret depends on the x30 register. The address in x30 is where execution returns when ret is executed. Unless a gadget modifies x30 in a way we can control, we cannot continue control flow.
+이 가젯 대부분은 쓸모가 없다. `ret`은 x30 레지스터에 의존하기 때문이다. x30에 담긴 주소가 `ret` 실행 시 리턴되는 위치다. 가젯이 우리가 제어할 수 있는 방식으로 x30을 변경하지 않으면 Control Flow를 이어갈 수 없다.
 
-Therefore, to execute a ROP chain on AArch64, we can only use gadgets that:
-- Perform the functionality we want
-- Pop x30 from the stack
-- Execute ret
+따라서 AArch64에서 ROP 체인을 실행하려면 다음 조건을 모두 만족하는 가젯만 사용할 수 있다:
 
-Since the heap exploit only allowed us to allocate a 0x98 chunk, and we need more space for the entire open/read/write chain, we must read additional ROP chain data in a second stage.
+- 우리가 원하는 기능을 수행할 것
+- 스택에서 x30을 pop할 것
+- `ret`을 실행할 것
 
-One way to accomplish this is to call gets(stack_address), which essentially allows us to write an arbitrary-length ROP chain to the stack (without newlines).
+힙 익스로 할당 가능한 공간이 0x98 청크뿐이었고, 전체 open/read/write 체인에는 더 많은 공간이 필요했다. 따라서 두 번째 단계에서 추가 ROP 체인 데이터를 먼저 읽어야 했다.
 
-But how do we call gets()? It's a libc function, and we already have a libc leak.
+한 가지 방법은 `gets(stack_address)`를 호출하는 것이다. 이렇게 하면 스택에 개행 없이 임의 길이의 ROP 체인을 작성할 수 있다.
 
-All we need is the address of gets in x30 and a stack address in x0 (function parameters are passed in x0~x7).
+`gets()`를 어떻게 호출할까? libc 함수이고 우리에게는 이미 libc leak이 있다.
 
-Here's a gadget we hunted:
+필요한 것은 x30에 gets 주소를, x0에 스택 주소를 넣는 것이다 (함수 파라미터는 x0~x7로 전달된다).
+
+헌팅해서 찾은 가젯:
 
 ```
 0x00062554: ldr x0, [x29, #0x18]; ldp x29, x30, [sp], #0x20; ret;
 
-Loads the value at x29+0x18 into x0, then loads x29 and x30 from the stack and increments sp by 0x20
+x29+0x18의 값을 x0에 로드; sp에서 x29와 x30을 로드하고 sp += 0x20
 ```
 
-Essentially, this gadget loads x0 from x29 + 0x18, then pops x29 and x30 from the stack (ldp from sp is equivalent to a pop, followed by sp += 0x20 for post-indexed addressing).
+본질적으로 이 가젯은 `x29 + 0x18`의 값을 x0에 로드한 뒤, 스택 상단에서 x29와 x30을 pop한다 (`ldp from sp`는 pop과 동일하며, 후위 인덱스 방식으로 sp += 0x20).
 
-In almost all gadgets, most load/store operations are performed relative to x29, so we must control it properly.
+거의 모든 가젯에서 대부분의 load/store는 x29를 기준으로 수행된다. 따라서 x29를 제대로 제어해야 한다.
 
-Here's how the stack looks just before executing the first gadget, as seen from the alloc function epilogue:
+첫 번째 가젯 실행 직전 스택 상태를 alloc 함수 에필로그 관점에서 보면:
 
-![AArch64 ROP Stack Layout](/images/blog/aarch64-rop-ctf-style/Untitled.png)
+![AArch64 ROP 스택 레이아웃](/images/blog/aarch64-rop-ctf-style/Untitled.png)
 
-We pop x29 and x30 from the stack and jump to the first gadget. Since we control x29, we control x0.
+스택에서 x29와 x30을 팝하고 첫 번째 가젯으로 점프한다. x29를 제어하므로 x0도 제어한다.
 
-Why does this matter? Look at the prologue of the gets function:
+왜 x29 제어가 x0 제어로 이어지냐면, gets 함수의 프롤로그를 보면 알 수 있다:
 
 ```c
 <_IO_gets>:    stp    x29, x30, [sp, #-48]!
 <_IO_gets+4>:    mov    x29, sp
 ```
 
-The return address is assumed to be in x30 (during normal execution), so it's preserved on the stack with x29.
+정상 실행 중에는 리턴 주소가 x30에 있다고 가정하므로 x29와 함께 스택에 보존하려 한다.
 
-Unfortunately, since we arrived with ret, x30 contains its own address.
+그런데 우리는 `ret`를 통해 도달했기 때문에 x30은 자기 자신의 주소를 갖고 있다.
 
-If this continues, at the end of gets, the preserved x30 is popped, and we jump back to gets in an infinite loop.
+이 상태가 계속되면 gets 끝에서 보존된 x30을 팝한 뒤 무한 루프로 다시 gets로 돌아간다.
 
-## Key Takeaways
+## 핵심 교훈
 
-**AArch64 ROP exploitation differs fundamentally from x86/x64:**
+**AArch64 ROP 익스플로잇은 x86/x64와 근본적으로 다르다:**
 
-1. **Link Register (x30) is critical** - Unlike x86 where return addresses sit on the stack, x30 must be carefully managed in every gadget chain
-2. **Stack frame layout is inverted** - x29 and preserved x30 typically appear at the top of the stack, with local variables below (opposite of x86)
-3. **Limited gadget usefulness** - Most gadgets are useless because they don't provide controlled x30 manipulation
-4. **Calling convention awareness** - Parameters x0-x7 must be properly set; control of x29 often indirectly controls x0 through gadgets
-5. **Two-stage chains** - Space limitations may require initial exploitation to allocate a larger buffer (via gets), then writing the full ROP chain in the second stage
-6. **Post-indexed addressing** - Understanding `[sp], #offset` semantics is crucial for gadget analysis
+1. **Link Register (x30)가 핵심** — x86에서 리턴 주소가 스택에 있는 것과 달리, x30은 모든 가젯 체인에서 신중하게 관리해야 한다
+2. **스택 프레임 레이아웃이 반대** — x29와 보존된 x30은 보통 스택 상단에 저장되고, 로컬 변수는 그 아래에 위치한다 (x86과 반대)
+3. **사용 가능한 가젯이 제한적** — 대부분의 가젯은 제어 가능한 x30 조작을 제공하지 않아 쓸모없다
+4. **호출 규약 숙지 필수** — x0~x7 파라미터를 올바르게 설정해야 하며, x29 제어가 종종 가젯을 통해 간접적으로 x0 제어로 이어진다
+5. **2단계 체인** — 공간 제한으로 인해 초기 익스로 더 큰 버퍼를 확보(gets를 통해)한 뒤 두 번째 단계에서 전체 ROP 체인을 작성해야 할 수 있다
+6. **후위 인덱스 방식 이해 필수** — `[sp], #offset` 의미론을 정확히 파악해야 가젯 분석이 가능하다
 
-The CTF challenge demonstrates that successful AArch64 ROP exploitation requires deep understanding of the architecture's unique features, particularly the link register mechanism and stack layout differences from x86.
+이 CTF 챌린지는 성공적인 AArch64 ROP 익스플로잇이 아키텍처 고유의 특성, 특히 Link Register 메커니즘과 x86과의 스택 레이아웃 차이에 대한 깊은 이해를 요구한다는 것을 잘 보여준다.

