@@ -2,6 +2,7 @@
 title: "AI 보안 에이전트 아키텍처: 정찰에서 익스플로잇까지"
 date: 2026-05-23
 description: "네트워크 정찰부터 익스플로잇 검증까지 자율적 취약점 평가가 가능한 계층적 AI 보안 에이전트 시스템의 아키텍처 설계 개요."
+draft: true
 tags: ["AI-Agents", "VoltAgent", "Security", "Architecture", "Multi-Agent-Systems"]
 categories: ["Research"]
 authors:

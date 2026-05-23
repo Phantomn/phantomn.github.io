@@ -29,6 +29,7 @@ export interface ContentMeta {
   authors?: Array<{ name: string; link?: string; image?: string }>;
   image?: string;
   difficulty?: string;
+  draft?: boolean;
   [key: string]: unknown;
 }
 
@@ -100,7 +101,7 @@ export function getContentList(section: string, hrefLocale: string = DEFAULT_LOC
       if (item) item.href = `/${hrefLocale}/${section}/${item.slug}/`;
       return item;
     })
-    .filter((item): item is ContentItem => item !== null)
+    .filter((item): item is ContentItem => item !== null && !item.meta.draft)
     .sort((a, b) => {
       if (a.meta.weight !== undefined && b.meta.weight !== undefined)
         return a.meta.weight - b.meta.weight;
@@ -226,6 +227,10 @@ export function getAllSlugs(section: string): string[] {
   return fs
     .readdirSync(dirPath)
     .filter((f) => CONTENT_EXT_RE.test(f) && !INDEX_RE.test(f))
+    .filter((f) => {
+      const item = getContent(path.join(DEFAULT_LOCALE, section, f));
+      return item !== null && !item.meta.draft;
+    })
     .map((f) => f.replace(CONTENT_EXT_RE, ""));
 }
 
