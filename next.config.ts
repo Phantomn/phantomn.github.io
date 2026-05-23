@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm";
 import remarkEmoji from "remark-emoji";
 import remarkBreaks from "remark-breaks";
 import rehypePrettyCode from "rehype-pretty-code";
+import rehypeSlug from "rehype-slug";
 import { visit } from "unist-util-visit";
 import type { Root, Html, Paragraph, RootContent, Parent } from "mdast";
 
@@ -152,6 +153,7 @@ const withMDX = createMDX({
       remarkMdxFrontmatter,
     ],
     rehypePlugins: [
+      rehypeSlug,
       [
         rehypePrettyCode,
         {
