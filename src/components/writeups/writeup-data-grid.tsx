@@ -45,6 +45,9 @@ const SOURCE_STYLES: Record<string, string> = {
     "border-indigo-600/40 bg-indigo-500/10 text-indigo-700 dark:border-indigo-500/40 dark:text-indigo-400",
   portswigger:
     "border-orange-600/40 bg-orange-500/10 text-orange-700 dark:border-orange-500/40 dark:text-orange-400",
+  ctf: "border-violet-600/40 bg-violet-500/10 text-violet-700 dark:border-violet-500/40 dark:text-violet-400",
+  wargame:
+    "border-teal-600/40 bg-teal-500/10 text-teal-700 dark:border-teal-500/40 dark:text-teal-400",
 };
 
 const DIFFICULTY_STYLES: Record<string, string> = {
