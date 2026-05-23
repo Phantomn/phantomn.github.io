@@ -1,7 +1,7 @@
 import { defineRouting } from "next-intl/routing";
 
 export const routing = defineRouting({
-  locales: ["en", "pt-br", "es"],
+  locales: ["en", "ko", "pt-br", "es"],
   defaultLocale: "en",
   localePrefix: "always",
 });
@@ -14,6 +14,7 @@ export type Locale = (typeof routing.locales)[number];
  * `source`/`target` parameters of the Lingva translator.
  */
 export function toBcp47(locale: string): string {
+  if (locale === "ko") return "ko-KR";
   if (locale === "pt-br") return "pt-BR";
   if (locale === "es") return "es-ES";
   return "en-US";

@@ -5,11 +5,11 @@ import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "0xrh0d4m1n",
-    template: "%s — 0xrh0d4m1n",
+    default: "phantomn",
+    template: "%s — phantomn",
   },
   description: "Hacking and general cybersecurity.",
-  metadataBase: new URL("https://0xrh0d4m1n.tech"),
+  metadataBase: new URL("https://phantomn.github.io"),
 };
 
 export default function RootLayout({

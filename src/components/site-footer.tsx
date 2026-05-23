@@ -24,13 +24,13 @@ const SOCIAL: Array<{
   href: string;
   label: string;
 }> = [
-  { icon: icons.github, href: "https://github.com/0xrh0d4m1n", label: "GitHub" },
+  { icon: icons.github, href: "https://github.com/phantomn", label: "GitHub" },
   {
     icon: icons.linkedin,
-    href: "https://www.linkedin.com/in/0xrh0d4m1n/",
+    href: "https://www.linkedin.com/in/ph4nt0m/",
     label: "LinkedIn",
   },
-  { icon: icons.xTwitter, href: "https://x.com/0xrh0d4m1n", label: "X" },
+  { icon: icons.xTwitter, href: "https://x.com/ph4nt0m", label: "X" },
 ];
 
 /**
