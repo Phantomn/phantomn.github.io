@@ -3,6 +3,8 @@ import Image from "next/image";
 import { MapPin, Link2, Users, ShieldCheck } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { routing } from "@/i18n/routing";
+import { DynamicTranslator } from "@/components/dynamic-translator";
 import { icons } from "@/lib/icons";
 
 import { Button } from "@/components/ui/button";
@@ -271,7 +273,9 @@ export default async function AboutPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "about" });
+  const shouldTranslate = locale !== routing.defaultLocale;
   return (
+    <DynamicTranslator enabled={shouldTranslate} targetLocale={locale} contentKey="about">
     <div className="mx-auto w-[90vw] max-w-[900px] py-6">
       {/* ── Profile Header ──────────────────────────────────────── */}
       <Card className="relative overflow-hidden p-0">
@@ -629,5 +633,6 @@ export default async function AboutPage({ params }: Props) {
         </CardContent>
       </Card>
     </div>
+    </DynamicTranslator>
   );
 }
