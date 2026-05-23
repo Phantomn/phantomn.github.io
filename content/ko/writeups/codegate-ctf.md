@@ -15,7 +15,7 @@ Codegate CTF 풀이 모음이다.
 
 ## CodeGate 2014 Nuclear WriteUp
 
-바이너리 분析 및 익스플로잇 풀이.
+바이너리 분석 및 익스플로잇 풀이.
 
 ## CodeGate 2018 PreQual RedVelvet (Rev)
 

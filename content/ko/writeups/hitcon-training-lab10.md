@@ -22,7 +22,7 @@ NX:    NX enabled
 PIE:   No PIE (0x8047000)
 ```
 
-## 소스 분析
+## 소스 분석
 
 ### add_note
 

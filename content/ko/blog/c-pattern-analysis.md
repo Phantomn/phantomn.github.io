@@ -1,5 +1,5 @@
 ---
-title: "간단한 C언어 패턴 分析 — if/for/while/do-while 어셈블리"
+title: "간단한 C언어 패턴 分석 — if/for/while/do-while 어셈블리"
 date: "2020-12-09"
 description: "C언어 제어 구조(if-else, for, while, do-while)가 x86 어셈블리에서 어떻게 컴파일되는지 분석"
 tags: ["reversing", "x86", "assembly", "c", "pattern", "beginner"]
