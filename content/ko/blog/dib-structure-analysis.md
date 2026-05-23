@@ -9,19 +9,17 @@ authors:
     link: "https://github.com/Phantomn"
 ---
 
-DIB(Device Independent Bitmap) 파일 포맷을 구성하는 구조체를 분석한다.
-
-## 샘플 헥스 덤프
-
-```
-42 4D F6 C6 2D 00 00 00 00 00 36 00 00 00 28 00
-00 00 E8 03 00 00 E8 03 00 00 01 00 18 00 00 00
-00 00 C0 C6 2D 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F
-...
+```c
+42 4D F6 C6 2D 00 00 00 00 00 36 00 00 00 28 00 
+00 00 E8 03 00 00 E8 03 00 00 01 00 18 00 00 00 
+00 00 C0 C6 2D 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 
+7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 
+7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 
+7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F 7F
 ```
 
-## BITMAPFILEHEADER
+### BITMAPFILEHEADER
 
 ```c
 typedef struct tagBITMAPFILEHEADER
@@ -36,51 +34,85 @@ typedef struct tagBITMAPFILEHEADER
 
 **bfType**
 
-Bitmap 파일의 형식이 기록되는 부분이다. 비트맵 파일은 반드시 `bfType` 값이 `BM`(0x42, 0x4D)이어야 한다.
+Bitmap 파일의 형식이 기록되는 부분입니다.비트맵 파일은 반드시 bfType의 값이 BM(0x42, 0x4d)이어야 합니다.
 
 **bfSize**
 
-비트맵 파일의 크기를 바이트 단위로 나타낸다.
+비트맵 파일의 크기를 바이트 단위로 나타냅니다.
 
-**bfReserved1 / bfReserved2**
+**bfReserved1**
 
-항상 0으로 설정한다. 현재 사용되지 않는 예약 필드다.
+항상 0으로 설정해주면 됩니다. 현재 사용되지 않는 비트입니다.
+
+**bfReserved2**
+
+마찬가지로 0으로 설정해주시면 됩니다.
 
 **bfOffBits**
 
-`BITMAPFILEHEADER`, `BITMAPINFOHEADER`, `RGBQUAD` 세 구조체 크기의 합으로, 실제 이미지 비트의 오프셋을 의미한다.
+이 값은 BITMAPFILEHEADER, BITMAPINFOHEADER, RGBQUAD 3개 구조체의 크기를 더한 값으로 실제 이미지 비트의 OffSet을 의미합니다.
 
-`BITMAPFILEHEADER`는 비트맵 이미지 자체보다 파일에 대한 정보를 담는다. 따라서 비트맵 파일을 DIB 형식으로 저장할 때만 사용되고, 화면에 출력할 때는 쓰이지 않는다.
+BITMAPFILEHEADER은 구조체명에서도 알수 있듯이, 비트맵 이미지 그 자체에 대한 정보보다는, 비트맵 파일에 대한 정보를 주로 가지고 있습니다. 따라서 비트맵 파일을 DIB 형식으로 저장할 때에만 쓰이고, 화면에 출력할때에는 쓰이지 않는 구조체입니다.
 
-## BITMAPINFOHEADER
+### **BITMAPINFOHEADER**
 
 ```c
 typedef struct tagBITMAPINFOHEADER
 {
    DWORD biSize;
-   LONG  biWidth;
-   LONG  biHeight;
-   WORD  biPlanes;
-   WORD  biBitCount;
+   LONG biWidth;
+   LONG biHeight;
+   WORD biPlanes;
+   WORD biBitCount;
    DWORD biCompression;
    DWORD biSizeImage;
-   LONG  biXPelsPerMeter;
-   LONG  biYPelsPerMeter;
+   LONG biXPelsPerMeter;
+   LONG biYPelsPerMeter;
    DWORD biClrUsed;
    DWORD biClrImportant;
 } BITMAPINFOHEADER;
 ```
 
-| 필드 | 설명 |
-|------|------|
-| `biSize` | 구조체 자체의 크기 |
-| `biWidth` | 비트맵 가로 픽셀 수 |
-| `biHeight` | 비트맵 세로 픽셀 수. 양수면 바텀업, 음수면 탑다운 방식 |
-| `biPlanes` | 플래인 개수. 반드시 1로 고정 |
-| `biBitCount` | 픽셀 당 비트 수. 1=흑백, 4=16색, 8=256색 |
-| `biCompression` | 압축 방식. `BI_RGB`=비압축, `BI_RLE8`=8비트 압축 |
-| `biSizeImage` | 이미지 크기(바이트). `BI_RGB`일 때 0 허용 |
-| `biXPelsPerMeter` | 가로 해상도(pixels per meter) |
-| `biYPelsPerMeter` | 세로 해상도(pixels per meter) |
-| `biClrUsed` | 사용된 색상 수. 0이면 모든 색상 사용 |
-| `biClrImportant` | 출력에 필수적인 색상 수. 0이면 모든 색상 필수 |
+**biSize**
+
+이 구조체의 크기를 나타냅니다.
+
+**biWidth**
+
+비트맵의 가로 픽셀수.
+
+**biHeight**
+
+비트맵의 세로 픽셀수.이 값이 양수이면, 바텀업 방식이라고 하며, 출력시, 아래쪽 부터 출력을 해야 합니다.또 이 값이 음수이면, 탑다운 방식이라고 하며, 출력시, 위쪽부터 차례로 출력 합니다.
+
+**biPlanes**
+
+비트맵의 플래인 개수를 나타내는데 이 값은 반드시 1로 고정되어야 합니다.
+
+**biBitCount**
+
+한 픽셀이 몇개의 비트로 이루어지는가를 나타내며 이 값에 따라 픽샐이 가질수 있는 색상수가 결정됩니다.1이면 흑백, 4이면 16색, 8이면 256색... 과 같이, 2의 제곱승으로 계산됩니다.
+
+**biCompression**
+
+압축 방식을 나타내는데요. 반드시 바텀업 방식일때만 압축이 가능하며,이 값이 BI_RGB이면 압축되지 않았다는 것을 의미하고,BI_RLE8이면 8비트 압축, BI_RLE4이면 4비트 압축으로 압축되어 있는 것입니다.
+
+**biSizeImage**
+
+이미지의 크기를 바이트 단위로 나타내며 BI_RGB(압축이 안된 상태) 비트맵에서의 이 값은 0입니다.
+
+**biXPelsPerMeter**
+
+가로 해상도를 의미합니다.
+
+**biYPelsPerMeter**
+
+세로 해상도를 의미합니다.
+
+**biClrUsed**
+
+비트맵에 사용된 색상수를 의미하며, 이값에 따라 RGBQUAD의 배열을 메모리 할당하여서 읽어오시면 됩니다.이 값이 0이면 모든 색깔을 다 사용한다는 의미입니다.
+
+**biClrImportant**
+
+비트맵을 출력하는데 필수적인 색상수를 나타내며, 이 값이 0이면 모든 색상을 다 사용한다는 의미입니다.

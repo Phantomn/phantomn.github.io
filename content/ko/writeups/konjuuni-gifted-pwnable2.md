@@ -11,23 +11,22 @@ authors:
     link: "https://github.com/Phantomn"
 ---
 
-## 문제
+![](/images/writeups/konjuuni-gifted-pwnable2/untitled.png)
 
-32-bit ELF 바이너리, NX 적용.
+12시간 기다리란다.
 
-## 분석
+![](/images/writeups/konjuuni-gifted-pwnable2/untitled%201.png)
 
-디버거로 파일을 분석하면 `Sleep` 함수 호출이 존재하며 인자가 `0x67D`(십진수 1661)이다. 1661초(약 28분)를 대기해야 플래그가 출력된다.
+파일에 대한 정보, 32비트 ELF바이너리이며, NX가 걸려있다.
 
-바이너리에 아스키 형태의 플래그처럼 보이는 값이 있지만 실제 플래그가 아니었다.
+디버거로 파일을 살펴보면
 
-## 풀이 — Sleep NOP 패치
+![](/images/writeups/konjuuni-gifted-pwnable2/untitled%202.png)
 
-디버거에서 `Sleep` 호출 부분을 `0x90`(NOP)으로 덮어쓰면 대기 없이 플래그를 즉시 출력할 수 있다.
+Sleep 이 걸려있고 인자는 0x67d, 십진수로 1661이다. 저거언제기달려... 위의 아스키 보면 플래그일거같은데 아니었다.
 
-```
-# 대기 시간 없이 즉시 flag 출력
-Sleep 호출 → NOP(0x90)으로 패치
-```
+![](/images/writeups/konjuuni-gifted-pwnable2/untitled%203.png)
 
-실행하면 Sleep을 건너뛰고 플래그 출력 루틴이 바로 실행된다.
+간단한 디코드도 가능하지만 디버거에서 0x90으로 덮어써주면
+
+flag를 기다리지 않고 출력할 수 있게 만들어준다.
