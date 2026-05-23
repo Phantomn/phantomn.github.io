@@ -4,13 +4,13 @@
     "about": "소개",
     "blog": "블로그",
     "writeups": "라이트업",
-    "toolbox": "툴박스",
+    "toolbox": "도구",
     "toggleMenu": "메뉴 토글",
     "menu": "메뉴",
     "language": "언어"
   },
   "home": {
-    "title": "phantomn",
+    "title": "Ph4nt0m",
     "description": "보안 연구 & 레드팀 오펜시브. CVE, CTF 라이트업, AI 기반 자동화 도구.",
     "goToBlog": "블로그 보기",
     "sections": {
@@ -23,7 +23,7 @@
         "description": "CTF 대회 및 모의해킹 라이트업 아카이브."
       },
       "toolbox": {
-        "label": "툴박스",
+        "label": "도구",
         "description": "오펜시브 & 디펜시브 보안 도구 큐레이션."
       }
     }
@@ -49,7 +49,7 @@
     "notFound": "라이트업을 찾을 수 없습니다"
   },
   "toolbox": {
-    "title": "툴박스",
+    "title": "도구",
     "subtitle": "보안 도구, 리소스 & 레퍼런스 큐레이션.",
     "searchPlaceholder": "도구 검색..."
   },
