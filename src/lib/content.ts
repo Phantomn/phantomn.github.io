@@ -157,6 +157,8 @@ const SOURCE_NAMES: Record<string, string> = {
   cyberdefenders: "CyberDefenders",
   letsdefend: "LetsDefend",
   portswigger: "PortSwigger",
+  ctf: "CTF",
+  wargame: "Wargame",
 };
 
 const CATEGORY_NAMES: Record<string, string> = {

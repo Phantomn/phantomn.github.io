@@ -1,7 +1,7 @@
 ---
-title: "간단한 C언어 패턴 분析 — if/for/while/do-while 어셈블리"
+title: "간단한 C언어 패턴 분석 — if/for/while/do-while 어셈블리"
 date: "2020-12-09"
-description: "C언어 제어 구조(if-else, for, while, do-while)가 x86 어셈블리에서 어떻게 컴파일되는지 분析"
+description: "C언어 제어 구조(if-else, for, while, do-while)가 x86 어셈블리에서 어떻게 컴파일되는지 분석"
 tags: ["reversing", "x86", "assembly", "c", "pattern", "beginner"]
 categories: ["research"]
 authors:
@@ -9,7 +9,7 @@ authors:
     link: "https://github.com/Phantomn"
 ---
 
-간단한 리버싱 패턴을 분析한 글을 적고자 한다.
+간단한 리버싱 패턴을 분석한 글을 적고자 한다.
 
 우선 scanf, printf 같은것들은 생략하기로 한다.
 
