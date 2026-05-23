@@ -62,6 +62,10 @@ const CATEGORY_STYLES: Record<string, string> = {
   redteam:
     "border-red-600/40 bg-red-500/10 text-red-700 dark:border-red-500/40 dark:text-red-400",
   web: "border-purple-600/40 bg-purple-500/10 text-purple-700 dark:border-purple-500/40 dark:text-purple-400",
+  pwn: "border-rose-600/40 bg-rose-500/10 text-rose-700 dark:border-rose-500/40 dark:text-rose-400",
+  reversing:
+    "border-amber-600/40 bg-amber-500/10 text-amber-700 dark:border-amber-500/40 dark:text-amber-400",
+  misc: "border-slate-600/40 bg-slate-500/10 text-slate-700 dark:border-slate-500/40 dark:text-slate-400",
 };
 
 /* ── Sort indicator ───────────────────────────────────────────── */
