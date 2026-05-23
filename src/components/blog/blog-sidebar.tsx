@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -29,6 +29,7 @@ export function BlogSidebar({
 }: BlogSidebarProps) {
   const tSidebar = useTranslations("sidebar");
   const tBlog = useTranslations("blog");
+  const locale = useLocale();
   return (
     <div className="space-y-4">
       {/* ── Mini About ─────────────────────────────────────────── */}
@@ -43,7 +44,7 @@ export function BlogSidebar({
             <p className="text-xs text-muted-foreground">{SITE_AUTHOR.bio}</p>
           </div>
           <Link
-            href={SITE_AUTHOR.href}
+            href={`/${locale}${SITE_AUTHOR.href}`}
             className="text-xs font-medium text-primary hover:underline"
           >
             {tSidebar("readMore")} &rarr;
