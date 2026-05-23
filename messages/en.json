@@ -10,7 +10,7 @@
     "language": "Language"
   },
   "home": {
-    "title": "phantomn",
+    "title": "Ph4nt0m",
     "description": "Offensive Security Researcher. CVE 21, OT/ICS Pentesting, AI Security Automation, CTF writeups.",
     "goToBlog": "Go to Blog",
     "sections": {
@@ -92,7 +92,7 @@
     "clickToReveal": "Click to reveal"
   },
   "footer": {
-    "copyright": "© {year} phantomn"
+    "copyright": "© {year} Ph4nt0m"
   },
   "translator": {
     "detected": "{locale} language detected!",
