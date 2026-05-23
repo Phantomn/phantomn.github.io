@@ -1,7 +1,7 @@
 ---
 title: "ROP Emporium: ret2win and callme"
 date: 2019-01-01
-description: "ROP Emporium challenge solutions: ret2win (basic ROP control flow hijack) and callme (chaining function calls with specific arguments)"
+description: "ROP Emporium 챌린지 풀이: ret2win(기본 ROP 제어 흐름 탈취), callme(특정 인자로 함수 연속 호출)"
 tags: ["ROP", "ROP-Emporium", "pwn", "binary-exploitation", "ret2win", "callme"]
 platform: "wargame"
 category: "pwn"

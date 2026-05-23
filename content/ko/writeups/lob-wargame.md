@@ -1,7 +1,7 @@
 ---
 title: "Lord of Buffer Overflow (LOB) Wargame: Gate → Iron_golem → Dark_eyes"
 date: 2019-06-01
-description: "LOB (Lord of Buffer Overflow) wargame progression: Gate (basic BOF), Iron_golem (partial RELRO bypass), Dark_eyes (NX + ASLR), demonstrating Linux exploitation technique evolution"
+description: "LOB(Lord of Buffer Overflow) 워게임 진행: Gate(기본 BOF), Iron_golem(partial RELRO 우회), Dark_eyes(NX + ASLR) — Linux 익스플로잇 기법의 발전 과정"
 tags: ["LOB", "pwn", "buffer-overflow", "ASLR", "NX", "RELRO", "GOT-overwrite", "wargame"]
 platform: "wargame"
 category: "pwn"
