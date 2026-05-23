@@ -25,12 +25,7 @@ export function TableOfContents() {
       const items: TocItem[] = [];
       elements.forEach((el) => {
         if (el.closest(".footnotes")) return;
-        if (!el.id) {
-          el.id = el.textContent
-            ?.toLowerCase()
-            .replace(/[^a-z0-9]+/g, "-")
-            .replace(/(^-|-$)/g, "") ?? "";
-        }
+        if (!el.id) return;
         const tag = el.tagName;
         const level = tag === "H1" ? 1 : tag === "H2" ? 2 : 3;
         items.push({
@@ -99,7 +94,7 @@ export function TableOfContents() {
         <nav className="space-y-1">
           {headings.map((h, i) => (
             <a
-              key={h.id}
+              key={h.id || String(i)}
               href={`#${h.id}`}
               onClick={(e) => {
                 e.preventDefault();
