@@ -1,7 +1,7 @@
 ---
 title: "Reversing.kr: Easy Series Writeups"
 date: 2019-06-01
-description: "Reversing.kr easy series solutions: Easy CrackMe, Easy ELF, Easy Keygen, Easy Unpack, and Replace challenges using static/dynamic analysis"
+description: "Reversing.kr 이지 시리즈 풀이: Easy CrackMe, Easy ELF, Easy Keygen, Easy Unpack, Replace 문제를 정적/동적 분석으로 해결"
 tags: ["reversing", "Reversing.kr", "crackme", "IDA", "GDB", "wargame"]
 platform: "wargame"
 category: "reversing"

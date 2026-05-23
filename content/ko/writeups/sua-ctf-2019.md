@@ -1,7 +1,7 @@
 ---
 title: "SUA CTF 2019 Writeup"
 date: 2019-10-01
-description: "SUA CTF 2019 challenge solutions covering pwn and reversing categories"
+description: "SUA CTF 2019 챌린지 풀이: pwn 및 리버싱 카테고리"
 tags: ["SUA", "CTF", "pwn", "reversing"]
 platform: "ctf"
 category: "pwn"
