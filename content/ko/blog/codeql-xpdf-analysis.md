@@ -1,7 +1,7 @@
 ---
-title: "CodeQL로 xpdf 취약점 분析"
+title: "CodeQL로 xpdf 취약점 분석"
 date: "2023-11-04"
-description: "CodeQL을 이용한 xpdf 정적 분析 데이터베이스 구성 방법"
+description: "CodeQL을 이용한 xpdf 정적 분석 데이터베이스 구성 방법"
 tags: ["codeql", "static-analysis", "xpdf", "vulnerability"]
 categories: ["research"]
 authors:
@@ -9,7 +9,7 @@ authors:
     link: "https://github.com/Phantomn"
 ---
 
-CodeQL을 이용해 xpdf의 취약점 분析을 위한 데이터베이스를 생성하는 방법을 정리한다.
+CodeQL을 이용해 xpdf의 취약점 분석을 위한 데이터베이스를 생성하는 방법을 정리한다.
 
 ## CodeQL 데이터베이스 생성
 
