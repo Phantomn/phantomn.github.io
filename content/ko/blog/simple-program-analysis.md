@@ -1,5 +1,5 @@
 ---
-title: "간단한 프로그램 분析 — x86 어셈블리 입문"
+title: "간단한 프로그램 분석 — x86 어셈블리 입문"
 date: "2020-12-09"
 description: "Hello World, 덧셈, 계산기 프로그램을 GDB로 디버깅하며 x86 어셈블리 패턴을 이해하는 과정"
 tags: ["reversing", "x86", "assembly", "gdb", "beginner"]
