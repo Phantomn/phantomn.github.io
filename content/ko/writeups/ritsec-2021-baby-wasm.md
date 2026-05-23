@@ -1,7 +1,7 @@
 ---
 title: "RITSEC 2021: baby WASM"
 date: 2021-04-10
-description: "RITSEC CTF 2021 baby WASM challenge writeup: reversing WebAssembly bytecode, understanding WASM memory model, and extracting the flag"
+description: "RITSEC CTF 2021 baby WASM 풀이: WebAssembly 바이트코드 리버싱, WASM 메모리 모델 이해, 플래그 추출"
 tags: ["RITSEC", "CTF", "WebAssembly", "WASM", "reversing", "browser"]
 platform: "ctf"
 category: "reversing"

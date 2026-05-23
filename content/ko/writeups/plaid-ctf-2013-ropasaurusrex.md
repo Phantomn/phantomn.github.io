@@ -1,7 +1,7 @@
 ---
 title: "Plaid CTF 2013 — ropasaurusrex Writeup"
 date: 2013-04-01
-description: "Classic ret2libc / ROP chain exploit against a 32-bit Linux binary from Plaid CTF 2013"
+description: "Plaid CTF 2013 클래식 문제: 32비트 Linux 바이너리를 대상으로 한 ret2libc / ROP 체인 익스플로잇"
 tags: ["CTF", "PlaidCTF", "pwn", "ROP", "ret2libc", "writeup"]
 categories: ["CTF"]
 platform: "ctf"

@@ -1,7 +1,7 @@
 ---
 title: "Pwnable.tw: Start"
 date: 2019-01-01
-description: "Pwnable.tw Start challenge: shellcode injection via stack-based buffer overflow on a minimal 32-bit Linux binary with no NX protection"
+description: "Pwnable.tw Start 챌린지: NX 미적용 최소 32비트 Linux 바이너리에서 스택 기반 버퍼 오버플로우를 통한 셸코드 인젝션"
 tags: ["pwnable.tw", "pwn", "shellcode", "buffer-overflow", "32-bit"]
 platform: "wargame"
 category: "pwn"

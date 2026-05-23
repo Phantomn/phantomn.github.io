@@ -1,7 +1,7 @@
 ---
 title: "picoCTF 2018: Pwn and Assembly Challenges"
 date: 2018-09-28
-description: "picoCTF 2018 solutions for pwn and assembly challenges: buffer overflow series, x86 assembly tasks, and shellcode execution"
+description: "picoCTF 2018 pwn 및 어셈블리 챌린지 풀이: 버퍼 오버플로우 시리즈, x86 어셈블리 문제, 셸코드 실행"
 tags: ["picoCTF", "pwn", "buffer-overflow", "assembly", "shellcode", "CTF"]
 platform: "ctf"
 category: "pwn"

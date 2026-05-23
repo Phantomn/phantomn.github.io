@@ -1,7 +1,7 @@
 ---
 title: "HackCTF Pwn Challenges Writeup"
 date: 2019-08-01
-description: "HackCTF pwn category solutions: basic BOF, format string bugs, heap exploitation (tcache), RTL chaining, and x64 buffer overflow"
+description: "HackCTF pwn 카테고리 풀이: 기본 BOF, 포맷 스트링 버그, 힙 익스플로잇(tcache), RTL 체이닝, x64 버퍼 오버플로우"
 tags: ["HackCTF", "pwn", "buffer-overflow", "format-string", "heap", "RTL", "wargame"]
 platform: "wargame"
 category: "pwn"
