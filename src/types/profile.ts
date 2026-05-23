@@ -1,6 +1,7 @@
 export type CertItem = {
   title: string;
   src: string;
+  href?: string;
 };
 
 export type CertCompanyGroup = {

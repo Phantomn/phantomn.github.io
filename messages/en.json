@@ -10,21 +10,21 @@
     "language": "Language"
   },
   "home": {
-    "title": "0xrh0d4m1n",
-    "description": "Security research & defensive hacking. Notes, writeups, and tools for red team, blue team, and building safer systems.",
+    "title": "phantomn",
+    "description": "Offensive Security Researcher. CVE 21, OT/ICS Pentesting, AI Security Automation, CTF writeups.",
     "goToBlog": "Go to Blog",
     "sections": {
       "blog": {
         "label": "Blog",
-        "description": "Articles and notes on pentesting, DFIR, and security engineering."
+        "description": "Technical notes on vulnerability research, OT/ICS security, and AI automation."
       },
       "writeups": {
         "label": "Writeups",
-        "description": "HackTheBox, CyberDefenders, and PortSwigger walkthroughs."
+        "description": "CTF competition and red team exercise writeup archive."
       },
       "toolbox": {
         "label": "Toolbox",
-        "description": "Curated tools for offensive and defensive security."
+        "description": "Curated offensive & defensive security tools."
       }
     }
   },
@@ -65,7 +65,7 @@
     "sectionLanguages": "Languages",
     "sectionResume": "Resume",
     "contactInfo": "Contact info",
-    "connections": "{count} connections",
+    "connections": "CVE {count}",
     "downloadPdf": "Download PDF"
   },
   "sidebar": {
@@ -92,7 +92,7 @@
     "clickToReveal": "Click to reveal"
   },
   "footer": {
-    "copyright": "© {year} 0xrh0d4m1n"
+    "copyright": "© {year} phantomn"
   },
   "translator": {
     "detected": "{locale} language detected!",

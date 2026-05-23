@@ -213,16 +213,22 @@ function CertImageModal({
                 transformOrigin: "top center",
               }}
             >
-              <img
-                src={activeCert.src}
-                alt={activeCert.title}
-                className={cn(
-                  "block h-auto w-auto max-w-full object-contain",
-                  fullscreen
-                    ? "max-h-[calc(100dvh-5.5rem)]"
-                    : "max-h-[calc(92vh-8.5rem)]"
-                )}
-              />
+              {activeCert.src ? (
+                <img
+                  src={activeCert.src}
+                  alt={activeCert.title}
+                  className={cn(
+                    "block h-auto w-auto max-w-full object-contain",
+                    fullscreen
+                      ? "max-h-[calc(100dvh-5.5rem)]"
+                      : "max-h-[calc(92vh-8.5rem)]"
+                  )}
+                />
+              ) : (
+                <div className="flex h-40 w-80 items-center justify-center rounded bg-muted text-sm text-muted-foreground">
+                  {activeCert.title}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -308,25 +314,58 @@ export function CertificationsSection({
               {isExpanded && (
                 <div className="border-t bg-muted/10 p-3">
                   <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-                    {g.certs.map((cert, cIdx) => (
-                      <button
-                        key={cert.src}
-                        type="button"
-                        onClick={() => openCert(gIdx, cIdx)}
-                        className="group flex cursor-pointer flex-col items-center gap-2 rounded-md border bg-background p-2 transition-colors hover:border-primary/40 hover:bg-accent/50"
-                        title={cert.title}
-                      >
-                        <img
-                          src={cert.src}
-                          alt={cert.title}
-                          className="h-20 w-full object-contain"
-                          loading="lazy"
-                        />
-                        <div className="line-clamp-2 w-full text-center text-[10px] leading-tight text-muted-foreground group-hover:text-foreground">
-                          {cert.title}
-                        </div>
-                      </button>
-                    ))}
+                    {g.certs.map((cert, cIdx) =>
+                      cert.href ? (
+                        <a
+                          key={cert.title}
+                          href={cert.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group flex cursor-pointer flex-col items-center gap-2 rounded-md border bg-background p-2 transition-colors hover:border-primary/40 hover:bg-accent/50"
+                          title={cert.title}
+                        >
+                          {cert.src ? (
+                            <img
+                              src={cert.src}
+                              alt={cert.title}
+                              className="h-20 w-full object-contain"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <div className="flex h-20 w-full items-center justify-center rounded bg-muted text-xs font-medium text-muted-foreground">
+                              {cert.title}
+                            </div>
+                          )}
+                          <div className="line-clamp-2 w-full text-center text-[10px] leading-tight text-muted-foreground group-hover:text-foreground">
+                            {cert.title}
+                          </div>
+                        </a>
+                      ) : (
+                        <button
+                          key={cert.src || cert.title}
+                          type="button"
+                          onClick={() => openCert(gIdx, cIdx)}
+                          className="group flex cursor-pointer flex-col items-center gap-2 rounded-md border bg-background p-2 transition-colors hover:border-primary/40 hover:bg-accent/50"
+                          title={cert.title}
+                        >
+                          {cert.src ? (
+                            <img
+                              src={cert.src}
+                              alt={cert.title}
+                              className="h-20 w-full object-contain"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <div className="flex h-20 w-full items-center justify-center rounded bg-muted text-xs font-medium text-muted-foreground">
+                              {cert.title}
+                            </div>
+                          )}
+                          <div className="line-clamp-2 w-full text-center text-[10px] leading-tight text-muted-foreground group-hover:text-foreground">
+                            {cert.title}
+                          </div>
+                        </button>
+                      )
+                    )}
                   </div>
                 </div>
               )}

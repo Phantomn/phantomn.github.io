@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import US from "country-flag-icons/react/3x2/US";
 import BR from "country-flag-icons/react/3x2/BR";
 import ES from "country-flag-icons/react/3x2/ES";
+import KR from "country-flag-icons/react/3x2/KR";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -16,12 +17,14 @@ import { routing } from "@/i18n/routing";
 
 const FLAGS = {
   en: US,
+  ko: KR,
   "pt-br": BR,
   es: ES,
 } as const;
 
 const LABELS = {
   en: "EN",
+  ko: "KR",
   "pt-br": "BR",
   es: "ES",
 } as const;

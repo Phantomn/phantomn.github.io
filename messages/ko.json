@@ -1,0 +1,103 @@
+{
+  "nav": {
+    "home": "홈",
+    "about": "소개",
+    "blog": "블로그",
+    "writeups": "라이트업",
+    "toolbox": "툴박스",
+    "toggleMenu": "메뉴 토글",
+    "menu": "메뉴",
+    "language": "언어"
+  },
+  "home": {
+    "title": "phantomn",
+    "description": "보안 연구 & 레드팀 오펜시브. CVE, CTF 라이트업, AI 기반 자동화 도구.",
+    "goToBlog": "블로그 보기",
+    "sections": {
+      "blog": {
+        "label": "블로그",
+        "description": "취약점 연구, OT/ICS 보안, AI 자동화에 관한 기술 노트."
+      },
+      "writeups": {
+        "label": "라이트업",
+        "description": "CTF 대회 및 모의해킹 라이트업 아카이브."
+      },
+      "toolbox": {
+        "label": "툴박스",
+        "description": "오펜시브 & 디펜시브 보안 도구 큐레이션."
+      }
+    }
+  },
+  "blog": {
+    "title": "블로그",
+    "backToBlog": "블로그로 돌아가기",
+    "searchPlaceholder": "제목, 태그, 카테고리로 검색...",
+    "minRead": "{minutes}분 읽기",
+    "noPosts": "아직 게시물이 없습니다.",
+    "noResults": "게시물을 찾을 수 없습니다.",
+    "recentPosts": "최근 게시물",
+    "featured": "추천"
+  },
+  "writeups": {
+    "title": "라이트업",
+    "subtitle": "CTF 대회 및 모의해킹 라이트업 — 정렬 & 검색 가능한 아카이브.",
+    "backToWriteups": "라이트업으로 돌아가기",
+    "searchPlaceholder": "이름, 출처, 카테고리, 난이도, 태그로 검색...",
+    "unknownDifficulty": "미정",
+    "tags": "태그",
+    "foundCount": "{count, plural, other {# 개 라이트업}}",
+    "notFound": "라이트업을 찾을 수 없습니다"
+  },
+  "toolbox": {
+    "title": "툴박스",
+    "subtitle": "보안 도구, 리소스 & 레퍼런스 큐레이션.",
+    "searchPlaceholder": "도구 검색..."
+  },
+  "about": {
+    "title": "소개",
+    "sectionAbout": "소개",
+    "sectionExperience": "경력",
+    "sectionEducation": "학력",
+    "sectionCertifications": "자격증 & 수상",
+    "sectionSkills": "기술",
+    "sectionAchievements": "성과",
+    "sectionProjects": "프로젝트",
+    "sectionLanguages": "언어",
+    "sectionResume": "이력서",
+    "contactInfo": "연락처",
+    "connections": "CVE {count}건",
+    "downloadPdf": "PDF 다운로드"
+  },
+  "sidebar": {
+    "relatedPosts": "관련 게시물",
+    "relatedTopics": "관련 주제",
+    "tableOfContents": "목차",
+    "topics": "주제",
+    "readMore": "더 읽기"
+  },
+  "lightbox": {
+    "zoomIn": "확대",
+    "zoomOut": "축소",
+    "resetZoom": "원래 크기",
+    "fullscreen": "전체 화면",
+    "exitFullscreen": "전체 화면 종료",
+    "download": "이미지 다운로드",
+    "close": "닫기"
+  },
+  "spoiler": {
+    "reveal": "정답 보기",
+    "hide": "정답 숨기기",
+    "copy": "클립보드에 복사",
+    "copied": "복사됨!",
+    "clickToReveal": "클릭하여 보기"
+  },
+  "footer": {
+    "copyright": "© {year} phantomn"
+  },
+  "translator": {
+    "detected": "{locale} 언어 감지됨!",
+    "translating": "콘텐츠 번역 중...",
+    "translationFailed": "번역 불가 — 원문 표시",
+    "poweredBy": "Lingva 번역"
+  }
+}
