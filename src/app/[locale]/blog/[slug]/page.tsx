@@ -43,10 +43,10 @@ async function importPost(locale: string, slug: string) {
     if (locale === "pt-br") return import(`@content/pt-br/blog/${slug}.md`);
     if (locale === "es") return import(`@content/es/blog/${slug}.md`);
   }
-  if (fs.existsSync(path.join(CONTENT_DIR, "en", "blog", `${slug}.mdx`))) {
-    return import(`@content/en/blog/${slug}.mdx`);
+  if (fs.existsSync(path.join(CONTENT_DIR, "ko", "blog", `${slug}.mdx`))) {
+    return import(`@content/ko/blog/${slug}.mdx`);
   }
-  return import(`@content/en/blog/${slug}.md`);
+  return import(`@content/ko/blog/${slug}.md`);
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -89,7 +89,7 @@ export default async function BlogPostPage({ params }: Props) {
   };
 
   const currentPost =
-    getContent(`en/blog/${slug}.mdx`) ?? getContent(`en/blog/${slug}.md`);
+    getContent(`ko/blog/${slug}.mdx`) ?? getContent(`ko/blog/${slug}.md`);
   const readingTime = currentPost?.readingTime ?? 1;
 
   const relatedItems = getRelatedPosts("blog", slug, fm.tags ?? [], 4, locale);

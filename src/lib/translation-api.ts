@@ -8,8 +8,7 @@ const CONCURRENCY = 4;
 function toLangCode(locale: string): string {
   const bcp = toBcp47(locale);
   if (bcp.startsWith("pt")) return "pt";
-  if (bcp.startsWith("es")) return "es";
-  return "en";
+  return bcp.split("-")[0].toLowerCase();
 }
 
 function mergeSignals(

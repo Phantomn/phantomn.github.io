@@ -37,10 +37,10 @@ async function importWriteup(locale: string, slug: string) {
     if (locale === "pt-br") return import(`@content/pt-br/writeups/${slug}.md`);
     if (locale === "es") return import(`@content/es/writeups/${slug}.md`);
   }
-  if (fs.existsSync(path.join(CONTENT_DIR, "en", "writeups", `${slug}.mdx`))) {
-    return import(`@content/en/writeups/${slug}.mdx`);
+  if (fs.existsSync(path.join(CONTENT_DIR, "ko", "writeups", `${slug}.mdx`))) {
+    return import(`@content/ko/writeups/${slug}.mdx`);
   }
-  return import(`@content/en/writeups/${slug}.md`);
+  return import(`@content/ko/writeups/${slug}.md`);
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
