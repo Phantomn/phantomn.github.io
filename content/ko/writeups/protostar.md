@@ -563,3 +563,5 @@ struct malloc_chunk {
   struct malloc_chunk* bk;
 };
 ```
+
+![힙 청크 구조 — Red/Green/Blue 객체의 메모리 레이아웃 (free 전)](/images/writeups/protostar/heap-structure.png)

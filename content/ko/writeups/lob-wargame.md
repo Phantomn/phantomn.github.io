@@ -138,6 +138,12 @@ recv(client_fd, buffer, 256, 0);
 
 네트워크 익스플로잇의 어려움은 stdin/stdout이 공격자의 터미널이 아닌 소켓에 연결되어 있다는 것이다. 바인드 셸(피해자에서 수신 대기) 또는 리버스 셸(공격자에게 연결)이 필요하다.
 
+![dark_eyes 바이너리 실행 및 소스 확인](/images/writeups/lob-wargame/death-knight-1.png)
+
+![dark_eyes recv 취약점 — buffer[40]에 256바이트 입력 가능](/images/writeups/lob-wargame/death-knight-2.png)
+
+![dark_eyes 익스플로잇 환경 확인](/images/writeups/lob-wargame/death-knight-3.png)
+
 리버스 셸 접근법을 사용했다:
 
 1. 피해자 아키텍처를 타깃으로 msfvenom으로 셸코드를 생성한다:
@@ -149,7 +155,11 @@ recv(client_fd, buffer, 256, 0);
    Format:  python
    ```
 
+![msfvenom으로 리버스 셸 페이로드 생성 — LHOST/LPORT 설정](/images/writeups/lob-wargame/death-knight-4.png)
+
 2. 셸코드가 NOP 슬레드에 임베드되고 리턴 주소가 버퍼 안을 가리키는 버퍼 오버플로우 페이로드를 구성한다.
+
+![익스플로잇 페이로드 구성](/images/writeups/lob-wargame/death-knight-5.png)
 
 3. 공격자 머신에서 리스너를 연다:
 
@@ -158,6 +168,10 @@ recv(client_fd, buffer, 256, 0);
    ```
 
 4. 피해자의 포트 6666으로 페이로드를 전송한다.
+
+![리버스 셸 연결 수립 — 공격자 nc 리스너에 dark_eyes 데몬 콜백](/images/writeups/lob-wargame/death-knight-6.png)
+
+![셸 획득 성공](/images/writeups/lob-wargame/death-knight-7.png)
 
 바인드 셸이 아닌 리버스 셸을 선택한 이유는? 방화벽은 일반적으로 내부 호스트의 아웃바운드 연결은 허용하지만 원치 않는 인바운드 연결은 차단한다. 리버스 셸은 피해자가 아웃바운드로 연결을 시작하게 하므로, 일반적으로 허용된다.
 
