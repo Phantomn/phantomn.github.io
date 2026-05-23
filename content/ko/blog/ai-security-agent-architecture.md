@@ -1,7 +1,7 @@
 ---
-title: "AI Security Agent Architecture: From Reconnaissance to Exploitation"
+title: "AI 보안 에이전트 아키텍처: 정찰에서 익스플로잇까지"
 date: 2026-05-23
-description: "Architectural design of a hierarchical AI security agent system capable of autonomous vulnerability assessment, from network reconnaissance through exploit validation."
+description: "네트워크 정찰부터 익스플로잇 검증까지 자율적 취약점 평가가 가능한 계층적 AI 보안 에이전트 시스템의 아키텍처 설계 개요."
 tags: ["AI-Agents", "VoltAgent", "Security", "Architecture", "Multi-Agent-Systems"]
 categories: ["Research"]
 authors:
@@ -10,51 +10,51 @@ authors:
     image: "https://github.com/Phantomn.png"
 ---
 
-## Executive Summary
+## 개요
 
-This article explores the architectural design of a sophisticated multi-agent AI system engineered for comprehensive security vulnerability assessment. The system orchestrates a hierarchical supervisor with specialized agents, each optimized for distinct phases of the vulnerability discovery workflow: reconnaissance, hypothesis generation, exploitation, and reporting.
+이 글은 종합적인 보안 취약점 평가를 위해 설계된 정교한 멀티 에이전트 AI 시스템의 아키텍처 설계를 다룬다. 이 시스템은 계층적 슈퍼바이저와 각기 최적화된 스페셜리스트 에이전트들을 오케스트레이션한다. 각 에이전트는 취약점 발견 워크플로우의 서로 다른 단계, 즉 정찰, 가설 생성, 익스플로잇, 보고를 담당한다.
 
-The design exemplifies production-grade patterns including:
-- **Hierarchical Agent Control**: Supervisor maintains execution state while specialists operate read-only
-- **Layered Architecture**: Clear separation between workflow orchestration, agent logic, tool interfaces, and skill execution
-- **Evidence-Driven Decision Making**: Graph-based knowledge accumulation and provenance tracking
-- **Guardrail Integration**: Runtime validation at task input, agent output, and cross-agent handoffs
-
----
-
-## 1. System Overview
-
-### 1.1 Design Goals
-
-The system is engineered to address fundamental challenges in autonomous security assessment:
-
-1. **Reducing False Positives**: Through multi-stage validation with explicit impact confirmation
-2. **Maintaining Audit Trail**: Complete provenance tracking from reconnaissance evidence to final findings
-3. **Handling Complexity**: Managing diverse target architectures (web, binary, embedded) with unified interfaces
-4. **Scale-Aware Safety**: Built-in guardrails to prevent infinite loops, resource exhaustion, and invalid state transitions
-
-### 1.2 Operational Scope
-
-- **Web Targets**: HTTP/HTTPS applications, APIs, authentication mechanisms, sensitive assets
-- **Binary Analysis**: ELF binaries, function mapping, memory safety analysis
-- **Attack Surface**: SQL injection, cross-site scripting, command injection, CSRF, authentication bypass
+이 설계는 다음과 같은 프로덕션급 패턴을 구현한다:
+- **계층적 에이전트 제어**: 슈퍼바이저가 실행 상태를 유지하고 스페셜리스트는 읽기 전용으로 동작
+- **계층화 아키텍처**: 워크플로우 오케스트레이션, 에이전트 로직, 도구 인터페이스, 스킬 실행의 명확한 분리
+- **증거 기반 의사결정**: 그래프 기반 지식 축적과 출처 추적
+- **가드레일 통합**: 태스크 입력, 에이전트 출력, 에이전트 간 핸드오프 지점에서의 런타임 검증
 
 ---
 
-## 2. Hierarchical Multi-Agent Architecture
+## 1. 시스템 개요
 
-### 2.1 System Components
+### 1.1 설계 목표
 
-The system is organized into five specialized agents operating under a central Supervisor:
+이 시스템은 자율 보안 평가에서 발생하는 핵심 과제들을 해결하기 위해 설계되었다:
+
+1. **False Positive 감소**: 명시적 영향 확인을 포함한 다단계 검증
+2. **감사 추적 유지**: 정찰 증거에서 최종 발견까지 완전한 출처 추적
+3. **복잡성 처리**: 통합 인터페이스로 다양한 타겟 아키텍처(웹, 바이너리, 임베디드) 관리
+4. **규모 인식 안전**: 무한 루프, 리소스 고갈, 잘못된 상태 전환을 방지하는 내장 가드레일
+
+### 1.2 운영 범위
+
+- **웹 타겟**: HTTP/HTTPS 애플리케이션, API, 인증 메커니즘, 민감 자산
+- **바이너리 분석**: ELF 바이너리, 함수 매핑, 메모리 안전성 분석
+- **공격 표면**: SQL 인젝션, 크로스사이트 스크립팅, 커맨드 인젝션, CSRF, 인증 우회
+
+---
+
+## 2. 계층적 멀티 에이전트 아키텍처
+
+### 2.1 시스템 컴포넌트
+
+시스템은 중앙 슈퍼바이저 아래 5개의 전문화된 에이전트로 구성된다:
 
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                                                          │
 │  Supervisor (HHS: Hierarchical Hybrid System)           │
-│  ├─ Orchestrates 4 specialist agents                    │
-│  ├─ Manages state transitions via FSM                   │
-│  ├─ Commits findings to persistent storage              │
-│  └─ Implements workflow gates and guardrails            │
+│  ├─ 4개 스페셜리스트 에이전트 오케스트레이션             │
+│  ├─ FSM을 통한 상태 전환 관리                           │
+│  ├─ 발견 내용을 영속 저장소에 커밋                       │
+│  └─ 워크플로우 게이트와 가드레일 구현                   │
 │                                                          │
 ├─────────────────────────────────────────────────────────┤
 │                                                          │
@@ -62,438 +62,424 @@ The system is organized into five specialized agents operating under a central S
 │  │ ReconWeb     │  │ VulnInjection │  │ExploitVal.   │  │
 │  │ Specialist   │  │ Specialist    │  │Specialist    │  │
 │  │              │  │               │  │              │  │
-│  │ Phase: HTTP  │  │ Phase: VULN   │  │ Phase: PoC   │  │
-│  │ crawling,    │  │ hypothesis    │  │ execution &  │  │
-│  │ auth, forms  │  │ testing,      │  │ validation   │  │
-│  │              │  │ WAF bypass    │  │              │  │
+│  │ Phase: HTTP  │  │ Phase: 취약점 │  │ Phase: PoC   │  │
+│  │ 크롤링,     │  │ 가설 생성,    │  │ 실행 및      │  │
+│  │ 인증, 폼    │  │ WAF 우회 테스트│  │ 검증         │  │
 │  └──────────────┘  └──────────────┘  └──────────────┘  │
 │                                                          │
 │                    ┌──────────────────┐                  │
 │                    │ Report Specialist │                  │
 │                    │                   │                  │
-│                    │ Phase: Synthesis  │                  │
-│                    │ Risk assessment   │                  │
-│                    │ Report generation │                  │
+│                    │ Phase: 발견 종합  │                  │
+│                    │ 위험도 평가       │                  │
+│                    │ 보고서 생성       │                  │
 │                    └──────────────────┘                  │
 │                                                          │
 └─────────────────────────────────────────────────────────┘
 ```
 
-### 2.2 Agent Specifications
+### 2.2 에이전트 명세
 
-#### Supervisor (HHS)
+#### 슈퍼바이저 (HHS)
 
-| Property | Value |
-|----------|-------|
-| **Model** | Cascade.mid (tuned for coordination) |
-| **Max Steps** | 50 |
-| **Role** | FSM orchestrator, single write-path (commit_finding) |
-| **Exclusive Tools** | commit_finding, write_audit_entry, delegate_task |
+| 속성 | 값 |
+|------|-----|
+| **모델** | Cascade.mid (조율 최적화) |
+| **최대 스텝** | 50 |
+| **역할** | FSM 오케스트레이터, 단일 쓰기 경로(commit_finding) |
+| **전용 도구** | commit_finding, write_audit_entry, delegate_task |
 
-**Key Responsibility**: The Supervisor maintains the workflow state machine and serves as the sole interface for persisting findings to the graph database. This ensures a single source of truth and prevents concurrent write conflicts.
+**핵심 책임**: 슈퍼바이저는 워크플로우 상태 기계를 유지하고, 그래프 데이터베이스에 발견 내용을 영속화하는 유일한 인터페이스 역할을 한다. 이를 통해 단일 진실 소스를 보장하고 동시 쓰기 충돌을 방지한다.
 
-**Specialist Management**: 
-- Step 1: ReconWebSpecialist (endpoints, auth mechanisms, sensitive assets)
-- Step 2: VulnInjectionSpecialist (attack hypotheses with evidence)
-- Step 3: ExploitValidatorSpecialist (PoC execution and impact confirmation)
-- Step 4: ReportSpecialist (synthesis and risk mapping)
-
----
-
-#### Reconnaissance Specialist
-
-| Property | Value |
-|----------|-------|
-| **Model** | Cascade.mid |
-| **Max Steps** | 500 |
-| **Scope** | HTTP reconnaissance (L0~L4 stack-agnostic) |
-
-**Key Capabilities**:
-1. **Multi-Modal Recon**: HTTP fingerprinting, crawling, historical data, brute-force discovery, CVE enrichment
-2. **Authentication Probing**: Form-based, bearer token, HTTP Basic, OAuth/MFA detection
-3. **Dynamic Tech Stack Detection**: Runtime fingerprinting (PHP/React/Node/.NET) without hardcoded selectors
-
-**Evidence Requirements**: 
-- Minimum 3 distinct endpoints identified
-- Authentication mechanism confirmed or explicitly marked public-only
-- Host information present in responses
-
-**Output**: Structured findings with full provenance trail linking each endpoint to reconnaissance evidence source.
+**스페셜리스트 실행 순서**:
+- Step 1: ReconWebSpecialist (엔드포인트, 인증 메커니즘, 민감 자산)
+- Step 2: VulnInjectionSpecialist (증거 기반 공격 가설)
+- Step 3: ExploitValidatorSpecialist (PoC 실행 및 영향 확인)
+- Step 4: ReportSpecialist (발견 종합 및 위험 매핑)
 
 ---
 
-#### Vulnerability Injection Specialist
+#### 정찰 스페셜리스트
 
-| Property | Value |
-|----------|-------|
-| **Model** | Cascade.mid |
-| **Max Steps** | 500 |
-| **Scope** | Attack hypothesis generation |
+| 속성 | 값 |
+|------|-----|
+| **모델** | Cascade.mid |
+| **최대 스텝** | 500 |
+| **범위** | HTTP 정찰 (L0~L4 스택 무관) |
 
-**Injection Categories**:
-- **SQL Injection**: Single quote error patterns (MySQL, MSSQL, Oracle), Boolean-based blind, Time-based blind
-- **Cross-Site Scripting**: Reflected (DOM-based), Stored (form submission)
-- **Server-Side Template Injection**: `{{7*7}}`, `${7*7}}`, `<%= 7*7 %>` patterns
-- **Command Injection**: Shell metacharacters (`;`, `|`, backticks), timing evidence (sleep)
+**핵심 기능**:
+1. **멀티 모달 정찰**: HTTP 핑거프린팅, 크롤링, 히스토리 데이터, 브루트포스 디스커버리, CVE 보강
+2. **인증 탐침**: 폼 기반, 베어러 토큰, HTTP Basic, OAuth/MFA 감지
+3. **동적 기술 스택 감지**: 하드코딩된 선택자 없이 런타임 핑거프린팅(PHP/React/Node/.NET)
 
-**Input Validation**: Requires authenticated endpoints with full provenance metadata from preceding reconnaissance phase.
-
-**Output Quality Metrics**:
-- Analysis coverage ≥80% of provided endpoints
-- Reasoning ≥80 characters (explicit hypothesis)
-- Confidence scored on evidence basis (low/medium/high)
+**출력 요구사항**:
+- 최소 3개의 고유 엔드포인트 확인
+- 인증 메커니즘 확인 또는 공개 접근만 가능함을 명시
+- 응답에 호스트 정보 포함
 
 ---
 
-#### Exploit Validator Specialist
+#### 취약점 인젝션 스페셜리스트
 
-| Property | Value |
-|----------|-------|
-| **Model** | Cascade.mid |
-| **Max Steps** | 250 |
-| **Scope** | PoC execution and impact confirmation |
+| 속성 | 값 |
+|------|-----|
+| **모델** | Cascade.mid |
+| **최대 스텝** | 500 |
+| **범위** | 공격 가설 생성 |
 
-**Validation Pipeline**:
-1. **Session Preparation**: Establish valid authentication context (if required)
-2. **PoC Execution**: Docker sandbox execution with 6 retry attempts
-3. **Impact Confirmation**: External validation oracle (SSOT principle)
-4. **Request Replay**: Curl reproduction for artifact transparency
+**인젝션 카테고리**:
+- **SQL 인젝션**: 단일 따옴표 오류 패턴(MySQL, MSSQL, Oracle), Boolean 기반 블라인드, 시간 기반 블라인드
+- **크로스사이트 스크립팅**: 반사형(DOM 기반), 저장형(폼 제출)
+- **서버 사이드 템플릿 인젝션**: `{{7*7}}`, `${7*7}`, `<%= 7*7 %>` 패턴
+- **커맨드 인젝션**: 셸 메타문자(`;`, `|`, 백틱), 타이밍 증거(sleep)
 
-**Failure Handling Strategy**:
-- **1st Failure**: Analyze failure reason (auth failure, WAF block, timeout)
-- **2nd Failure**: Adapt exploit technique (e.g., SQLi: error→union→time-based)
-- **3rd Failure**: Escalate category (e.g., XSS: reflected→DOM→stored)
-- **≥4 Failures**: Mark exhausted, move to next finding
-
-**Severity Filter**: Only findings with confidence ≥0.7 proceed to validation phase.
+**출력 품질 기준**:
+- 제공된 엔드포인트의 80% 이상 분석 커버리지
+- 명시적 가설을 담은 80자 이상의 추론
+- 증거 기반 신뢰도 점수(낮음/중간/높음)
 
 ---
 
-#### Report Specialist
+#### 익스플로잇 검증 스페셜리스트
 
-| Property | Value |
-|----------|-------|
-| **Model** | Cascade.mid |
-| **Max Steps** | 10 |
-| **Scope** | Finding synthesis and risk assessment |
+| 속성 | 값 |
+|------|-----|
+| **모델** | Cascade.mid |
+| **최대 스텝** | 250 |
+| **범위** | PoC 실행 및 영향 확인 |
 
-**Risk Mapping**:
-- **CVSS → Risk Level**: ≥7.0 → High, 4.0-6.9 → Medium, <4.0 → Low
-- **KISA Vulnerability Classification**: WEB-05 (SQLi), WEB-08 (XSS), WEB-09 (CSRF), WEB-13 (default)
-- **Environmental Context**: WAF detection, authentication probe results, exposed sensitive assets
+**검증 파이프라인**:
+1. **세션 준비**: 유효한 인증 컨텍스트 확립(필요 시)
+2. **PoC 실행**: Docker 샌드박스 실행 (최대 6회 재시도)
+3. **영향 확인**: 외부 검증 오라클(SSOT 원칙)
+4. **요청 재현**: 아티팩트 투명성을 위한 curl 재현
 
-**Output Format**: Markdown report with minimum 500 characters, vulnerability count, total severity distribution.
+**실패 처리 전략**:
+- **1회 실패**: 실패 원인 분석(인증 실패, WAF 차단, 타임아웃)
+- **2회 실패**: 익스플로잇 기법 조정(예: SQLi: 오류→union→시간기반)
+- **3회 실패**: 카테고리 에스컬레이션(예: XSS: 반사형→DOM→저장형)
+- **4회 이상 실패**: 소진 처리, 다음 발견으로 이동
+
+**심각도 필터**: 신뢰도 0.7 이상인 발견만 검증 단계로 진행
 
 ---
 
-## 3. Layered Workflow Architecture
+#### 보고서 스페셜리스트
 
-### 3.1 Five-Layer Harness Model
+| 속성 | 값 |
+|------|-----|
+| **모델** | Cascade.mid |
+| **최대 스텝** | 10 |
+| **범위** | 발견 종합 및 위험도 평가 |
 
-The system is structured as a five-layer stack, each with distinct responsibilities:
+**위험 매핑**:
+- **CVSS → 위험 수준**: 7.0 이상 → 높음, 4.0~6.9 → 중간, 4.0 미만 → 낮음
+- **KISA 취약점 분류**: WEB-05(SQLi), WEB-08(XSS), WEB-09(CSRF), WEB-13(기본)
+- **환경 컨텍스트**: WAF 감지, 인증 탐침 결과, 노출된 민감 자산
+
+---
+
+## 3. 계층화 워크플로우 아키텍처
+
+### 3.1 5계층 하네스 모델
+
+시스템은 각각 명확한 책임을 가진 5계층 스택으로 구성된다:
 
 ```
 ┌──────────────────────────────────────────────────┐
-│ L0: Entry Point & HTTP                           │
+│ L0: 진입점 & HTTP                                │
 │ POST /secflow/start → fire-and-forget            │
 └──────────────────────────────────────────────────┘
                     │
                     ▼
 ┌──────────────────────────────────────────────────┐
-│ L1: Workflow Orchestration                       │
-│ FSM state machine, phase transitions             │
-│ Workflow chain construction                      │
+│ L1: 워크플로우 오케스트레이션                    │
+│ FSM 상태 기계, 단계 전환                         │
+│ 워크플로우 체인 구성                             │
 └──────────────────────────────────────────────────┘
                     │
                     ▼
 ┌──────────────────────────────────────────────────┐
-│ L2: Agent Layer                                   │
-│ Supervisor + 4 Specialist agents                 │
-│ LLM inference, tool delegation                   │
+│ L2: 에이전트 계층                                │
+│ 슈퍼바이저 + 4개 스페셜리스트 에이전트           │
+│ LLM 추론, 도구 위임                              │
 └──────────────────────────────────────────────────┘
                     │
                     ▼
 ┌──────────────────────────────────────────────────┐
-│ L3: Tool/Toolkit Interface                       │
-│ Docker-in-Docker wrappers                        │
-│ Context propagation via Map<string,any>          │
+│ L3: 도구/툴킷 인터페이스                         │
+│ Docker-in-Docker 래퍼                            │
+│ Map<string,any>를 통한 컨텍스트 전파             │
 └──────────────────────────────────────────────────┘
                     │
                     ▼
 ┌──────────────────────────────────────────────────┐
-│ L4: Skill Execution & MCP Servers               │
-│ Shell scripts, Python tools                      │
+│ L4: 스킬 실행 & MCP 서버                        │
+│ 셸 스크립트, Python 도구                         │
 │ httpx, nuclei, ffuf, playwright, IDA Pro        │
 └──────────────────────────────────────────────────┘
 ```
 
-**Key Design Principle**: Each layer has minimal awareness of downstream implementation. L2 agents don't know whether L4 uses curl or httpx; L3 wrappers handle all Docker orchestration details.
+**핵심 설계 원칙**: 각 계층은 다운스트림 구현에 대한 최소한의 인식만 갖는다. L2 에이전트는 L4가 curl을 쓰는지 httpx를 쓰는지 알지 못한다. L3 래퍼가 모든 Docker 오케스트레이션 세부사항을 처리한다.
 
-### 3.2 Tool Ecosystem
+### 3.2 도구 생태계
 
-#### Authentication Probing
+#### 인증 탐침
 
-The system implements a sophisticated multi-phase authentication discovery pipeline:
+시스템은 정교한 다단계 인증 발견 파이프라인을 구현한다:
 
-**Phase 0**: Environmental credentials (if provided)  
-**Phase 1**: Nuclei default-login templates (116 built-in patterns)  
-**Phase 2**: SQLi-based authentication bypass detection  
-**Phase 3**: Capability scatter-gather (forms, JSON APIs, HTTP Basic)  
-**Phase 4**: Public-only fallback (when human intervention required)
+- **Phase 0**: 환경 크리덴셜 (제공된 경우)
+- **Phase 1**: Nuclei 기본 로그인 템플릿 (116개 내장 패턴)
+- **Phase 2**: SQLi 기반 인증 우회 감지
+- **Phase 3**: 기능 산포 수집 (폼, JSON API, HTTP Basic)
+- **Phase 4**: 공개 전용 폴백 (사람의 개입이 필요한 경우)
 
-#### Reconnaissance Tools
+#### 정찰 도구
 
-| Tool Category | Examples | Purpose |
+| 도구 카테고리 | 예시 | 목적 |
 |---|---|---|
-| **HTTP Fingerprinting** | httpx, curl | Service detection, header analysis |
-| **Crawling** | Playwright, Katana | URL discovery, endpoint enumeration |
-| **Vulnerability Scanning** | Nuclei, Nuclei templates | CVE matching, misconfig detection |
-| **Brute Force** | ffuf | Path discovery, parameter enumeration |
-| **Historical Data** | Wayback Machine API | Legacy endpoint discovery |
+| **HTTP 핑거프린팅** | httpx, curl | 서비스 감지, 헤더 분석 |
+| **크롤링** | Playwright, Katana | URL 발견, 엔드포인트 열거 |
+| **취약점 스캐닝** | Nuclei, Nuclei 템플릿 | CVE 매칭, 잘못된 구성 감지 |
+| **브루트포스** | ffuf | 경로 발견, 파라미터 열거 |
+| **히스토리 데이터** | Wayback Machine API | 레거시 엔드포인트 발견 |
 
 ---
 
-## 4. Evidence & Knowledge Management
+## 4. 증거 및 지식 관리
 
-### 4.1 Structured Data Model
+### 4.1 구조화 데이터 모델
 
-The system maintains a comprehensive graph database (FalkorDB) representing security findings as interconnected nodes:
+시스템은 보안 발견을 상호 연결된 노드로 표현하는 그래프 데이터베이스를 유지한다:
 
-**Core Node Types**:
-- **Web Domain**: Host, Service, Endpoint, Parameter, Form, AuthFlow
-- **Binary Domain**: Binary, Function, Section, Symbol
-- **Attack Analysis**: AttackVector, Vulnerability, RejectedCandidate
-- **Exploit**: ProductionExploit, ValidatedFinding
-- **Knowledge**: Lesson (learned patterns), DeadEnd (failed approaches), TargetProfile
+**핵심 노드 유형**:
+- **웹 도메인**: Host, Service, Endpoint, Parameter, Form, AuthFlow
+- **바이너리 도메인**: Binary, Function, Section, Symbol
+- **공격 분석**: AttackVector, Vulnerability, RejectedCandidate
+- **익스플로잇**: ProductionExploit, ValidatedFinding
+- **지식**: Lesson(학습된 패턴), DeadEnd(실패한 접근법), TargetProfile
 
-**Common Properties** (all nodes):
-- `run_id`: Execution session identifier
-- `node_id`: Unique node reference
-- `created_at`: Timestamp with provenance
-- `description`: Human-readable context
+**공통 속성** (모든 노드):
+- `run_id`: 실행 세션 식별자
+- `node_id`: 고유 노드 참조
+- `created_at`: 출처 포함 타임스탬프
+- `description`: 사람이 읽을 수 있는 컨텍스트
 
-### 4.2 Provenance Tracking
+### 4.2 출처 추적
 
-Every finding maintains an audit trail:
+모든 발견은 감사 추적을 유지한다:
 
 ```
-Reconnaissance Evidence
+정찰 증거
     ↓
-    └─ Endpoint {path, method, _provenance: source_tool}
+    └─ 엔드포인트 {경로, 메서드, _출처: 소스_도구}
         ↓
-        └─ Attack Hypothesis {confidence, evidence[], reasoning}
+        └─ 공격 가설 {신뢰도, 증거[], 추론}
             ↓
-            └─ PoC Execution {test_pov_stdout, test_pov_stderr}
+            └─ PoC 실행 {테스트_stdout, 테스트_stderr}
                 ↓
-                └─ Impact Validation {confirmed: true, cvss: 7.5}
+                └─ 영향 검증 {confirmed: true, cvss: 7.5}
                     ↓
-                    └─ Final Report {risk_level, kisa_code, summary}
+                    └─ 최종 보고서 {위험_수준, kisa_코드, 요약}
 ```
 
-This chain ensures that any finding can be traced back to its original reconnaissance source and all intermediate validation steps.
+이 체인은 모든 발견을 원래 정찰 소스와 모든 중간 검증 단계로 거슬러 올라갈 수 있게 보장한다.
 
 ---
 
-## 5. Guardrail System
+## 5. 가드레일 시스템
 
-### 5.1 Input Validation Guardrails
+### 5.1 입력 검증 가드레일
 
-Each agent implements Zod schema validation at task intake:
+각 에이전트는 태스크 수신 시 스키마 검증을 구현한다:
 
-**Supervisor Level**:
-- FalkorDB connectivity (preflight)
-- Target URL within Rules of Engagement scope
-- ROE authorization verification
+**슈퍼바이저 수준**:
+- 데이터베이스 연결 사전 확인 (사전 비행 체크)
+- 교전 규칙(ROE) 범위 내 타겟 URL 확인
+- ROE 권한 검증
 
-**ReconWebSpecialist Level**:
-- ReconWebTaskSchema validation
-- Endpoint provenance requirements (for vulnerability injection)
-- Scope boundary enforcement
+**VulnInjectionSpecialist 수준**:
+- 태스크 스키마 검증
+- ReconSourceGuard: 모든 엔드포인트의 출처 메타데이터 보장
+- 증거 밀도 임계값 (가설당 최소 2개의 독립 증거 소스)
 
-**VulnInjectionSpecialist Level**:
-- Task schema Zod validation
-- ReconSourceGuard: Ensure all endpoints have provenance metadata
-- Evidence density threshold (≥2 independent evidence sources per hypothesis)
+**ExploitValidatorSpecialist 수준**:
+- 익스플로잇 검증 태스크 스키마 검증 (PoC 언어, 타겟 경로, 예상 영향)
+- 이전 시도 이력 (최대 3회, 전략 적응 트리거)
 
-**ExploitValidatorSpecialist Level**:
-- ExploitValidatorTaskSchema validation (PoC language, target path, expected impact)
-- Previous attempt history (max 3, triggers strategy adaptation)
+**ReportSpecialist 수준**:
+- 태스크 스키마 검증
+- PoC 확인 게이트: 검증된 발견만 보고 (impact_confirmed=true)
 
-**ReportSpecialist Level**:
-- Task schema validation
-- PoC confirmation gate: Only report validated findings (impact_confirmed=true)
+### 5.2 출력 검증 가드레일
 
-### 5.2 Output Validation Guardrails
+각 에이전트 완료 후:
+- **발견 스키마 검증**: 구조화 출력에 대한 스키마 적용
+- **증거 밀도 확인**: 최소 증거 수 검증
+- **상태 일관성**: 명시적 검증 후에만 "confirmed" 표시
 
-After each agent completes:
+### 5.3 안티 루프 메커니즘
 
-- **Finding Schema Validation**: Zod schema enforcement on structured output
-- **Evidence Density Check**: Minimum evidence count verification
-- **Status Consistency**: Findings marked as "confirmed" only after explicit validation
+3회 연속 규칙 구현:
 
-### 5.3 Anti-Loop Mechanisms
-
-Three-strike rule implementation:
-
-**Same Hypothesis, 3 Consecutive Failures**: Mark exhausted, move to next hypothesis  
-**Information Gain Assessment**: If 3 attempts yield zero new information, escalate  
-**Stagnation Detection**: Monitor token consumption vs. new findings; trigger pivot on plateau
+- **동일 가설, 3회 연속 실패**: 소진 처리, 다음 가설로 이동
+- **정보 이득 평가**: 3회 시도에서 새로운 정보가 없으면 에스컬레이션
+- **침체 감지**: 토큰 소비 대비 새 발견 수 모니터링; 정체 시 전환 트리거
 
 ---
 
-## 6. Workflow State Machine
+## 6. 워크플로우 상태 기계
 
-### 6.1 Phase Transitions
+### 6.1 단계 전환
 
 ```
-START
+시작
   │
-  ├─► RECON: ReconWebSpecialist discovers endpoints, auth, assets
-  │     └─ Output: ReconFinding (kind: "recon")
+  ├─► RECON: ReconWebSpecialist가 엔드포인트, 인증, 자산 발견
+  │     └─ 출력: ReconFinding (kind: "recon")
   │
-  ├─► Gate-A: VERIFY mode re-validation (if requested)
-  │     └─ Merge provenance metadata
+  ├─► Gate-A: VERIFY 모드 재검증 (요청 시)
+  │     └─ 출처 메타데이터 병합
   │
-  ├─► VULN: VulnInjectionSpecialist generates hypotheses
-  │     └─ Output: HypothesesFinding (kind: "hypotheses")
+  ├─► VULN: VulnInjectionSpecialist가 가설 생성
+  │     └─ 출력: HypothesesFinding (kind: "hypotheses")
   │
-  ├─► POC: ExploitValidatorSpecialist validates exploitability
-  │     ├─ Attempt ≤3: Retry with strategy adaptation
-  │     └─ Output: ValidatedFinding (kind: "validated")
+  ├─► POC: ExploitValidatorSpecialist가 익스플로잇 가능성 검증
+  │     ├─ 시도 ≤3: 전략 적응으로 재시도
+  │     └─ 출력: ValidatedFinding (kind: "validated")
   │
-  ├─► Gate-B: Evidence density check, 3-strike enforcement
+  ├─► Gate-B: 증거 밀도 확인, 3회 연속 규칙 적용
   │
-  ├─► REPORT: ReportSpecialist synthesizes findings
-  │     └─ Output: ReportFinding (kind: "report")
+  ├─► REPORT: ReportSpecialist가 발견 종합
+  │     └─ 출력: ReportFinding (kind: "report")
   │
-  └─► COMPLETE: "Analysis complete. RunId: <id>"
+  └─► 완료: "분석 완료. RunId: <id>"
 ```
 
-**Cost Limits**: 60 tool calls, $4.00 budget (tunable via supervisor maxSteps)
+**비용 한도**: 도구 호출 60회, $4.00 예산 (슈퍼바이저 maxSteps로 조정 가능)
 
 ---
 
-## 7. Design Patterns & Principles
+## 7. 설계 패턴과 원칙
 
-### 7.1 Capability-Context Separation
+### 7.1 기능-컨텍스트 분리
 
-LLM-facing parameter schemas exclude system-internal values:
+LLM 대면 파라미터 스키마는 시스템 내부 값을 제외한다:
 
 ```
-// ❌ Avoid: System details mixed with LLM input
+// 피해야 할 패턴: 시스템 세부사항이 LLM 입력에 혼재
 {
   target_url: "...",
-  run_id: "uuid...",        // ← System noise
-  workspace_path: "/data/..." // ← Internal detail
+  run_id: "uuid...",          // ← 시스템 노이즈
+  workspace_path: "/data/..." // ← 내부 세부사항
 }
 
-// ✅ Correct: Clean LLM input
+// 올바른 패턴: 깔끔한 LLM 입력
 {
   target_url: "...",
   mode: "normal"
 }
 
-// System values injected separately
+// 시스템 값은 별도로 주입
 const context = new OperationContext();
 context.set("run_id", runUuid);
 context.set("workspace", workspacePath);
 ```
 
-This ensures LLM attention remains on security logic rather than infrastructure plumbing.
+이를 통해 LLM의 주의가 인프라 배관이 아닌 보안 로직에 집중되도록 보장한다.
 
-### 7.2 Single Write-Path Pattern
+### 7.2 단일 쓰기 경로 패턴
 
-Only the Supervisor directly writes findings to persistent storage. Specialists signal intent; Supervisor executes. This prevents:
-- Concurrent write conflicts
-- Orphaned or duplicate records
-- State inconsistency
+슈퍼바이저만이 영속 저장소에 직접 발견을 기록한다. 스페셜리스트는 의도를 신호로 보내고, 슈퍼바이저가 실행한다. 이를 통해 다음을 방지한다:
+- 동시 쓰기 충돌
+- 고아 레코드 또는 중복 레코드
+- 상태 불일관
 
-### 7.3 Stack-Agnostic Design
+### 7.3 스택 무관 설계
 
-No hardcoded selectors, timeouts, or credentials in agent code. Authentication probing is driven by runtime configuration that adapts to detected technology stacks.
-
----
-
-## 8. Operational Considerations
-
-### 8.1 Environmental Isolation
-
-All tool execution occurs in Docker containers with explicit isolation:
-
-- **Network Isolation**: Dedicated Docker network per run
-- **Volume Labels**: Metadata-driven container management
-- **Workspace Mounting**: Host path explicitly mapped for artifact collection
-
-### 8.2 Timeout Management
-
-Multi-level timeout hierarchy ensures bounded execution:
-
-| Level | Scope | Example |
-|-------|-------|---------|
-| **Tool Level** | Individual subprocess | Curl with 15-second max |
-| **Wrapper Level** | Docker container | Playwright timeout 30s |
-| **Specialist Level** | Agent.maxSteps enforcement | VulnInjectionSpecialist: 500 steps |
-| **Supervisor Level** | Entire run | Supervisor: 50 steps, $4.00 budget |
-
-### 8.3 Resource Constraints
-
-**Parallel Execution Limits**:
-- Authentication workers: 10 concurrent threads
-- ThreadPool for form discovery: 10 workers
-- Vulnerability scanner concurrency: 25 (rate-limited to 50/sec)
-
-**Early Termination Conditions**:
-- Human intervention required (MFA/CAPTCHA/OAuth): Stop auth probing, continue public reconnaissance
-- Cost budget exhausted: Immediately halt all operations
-- Evidence threshold met: Skip remaining hypotheses if confidence threshold reached
+에이전트 코드에 하드코딩된 선택자, 타임아웃, 크리덴셜이 없다. 인증 탐침은 감지된 기술 스택에 적응하는 런타임 구성에 의해 주도된다.
 
 ---
 
-## 9. Lessons & Trade-offs
+## 8. 운영 고려사항
 
-### 9.1 Anti-Patterns Avoided
+### 8.1 환경 격리
 
-**❌ Monolithic Agent**: Single LLM making all decisions → context overload, poor parallelization  
-**✅ Hierarchical Delegation**: Supervisor coordinates, specialists focus → clear responsibilities
+모든 도구 실행은 명시적 격리가 적용된 Docker 컨테이너에서 이루어진다:
+- **네트워크 격리**: 실행당 전용 Docker 네트워크
+- **볼륨 레이블**: 메타데이터 기반 컨테이너 관리
+- **워크스페이스 마운팅**: 아티팩트 수집을 위한 호스트 경로 명시적 매핑
 
-**❌ Direct Shell Commands**: Subprocess execution without sandboxing → security risk  
-**✅ Docker-in-Docker**: Controlled execution environment with audit trail
+### 8.2 타임아웃 관리
 
-**❌ Shared Mutable State**: Agents modifying common data structures → race conditions  
-**✅ Read-Only Specialists**: Only Supervisor writes; specialists signal intent
+다수준 타임아웃 계층으로 제한된 실행을 보장한다:
 
-### 9.2 Performance Trade-offs
+| 수준 | 범위 | 예시 |
+|------|------|------|
+| **도구 수준** | 개별 서브프로세스 | 15초 최대의 curl |
+| **래퍼 수준** | Docker 컨테이너 | Playwright 타임아웃 30초 |
+| **스페셜리스트 수준** | 에이전트 maxSteps 적용 | VulnInjectionSpecialist: 500 스텝 |
+| **슈퍼바이저 수준** | 전체 실행 | 슈퍼바이저: 50 스텝, $4.00 예산 |
 
-**Latency**: Multi-phase validation adds wall-clock time but improves accuracy  
-**Cost**: Larger token consumption for structured outputs vs. efficiency of freeform text  
-**Complexity**: Explicit state management vs. implicit LLM reasoning
+### 8.3 리소스 제약
 
-The design prioritizes **correctness and auditability** over raw speed, acknowledging that security assessments benefit more from thorough analysis than rapid iteration.
+**병렬 실행 한도**:
+- 인증 워커: 10 동시 스레드
+- 폼 발견 ThreadPool: 10 워커
+- 취약점 스캐너 동시성: 25 (초당 50 속도 제한)
 
----
-
-## 10. Conclusion
-
-This architecture demonstrates that sophisticated, autonomous security assessment requires more than a single capable LLM. The system's strength derives from:
-
-1. **Clear Role Separation**: Each agent has a focused responsibility
-2. **Explicit Guarantees**: Guardrails enforce invariants at every boundary
-3. **Provenance Integrity**: Complete audit trail enables forensic analysis
-4. **Graceful Degradation**: Fallback paths handle adversarial conditions
-5. **Tunable Safety**: Cost limits and timeout hierarchies prevent runaway behavior
-
-This design pattern—hierarchical delegation with read-only specialists and a centralized coordinator—offers a reusable blueprint for building trustworthy, autonomous AI systems in security-critical domains.
+**조기 종료 조건**:
+- 사람 개입 필요(MFA/CAPTCHA/OAuth): 인증 탐침 중단, 공개 정찰 계속
+- 비용 예산 소진: 즉시 모든 작업 중단
+- 증거 임계값 달성: 신뢰도 임계값 도달 시 나머지 가설 건너뜀
 
 ---
 
-## References
+## 9. 설계 교훈 및 트레이드오프
 
-- VoltAgent Framework: Multi-agent workflow orchestration
-- FalkorDB: Graph database for security knowledge representation
-- Nuclei: Template-based vulnerability scanner
-- OWASP Testing Guide: Manual security assessment methodology
-- CVSS v3.1: Common Vulnerability Scoring System
+### 피해야 할 안티패턴
+
+**단일 모놀리식 에이전트**: 하나의 LLM이 모든 결정 → 컨텍스트 과부하, 병렬화 불가  
+**계층적 위임**: 슈퍼바이저가 조율하고 스페셜리스트가 집중 → 명확한 책임
+
+**직접 셸 명령**: 샌드박싱 없는 서브프로세스 실행 → 보안 위험  
+**Docker-in-Docker**: 감사 추적이 있는 제어된 실행 환경
+
+**공유 변경 가능 상태**: 에이전트가 공통 데이터 구조 수정 → 경쟁 조건  
+**읽기 전용 스페셜리스트**: 슈퍼바이저만 쓰고 스페셜리스트는 의도를 신호
+
+### 성능 트레이드오프
+
+**지연 시간**: 다단계 검증으로 벽시계 시간이 증가하지만 정확도가 향상됨  
+**비용**: 구조화된 출력을 위한 더 많은 토큰 소비 대 자유형 텍스트의 효율성  
+**복잡성**: 명시적 상태 관리 대 암묵적 LLM 추론
+
+이 설계는 보안 평가가 빠른 반복보다 철저한 분석에서 더 많은 이점을 얻는다는 사실을 인정하며 **정확성과 감사 가능성**을 속도보다 우선시한다.
 
 ---
 
-*This architecture represents the synthesis of offensive security, distributed systems, and software engineering principles. Production deployment requires careful consideration of organizational risk tolerance and operational constraints.*
+## 10. 결론
+
+이 아키텍처는 정교하고 자율적인 보안 평가에 단일 유능한 LLM 이상이 필요하다는 것을 보여준다. 시스템의 강점은 다음에서 비롯된다:
+
+1. **명확한 역할 분리**: 각 에이전트가 집중된 책임을 가짐
+2. **명시적 보장**: 가드레일이 모든 경계에서 불변성을 강제
+3. **출처 무결성**: 완전한 감사 추적이 포렌식 분석을 가능하게 함
+4. **우아한 저하**: 폴백 경로가 적대적 조건을 처리
+5. **조정 가능한 안전**: 비용 한도와 타임아웃 계층이 폭주 동작을 방지
+
+계층적 위임과 읽기 전용 스페셜리스트, 중앙화된 코디네이터로 구성된 이 설계 패턴은 보안 중요 도메인에서 신뢰할 수 있는 자율 AI 시스템을 구축하기 위한 재사용 가능한 청사진을 제공한다.
+
+---
+
+## 참고 자료
+
+- VoltAgent Framework: 멀티 에이전트 워크플로우 오케스트레이션
+- FalkorDB: 보안 지식 표현을 위한 그래프 데이터베이스
+- Nuclei: 템플릿 기반 취약점 스캐너
+- OWASP Testing Guide: 수동 보안 평가 방법론
+- CVSS v3.1: 공통 취약점 점수 시스템
+
+---
+
+*이 아키텍처는 공격적 보안, 분산 시스템, 소프트웨어 엔지니어링 원칙의 종합이다. 프로덕션 배포는 조직의 위험 허용 수준과 운영 제약을 신중히 고려해야 한다.*
