@@ -468,3 +468,96 @@ WASM 익스포트 호출 → 셸코드 실행
 - OOB 접근은 FixedDoubleArray 바로 다음에 메모리에 위치한 JSArray의 Map 필드를 정확히 겨냥한다. 따라서 단 하나의 `oob()` 쓰기로 Map 오염이 가능하다.
 - `ArrayBuffer` 백킹 스토어 덮어쓰기는 **V8 임의 쓰기의 표준 패턴**이다. 불안정한 가짜 객체 쓰기를 피하고 `DataView`를 통해 깔끔한 타입 안전 인터페이스를 제공한다.
 - WASM RWX 페이지는 V8 익스플로잇에서 정식 `exec` 프리미티브다. 페이지는 `WebAssembly.Instance`당 한 번 할당되며, `WasmInstance` 구조체의 고정 오프셋에서 `arb_read`로 주소를 읽어올 수 있다.
+
+![xcalc 셸코드 실행 결과 — WASM RWX 페이지를 통한 임의 코드 실행 성공](/images/blog/ctf-2019-oob-v8/xcalc-result.png)
+
+---
+
+## 부록: V8 빌드 환경 구성 (Windows)
+
+익스플로잇을 재현하려면 특정 버전의 V8을 직접 빌드해야 한다. 아래는 Windows 환경 기준 빌드 절차다.
+
+### 크롬 자동 업데이트 비활성화
+
+V8 버전을 고정하려면 크롬의 자동 업데이트를 먼저 비활성화한다.
+
+**서비스 비활성화** — `msconfig.msc`에서 `gupdate`, `gupdatem` 옵션을 체크 해제한다.
+
+![크롬 업데이트 서비스 비활성화 (msconfig.msc)](/images/blog/ctf-2019-oob-v8/v8-build-00.png)
+
+**작업 스케줄러 비활성화** — `taskschd.msc`에서 `GoogleUpdateTaskMachineCore`, `GoogleUpdateTaskMachineUA`를 비활성화한다.
+
+**업데이트 파일 이름 변경** — `C:\Program Files (x86)\Google\Update\GoogleUpdate.exe`를 `GoogleUpdate.bak`로 변경한다.
+
+![크롬 업데이트 파일 이름 변경](/images/blog/ctf-2019-oob-v8/v8-build-01.png)
+
+### 준비물
+
+- Visual Studio 2019 16.0.0 이상
+- Windows 10 SDK 10.10.17763 이상
+- depot_tools
+
+**Visual Studio 설치**
+
+![Visual Studio 2019 설치](/images/blog/ctf-2019-oob-v8/v8-build-02.png)
+
+설치 후 제어판 → 프로그램 추가/제거에서 Windows Software Development Kit를 선택하고 Change를 클릭한다.
+
+![Windows SDK 변경 메뉴](/images/blog/ctf-2019-oob-v8/v8-build-03.png)
+
+![Windows SDK 구성 요소 선택](/images/blog/ctf-2019-oob-v8/v8-build-04.png)
+
+Windows Debugging Tools를 체크하고 변경한다.
+
+![Windows Debugging Tools 설치 완료](/images/blog/ctf-2019-oob-v8/v8-build-05.png)
+
+### depot_tools 설치
+
+`https://storage.googleapis.com/chrome-infra/depot_tools.zip`을 다운로드하여 `C:\v8_engine\depot_tools`에 압축 해제한다. 이후 Path 환경 변수에 해당 경로를 추가한다.
+
+![Path 환경 변수에 depot_tools 추가](/images/blog/ctf-2019-oob-v8/v8-build-06.png)
+
+추가로 다음 환경 변수를 설정한다:
+
+```
+DEPOT_TOOLS_WIN_TOOLCHAIN = 0
+GYP_MSVS_VERSION=2019
+```
+
+![추가 환경 변수 설정](/images/blog/ctf-2019-oob-v8/v8-build-07.png)
+
+`C:\v8_engine\depot_tools>gclient` 명령을 실행한다. 성공하면 다음 화면이 나타난다.
+
+![gclient 실행 성공](/images/blog/ctf-2019-oob-v8/v8-build-08.png)
+
+`where python` 명령으로 depot_tools의 python.bat이 목록 최상단에 있는지 확인한다.
+
+![python 경로 확인](/images/blog/ctf-2019-oob-v8/v8-build-09.png)
+
+### V8 소스 다운로드 및 빌드
+
+```cmd
+C:\v8_engine\source>fetch v8
+```
+
+정상적으로 받으면 다음 화면을 보여준다.
+
+![V8 소스 다운로드 성공](/images/blog/ctf-2019-oob-v8/v8-build-10.png)
+
+원하는 커밋으로 checkout 후 `gclient sync`를 실행하고, v8 디렉토리에서 빌드 설정을 생성한다.
+
+```cmd
+gn gen --ide=vs out\x64.release --args="is_debug=false is_component_build=true"
+```
+
+성공하면 다음 화면이 나타난다.
+
+![gn gen 실행 성공](/images/blog/ctf-2019-oob-v8/v8-build-11.png)
+
+마지막으로 ninja로 빌드를 진행한다.
+
+```cmd
+ninja -C out.gn/x64.release
+```
+
+![ninja 빌드 완료](/images/blog/ctf-2019-oob-v8/v8-build-12.png)

