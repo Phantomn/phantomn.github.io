@@ -95,7 +95,7 @@ export function SiteHeader() {
                 className="h-full w-full object-cover"
               />
             </span>
-            <span>phantomn</span>
+            <span>Ph4nt0m</span>
           </Link>
         </Button>
 

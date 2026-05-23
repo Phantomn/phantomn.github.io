@@ -5,8 +5,8 @@ import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "phantomn",
-    template: "%s — phantomn",
+    default: "Ph4nt0m",
+    template: "%s — Ph4nt0m",
   },
   description: "Hacking and general cybersecurity.",
   metadataBase: new URL("https://phantomn.github.io"),
