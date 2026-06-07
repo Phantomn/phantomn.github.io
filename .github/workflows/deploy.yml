@@ -25,6 +25,16 @@ jobs:
           cache: npm
 
       - run: npm ci
+
+      - name: Cache Next.js build artifacts
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-next-${{ hashFiles('package-lock.json') }}-${{ hashFiles('next.config.*', 'tsconfig.json', 'src/**/*.ts', 'src/**/*.tsx', 'content/**/*.md', 'content/**/*.mdx', 'messages/**/*.json') }}
+          restore-keys: |
+            ${{ runner.os }}-next-${{ hashFiles('package-lock.json') }}-
+            ${{ runner.os }}-next-
+
       - run: npm run build
 
       - uses: actions/upload-pages-artifact@v3
