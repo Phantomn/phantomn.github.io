@@ -59,7 +59,14 @@
       "group": "Group",
       "severity": "Severity",
       "status": "Status",
-      "link": "Link"
+      "link": "Link",
+      "cvss": "CVSS",
+      "cwe": "CWE",
+      "nvdStatus": "NVD status",
+      "published": "Published",
+      "modified": "Modified",
+      "nvdRecord": "NVD record",
+      "upstreamDisclosure": "Upstream disclosure"
     },
     "status": {
       "published": "Published",
@@ -67,6 +74,8 @@
     },
     "open": "Open",
     "openRegistry": "Open registry",
+    "openNvd": "Open NVD",
+    "openDisclosure": "Open disclosure",
     "detail": "Detail",
     "external": "External link",
     "all": "All",
