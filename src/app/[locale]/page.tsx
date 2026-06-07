@@ -27,7 +27,7 @@ const HERO_VIDEO =
 const HERO_AVATAR =
   "https://res.cloudinary.com/a88188f90768a608fc75048188ef19e7/image/upload/q_auto/f_auto/v1776380450/Website/Homepage/54879845732140987541253743874983361_hfxt3v.gif";
 
-const SECTION_KEYS = ["blog", "writeups", "toolbox"] as const;
+const SECTION_KEYS = ["blog", "cves", "writeups", "toolbox"] as const;
 
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;

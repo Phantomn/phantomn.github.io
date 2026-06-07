@@ -20,13 +20,14 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 
-const NAV_KEYS = ["home", "about", "blog", "writeups", "toolbox"] as const;
+const NAV_KEYS = ["home", "about", "blog", "cves", "writeups", "toolbox"] as const;
 type NavKey = (typeof NAV_KEYS)[number];
 
 const NAV_PATHS: Record<NavKey, string> = {
   home: "",
   about: "about/",
   blog: "blog/",
+  cves: "cves/",
   writeups: "writeups/",
   toolbox: "toolbox/",
 };
