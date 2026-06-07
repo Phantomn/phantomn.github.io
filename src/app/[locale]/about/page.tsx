@@ -217,11 +217,6 @@ const ACHIEVEMENTS: AchievementItem[] = [
     href: "https://ccdcoe.org/exercises/locked-shields/",
     badgeSrc: "/images/ccdcoe.png",
   },
-  {
-    name: "CVE 21건 (Kernel 16 + IoT 5)",
-    href: "https://www.cve.org/",
-    badgeSrc: "https://img.shields.io/badge/CVE_21%EA%B1%B4-OS_Kernel_16_%2B_IoT_5-red?style=for-the-badge&logo=linux&logoColor=white",
-  },
 ];
 
 const LANGUAGES: LanguageItem[] = [
@@ -432,16 +427,6 @@ export default async function AboutPage({ params }: Props) {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {CVE_GROUPS.map((group) => (
-                <div key={group.key} className="rounded-lg border bg-card p-4">
-                  <div className="text-sm font-semibold">{group.shortLabel}</div>
-                  <div className="mt-1 text-2xl font-bold font-heading">{group.count}</div>
-                  <div className="mt-1 text-xs text-muted-foreground">{group.label}</div>
-                </div>
-              ))}
-            </div>
-
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {FEATURED_CVES.map((item) => (
                 <a

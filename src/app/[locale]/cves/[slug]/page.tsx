@@ -98,6 +98,8 @@ export default async function CvePage({ params }: Props) {
       notes?: string;
     };
     redaction?: Record<string, boolean>;
+    submittedAt?: string;
+    issuedAt?: string;
     nvdStatus?: string;
     lastModified?: string;
     tags?: string[];
@@ -130,7 +132,8 @@ export default async function CvePage({ params }: Props) {
     cweFromFrontmatter.additional;
   const visibility = fm.visibility ?? entry?.visibility ?? (sourceLinks.upstream === "#" ? "redacted" : "public");
   const evaluation = fm.evaluation ?? entry?.evaluation ?? undefined;
-  const nvdStatus = fm.nvdStatus ?? entry?.nvdStatus ?? "";
+  const submittedAt = fm.submittedAt ?? entry?.submittedAt ?? "";
+  const issuedAt = fm.issuedAt ?? entry?.issuedAt ?? "";
   const published = fm.date ?? entry?.published ?? current?.meta.date ?? "";
   const lastModified = fm.lastModified ?? entry?.lastModified ?? "";
 
@@ -266,10 +269,6 @@ export default async function CvePage({ params }: Props) {
                       </div>
                     )}
                     <div className="flex items-center justify-between gap-3">
-                      <span className="text-muted-foreground">{t("table.nvdStatus")}</span>
-                      <span className="text-right font-medium">{nvdStatus || "-"}</span>
-                    </div>
-                    <div className="flex items-center justify-between gap-3">
                       <span className="text-muted-foreground">{t("table.published")}</span>
                       <span className="text-right font-medium">
                         {published
@@ -277,6 +276,26 @@ export default async function CvePage({ params }: Props) {
                           : "-"}
                       </span>
                     </div>
+                    {(submittedAt || issuedAt) && (
+                      <>
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="text-muted-foreground">{t("table.submittedAt")}</span>
+                          <span className="text-right font-medium">
+                            {submittedAt
+                              ? formatDate(submittedAt, { year: "numeric", month: "long", day: "numeric" }, toBcp47(locale))
+                              : "-"}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="text-muted-foreground">{t("table.issuedAt")}</span>
+                          <span className="text-right font-medium">
+                            {issuedAt
+                              ? formatDate(issuedAt, { year: "numeric", month: "long", day: "numeric" }, toBcp47(locale))
+                              : "-"}
+                          </span>
+                        </div>
+                      </>
+                    )}
                     <div className="flex items-center justify-between gap-3">
                       <span className="text-muted-foreground">{t("table.modified")}</span>
                       <span className="text-right font-medium">
@@ -295,7 +314,7 @@ export default async function CvePage({ params }: Props) {
                 <Card>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-semibold">
-                      {t("table.standardCvss")}
+                      {t("table.cvss")}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2 text-sm">
@@ -310,7 +329,7 @@ export default async function CvePage({ params }: Props) {
                 <Card>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-semibold">
-                      {t("table.assessment")}
+                      {t("table.evaluation")}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2 text-sm">
@@ -331,7 +350,7 @@ export default async function CvePage({ params }: Props) {
                 <Card>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-semibold">
-                      {t("table.nvdRecord")}
+                      NVD
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -356,7 +375,7 @@ export default async function CvePage({ params }: Props) {
                 <Card>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-semibold">
-                      {t("table.upstreamDisclosure")}
+                      Disclosure
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -377,19 +396,6 @@ export default async function CvePage({ params }: Props) {
                     )}
                   </CardContent>
                 </Card>
-
-                {vector && (
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm font-semibold">
-                        {t("table.vector")}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="text-sm text-muted-foreground break-all">
-                      {vector}
-                    </CardContent>
-                  </Card>
-                )}
 
                 {visibility === "redacted" && (
                   <Card>

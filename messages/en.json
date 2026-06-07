@@ -74,6 +74,8 @@
       "assessment": "Assessment details",
       "nvdStatus": "NVD status",
       "published": "Published",
+      "submittedAt": "Submitted",
+      "issuedAt": "Issued",
       "modified": "Modified",
       "nvdRecord": "NVD record",
       "upstreamDisclosure": "Upstream disclosure"
