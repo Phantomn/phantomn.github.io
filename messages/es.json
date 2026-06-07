@@ -45,12 +45,10 @@
   },
   "cves": {
     "title": "Registro de CVE",
-    "subtitle": "Fuente única de verdad para mis divulgaciones públicas, con estado, severidad y enlaces principales.",
     "backToCves": "Volver al registro de CVE",
     "searchPlaceholder": "Buscar por CVE, grupo, severidad o estado...",
     "summary": {
-      "total": "CVE totales",
-      "totalLabel": "Registro actual de divulgaciones públicas"
+      "total": "CVE totales"
     },
     "facts": "Datos",
     "table": {

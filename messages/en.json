@@ -45,12 +45,10 @@
   },
   "cves": {
     "title": "CVE Registry",
-    "subtitle": "Single source of truth for my public disclosures, with status, severity, and primary links.",
     "backToCves": "Back to CVE registry",
     "searchPlaceholder": "Search by CVE, group, severity, or status...",
     "summary": {
-      "total": "Total CVEs",
-      "totalLabel": "Current registry of public disclosures"
+      "total": "Total CVEs"
     },
     "facts": "Facts",
     "table": {
