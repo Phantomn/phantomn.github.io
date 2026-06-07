@@ -405,6 +405,42 @@ export const CVE_ITEMS: CveEntry[] = [
     "published": "2024-05-03",
     "lastModified": "2025-06-17",
     "nvdStatus": "Analyzed"
+  },
+  {
+    "id": "FVE-2026-8617-74507",
+    "title": "Masked web disclosure from Findthegap bug bounty platform",
+    "year": 2026,
+    "groupKey": "findthegap",
+    "groupLabel": "Findthegap - Bug Bounty Platform",
+    "severity": "pending",
+    "status": "published",
+    "href": "#",
+    "nvdHref": "#",
+    "summary": "Public details are intentionally redacted. Product, vendor, endpoint, parameter, and reproduction steps are withheld.",
+    "cvssBaseScore": 0,
+    "cvssVector": "",
+    "cwe": "CWE-unknown",
+    "published": "2026-06-07",
+    "lastModified": "2026-06-07",
+    "nvdStatus": "Redacted"
+  },
+  {
+    "id": "FVE-2026-8617-74513",
+    "title": "Masked web disclosure from Findthegap bug bounty platform",
+    "year": 2026,
+    "groupKey": "findthegap",
+    "groupLabel": "Findthegap - Bug Bounty Platform",
+    "severity": "pending",
+    "status": "published",
+    "href": "#",
+    "nvdHref": "#",
+    "summary": "Public details are intentionally redacted. Product, vendor, endpoint, parameter, and reproduction steps are withheld.",
+    "cvssBaseScore": 0,
+    "cvssVector": "",
+    "cwe": "CWE-unknown",
+    "published": "2026-06-07",
+    "lastModified": "2026-06-07",
+    "nvdStatus": "Redacted"
   }
 ];
 
@@ -422,6 +458,12 @@ export const CVE_GROUPS: CveGroupSummary[] = [
     "label": "Personal research - IoT",
     "shortLabel": "IoT",
     "count": 5
+  },
+  {
+    "key": "findthegap",
+    "label": "Findthegap - Bug Bounty Platform",
+    "shortLabel": "Findthegap",
+    "count": 2
   }
 ];
 
