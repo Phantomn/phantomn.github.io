@@ -3,6 +3,7 @@
     "home": "Inicio",
     "about": "Acerca",
     "blog": "Blog",
+    "cves": "CVE",
     "writeups": "Writeups",
     "toolbox": "Herramientas",
     "toggleMenu": "Alternar menú",
@@ -17,6 +18,10 @@
       "blog": {
         "label": "Blog",
         "description": "Artículos y notas sobre pentesting, DFIR e ingeniería de seguridad."
+      },
+      "cves": {
+        "label": "CVE",
+        "description": "Archivo único para divulgaciones públicas, estado y referencias externas."
       },
       "writeups": {
         "label": "Writeups",
@@ -38,9 +43,38 @@
     "recentPosts": "Posts Recientes",
     "featured": "Destacado"
   },
+  "cves": {
+    "title": "Registro de CVE",
+    "subtitle": "Fuente única de verdad para mis divulgaciones públicas, con estado, severidad y enlaces principales.",
+    "backToCves": "Volver al registro de CVE",
+    "searchPlaceholder": "Buscar por CVE, grupo, severidad o estado...",
+    "summary": {
+      "total": "CVE totales",
+      "totalLabel": "Registro actual de divulgaciones públicas"
+    },
+    "facts": "Datos",
+    "table": {
+      "cve": "CVE",
+      "summary": "Resumen",
+      "group": "Grupo",
+      "severity": "Severidad",
+      "status": "Estado",
+      "link": "Enlace"
+    },
+    "status": {
+      "published": "Publicado",
+      "pending": "Pendiente"
+    },
+    "open": "Abrir",
+    "openRegistry": "Abrir registro",
+    "detail": "Detalle",
+    "external": "Enlace externo",
+    "all": "Todos",
+    "noResults": "No hay CVEs que coincidan con tus filtros."
+  },
   "writeups": {
     "title": "Writeups",
-    "subtitle": "Crónicas de mis batallas cibernéticas \u2014 archivo ordenable y buscable de writeups de CTF y labs.",
+    "subtitle": "Crónicas de mis batallas cibernéticas — archivo ordenable y buscable de writeups de CTF y labs.",
     "backToWriteups": "Volver a Writeups",
     "searchPlaceholder": "Buscar por nombre, fuente, categoría, dificultad o etiqueta...",
     "unknownDifficulty": "Desconocida",
@@ -59,14 +93,16 @@
     "sectionExperience": "Experiencia",
     "sectionEducation": "Educación",
     "sectionCertifications": "Licencias y Certificaciones",
+    "sectionCves": "Registro de CVE",
     "sectionSkills": "Habilidades",
     "sectionAchievements": "Logros",
     "sectionProjects": "Proyectos",
     "sectionLanguages": "Idiomas",
     "sectionResume": "Currículum",
     "contactInfo": "Contacto",
-    "connections": "{count} conexiones",
-    "downloadPdf": "Descargar PDF"
+    "connections": "{count} CVE",
+    "downloadPdf": "Descargar PDF",
+    "openRegistry": "Abrir registro"
   },
   "sidebar": {
     "relatedPosts": "Posts Relacionados",
@@ -97,7 +133,7 @@
   "translator": {
     "detected": "¡Idioma {locale} detectado!",
     "translating": "Traduciendo contenido...",
-    "translationFailed": "Traducción no disponible \u2014 mostrando original",
+    "translationFailed": "Traducción no disponible — mostrando original",
     "poweredBy": "Traducción por Lingva"
   }
 }
