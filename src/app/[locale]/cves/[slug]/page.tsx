@@ -222,15 +222,21 @@ export default async function CvePage({ params }: Props) {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <a
-                      href={nvdLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
-                    >
-                      {t("openNvd")}
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
+                    {nvdLink && nvdLink !== "#" ? (
+                      <a
+                        href={nvdLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
+                      >
+                        {t("openNvd")}
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    ) : (
+                      <span className="text-sm text-muted-foreground">
+                        {t("redacted")}
+                      </span>
+                    )}
                   </CardContent>
                 </Card>
 
@@ -241,15 +247,21 @@ export default async function CvePage({ params }: Props) {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <a
-                      href={externalLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
-                    >
-                      {t("openDisclosure")}
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
+                    {externalLink && externalLink !== "#" ? (
+                      <a
+                        href={externalLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
+                      >
+                        {t("openDisclosure")}
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    ) : (
+                      <span className="text-sm text-muted-foreground">
+                        {t("redacted")}
+                      </span>
+                    )}
                   </CardContent>
                 </Card>
 
@@ -262,6 +274,14 @@ export default async function CvePage({ params }: Props) {
                     </CardHeader>
                     <CardContent className="text-sm text-muted-foreground break-all">
                       {cvssVector}
+                    </CardContent>
+                  </Card>
+                )}
+
+                {(!nvdLink || nvdLink === "#") && (!externalLink || externalLink === "#") && (
+                  <Card>
+                    <CardContent className="pt-6 text-sm text-muted-foreground">
+                      This disclosure is intentionally redacted.
                     </CardContent>
                   </Card>
                 )}
