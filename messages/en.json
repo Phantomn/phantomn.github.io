@@ -53,6 +53,7 @@
     "facts": "Facts",
     "table": {
       "cve": "CVE",
+      "id": "ID",
       "summary": "Summary",
       "group": "Group",
       "kind": "Kind",

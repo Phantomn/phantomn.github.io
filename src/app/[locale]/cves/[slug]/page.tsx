@@ -154,7 +154,10 @@ export default async function CvePage({ params }: Props) {
           targetLocale={locale}
           contentKey={`cves/${slug}`}
         >
-          <header className="mb-8 space-y-4">
+          <header
+            className="mb-8 rounded-[var(--cve-radius)] border border-[var(--cve-border)] bg-[var(--cve-surface-strong)] p-6"
+            style={{ boxShadow: "var(--cve-shadow)" }}
+          >
             <div className="flex flex-wrap gap-2">
               <Badge variant="outline" className="uppercase">
                 {kind}
@@ -180,19 +183,24 @@ export default async function CvePage({ params }: Props) {
               )}
             </div>
 
-            <h1 className="text-3xl font-bold font-heading leading-tight sm:text-4xl">
-              {title}
-            </h1>
+            <div className="mt-5 space-y-3">
+              <h1 className="text-3xl font-bold font-heading leading-tight sm:text-4xl">
+                {title}
+              </h1>
 
-            {summary && (
-              <p className="max-w-3xl text-lg leading-relaxed text-muted-foreground">
-                {summary}
-              </p>
-            )}
+              {summary && (
+                <p className="max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">
+                  {summary}
+                </p>
+              )}
+            </div>
           </header>
 
           <div className="flex flex-col gap-8 lg:flex-row">
-            <article className="w-full min-w-0 lg:w-[72%]">
+            <article
+              className="w-full min-w-0 rounded-[var(--cve-radius)] border border-[var(--cve-border)] bg-[var(--cve-surface-strong)] p-5 lg:w-[72%]"
+              style={{ boxShadow: "var(--cve-shadow)" }}
+            >
               <ProseImageLightbox>
                 <div
                   data-prose-content
@@ -205,7 +213,10 @@ export default async function CvePage({ params }: Props) {
 
             <aside className="w-full lg:w-[28%]">
               <div className="space-y-4 lg:sticky lg:top-20">
-                <Card>
+                <Card
+                  className="border-[color:var(--cve-border)] bg-[var(--cve-surface-strong)]"
+                  style={{ boxShadow: "var(--cve-shadow)" }}
+                >
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-semibold">
                       {t("facts")}
@@ -248,26 +259,6 @@ export default async function CvePage({ params }: Props) {
                       <span className="text-muted-foreground">{t("table.primaryCwe")}</span>
                       <span className="text-right font-medium">{cwePrimary || "-"}</span>
                     </div>
-                    {cweAdditional.length > 0 && (
-                      <div className="flex items-center justify-between gap-3">
-                        <span className="text-muted-foreground">{t("table.additionalCwe")}</span>
-                        <span className="max-w-[60%] text-right font-medium">
-                          {cweAdditional.join(", ")}
-                        </span>
-                      </div>
-                    )}
-                    {evaluation && (
-                      <div className="flex items-center justify-between gap-3">
-                        <span className="text-muted-foreground">{t("table.evaluation")}</span>
-                        <span className="text-right font-medium">{evaluation.label}</span>
-                      </div>
-                    )}
-                    {evaluation?.notes && (
-                      <div className="flex items-center justify-between gap-3">
-                        <span className="text-muted-foreground">{t("table.notes")}</span>
-                        <span className="max-w-[60%] text-right font-medium">{evaluation.notes}</span>
-                      </div>
-                    )}
                     <div className="flex items-center justify-between gap-3">
                       <span className="text-muted-foreground">{t("table.published")}</span>
                       <span className="text-right font-medium">
@@ -304,14 +295,13 @@ export default async function CvePage({ params }: Props) {
                           : "-"}
                       </span>
                     </div>
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="text-muted-foreground">{t("table.cve")}</span>
-                      <span className="text-right font-medium">{slug.toUpperCase()}</span>
-                    </div>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card
+                  className="border-[color:var(--cve-border)] bg-[var(--cve-surface-strong)]"
+                  style={{ boxShadow: "var(--cve-shadow)" }}
+                >
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-semibold">
                       {t("table.cvss")}
@@ -326,7 +316,10 @@ export default async function CvePage({ params }: Props) {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card
+                  className="border-[color:var(--cve-border)] bg-[var(--cve-surface-strong)]"
+                  style={{ boxShadow: "var(--cve-shadow)" }}
+                >
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-semibold">
                       {t("table.evaluation")}
@@ -347,7 +340,10 @@ export default async function CvePage({ params }: Props) {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card
+                  className="border-[color:var(--cve-border)] bg-[var(--cve-surface-strong)]"
+                  style={{ boxShadow: "var(--cve-shadow)" }}
+                >
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-semibold">
                       NVD
@@ -372,7 +368,10 @@ export default async function CvePage({ params }: Props) {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card
+                  className="border-[color:var(--cve-border)] bg-[var(--cve-surface-strong)]"
+                  style={{ boxShadow: "var(--cve-shadow)" }}
+                >
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-semibold">
                       Disclosure
@@ -398,7 +397,10 @@ export default async function CvePage({ params }: Props) {
                 </Card>
 
                 {visibility === "redacted" && (
-                  <Card>
+                  <Card
+                    className="border-[color:var(--cve-border)] bg-[var(--cve-surface-strong)]"
+                    style={{ boxShadow: "var(--cve-shadow)" }}
+                  >
                     <CardContent className="pt-6 text-sm text-muted-foreground">
                       {t("redactedDetails")}
                     </CardContent>
@@ -406,7 +408,10 @@ export default async function CvePage({ params }: Props) {
                 )}
 
                 {fm.tags && fm.tags.length > 0 && (
-                  <Card>
+                  <Card
+                    className="border-[color:var(--cve-border)] bg-[var(--cve-surface-strong)]"
+                    style={{ boxShadow: "var(--cve-shadow)" }}
+                  >
                     <CardHeader className="pb-2">
                       <CardTitle className="text-sm font-semibold">
                         Tags
