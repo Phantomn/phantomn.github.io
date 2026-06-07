@@ -67,7 +67,7 @@
       "cwe": "CWE",
       "primaryCwe": "CWE",
       "additionalCwe": "추가 CWE",
-      "evaluation": "평가 결과",
+      "evaluation": "Severity",
       "notes": "비고",
       "published": "발행일",
       "submittedAt": "제출일",
