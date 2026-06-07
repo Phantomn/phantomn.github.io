@@ -1,7 +1,30 @@
-export type CveSeverity = "critical" | "high" | "medium" | "pending";
+export type CveKind = "cve" | "fve";
+export type CveSeverity = "critical" | "high" | "medium" | "low" | "pending";
 export type CveStatus = "published" | "pending";
+export type CveVisibility = "public" | "redacted";
 
-export interface CveEntry {
+export interface CveSourceLinks {
+  upstream?: string;
+  nvd?: string;
+  report?: string;
+}
+
+export interface CveEvaluation {
+  label: "Critical" | "High" | "Medium" | "Low" | "Pending";
+  vector: string;
+  notes?: string;
+}
+
+export interface CveRedaction {
+  product?: boolean;
+  vendor?: boolean;
+  path?: boolean;
+  params?: boolean;
+  repro?: boolean;
+  links?: boolean;
+}
+
+interface LegacyCveEntry {
   id: string;
   title: string;
   year: number;
@@ -20,6 +43,31 @@ export interface CveEntry {
   nvdStatus: string;
 }
 
+export interface CveEntry {
+  id: string;
+  slug: string;
+  kind: CveKind;
+  title: string;
+  year: number;
+  groupKey: string;
+  groupLabel: string;
+  severity: CveSeverity;
+  status: CveStatus;
+  visibility: CveVisibility;
+  summary: string;
+  score: number;
+  vector: string;
+  cwePrimary?: string;
+  cweAdditional: string[];
+  published: string;
+  lastModified: string;
+  sourceLinks: CveSourceLinks;
+  evaluation?: CveEvaluation;
+  redaction?: CveRedaction;
+  tags: string[];
+  nvdStatus: string;
+}
+
 export interface CveGroupSummary {
   key: string;
   label: string;
@@ -27,14 +75,14 @@ export interface CveGroupSummary {
   count: number;
 }
 
-export const CVE_ITEMS: CveEntry[] = [
+const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
   {
     "id": "CVE-2019-18885",
     "title": "Linux kernel btrfs NULL pointer dereference",
     "year": 2019,
     "groupKey": "os-kernel",
     "groupLabel": "Best of the Best 8 - BoBFuzzer",
-    "severity": "medium",
+    "severity": "high",
     "status": "published",
     "href": "https://github.com/Phantomn/CVE/tree/master/CVE-2019-18885",
     "nvdHref": "https://nvd.nist.gov/vuln/detail/CVE-2019-18885",
@@ -340,13 +388,13 @@ export const CVE_ITEMS: CveEntry[] = [
     "year": 2024,
     "groupKey": "iot",
     "groupLabel": "Personal research - IoT",
-    "severity": "critical",
+    "severity": "medium",
     "status": "published",
     "href": "https://github.com/0x0xxxx/CVE/tree/main/CVE-2024-33789",
     "nvdHref": "https://nvd.nist.gov/vuln/detail/CVE-2024-33789",
     "summary": "Linksys E5600 v1.1.0.26 was discovered to contain a command injection vulnerability via the ipurl parameter at /API/info form endpoint.",
-    "cvssBaseScore": 9.8,
-    "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cvssBaseScore": 8.2,
+    "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:L",
     "cwe": "CWE-77",
     "published": "2024-05-03",
     "lastModified": "2025-06-10",
@@ -358,7 +406,7 @@ export const CVE_ITEMS: CveEntry[] = [
     "year": 2024,
     "groupKey": "iot",
     "groupLabel": "Personal research - IoT",
-    "severity": "medium",
+    "severity": "high",
     "status": "published",
     "href": "https://github.com/0x0xxxx/CVE/tree/main/CVE-2024-33791",
     "nvdHref": "https://nvd.nist.gov/vuln/detail/CVE-2024-33791",
@@ -412,14 +460,14 @@ export const CVE_ITEMS: CveEntry[] = [
     "year": 2026,
     "groupKey": "web",
     "groupLabel": "Web",
-    "severity": "pending",
+    "severity": "critical",
     "status": "published",
     "href": "#",
     "nvdHref": "#",
     "summary": "Public details are intentionally redacted. Product, vendor, endpoint, parameter, and reproduction steps are withheld.",
-    "cvssBaseScore": 0,
-    "cvssVector": "",
-    "cwe": "CWE-unknown",
+    "cvssBaseScore": 9.8,
+    "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-620 / CWE-306",
     "published": "2026-06-07",
     "lastModified": "2026-06-07",
     "nvdStatus": "Redacted"
@@ -430,13 +478,13 @@ export const CVE_ITEMS: CveEntry[] = [
     "year": 2026,
     "groupKey": "web",
     "groupLabel": "Web",
-    "severity": "pending",
+    "severity": "high",
     "status": "published",
     "href": "#",
     "nvdHref": "#",
     "summary": "Public details are intentionally redacted. Product, vendor, endpoint, parameter, and reproduction steps are withheld.",
-    "cvssBaseScore": 0,
-    "cvssVector": "",
+    "cvssBaseScore": 7.5,
+    "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
     "cwe": "CWE-unknown",
     "published": "2026-06-07",
     "lastModified": "2026-06-07",
@@ -444,28 +492,126 @@ export const CVE_ITEMS: CveEntry[] = [
   }
 ];
 
+const CVE_GROUP_DEFINITIONS = [
+  {
+    key: "os-kernel",
+    label: "Best of the Best 8 - BoBFuzzer",
+    shortLabel: "Kernel",
+  },
+  {
+    key: "iot",
+    label: "Personal research - IoT",
+    shortLabel: "IoT",
+  },
+  {
+    key: "web",
+    label: "Web",
+    shortLabel: "Web",
+  },
+] as const;
+
+function splitCwe(cwe: string) {
+  const parts = cwe
+    .split("/")
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .filter((part) => part !== "CWE-unknown");
+
+  const [primary, ...additional] = parts;
+  return {
+    primary,
+    additional,
+  };
+}
+
+function toVisibility(entry: LegacyCveEntry): CveVisibility {
+  return entry.nvdStatus === "Redacted" || entry.href === "#" ? "redacted" : "public";
+}
+
+function toEvaluation(entry: LegacyCveEntry): CveEvaluation | undefined {
+  if (!entry.id.startsWith("FVE-")) {
+    return undefined;
+  }
+
+  if (entry.id === "FVE-2026-8617-74507") {
+    return {
+      label: "Medium",
+      vector: "AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:L/SH:D/DO:A",
+    };
+  }
+
+  if (entry.id === "FVE-2026-8617-74513") {
+    return {
+      label: "Medium",
+      vector: "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N/SH:B/DO:A",
+    };
+  }
+
+  return undefined;
+}
+
+function toRedaction(entry: LegacyCveEntry): CveRedaction | undefined {
+  if (!entry.id.startsWith("FVE-")) {
+    return undefined;
+  }
+
+  return {
+    product: true,
+    vendor: true,
+    path: true,
+    params: true,
+    repro: true,
+    links: true,
+  };
+}
+
+function normalizeCveEntry(entry: LegacyCveEntry): CveEntry {
+  const cwe = splitCwe(entry.cwe);
+  const kind: CveKind = entry.id.startsWith("FVE-") ? "fve" : "cve";
+
+  return {
+    id: entry.id,
+    slug: getCveSlug(entry.id),
+    kind,
+    title: entry.title,
+    year: entry.year,
+    groupKey: entry.groupKey,
+    groupLabel: entry.groupLabel,
+    severity: entry.severity,
+    status: entry.status,
+    visibility: toVisibility(entry),
+    summary: entry.summary,
+    score: entry.cvssBaseScore,
+    vector: entry.cvssVector,
+    cwePrimary: cwe.primary,
+    cweAdditional: cwe.additional,
+    published: entry.published,
+    lastModified: entry.lastModified,
+    sourceLinks: {
+      upstream: entry.href,
+      nvd: entry.nvdHref,
+    },
+    evaluation: toEvaluation(entry),
+    redaction: toRedaction(entry),
+    tags: [
+      kind,
+      entry.groupKey,
+      ...(entry.id.startsWith("FVE-") ? ["redacted"] : []),
+    ],
+    nvdStatus: entry.nvdStatus,
+  };
+}
+
+export const CVE_ITEMS: CveEntry[] = CVE_SOURCE_ITEMS.map(normalizeCveEntry);
+
 export const CVE_COUNT = CVE_ITEMS.length;
 
-export const CVE_GROUPS: CveGroupSummary[] = [
-  {
-    "key": "os-kernel",
-    "label": "Best of the Best 8 - BoBFuzzer",
-    "shortLabel": "Kernel",
-    "count": 16
-  },
-  {
-    "key": "iot",
-    "label": "Personal research - IoT",
-    "shortLabel": "IoT",
-    "count": 5
-  },
-  {
-    "key": "web",
-    "label": "Web",
-    "shortLabel": "Web",
-    "count": 2
-  }
-];
+export const CVE_GROUPS: CveGroupSummary[] = CVE_GROUP_DEFINITIONS.map((group) => ({
+  key: group.key,
+  label: group.label,
+  shortLabel: group.shortLabel,
+  count: CVE_ITEMS.filter((item) => item.groupKey === group.key).length,
+}));
 
 export function getCveSeverityLabel(severity: CveSeverity) {
   switch (severity) {
@@ -475,6 +621,8 @@ export function getCveSeverityLabel(severity: CveSeverity) {
       return "High";
     case "medium":
       return "Medium";
+    case "low":
+      return "Low";
     case "pending":
       return "Pending";
   }

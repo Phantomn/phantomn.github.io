@@ -27,6 +27,17 @@ interface Props {
   params: Promise<{ locale: string; slug: string }>;
 }
 
+function parseCweList(cwe?: string) {
+  const parts = (cwe ?? "")
+    .split("/")
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .filter((part) => part !== "CWE-unknown");
+
+  const [primary, ...additional] = parts;
+  return { primary, additional };
+}
+
 export async function generateStaticParams() {
   const slugs = getAllSlugs("cves");
   return routing.locales.flatMap((locale) =>
@@ -62,14 +73,31 @@ export default async function CvePage({ params }: Props) {
     title?: string;
     date?: string;
     summary?: string;
+    kind?: string;
+    visibility?: string;
     severity?: string;
     status?: string;
     group?: string;
     externalLink?: string;
     nvdLink?: string;
+    sourceLinks?: {
+      upstream?: string;
+      nvd?: string;
+      report?: string;
+    };
+    score?: number;
     cvssBaseScore?: number;
+    vector?: string;
     cvssVector?: string;
+    cwePrimary?: string;
+    cweAdditional?: string[];
     cwe?: string;
+    evaluation?: {
+      label?: string;
+      vector?: string;
+      notes?: string;
+    };
+    redaction?: Record<string, boolean>;
     nvdStatus?: string;
     lastModified?: string;
     tags?: string[];
@@ -82,15 +110,26 @@ export default async function CvePage({ params }: Props) {
   const shouldTranslate = locale !== routing.defaultLocale && !hasOverride;
 
   const title = fm.title ?? entry?.title ?? slug.toUpperCase();
+  const kind = fm.kind ?? entry?.kind ?? "cve";
   const severity = (fm.severity ?? entry?.severity ?? "medium") as CveSeverity;
   const status = fm.status ?? entry?.status ?? "published";
   const group = fm.group ?? entry?.groupLabel ?? "";
   const summary = fm.summary ?? entry?.summary ?? "";
-  const externalLink = fm.externalLink ?? entry?.href ?? "#";
-  const nvdLink = fm.nvdLink ?? entry?.nvdHref ?? "#";
-  const cvssBaseScore = fm.cvssBaseScore ?? entry?.cvssBaseScore ?? 0;
-  const cvssVector = fm.cvssVector ?? entry?.cvssVector ?? "";
-  const cwe = fm.cwe ?? entry?.cwe ?? "";
+  const sourceLinks = {
+    upstream: fm.sourceLinks?.upstream ?? fm.externalLink ?? entry?.sourceLinks.upstream ?? "#",
+    nvd: fm.sourceLinks?.nvd ?? fm.nvdLink ?? entry?.sourceLinks.nvd ?? "#",
+    report: fm.sourceLinks?.report ?? entry?.sourceLinks.report ?? "#",
+  };
+  const score = fm.score ?? fm.cvssBaseScore ?? entry?.score ?? 0;
+  const vector = fm.vector ?? fm.cvssVector ?? entry?.vector ?? "";
+  const cweFromFrontmatter = parseCweList(fm.cwe);
+  const cwePrimary = fm.cwePrimary ?? entry?.cwePrimary ?? cweFromFrontmatter.primary ?? "";
+  const cweAdditional =
+    fm.cweAdditional ??
+    entry?.cweAdditional ??
+    cweFromFrontmatter.additional;
+  const visibility = fm.visibility ?? entry?.visibility ?? (sourceLinks.upstream === "#" ? "redacted" : "public");
+  const evaluation = fm.evaluation ?? entry?.evaluation ?? undefined;
   const nvdStatus = fm.nvdStatus ?? entry?.nvdStatus ?? "";
   const published = fm.date ?? entry?.published ?? current?.meta.date ?? "";
   const lastModified = fm.lastModified ?? entry?.lastModified ?? "";
@@ -114,6 +153,9 @@ export default async function CvePage({ params }: Props) {
         >
           <header className="mb-8 space-y-4">
             <div className="flex flex-wrap gap-2">
+              <Badge variant="outline" className="uppercase">
+                {kind}
+              </Badge>
               <Badge variant="outline" className="capitalize">
                 {getCveSeverityLabel(severity)}
               </Badge>
@@ -121,6 +163,9 @@ export default async function CvePage({ params }: Props) {
                 {status === "pending" ? t("status.pending") : t("status.published")}
               </Badge>
               {group && <Badge variant="secondary">{group}</Badge>}
+              <Badge variant="outline" className="capitalize">
+                {visibility}
+              </Badge>
               {published && (
                 <Badge variant="outline">
                   {formatDate(
@@ -169,6 +214,10 @@ export default async function CvePage({ params }: Props) {
                       <span className="text-right font-medium">{group || "-"}</span>
                     </div>
                     <div className="flex items-center justify-between gap-3">
+                      <span className="text-muted-foreground">{t("table.kind")}</span>
+                      <span className="text-right font-medium uppercase">{kind}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
                       <span className="text-muted-foreground">{t("table.severity")}</span>
                       <span className="text-right font-medium capitalize">{getCveSeverityLabel(severity)}</span>
                     </div>
@@ -179,15 +228,43 @@ export default async function CvePage({ params }: Props) {
                       </span>
                     </div>
                     <div className="flex items-center justify-between gap-3">
-                      <span className="text-muted-foreground">{t("table.cvss")}</span>
-                      <span className="text-right font-medium">
-                        {cvssBaseScore.toFixed(1)}
+                      <span className="text-muted-foreground">{t("table.visibility")}</span>
+                      <span className="text-right font-medium capitalize">
+                        {visibility === "redacted" ? t("redacted") : visibility}
                       </span>
                     </div>
+                    {score > 0 && (
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-muted-foreground">{t("table.score")}</span>
+                        <span className="text-right font-medium">
+                          {score.toFixed(1)}
+                        </span>
+                      </div>
+                    )}
                     <div className="flex items-center justify-between gap-3">
-                      <span className="text-muted-foreground">{t("table.cwe")}</span>
-                      <span className="text-right font-medium">{cwe || "-"}</span>
+                      <span className="text-muted-foreground">{t("table.primaryCwe")}</span>
+                      <span className="text-right font-medium">{cwePrimary || "-"}</span>
                     </div>
+                    {cweAdditional.length > 0 && (
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-muted-foreground">{t("table.additionalCwe")}</span>
+                        <span className="max-w-[60%] text-right font-medium">
+                          {cweAdditional.join(", ")}
+                        </span>
+                      </div>
+                    )}
+                    {evaluation && (
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-muted-foreground">{t("table.evaluation")}</span>
+                        <span className="text-right font-medium">{evaluation.label}</span>
+                      </div>
+                    )}
+                    {evaluation?.notes && (
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-muted-foreground">{t("table.notes")}</span>
+                        <span className="max-w-[60%] text-right font-medium">{evaluation.notes}</span>
+                      </div>
+                    )}
                     <div className="flex items-center justify-between gap-3">
                       <span className="text-muted-foreground">{t("table.nvdStatus")}</span>
                       <span className="text-right font-medium">{nvdStatus || "-"}</span>
@@ -218,13 +295,49 @@ export default async function CvePage({ params }: Props) {
                 <Card>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-semibold">
+                      {t("table.standardCvss")}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2 text-sm">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-muted-foreground">{t("table.score")}</span>
+                      <span className="font-medium">{score > 0 ? score.toFixed(1) : "-"}</span>
+                    </div>
+                    <div className="break-all text-muted-foreground">{vector || "-"}</div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm font-semibold">
+                      {t("table.assessment")}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2 text-sm">
+                    {evaluation ? (
+                      <>
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="text-muted-foreground">{t("table.evaluation")}</span>
+                          <span className="font-medium">{evaluation.label}</span>
+                        </div>
+                        <div className="break-all text-muted-foreground">{evaluation.vector}</div>
+                      </>
+                    ) : (
+                      <span className="text-muted-foreground">{t("redacted")}</span>
+                    )}
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm font-semibold">
                       {t("table.nvdRecord")}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    {nvdLink && nvdLink !== "#" ? (
+                    {sourceLinks.nvd && sourceLinks.nvd !== "#" ? (
                       <a
-                        href={nvdLink}
+                        href={sourceLinks.nvd}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
@@ -247,9 +360,9 @@ export default async function CvePage({ params }: Props) {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    {externalLink && externalLink !== "#" ? (
+                    {sourceLinks.upstream && sourceLinks.upstream !== "#" ? (
                       <a
-                        href={externalLink}
+                        href={sourceLinks.upstream}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
@@ -265,23 +378,23 @@ export default async function CvePage({ params }: Props) {
                   </CardContent>
                 </Card>
 
-                {cvssVector && (
+                {vector && (
                   <Card>
                     <CardHeader className="pb-2">
                       <CardTitle className="text-sm font-semibold">
-                        CVSS Vector
+                        {t("table.vector")}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="text-sm text-muted-foreground break-all">
-                      {cvssVector}
+                      {vector}
                     </CardContent>
                   </Card>
                 )}
 
-                {(!nvdLink || nvdLink === "#") && (!externalLink || externalLink === "#") && (
+                {visibility === "redacted" && (
                   <Card>
                     <CardContent className="pt-6 text-sm text-muted-foreground">
-                      This disclosure is intentionally redacted.
+                      {t("redactedDetails")}
                     </CardContent>
                   </Card>
                 )}

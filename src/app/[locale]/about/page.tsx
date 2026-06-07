@@ -446,7 +446,7 @@ export default async function AboutPage({ params }: Props) {
               {FEATURED_CVES.map((item) => (
                 <a
                   key={item.id}
-                  href={`/${locale}/cves/${item.id.toLowerCase()}/`}
+                  href={`/${locale}/cves/${item.slug}/`}
                   className="rounded-lg border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-accent/30"
                 >
                   <div className="flex items-center justify-between gap-2">
