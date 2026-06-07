@@ -11,7 +11,7 @@
     "language": "Idioma"
   },
   "home": {
-    "title": "0xrh0d4m1n",
+    "title": "Ph4nt0m",
     "description": "Investigación en seguridad y hacking defensivo. Notas, writeups y herramientas para red team, blue team, y para construir sistemas más seguros.",
     "goToBlog": "Ir al Blog",
     "sections": {
@@ -151,7 +151,7 @@
     "clickToReveal": "Haz clic para revelar"
   },
   "footer": {
-    "copyright": "© {year} 0xrh0d4m1n"
+    "copyright": "© {year} Ph4nt0m"
   },
   "translator": {
     "detected": "¡Idioma {locale} detectado!",
