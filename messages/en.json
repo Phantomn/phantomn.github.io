@@ -3,6 +3,7 @@
     "home": "Home",
     "about": "About",
     "blog": "Blog",
+    "cves": "CVE",
     "writeups": "Writeups",
     "toolbox": "Toolbox",
     "toggleMenu": "Toggle menu",
@@ -17,6 +18,10 @@
       "blog": {
         "label": "Blog",
         "description": "Technical notes on vulnerability research, OT/ICS security, and AI automation."
+      },
+      "cves": {
+        "label": "CVE",
+        "description": "A single archive for public disclosures, status tracking, and external references."
       },
       "writeups": {
         "label": "Writeups",
@@ -38,9 +43,38 @@
     "recentPosts": "Recent Posts",
     "featured": "Featured"
   },
+  "cves": {
+    "title": "CVE Registry",
+    "subtitle": "Single source of truth for my public disclosures, with status, severity, and primary links.",
+    "backToCves": "Back to CVE registry",
+    "searchPlaceholder": "Search by CVE, group, severity, or status...",
+    "summary": {
+      "total": "Total CVEs",
+      "totalLabel": "Current registry of public disclosures"
+    },
+    "facts": "Facts",
+    "table": {
+      "cve": "CVE",
+      "summary": "Summary",
+      "group": "Group",
+      "severity": "Severity",
+      "status": "Status",
+      "link": "Link"
+    },
+    "status": {
+      "published": "Published",
+      "pending": "Pending"
+    },
+    "open": "Open",
+    "openRegistry": "Open registry",
+    "detail": "Detail",
+    "external": "External link",
+    "all": "All",
+    "noResults": "No CVEs matched your filters."
+  },
   "writeups": {
     "title": "Writeups",
-    "subtitle": "Chronicles of my Cyber Battles \u2014 sortable & searchable archive of CTF and lab writeups.",
+    "subtitle": "Chronicles of my Cyber Battles — sortable & searchable archive of CTF and lab writeups.",
     "backToWriteups": "Back to Writeups",
     "searchPlaceholder": "Search by name, source, category, difficulty, or tag...",
     "unknownDifficulty": "Unknown",
@@ -59,6 +93,7 @@
     "sectionExperience": "Experience",
     "sectionEducation": "Education",
     "sectionCertifications": "Licenses & Certifications",
+    "sectionCves": "CVE Registry",
     "sectionSkills": "Skills",
     "sectionAchievements": "Achievements",
     "sectionProjects": "Projects",
@@ -66,7 +101,8 @@
     "sectionResume": "Resume",
     "contactInfo": "Contact info",
     "connections": "CVE {count}",
-    "downloadPdf": "Download PDF"
+    "downloadPdf": "Download PDF",
+    "openRegistry": "Open registry"
   },
   "sidebar": {
     "relatedPosts": "Related Posts",
@@ -97,7 +133,7 @@
   "translator": {
     "detected": "{locale} language detected!",
     "translating": "Translating content...",
-    "translationFailed": "Translation unavailable \u2014 showing original",
+    "translationFailed": "Translation unavailable — showing original",
     "poweredBy": "Translation by Lingva"
   }
 }

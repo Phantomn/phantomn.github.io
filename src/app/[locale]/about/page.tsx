@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Link2, Users, ShieldCheck } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,6 +17,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CertificationsSection } from "@/components/skills/certifications-section";
+import { CVE_COUNT, CVE_GROUPS, CVE_ITEMS } from "@/data/cves";
 import type {
   CertCompanyGroup,
   ExperienceItem,
@@ -44,10 +46,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const PROFILE = {
   name: "홍승표 (ph4nt0m)",
   headline:
-    "Offensive Security Researcher | Web/App · OT/ICS Pentesting | CVE 21 | AI Security Automation",
+    `Offensive Security Researcher | Web/App · OT/ICS Pentesting | CVE ${CVE_COUNT} | AI Security Automation`,
   location: "Seoul, South Korea",
   website: "mailto:newbiepwner@kakao.com",
-  connections: "21",
+  connections: String(CVE_COUNT),
   avatar: "/images/avatar.jpg",
   banner: "/images/banner.webp",
   currentCompany: {
@@ -56,7 +58,7 @@ const PROFILE = {
   },
 } as const;
 
-const ABOUT_TEXT = "NATO CCDCOE Locked Shields 2025 DFIR CTF 1위 · CVE 21건 보유. 금융권 Web/App 모의해킹과 약 5년간의 OT/ICS 보안 경험을 바탕으로, 공격자의 시각으로 시스템의 근본 취약점을 찾고 공인된 성과로 입증해온 Offensive Security Researcher입니다. Best of the Best 8기 과정에서 File System Fuzzer를 직접 설계·구현해 OS Kernel CVE 16건(0-day 포함)을 도출하고 CodeBlue·Hack In The Box에서 발표했습니다. 최근에는 IDA·Burp Suite·Frida·CodeQL을 MCP+A2A 기반으로 연결한 AI Orchestration Framework를 구현해 실제 점검 대상에 적용하며 Low~Medium 취약점을 자동 식별하는 결과를 얻었습니다.";
+const ABOUT_TEXT = `Offensive Security Researcher. CVE ${CVE_COUNT}건(OS Kernel 16 + IoT 5) 보유. 금융권 Web/App과 OT/ICS 점검, BoB 8기 커널 퍼징, 그리고 AI 기반 점검 자동화에 집중하고 있습니다. 상세 레지스트리는 /cves에서 관리합니다.`;
 
 const EXPERIENCE: ExperienceItem[] = [
   {
@@ -142,44 +144,11 @@ const SKILLS: SkillCategory[] = [
 
 const CERTIFICATIONS: CertCompanyGroup[] = [
   {
-    company: "Best of the Best (BoB) 8기 — OS Kernel CVE 16건",
-    logo: "/images/bob.png",
-    certs: [
-      { title: "CVE-2019-18885", src: "https://img.shields.io/badge/CVE--2019--18885-CVSS%205.5%20MEDIUM-orange?style=for-the-badge", href: "https://github.com/Phantomn/CVE/tree/master/CVE-2019-18885" },
-      { title: "CVE-2019-19036", src: "https://img.shields.io/badge/CVE--2019--19036-CVSS%205.5%20MEDIUM-orange?style=for-the-badge", href: "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19036" },
-      { title: "CVE-2019-19037", src: "https://img.shields.io/badge/CVE--2019--19037-CVSS%205.5%20MEDIUM-orange?style=for-the-badge", href: "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19037" },
-      { title: "CVE-2019-19039", src: "https://img.shields.io/badge/CVE--2019--19039-CVSS%205.5%20MEDIUM-orange?style=for-the-badge", href: "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19039" },
-      { title: "CVE-2019-19318", src: "https://img.shields.io/badge/CVE--2019--19318-CVSS%204.4%20MEDIUM-orange?style=for-the-badge", href: "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19318" },
-      { title: "CVE-2019-19319", src: "https://img.shields.io/badge/CVE--2019--19319-CVSS%206.5%20MEDIUM-orange?style=for-the-badge", href: "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19319" },
-      { title: "CVE-2019-19377", src: "https://img.shields.io/badge/CVE--2019--19377-CVSS%207.8%20HIGH-red?style=for-the-badge", href: "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19377" },
-      { title: "CVE-2019-19378", src: "https://img.shields.io/badge/CVE--2019--19378-CVSS%207.8%20HIGH-red?style=for-the-badge", href: "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19378" },
-      { title: "CVE-2019-19447", src: "https://img.shields.io/badge/CVE--2019--19447-CVSS%207.8%20HIGH-red?style=for-the-badge", href: "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19447" },
-      { title: "CVE-2019-19448", src: "https://img.shields.io/badge/CVE--2019--19448-CVSS%207.8%20HIGH-red?style=for-the-badge", href: "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19448" },
-      { title: "CVE-2019-19449", src: "https://img.shields.io/badge/CVE--2019--19449-CVSS%207.8%20HIGH-red?style=for-the-badge", href: "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19449" },
-      { title: "CVE-2019-19813", src: "https://img.shields.io/badge/CVE--2019--19813-CVSS%205.5%20MEDIUM-orange?style=for-the-badge", href: "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19813" },
-      { title: "CVE-2019-19814", src: "https://img.shields.io/badge/CVE--2019--19814-CVSS%207.8%20HIGH-red?style=for-the-badge", href: "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19814" },
-      { title: "CVE-2019-19815", src: "https://img.shields.io/badge/CVE--2019--19815-CVSS%205.5%20MEDIUM-orange?style=for-the-badge", href: "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19815" },
-      { title: "CVE-2019-19816", src: "https://img.shields.io/badge/CVE--2019--19816-CVSS%207.8%20HIGH-red?style=for-the-badge", href: "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19816" },
-      { title: "CVE-2019-19927", src: "https://img.shields.io/badge/CVE--2019--19927-CVSS%206.0%20MEDIUM-orange?style=for-the-badge", href: "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19927" },
-    ],
-  },
-  {
     company: "한국정보통신자격협회 (KAIT)",
     logo: "",
     certs: [
       { title: "리눅스 마스터 2급", src: "" },
       { title: "네트워크 관리사 2급", src: "" },
-    ],
-  },
-  {
-    company: "개인 취약점 연구 — IoT CVE 5건",
-    logo: "/images/cve.svg",
-    certs: [
-      { title: "CVE-2024-33788", src: "https://img.shields.io/badge/CVE--2024--33788-CVSS%208.0%20HIGH-red?style=for-the-badge", href: "https://github.com/0x0xxxx/CVE/tree/main/CVE-2024-33788" },
-      { title: "CVE-2024-33789", src: "https://img.shields.io/badge/CVE--2024--33789-CVE%20Pending-lightgrey?style=for-the-badge", href: "https://github.com/0x0xxxx/CVE/tree/main/CVE-2024-33789" },
-      { title: "CVE-2024-33791", src: "https://img.shields.io/badge/CVE--2024--33791-CVSS%204.6%20MEDIUM-orange?style=for-the-badge", href: "https://github.com/0x0xxxx/CVE/tree/main/CVE-2024-33791" },
-      { title: "CVE-2024-33792", src: "https://img.shields.io/badge/CVE--2024--33792-CVSS%209.8%20CRITICAL-critical?style=for-the-badge", href: "https://github.com/0x0xxxx/CVE/tree/main/CVE-2024-33792" },
-      { title: "CVE-2024-33793", src: "https://img.shields.io/badge/CVE--2024--33793-CVSS%205.3%20MEDIUM-orange?style=for-the-badge", href: "https://github.com/0x0xxxx/CVE/tree/main/CVE-2024-33793" },
     ],
   },
 ];
@@ -259,6 +228,10 @@ const LANGUAGES: LanguageItem[] = [
   { flag: "kr", name: "한국어", level: "Native" },
   { flag: "us", name: "English", level: "Conversational" },
 ];
+
+const FEATURED_CVES = [...CVE_ITEMS]
+  .sort((a, b) => b.year - a.year || a.id.localeCompare(b.id))
+  .slice(0, 4);
 
 const RESUME_LINKS: ResumeLink[] = [
   { label: "한국어 이력서", href: "/docs/resume-ko.pdf", flag: "kr" },
@@ -452,6 +425,48 @@ export default async function AboutPage({ params }: Props) {
         </CardContent>
       </Card>
 
+      {/* ── CVE Registry ───────────────────────────────────────── */}
+      <Card className="mt-4">
+        <CardHeader>
+          <CardTitle className="text-xl">{t("sectionCves")}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {CVE_GROUPS.map((group) => (
+                <div key={group.key} className="rounded-lg border bg-card p-4">
+                  <div className="text-sm font-semibold">{group.shortLabel}</div>
+                  <div className="mt-1 text-2xl font-bold font-heading">{group.count}</div>
+                  <div className="mt-1 text-xs text-muted-foreground">{group.label}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {FEATURED_CVES.map((item) => (
+                <a
+                  key={item.id}
+                  href={`/${locale}/cves/${item.id.toLowerCase()}/`}
+                  className="rounded-lg border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-accent/30"
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-semibold">{item.id}</span>
+                    <span className="text-xs text-muted-foreground">{item.year}</span>
+                  </div>
+                  <div className="mt-2 text-sm text-muted-foreground">{item.summary}</div>
+                </a>
+              ))}
+            </div>
+
+            <div className="flex justify-end">
+              <Button asChild variant="outline">
+                <Link href={`/${locale}/cves/`}>{t("openRegistry")}</Link>
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* ── Licenses & Certifications ───────────────────────────── */}
       <Card className="mt-4">
         <CardHeader>
@@ -505,9 +520,9 @@ export default async function AboutPage({ params }: Props) {
             {ACHIEVEMENTS.map((a) => (
               <a
                 key={a.name}
-                href={a.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={a.name.startsWith("CVE ") ? `/${locale}/cves/` : a.href}
+                target={a.name.startsWith("CVE ") ? undefined : "_blank"}
+                rel={a.name.startsWith("CVE ") ? undefined : "noopener noreferrer"}
                 className="flex items-center justify-center overflow-hidden rounded-lg border bg-card p-2 transition-colors hover:border-primary/40 hover:bg-accent/30"
               >
                 {a.badgeSrc ? (
