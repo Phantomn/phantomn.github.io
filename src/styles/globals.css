@@ -75,6 +75,23 @@
      heading hierarchy is visually distinct in light mode */
   --prose-h-accent: #0f766e;  /* teal */
   --prose-link-hover: #0f766e;
+
+  /* CVE registry tokens */
+  --cve-surface: #f7f7f7;
+  --cve-surface-strong: #ffffff;
+  --cve-surface-soft: #fbfbfb;
+  --cve-border: #e6e6e6;
+  --cve-border-strong: #cfcfcf;
+  --cve-accent: #121212;
+  --cve-accent-soft: rgba(18, 18, 18, 0.08);
+  --cve-danger: #dc2626;
+  --cve-warning: #d97706;
+  --cve-info: #0f766e;
+  --cve-muted: #717171;
+  --cve-focus: #121212;
+  --cve-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  --cve-radius: 18px;
+  --cve-radius-inner: 14px;
 }
 
 /*  Dark mode — the signature Ph4nt0m palette  */
@@ -110,6 +127,23 @@
      primary and create a hacker-terminal vibe in dark mode */
   --prose-h-accent: #58a6ff;  /* github blue */
   --prose-link-hover: #9fef00;
+
+  /* CVE registry tokens */
+  --cve-surface: #11161d;
+  --cve-surface-strong: #0d1117;
+  --cve-surface-soft: #1a2028;
+  --cve-border: #21262d;
+  --cve-border-strong: #9fef00;
+  --cve-accent: #9fef00;
+  --cve-accent-soft: rgba(159, 239, 0, 0.08);
+  --cve-danger: #ff5f57;
+  --cve-warning: #f59e0b;
+  --cve-info: #58a6ff;
+  --cve-muted: #8b949e;
+  --cve-focus: #9fef00;
+  --cve-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+  --cve-radius: 18px;
+  --cve-radius-inner: 14px;
 }
 
 @layer base {

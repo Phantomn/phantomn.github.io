@@ -53,6 +53,7 @@
     "facts": "메타 정보",
     "table": {
       "cve": "CVE",
+      "id": "ID",
       "summary": "요약",
       "group": "그룹",
       "kind": "유형",

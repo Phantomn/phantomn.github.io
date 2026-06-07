@@ -53,6 +53,7 @@
     "facts": "Datos",
     "table": {
       "cve": "CVE",
+      "id": "ID",
       "summary": "Resumen",
       "group": "Grupo",
       "kind": "Tipo",
