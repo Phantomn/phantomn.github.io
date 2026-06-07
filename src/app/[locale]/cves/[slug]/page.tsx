@@ -66,6 +66,12 @@ export default async function CvePage({ params }: Props) {
     status?: string;
     group?: string;
     externalLink?: string;
+    nvdLink?: string;
+    cvssBaseScore?: number;
+    cvssVector?: string;
+    cwe?: string;
+    nvdStatus?: string;
+    lastModified?: string;
     tags?: string[];
   };
 
@@ -81,6 +87,13 @@ export default async function CvePage({ params }: Props) {
   const group = fm.group ?? entry?.groupLabel ?? "";
   const summary = fm.summary ?? entry?.summary ?? "";
   const externalLink = fm.externalLink ?? entry?.href ?? "#";
+  const nvdLink = fm.nvdLink ?? entry?.nvdHref ?? "#";
+  const cvssBaseScore = fm.cvssBaseScore ?? entry?.cvssBaseScore ?? 0;
+  const cvssVector = fm.cvssVector ?? entry?.cvssVector ?? "";
+  const cwe = fm.cwe ?? entry?.cwe ?? "";
+  const nvdStatus = fm.nvdStatus ?? entry?.nvdStatus ?? "";
+  const published = fm.date ?? entry?.published ?? current?.meta.date ?? "";
+  const lastModified = fm.lastModified ?? entry?.lastModified ?? "";
 
   return (
     <>
@@ -108,10 +121,10 @@ export default async function CvePage({ params }: Props) {
                 {status === "pending" ? t("status.pending") : t("status.published")}
               </Badge>
               {group && <Badge variant="secondary">{group}</Badge>}
-              {current?.meta.date && (
+              {published && (
                 <Badge variant="outline">
                   {formatDate(
-                    current.meta.date,
+                    published,
                     { year: "numeric", month: "long", day: "numeric" },
                     toBcp47(locale),
                   )}
@@ -166,6 +179,36 @@ export default async function CvePage({ params }: Props) {
                       </span>
                     </div>
                     <div className="flex items-center justify-between gap-3">
+                      <span className="text-muted-foreground">{t("table.cvss")}</span>
+                      <span className="text-right font-medium">
+                        {cvssBaseScore.toFixed(1)}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-muted-foreground">{t("table.cwe")}</span>
+                      <span className="text-right font-medium">{cwe || "-"}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-muted-foreground">{t("table.nvdStatus")}</span>
+                      <span className="text-right font-medium">{nvdStatus || "-"}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-muted-foreground">{t("table.published")}</span>
+                      <span className="text-right font-medium">
+                        {published
+                          ? formatDate(published, { year: "numeric", month: "long", day: "numeric" }, toBcp47(locale))
+                          : "-"}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-muted-foreground">{t("table.modified")}</span>
+                      <span className="text-right font-medium">
+                        {lastModified
+                          ? formatDate(lastModified, { year: "numeric", month: "long", day: "numeric" }, toBcp47(locale))
+                          : "-"}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
                       <span className="text-muted-foreground">{t("table.cve")}</span>
                       <span className="text-right font-medium">{slug.toUpperCase()}</span>
                     </div>
@@ -175,7 +218,26 @@ export default async function CvePage({ params }: Props) {
                 <Card>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-semibold">
-                      {t("table.link")}
+                      {t("table.nvdRecord")}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <a
+                      href={nvdLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
+                    >
+                      {t("openNvd")}
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm font-semibold">
+                      {t("table.upstreamDisclosure")}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -185,11 +247,24 @@ export default async function CvePage({ params }: Props) {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
                     >
-                      {t("open")}
+                      {t("openDisclosure")}
                       <ExternalLink className="h-4 w-4" />
                     </a>
                   </CardContent>
                 </Card>
+
+                {cvssVector && (
+                  <Card>
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-sm font-semibold">
+                        CVSS Vector
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-sm text-muted-foreground break-all">
+                      {cvssVector}
+                    </CardContent>
+                  </Card>
+                )}
 
                 {fm.tags && fm.tags.length > 0 && (
                   <Card>
