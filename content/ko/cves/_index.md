@@ -1,18 +1,18 @@
 ---
-title: "CVE Registry"
-summary: "Canonical registry pages for the public CVEs in this portfolio, normalized from NVD records and linked to the upstream disclosures."
+title: CVE 레지스트리
+summary: 이 포트폴리오의 공개 CVE에 대한 표준 레지스트리 페이지는 NVD 기록에서 정규화되고 업스트림 공개에 연결됩니다.
 tags:
   - cve
   - nvd
   - registry
 ---
 
-## Overview
+## 개요
 
-This section is the canonical landing zone for the public CVEs on this site. Each entry mirrors the NVD record, keeps the upstream disclosure linked, and exposes a stable page for portfolio references.
+이 섹션은 이 사이트의 공개 CVE에 대한 표준 랜딩 존입니다. 각 항목은 NVD 기록을 미러링하고 업스트림 공개 링크를 유지하며 포트폴리오 참조를 위한 안정적인 페이지를 노출합니다.
 
-## How to read entries
+## 항목을 읽는 방법
 
-- NVD description is used as the main summary.
-- CVSS, CWE, publication date, and last-modified date are preserved in the frontmatter and sidebar facts.
-- The upstream disclosure remains available as a secondary reference.
+- NVD 설명이 주요 요약으로 사용됩니다.
+- CVSS, CWE, 발행일, 최종 수정일은 머리말과 사이드바 팩트에 보존됩니다.
+- 업스트림 공개는 2차 참고 자료로 계속 제공됩니다.

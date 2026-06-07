@@ -64,6 +64,8 @@ export interface CveEntry {
   sourceLinks: CveSourceLinks;
   evaluation?: CveEvaluation;
   redaction?: CveRedaction;
+  submittedAt?: string;
+  issuedAt?: string;
   tags: string[];
   nvdStatus: string;
 }
@@ -81,7 +83,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "title": "Linux kernel btrfs NULL pointer dereference",
     "year": 2019,
     "groupKey": "os-kernel",
-    "groupLabel": "Best of the Best 8 - BoBFuzzer",
+    "groupLabel": "Kernel",
     "severity": "high",
     "status": "published",
     "href": "https://github.com/Phantomn/CVE/tree/master/CVE-2019-18885",
@@ -99,7 +101,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "title": "Linux kernel btrfs root node NULL pointer dereference",
     "year": 2019,
     "groupKey": "os-kernel",
-    "groupLabel": "Best of the Best 8 - BoBFuzzer",
+    "groupLabel": "Kernel",
     "severity": "medium",
     "status": "published",
     "href": "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19036",
@@ -117,7 +119,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "title": "Linux kernel ext4 NULL pointer dereference",
     "year": 2019,
     "groupKey": "os-kernel",
-    "groupLabel": "Best of the Best 8 - BoBFuzzer",
+    "groupLabel": "Kernel",
     "severity": "medium",
     "status": "published",
     "href": "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19037",
@@ -135,7 +137,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "title": "Linux kernel btrfs information disclosure",
     "year": 2019,
     "groupKey": "os-kernel",
-    "groupLabel": "Best of the Best 8 - BoBFuzzer",
+    "groupLabel": "Kernel",
     "severity": "medium",
     "status": "published",
     "href": "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19039",
@@ -153,7 +155,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "title": "Linux kernel btrfs use-after-free",
     "year": 2019,
     "groupKey": "os-kernel",
-    "groupLabel": "Best of the Best 8 - BoBFuzzer",
+    "groupLabel": "Kernel",
     "severity": "medium",
     "status": "published",
     "href": "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19318",
@@ -171,7 +173,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "title": "Linux kernel ext4 slab out-of-bounds write",
     "year": 2019,
     "groupKey": "os-kernel",
-    "groupLabel": "Best of the Best 8 - BoBFuzzer",
+    "groupLabel": "Kernel",
     "severity": "medium",
     "status": "published",
     "href": "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19319",
@@ -189,7 +191,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "title": "Linux kernel btrfs use-after-free",
     "year": 2019,
     "groupKey": "os-kernel",
-    "groupLabel": "Best of the Best 8 - BoBFuzzer",
+    "groupLabel": "Kernel",
     "severity": "high",
     "status": "published",
     "href": "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19377",
@@ -207,7 +209,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "title": "Linux kernel btrfs slab out-of-bounds write",
     "year": 2019,
     "groupKey": "os-kernel",
-    "groupLabel": "Best of the Best 8 - BoBFuzzer",
+    "groupLabel": "Kernel",
     "severity": "high",
     "status": "published",
     "href": "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19378",
@@ -225,7 +227,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "title": "Linux kernel ext4 use-after-free",
     "year": 2019,
     "groupKey": "os-kernel",
-    "groupLabel": "Best of the Best 8 - BoBFuzzer",
+    "groupLabel": "Kernel",
     "severity": "high",
     "status": "published",
     "href": "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19447",
@@ -243,7 +245,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "title": "Linux kernel btrfs use-after-free",
     "year": 2019,
     "groupKey": "os-kernel",
-    "groupLabel": "Best of the Best 8 - BoBFuzzer",
+    "groupLabel": "Kernel",
     "severity": "high",
     "status": "published",
     "href": "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19448",
@@ -261,7 +263,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "title": "Linux kernel f2fs slab out-of-bounds read",
     "year": 2019,
     "groupKey": "os-kernel",
-    "groupLabel": "Best of the Best 8 - BoBFuzzer",
+    "groupLabel": "Kernel",
     "severity": "high",
     "status": "published",
     "href": "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19449",
@@ -279,7 +281,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "title": "Linux kernel btrfs use-after-free",
     "year": 2019,
     "groupKey": "os-kernel",
-    "groupLabel": "Best of the Best 8 - BoBFuzzer",
+    "groupLabel": "Kernel",
     "severity": "medium",
     "status": "published",
     "href": "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19813",
@@ -297,7 +299,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "title": "Linux kernel f2fs slab out-of-bounds write",
     "year": 2019,
     "groupKey": "os-kernel",
-    "groupLabel": "Best of the Best 8 - BoBFuzzer",
+    "groupLabel": "Kernel",
     "severity": "high",
     "status": "published",
     "href": "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19814",
@@ -315,7 +317,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "title": "Linux kernel f2fs NULL pointer dereference",
     "year": 2019,
     "groupKey": "os-kernel",
-    "groupLabel": "Best of the Best 8 - BoBFuzzer",
+    "groupLabel": "Kernel",
     "severity": "medium",
     "status": "published",
     "href": "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19815",
@@ -333,7 +335,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "title": "Linux kernel btrfs slab out-of-bounds write",
     "year": 2019,
     "groupKey": "os-kernel",
-    "groupLabel": "Best of the Best 8 - BoBFuzzer",
+    "groupLabel": "Kernel",
     "severity": "high",
     "status": "published",
     "href": "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19816",
@@ -351,7 +353,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "title": "Linux kernel ttm slab out-of-bounds read",
     "year": 2019,
     "groupKey": "os-kernel",
-    "groupLabel": "Best of the Best 8 - BoBFuzzer",
+    "groupLabel": "Kernel",
     "severity": "medium",
     "status": "published",
     "href": "https://github.com/Phantomn/CVE/tree/master/CVE-2019-19927",
@@ -495,7 +497,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
 const CVE_GROUP_DEFINITIONS = [
   {
     key: "os-kernel",
-    label: "Best of the Best 8 - BoBFuzzer",
+    label: "Kernel",
     shortLabel: "Kernel",
   },
   {
@@ -593,6 +595,18 @@ function normalizeCveEntry(entry: LegacyCveEntry): CveEntry {
     },
     evaluation: toEvaluation(entry),
     redaction: toRedaction(entry),
+    submittedAt:
+      entry.id === "FVE-2026-8617-74507"
+        ? "2026-05-18"
+        : entry.id === "FVE-2026-8617-74513"
+          ? "2026-05-20"
+          : undefined,
+    issuedAt:
+      entry.id === "FVE-2026-8617-74507"
+        ? "2026-05-29"
+        : entry.id === "FVE-2026-8617-74513"
+          ? "2026-06-05"
+          : undefined,
     tags: [
       kind,
       entry.groupKey,

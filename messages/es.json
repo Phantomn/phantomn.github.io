@@ -74,6 +74,8 @@
       "assessment": "Detalles de evaluación",
       "nvdStatus": "Estado en NVD",
       "published": "Publicado",
+      "submittedAt": "Enviado",
+      "issuedAt": "Emitido",
       "modified": "Modificado",
       "nvdRecord": "Registro NVD",
       "upstreamDisclosure": "Divulgación original"
