@@ -1,4 +1,4 @@
-# 0xrh0d4m1n.tech
+# Ph4nt0m.tech
 
 Personal cybersecurity portfolio and blog.
 Built with **Next.js 15**, **shadcn/ui**, **Tailwind CSS v4**, and **MDX**.
