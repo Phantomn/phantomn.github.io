@@ -58,7 +58,7 @@ const PROFILE = {
   },
 } as const;
 
-const ABOUT_TEXT = `Offensive Security Researcher. CVE ${CVE_COUNT}건(OS Kernel 16 + IoT 5) 보유. 금융권 Web/App과 OT/ICS 점검, BoB 8기 커널 퍼징, 그리고 AI 기반 점검 자동화에 집중하고 있습니다. 상세 레지스트리는 /cves에서 관리합니다.`;
+const ABOUT_TEXT = `Offensive Security Researcher. CVE ${CVE_COUNT}건(Kernel 16 + IoT 5) 보유. 금융권 Web/App과 OT/ICS 점검, BoB 8기 커널 퍼징, 그리고 AI 기반 점검 자동화에 집중하고 있습니다. 상세 레지스트리는 /cves에서 관리합니다.`;
 
 const EXPERIENCE: ExperienceItem[] = [
   {
@@ -218,7 +218,7 @@ const ACHIEVEMENTS: AchievementItem[] = [
     badgeSrc: "/images/ccdcoe.png",
   },
   {
-    name: "CVE 21건 (OS Kernel 16 + IoT 5)",
+    name: "CVE 21건 (Kernel 16 + IoT 5)",
     href: "https://www.cve.org/",
     badgeSrc: "https://img.shields.io/badge/CVE_21%EA%B1%B4-OS_Kernel_16_%2B_IoT_5-red?style=for-the-badge&logo=linux&logoColor=white",
   },

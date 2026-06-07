@@ -21,7 +21,7 @@
       },
       "cves": {
         "label": "CVE",
-        "description": "공개 취약점 레지스트리와 상태, 외부 레퍼런스를 한곳에 모아둔 아카이브."
+        "description": "공개 취약점 상태, 외부 레퍼런스를 한곳에 모아둔 아카이브."
       },
       "writeups": {
         "label": "라이트업",
@@ -44,13 +44,13 @@
     "featured": "추천"
   },
   "cves": {
-    "title": "CVE 레지스트리",
-    "subtitle": "내 공개 취약점의 단일 원장. 상태, 심각도, 그룹, 외부 링크를 함께 관리합니다.",
-    "backToCves": "CVE 레지스트리로 돌아가기",
+    "title": "CVEs",
+    "subtitle": "내가 찾은 취약점. 상태, 심각도, 그룹, 외부 링크를 함께 관리합니다.",
+    "backToCves": "CVEs 돌아가기",
     "searchPlaceholder": "CVE, 그룹, 심각도, 상태로 검색...",
     "summary": {
       "total": "전체 CVE",
-      "totalLabel": "공개 취약점의 현재 원장"
+      "totalLabel": "공개 취약점"
     },
     "facts": "메타 정보",
     "table": {
@@ -59,7 +59,14 @@
       "group": "그룹",
       "severity": "심각도",
       "status": "상태",
-      "link": "링크"
+      "link": "링크",
+      "cvss": "CVSS",
+      "cwe": "CWE",
+      "nvdStatus": "NVD 상태",
+      "published": "발행일",
+      "modified": "수정일",
+      "nvdRecord": "NVD 레코드",
+      "upstreamDisclosure": "원문 공개"
     },
     "status": {
       "published": "공개",
@@ -67,6 +74,8 @@
     },
     "open": "열기",
     "openRegistry": "열기",
+    "openNvd": "NVD 열기",
+    "openDisclosure": "원문 열기",
     "detail": "상세",
     "external": "외부 링크",
     "all": "전체",
@@ -93,7 +102,7 @@
     "sectionExperience": "경력",
     "sectionEducation": "학력",
     "sectionCertifications": "자격증 & 수상",
-    "sectionCves": "CVE 레지스트리",
+    "sectionCves": "CVEs",
     "sectionSkills": "기술",
     "sectionAchievements": "성과",
     "sectionProjects": "프로젝트",
