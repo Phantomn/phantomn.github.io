@@ -45,12 +45,10 @@
   },
   "cves": {
     "title": "CVEs",
-    "subtitle": "내가 찾은 취약점. 상태, 심각도, 그룹, 외부 링크를 함께 관리합니다.",
     "backToCves": "CVEs 돌아가기",
     "searchPlaceholder": "CVE, 그룹, 심각도, 상태로 검색...",
     "summary": {
-      "total": "전체 CVE",
-      "totalLabel": "공개 취약점"
+      "total": "전체 CVE"
     },
     "facts": "메타 정보",
     "table": {
@@ -67,7 +65,7 @@
       "cwe": "CWE",
       "primaryCwe": "CWE",
       "additionalCwe": "추가 CWE",
-      "evaluation": "평가 결과",
+      "evaluation": "Severity",
       "notes": "비고",
       "published": "발행일",
       "submittedAt": "제출일",
