@@ -410,8 +410,8 @@ export const CVE_ITEMS: CveEntry[] = [
     "id": "FVE-2026-8617-74507",
     "title": "Masked web disclosure from Findthegap bug bounty platform",
     "year": 2026,
-    "groupKey": "findthegap",
-    "groupLabel": "Findthegap - Bug Bounty Platform",
+    "groupKey": "web",
+    "groupLabel": "Web",
     "severity": "pending",
     "status": "published",
     "href": "#",
@@ -428,8 +428,8 @@ export const CVE_ITEMS: CveEntry[] = [
     "id": "FVE-2026-8617-74513",
     "title": "Masked web disclosure from Findthegap bug bounty platform",
     "year": 2026,
-    "groupKey": "findthegap",
-    "groupLabel": "Findthegap - Bug Bounty Platform",
+    "groupKey": "web",
+    "groupLabel": "Web",
     "severity": "pending",
     "status": "published",
     "href": "#",
@@ -460,9 +460,9 @@ export const CVE_GROUPS: CveGroupSummary[] = [
     "count": 5
   },
   {
-    "key": "findthegap",
-    "label": "Findthegap - Bug Bounty Platform",
-    "shortLabel": "Findthegap",
+    "key": "web",
+    "label": "Web",
+    "shortLabel": "Web",
     "count": 2
   }
 ];
