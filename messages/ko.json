@@ -3,6 +3,7 @@
     "home": "홈",
     "about": "소개",
     "blog": "블로그",
+    "cves": "CVE",
     "writeups": "라이트업",
     "toolbox": "도구",
     "toggleMenu": "메뉴 토글",
@@ -17,6 +18,10 @@
       "blog": {
         "label": "블로그",
         "description": "취약점 연구, OT/ICS 보안, AI 자동화에 관한 기술 노트."
+      },
+      "cves": {
+        "label": "CVE",
+        "description": "공개 취약점 레지스트리와 상태, 외부 레퍼런스를 한곳에 모아둔 아카이브."
       },
       "writeups": {
         "label": "라이트업",
@@ -37,6 +42,35 @@
     "noResults": "게시물을 찾을 수 없습니다.",
     "recentPosts": "최근 게시물",
     "featured": "추천"
+  },
+  "cves": {
+    "title": "CVE 레지스트리",
+    "subtitle": "내 공개 취약점의 단일 원장. 상태, 심각도, 그룹, 외부 링크를 함께 관리합니다.",
+    "backToCves": "CVE 레지스트리로 돌아가기",
+    "searchPlaceholder": "CVE, 그룹, 심각도, 상태로 검색...",
+    "summary": {
+      "total": "전체 CVE",
+      "totalLabel": "공개 취약점의 현재 원장"
+    },
+    "facts": "메타 정보",
+    "table": {
+      "cve": "CVE",
+      "summary": "요약",
+      "group": "그룹",
+      "severity": "심각도",
+      "status": "상태",
+      "link": "링크"
+    },
+    "status": {
+      "published": "공개",
+      "pending": "대기"
+    },
+    "open": "열기",
+    "openRegistry": "열기",
+    "detail": "상세",
+    "external": "외부 링크",
+    "all": "전체",
+    "noResults": "조건에 맞는 CVE가 없습니다."
   },
   "writeups": {
     "title": "라이트업",
@@ -59,6 +93,7 @@
     "sectionExperience": "경력",
     "sectionEducation": "학력",
     "sectionCertifications": "자격증 & 수상",
+    "sectionCves": "CVE 레지스트리",
     "sectionSkills": "기술",
     "sectionAchievements": "성과",
     "sectionProjects": "프로젝트",
@@ -66,7 +101,8 @@
     "sectionResume": "이력서",
     "contactInfo": "연락처",
     "connections": "CVE {count}건",
-    "downloadPdf": "PDF 다운로드"
+    "downloadPdf": "PDF 다운로드",
+    "openRegistry": "열기"
   },
   "sidebar": {
     "relatedPosts": "관련 게시물",
