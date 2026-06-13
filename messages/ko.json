@@ -2,6 +2,7 @@
   "nav": {
     "home": "홈",
     "about": "소개",
+    "portfolio": "포트폴리오",
     "blog": "블로그",
     "cves": "CVE",
     "writeups": "라이트업",
@@ -119,6 +120,23 @@
     "connections": "CVE {count}건",
     "downloadPdf": "PDF 다운로드",
     "openRegistry": "열기"
+  },
+  "portfolio": {
+    "title": "포트폴리오",
+    "sectionSummary": "요약",
+    "sectionCompetencies": "핵심 역량",
+    "sectionFeatured": "주요 프로젝트",
+    "sectionExperience": "경력",
+    "sectionProjects": "전체 프로젝트",
+    "sectionSkills": "기술",
+    "sectionCves": "취약점 연구 (CVE)",
+    "sectionCredentials": "자격증 · 학력",
+    "labelActions": "주요 수행",
+    "labelResults": "성과",
+    "labelCertifications": "자격증",
+    "labelEducation": "학력",
+    "downloadPdf": "경력기술서 다운로드",
+    "openRegistry": "전체 보기"
   },
   "sidebar": {
     "relatedPosts": "관련 게시물",

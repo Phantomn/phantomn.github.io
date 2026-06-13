@@ -2,6 +2,7 @@
   "nav": {
     "home": "Início",
     "about": "Sobre",
+    "portfolio": "Portfólio",
     "blog": "Blog",
     "cves": "CVE",
     "writeups": "Writeups",
@@ -125,6 +126,23 @@
     "connections": "{count} CVEs",
     "downloadPdf": "Baixar PDF",
     "openRegistry": "Abrir registro"
+  },
+  "portfolio": {
+    "title": "Portfólio",
+    "sectionSummary": "Resumo",
+    "sectionCompetencies": "Competências Principais",
+    "sectionFeatured": "Projetos em Destaque",
+    "sectionExperience": "Experiência",
+    "sectionProjects": "Todos os Projetos",
+    "sectionSkills": "Habilidades",
+    "sectionCves": "Pesquisa de Vulnerabilidades (CVE)",
+    "sectionCredentials": "Certificações e Educação",
+    "labelActions": "Ações Principais",
+    "labelResults": "Resultados",
+    "labelCertifications": "Certificações",
+    "labelEducation": "Educação",
+    "downloadPdf": "Baixar Currículo",
+    "openRegistry": "Ver Tudo"
   },
   "sidebar": {
     "relatedPosts": "Posts Relacionados",

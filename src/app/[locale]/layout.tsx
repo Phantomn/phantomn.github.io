@@ -26,9 +26,13 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
       <LocaleHtmlLang locale={locale} />
-      <SiteHeader />
+      <div className="print:hidden">
+        <SiteHeader />
+      </div>
       <main className="flex-1">{children}</main>
-      <SiteFooter />
+      <div className="print:hidden">
+        <SiteFooter />
+      </div>
     </NextIntlClientProvider>
   );
 }

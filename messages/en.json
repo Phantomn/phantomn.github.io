@@ -2,6 +2,7 @@
   "nav": {
     "home": "Home",
     "about": "About",
+    "portfolio": "Portfolio",
     "blog": "Blog",
     "cves": "CVE",
     "writeups": "Writeups",
@@ -125,6 +126,23 @@
     "connections": "CVE {count}",
     "downloadPdf": "Download PDF",
     "openRegistry": "Open registry"
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "sectionSummary": "Summary",
+    "sectionCompetencies": "Core Competencies",
+    "sectionFeatured": "Featured Projects",
+    "sectionExperience": "Experience",
+    "sectionProjects": "All Projects",
+    "sectionSkills": "Skills",
+    "sectionCves": "Vulnerability Research (CVE)",
+    "sectionCredentials": "Certifications & Education",
+    "labelActions": "Key Actions",
+    "labelResults": "Results",
+    "labelCertifications": "Certifications",
+    "labelEducation": "Education",
+    "downloadPdf": "Download Career Statement",
+    "openRegistry": "View All"
   },
   "sidebar": {
     "relatedPosts": "Related Posts",
