@@ -44,3 +44,6 @@ tests/playwright-report/
 /tasks/
 Obsidian/
 Notion_export/
+
+# RenderCV build output
+scripts/cv/rendercv_output/

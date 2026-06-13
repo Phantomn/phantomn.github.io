@@ -1,44 +1,39 @@
 #!/usr/bin/env bash
-# 경력기술서 PDF 생성
+# 경력기술서 PDF 생성 (RenderCV)
 #
-# portfolio 페이지(/ko/portfolio/)를 print CSS(RenderCV classic 룩)와 함께
-# headless Chrome으로 PDF화하여 public/docs/career-statement-ko.pdf 에 저장한다.
+# scripts/cv/career-statement-ko.yaml (portfolio 24개 프로젝트 STAR)을
+# RenderCV(YAML→Typst→PDF, classic 테마·Pretendard)로 렌더해
+# public/docs/career-statement-ko.pdf 에 배치한다.
 #
-# 사전조건: `pnpm build` 로 out/ 이 최신 상태여야 한다.
+# 사전조건:
+#   - rendercv 설치:  pip install "rendercv[full]"   (Typst 번들 포함)
+#   - Pretendard 폰트: scripts/cv/fonts/Pretendard-*.ttf (RenderCV가 자동 임베드)
 # 사용법: bash scripts/generate-career-pdf.sh
 
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-OUT_DIR="$ROOT/out"
+CV_DIR="$ROOT/scripts/cv"
 DOCS_DIR="$ROOT/public/docs"
-PORT=8123
-CHROME="${CHROME_BIN:-google-chrome-stable}"
+YAML="career-statement-ko.yaml"
+TARGET="$DOCS_DIR/career-statement-ko.pdf"
 
-if [ ! -d "$OUT_DIR/ko/portfolio" ]; then
-  echo "✗ out/ko/portfolio 없음 — 먼저 'pnpm build' 실행" >&2
+command -v rendercv >/dev/null 2>&1 || {
+  echo "✗ rendercv 미설치 — 'pip install \"rendercv[full]\"' 실행" >&2
   exit 1
-fi
+}
 
 mkdir -p "$DOCS_DIR"
 
-# 정적 서버 기동 (이 스크립트 수명 동안만)
-python3 -m http.server "$PORT" --directory "$OUT_DIR" >/dev/null 2>&1 &
-SERVER_PID=$!
-trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
-sleep 2
+# RenderCV 렌더 (yaml 디렉토리에서 실행해야 fonts/ 자동 인식)
+( cd "$CV_DIR" && rendercv render "$YAML" >/dev/null )
 
-URL="http://localhost:$PORT/ko/portfolio/index.html"
-TARGET="$DOCS_DIR/career-statement-ko.pdf"
-
-"$CHROME" --headless --disable-gpu --no-sandbox \
-  --no-pdf-header-footer \
-  --print-to-pdf="$TARGET" \
-  "$URL" 2>/dev/null
-
-if [ -f "$TARGET" ]; then
-  echo "✓ 생성: $TARGET ($(du -h "$TARGET" | cut -f1))"
-else
-  echo "✗ PDF 생성 실패" >&2
+# RenderCV 출력 PDF (cv.name 기반 파일명) → 고정 경로로 복사
+GENERATED="$(find "$CV_DIR/rendercv_output" -maxdepth 1 -name '*.pdf' -print -quit)"
+if [ -z "$GENERATED" ]; then
+  echo "✗ RenderCV PDF 생성 실패" >&2
   exit 1
 fi
+
+cp "$GENERATED" "$TARGET"
+echo "✓ 생성: $TARGET ($(du -h "$TARGET" | cut -f1), $(basename "$GENERATED"))"
