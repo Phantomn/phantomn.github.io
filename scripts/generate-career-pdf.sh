@@ -4,9 +4,10 @@
 # scripts/cv/*.yaml 을 RenderCV(YAML→Typst→PDF, classic 테마·Pretendard)로
 # 렌더해 public/docs/ 에 배치한다.
 #
-#   career-statement-ko.yaml  → public/docs/career-statement-ko.pdf  (경력기술서, /portfolio)
-#   Hong_Seungpyo_CV_kor.yaml → public/docs/resume-ko.pdf            (한글 이력서, /about)
-#   Hong_Seungpyo_CV.yaml     → public/docs/resume-en.pdf            (영문 이력서, /about)
+#   career-statement-ko.yaml   → public/docs/career-statement-ko.pdf (경력기술서, /portfolio)
+#   Hong_Seungpyo_CV_kor.yaml  → public/docs/resume-ko.pdf           (한글 이력서, /about)
+#   Hong_Seungpyo_CV.yaml      → public/docs/resume-en.pdf           (영문 이력서, /about)
+#   Hong_Seungpyo_CV_xbow.yaml → public/docs/resume-xbow.pdf         (지원처 맞춤 이력서)
 #
 # 주의: career-statement-ko 와 한글 이력서는 cv.name 이 같아 RenderCV 출력
 #       파일명(홍승표_CV.pdf)이 충돌한다. 각 렌더 직후 즉시 고정명으로 복사한다.
@@ -41,8 +42,9 @@ render() {
   echo "✓ $target ($(du -h "$DOCS_DIR/$target" | cut -f1))"
 }
 
-render "career-statement-ko.yaml"  "홍승표_CV.pdf"        "career-statement-ko.pdf"
-render "Hong_Seungpyo_CV_kor.yaml" "홍승표_CV.pdf"        "resume-ko.pdf"
-render "Hong_Seungpyo_CV.yaml"     "Seungpyo_Hong_CV.pdf" "resume-en.pdf"
+render "career-statement-ko.yaml"   "홍승표_CV.pdf"        "career-statement-ko.pdf"
+render "Hong_Seungpyo_CV_kor.yaml"  "홍승표_CV.pdf"        "resume-ko.pdf"
+render "Hong_Seungpyo_CV.yaml"      "Seungpyo_Hong_CV.pdf" "resume-en.pdf"
+render "Hong_Seungpyo_CV_xbow.yaml" "Seungpyo_Hong_CV.pdf" "resume-xbow.pdf"
 
 echo "완료 — public/docs/ 갱신"
