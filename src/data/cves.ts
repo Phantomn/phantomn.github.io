@@ -491,6 +491,24 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "published": "2026-06-07",
     "lastModified": "2026-06-07",
     "nvdStatus": "Redacted"
+  },
+  {
+    "id": "FVE-2026-8617-74526",
+    "title": "Masked web disclosure from Findthegap bug bounty platform",
+    "year": 2026,
+    "groupKey": "web",
+    "groupLabel": "Web",
+    "severity": "high",
+    "status": "published",
+    "href": "#",
+    "nvdHref": "#",
+    "summary": "Public details are intentionally redacted. Product, vendor, endpoint, parameter, and reproduction steps are withheld.",
+    "cvssBaseScore": 7.5,
+    "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-639 / CWE-306",
+    "published": "2026-06-11",
+    "lastModified": "2026-06-11",
+    "nvdStatus": "Redacted"
   }
 ];
 

@@ -42,7 +42,7 @@ const PROFILE = {
   name: "홍승표 (ph4nt0m)",
   headline:
     "Offensive Security Researcher · Web/App · OT/ICS Pentesting · 보안 컨설팅",
-  summary: `금융권 Web/App 모의해킹부터 OT/ICS(IEC 62443)·IoT·의료기기(FDA) 보안, 사이버 공방 훈련 개발까지 ${PORTFOLIO_PROJECT_COUNT}건 이상의 프로젝트를 수행했습니다. LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득, NATO CCDCOE Locked Shields 2025 DFIR CTF 1위, Linux Kernel CVE ${CVE_COUNT}건 보유.`,
+  summary: `금융권 Web/App 모의해킹부터 OT/ICS(IEC 62443)·IoT·의료기기(FDA) 보안, 사이버 공방 훈련 개발까지 ${PORTFOLIO_PROJECT_COUNT}건 이상의 프로젝트를 수행했습니다. LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득, NATO CCDCOE Locked Shields 2025 DFIR CTF 1위, Linux Kernel CVE 16건·IoT CVE 5건·FVE 3건 보유.`,
   location: "Seoul, South Korea",
   email: "newbiepwner@kakao.com",
   avatar: "/images/avatar.jpg",
