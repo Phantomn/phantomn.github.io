@@ -1,0 +1,124 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.8/schema.json
+cv:
+  name: Seungpyo Hong
+  headline: Offensive Security Researcher
+  email: newbiepwner@kakao.com
+  location: Seoul, South Korea
+  website: https://phantomn.github.io
+  social_networks:
+    - network: GitHub
+      username: phantomn
+    - network: LinkedIn
+      username: ph4nt0m
+
+  sections:
+    summary:
+      - "Offensive Security Researcher with 6 years of hands-on penetration testing and vulnerability research. Derived **21 CVEs** (OS Kernel 16 + IoT 5) through independent fuzzing and reverse engineering. Built an AI Orchestration Framework that autonomously identifies vulnerabilities on live targets — using IDA Pro, Burp Suite, Frida, and CodeQL orchestrated via MCP + A2A. NATO CCDCOE Locked Shields 2025 DFIR CTF #1."
+
+    experience:
+      - company: CoreSecurity
+        position: ICS Security Researcher (Senior)
+        location: Seoul, South Korea
+        start_date: 2021-06
+        end_date: present
+        highlights:
+          - "Triage and validate vulnerabilities across OT/ICS, IoT, and medical device targets — distinguishing exploitable issues from false positives with reproducible PoCs"
+          - "IEC 62443-4-2 Threat Modeling & pentesting — contributed to LS ELECTRIC Achilles Level 2 certification; delivered structured findings to engineering and certification teams"
+          - "Designed and developed automated security assessment tooling for vulnerability detection across smart building IoT infrastructure"
+          - "Built AI-driven offensive pipeline (MCP + A2A): orchestrates IDA Pro, Burp Suite, Frida, CodeQL to auto-identify Low–Medium vulnerabilities on live pentest targets"
+          - "ELECCON (KEPCO) 2021–2024: 4-year operation of national OT/ICS red-vs-blue exercise — attack scenario design, PoC development, and blue team evaluation"
+          - "**NATO CCDCOE Locked Shields 2025** — DFIR CTF **#1 place** out of all participating nations"
+          - "APEX CTF 2025 DFIR challenge author (May–Sep 2025)"
+
+      - company: A3 Security
+        position: Web/App Pentester
+        location: Seoul, South Korea
+        start_date: 2020-06
+        end_date: 2021-06
+        highlights:
+          - "12 web/app penetration tests against financial and public-sector targets — delivered reproducible, severity-ranked findings with PoC evidence to clients"
+          - "Avg. 1–2 high-risk vulnerabilities per engagement: auth bypass, business logic flaws, privilege escalation"
+          - "Reviewed non-standard targets (KT GiGA Genie IoT, NH RPA, thermal sensors) — adapted methodology to unfamiliar attack surfaces"
+          - "Customer-facing reporting and remediation validation — translated technical findings for engineering and compliance stakeholders"
+
+    education:
+      - institution: Kongju National University
+        area: Computer Science
+        degree: BS
+        location: Chungnam, South Korea
+        start_date: 2012-02
+        end_date: 2020-02
+
+    vulnerability_research:
+      - label: "OS Kernel CVEs (16) — Best of the Best 8th Cohort, 2019"
+        details: "Designed and implemented a custom coverage-guided File System Fuzzer from scratch. Identified, triaged, and reproduced 16 Linux kernel vulnerabilities (0-day + 1-day), including CVSS 7.8 HIGH issues. Delivered PoCs and root cause analysis. Presented at **CodeBlue 2019** (Tokyo) & **Hack In The Box 2019** (Amsterdam). CVE-2019-18885, 19036, 19037, 19039, 19318, 19319, 19377, 19378, 19447, 19448, 19449, 19813, 19814, 19815, 19816, 19927"
+
+      - label: "IoT CVEs (5) — Independent Research, 2024"
+        details: "Reverse-engineered embedded firmware; identified and reproduced vulnerabilities with full PoC chains. CVE-2024-33789 & CVE-2024-33792 (CVSS **9.8 CRITICAL**), CVE-2024-33788 (CVSS 8.0 HIGH), CVE-2024-33791 (CVSS 4.6), CVE-2024-33793 (CVSS 5.3)"
+
+    projects:
+      - name: AI Offensive Security Orchestration Framework
+        date: "2024 – present"
+        highlights:
+          - "Autonomous vulnerability identification pipeline: IDA Pro, Burp Suite, Frida, CodeQL connected via MCP + A2A protocol"
+          - "LLM agent triages scan output, separates exploitable findings from noise, generates structured reports"
+          - "Validated on live pentest targets — consistently surfaces Low–Medium findings that manual scans miss"
+          - "RAG pipeline (n8n · pgvector) provides real-time context from IEC 62443, ISO 27001, and past exploit patterns"
+
+      - name: "ELECCON — National OT/ICS Cyber Warfare Exercise"
+        date: "2021 – 2024"
+        highlights:
+          - "4-year consecutive design and operation of KEPCO's national red-vs-blue exercise"
+          - "Developed SCADA/PLC exploit scenarios and blue team scoring metrics"
+
+      - name: File System Fuzzer (BoB 8th Cohort)
+        date: "2019"
+        highlights:
+          - "Built coverage-guided fuzzer targeting Linux kernel filesystem code → 16 CVEs"
+          - "Full exploit chain: fuzzing → crash triage → root cause analysis → PoC → CVE submission"
+
+    skills:
+      - label: Offensive Tooling
+        details: "Burp Suite, IDA Pro, Frida, CodeQL, pwndbg, Metasploit, Nmap, Ghidra, custom scripts"
+
+      - label: Vulnerability Research
+        details: "Fuzzing (coverage-guided, stateful), exploit development, reverse engineering (firmware/kernel), PoC crafting, root cause analysis"
+
+      - label: AI Security Automation
+        details: "MCP + A2A orchestration, LangGraph, VoltAgent, n8n, RAG (pgvector), Claude Code"
+
+      - label: Pentest Domains
+        details: "Web/App, OT/ICS, IoT/Embedded, Medical Device"
+
+      - label: Standards & Communication
+        details: "IEC 62443-4-2, FDA 510(k)/eSTAR · Korean (Native), English (Professional working)"
+
+design:
+  theme: classic
+  colors:
+    name: rgb(44, 62, 80)
+    headline: rgb(44, 62, 80)
+    connections: rgb(44, 62, 80)
+    section_titles: rgb(44, 62, 80)
+    links: rgb(44, 62, 80)
+  typography:
+    font_family:
+      body: Pretendard
+      name: Pretendard
+      headline: Pretendard
+      connections: Pretendard
+      section_titles: Pretendard
+    font_size:
+      body: 10pt
+  page:
+    size: a4
+
+locale:
+  language: english
+
+settings:
+  render_command:
+    output_folder: rendercv_output
+    dont_generate_png: true
+    dont_generate_html: true
+    dont_generate_markdown: true
