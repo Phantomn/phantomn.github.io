@@ -1,0 +1,131 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.8/schema.json
+# TUV SUD Korea 맞춤 변형 (Requisition ID 6323, Cybersecurity Consultant - OT/Mobility/IoT)
+# 베이스: Hong_Seungpyo_CV.yaml. 자동차 경험 없음 -> 지어내지 않음.
+# 재조정: OT/ICS + IEC 62443 + TARA + 규제 컴플라이언스 각도. 신규 규제는 "전이 가능"으로만 표기.
+cv:
+  name: Seungpyo Hong
+  headline: OT/ICS & Embedded Security Researcher | IEC 62443
+  email: newbiepwner@kakao.com
+  location: Seoul, South Korea
+  website: https://phantomn.github.io
+  social_networks:
+    - network: GitHub
+      username: phantomn
+    - network: LinkedIn
+      username: ph4nt0m
+
+  sections:
+    summary:
+      - "OT/ICS and embedded security specialist with 6 years across industrial control systems, IoT, and medical devices. Took an LS ELECTRIC PLC line through IEC 62443-4-2 Threat Analysis & Risk Assessment (TARA) to Achilles Level 2 certification, and hold 21 CVEs (16 Linux kernel + 5 IoT). Strong in penetration testing, exploit development, and turning findings into audit evidence that passes certification review — a foundation that transfers directly to RED (EN 18031), Cyber Resilience Act, and NIS2 compliance assessment. NATO CCDCOE Locked Shields 2025 DFIR CTF #1."
+
+    experience:
+      - company: CoreSecurity
+        position: ICS Security Researcher (Senior)
+        location: Seoul, South Korea
+        start_date: 2021-06
+        end_date: present
+        highlights:
+          - "IEC 62443-4-2 Threat Analysis & Risk Assessment (TARA) and penetration testing — contributed to LS ELECTRIC Achilles Level 2 certification"
+          - "Guided client engineering teams through the compliance journey: reproduction steps, fixes, and re-verification into audit evidence"
+          - "FDA eSTAR / 510(k) security consulting & medical device penetration testing"
+          - "Smart building IoT vulnerability detection tool development & field deployment"
+          - "ELECCON (KEPCO cyber warfare exercise) 2021–2024: 4-year operations & challenge development"
+          - "**NATO CCDCOE Locked Shields 2025** (Korea-Canada DFIR blue team) — overall 6th, **DFIR CTF 1st place**"
+          - "**NATO CCDCOE Locked Shields 2026** (Korea-Hungary Special System blue team) — overall 9th"
+
+      - company: A3 Security
+        position: Web/App Pentester
+        location: Seoul, South Korea
+        start_date: 2020-06
+        end_date: 2021-06
+        highlights:
+          - "12 financial/public-sector electronic finance infrastructure pentests — avg. 1–2 high-risk findings per site"
+          - "Non-standard / embedded system reviews: KT GiGA Genie AI speaker (firmware via UART), NH RPA, IoT thermal sensor"
+          - "ISMS/ISO 27001 certification consulting (Coway)"
+          - "Clients: Cham Savings Bank, Acuon Capital, SBI Savings Bank, Hyundai HKMC"
+
+    education:
+      - institution: Kongju National University
+        area: Computer Science
+        degree: BS
+        location: Chungnam, South Korea
+        start_date: 2012-02
+        end_date: 2020-02
+
+      - institution: Cheonan Commercial High School
+        area: Information Processing
+        location: Chungnam, South Korea
+        start_date: 2009-03
+        end_date: 2012-02
+
+    vulnerability_research:
+      - label: "OS Kernel CVEs (16) — Best of the Best 8th Cohort"
+        details: "Designed & implemented a custom File System Fuzzer; derived 16 CVEs (0-day + 1-day) from Linux kernel. Presented at **CodeBlue 2019** (Tokyo) & **Hack In The Box 2019** (Amsterdam). CVE-2019-18885, 19036, 19037, 19039, 19318, 19319, 19377, 19378, 19447, 19448, 19449, 19813, 19814, 19815, 19816, 19927"
+
+      - label: "IoT CVEs (5) — Independent Research"
+        details: "Embedded/IoT device vulnerability analysis (firmware over UART, binwalk flash extraction). CVE-2024-33788 (CVSS 8.0 HIGH), CVE-2024-33789 (CVSS 9.8 CRITICAL), CVE-2024-33791 (CVSS 4.6 MEDIUM), CVE-2024-33792 (CVSS 9.8 CRITICAL), CVE-2024-33793 (CVSS 5.3 MEDIUM)"
+
+    projects:
+      - name: "ELECCON — KEPCO Cyber Warfare Exercise"
+        date: "2021 – 2024"
+        highlights:
+          - "4-year consecutive operation of Korea's premier OT/ICS red-vs-blue exercise"
+          - "SCADA/PLC-based attack scenario design and blue team evaluation metrics"
+
+      - name: File System Fuzzer
+        date: "2019"
+        highlights:
+          - "Custom fuzzer design & implementation → 16 Linux kernel CVEs"
+          - "Conference talks: CodeBlue 2019 (Tokyo), Hack In The Box 2019 (Amsterdam)"
+
+      - name: AI Orchestration Framework for Security
+        date: "2024 – present"
+        highlights:
+          - "LLM-driven pipeline orchestrating IDA Pro, Burp Suite, Frida, CodeQL via MCP to auto-identify vulnerabilities on live targets"
+          - "RAG pipeline (n8n · pgvector) indexes IEC 62443, ISO 27001 standards for contextual lookup"
+
+    skills:
+      - label: OT / ICS & Embedded
+        details: "IEC 62443-4-2, Achilles Level 2, Industrial Protocol Analysis (Modbus, DNP3, PROFINET), Embedded/Firmware Analysis (UART, JTAG, binwalk)"
+
+      - label: Standards & Compliance
+        details: "Hands-on: IEC 62443-4-2 (TARA, certification), FDA 510(k)/eSTAR, ISO 27001 · Transferable to: RED/EN 18031, Cyber Resilience Act (CRA), NIS2"
+
+      - label: Offensive Security
+        details: "OT/ICS Pentesting, Web/App Pentesting, Red Teaming, Exploit Development, Vulnerability Research, Fuzzing, Threat Modeling (STRIDE/DREAD)"
+
+      - label: Tools
+        details: "IDA Pro, Burp Suite, Frida, CodeQL, pwndbg, Wireshark, Metasploit, Nmap"
+
+      - label: Languages & Certifications
+        details: "Korean (Native), English (Conversational) · Linux Master 2nd Grade · Network Administrator 2nd Grade"
+
+design:
+  theme: classic
+  colors:
+    name: rgb(44, 62, 80)
+    headline: rgb(44, 62, 80)
+    connections: rgb(44, 62, 80)
+    section_titles: rgb(44, 62, 80)
+    links: rgb(44, 62, 80)
+  typography:
+    font_family:
+      body: Pretendard
+      name: Pretendard
+      headline: Pretendard
+      connections: Pretendard
+      section_titles: Pretendard
+    font_size:
+      body: 10pt
+  page:
+    size: a4
+
+locale:
+  language: english
+
+settings:
+  render_command:
+    output_folder: rendercv_output
+    dont_generate_png: true
+    dont_generate_html: true
+    dont_generate_markdown: true
