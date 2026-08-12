@@ -16,7 +16,8 @@ export type PortfolioCategoryKey =
   | "iot"
   | "medical"
   | "cyber-range"
-  | "consulting";
+  | "consulting"
+  | "vuln-research";
 
 export interface PortfolioCategory {
   key: PortfolioCategoryKey;
@@ -55,6 +56,7 @@ export const PORTFOLIO_CATEGORIES: PortfolioCategory[] = [
   { key: "medical", label: "의료기기 보안 (FDA/eSTAR)" },
   { key: "cyber-range", label: "사이버훈련장·CTF 개발" },
   { key: "consulting", label: "보안 컨설팅·인증" },
+  { key: "vuln-research", label: "취약점 연구 (CVE/FVE)" },
 ];
 
 export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
@@ -100,6 +102,47 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
       "Locked Shields 2026 — 한국-헝가리 연합 Special System 블루팀, 종합 9위",
     ],
     stack: ["DFIR", "Volatility", "Wireshark", "Sysmon", "YARA"],
+  },
+  {
+    title: "llama.cpp LLM 추론 엔진 취약점 연구 (CVE 3건)",
+    client: "ggml-org/llama.cpp (오픈소스)",
+    period: "2026.07 — 2026.08",
+    category: "vuln-research",
+    role: "취약점 분석·리포팅 주담당",
+    contribution: 100,
+    featured: true,
+    background:
+      "LLM 추론 엔진이 사내·제품 인프라에 빠르게 편입되는 반면, 서버 모드로 노출되는 공격 표면은 검증이 얕았다. llama.cpp 서버의 외부 입력 처리 경로(문법 변환·모델 파서·랭킹 API)를 대상으로 원격 비인증 공격 가능성을 검증했다.",
+    actions: [
+      "json-schema-to-grammar의 SchemaConverter::visit·_generate_union_rule 무제어 재귀 분석 — 재귀 깊이 7000 이상에서 기본 8MB 스레드 스택 고갈로 DoS 재현 (CVE-2026-52130, CWE-674, CVSS 7.5)",
+      "영향 경로 한정 검증 — POST /completions만 해당하며 /v1/chat/completions는 jinja 엔진 경유로 비해당임을 확인해 오탐 없는 영향 범위 산정",
+      "gguf_reader::read 도달 가능한 어서션으로 악성 GGUF 모델 로드 시 프로세스 abort 유도 (CVE-2026-52131, CWE-617)",
+      "/rerank 엔드포인트 음수 top_n 정수 오버플로 기반 DoS 식별 및 PoC 작성 (CVE-2026-52132, CWE-190)",
+    ],
+    results: [
+      "llama.cpp 대상 CVE 3건 채번 — CVE-2026-52130 / 52131 / 52132",
+      "원격 비인증 DoS 2건(CVSS 7.5) 포함, 취약 경로·비취약 경로를 구분한 재현 절차 업스트림 제공",
+    ],
+    stack: ["C/C++", "llama.cpp", "GGUF", "Fuzzing", "CVSS 3.1", "PoC"],
+  },
+  {
+    title: "데이터 플랫폼 무인증 IDOR 취약점 신고 (FVE)",
+    client: "비공개 (Findthegap 버그바운티)",
+    period: "2026.08",
+    category: "vuln-research",
+    role: "취약점 분석·신고",
+    contribution: 100,
+    featured: false,
+    background:
+      "버그바운티 플랫폼을 통해 데이터 API의 인증·접근통제를 점검했다. 신고 정책에 따라 제품·벤더·엔드포인트·파라미터·재현 절차는 공개하지 않는다.",
+    actions: [
+      "데이터 조회 API의 인증 부재 및 객체 참조 검증 미흡 확인 (CWE-306 / CWE-200 / CWE-284)",
+      "개인정보 마스킹 우회 가능성 검증 후 플랫폼 정책에 따라 신고",
+    ],
+    results: [
+      "FVE-2026-8617-75112 채번 — 무인증 IDOR 및 마스킹 우회 (상세 마스킹)",
+    ],
+    stack: ["Web", "API Security", "IDOR", "Burp Suite"],
   },
   {
     title: "IoT/CCTV 침해사고 조사 도구 개발",

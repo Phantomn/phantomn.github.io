@@ -726,6 +726,25 @@ export const CVE_ITEMS: CveEntry[] = CVE_SOURCE_ITEMS.map(normalizeCveEntry);
 
 export const CVE_COUNT = CVE_ITEMS.length;
 
+/** CVE(공식 채번)만. FVE는 제외 — 이력서·소개 문구에서 둘을 섞어 세면 안 된다. */
+export const CVE_ONLY_COUNT = CVE_ITEMS.filter((item) => item.kind === "cve").length;
+
+/** FVE(Findthegap 플랫폼 채번)만. */
+export const FVE_COUNT = CVE_ITEMS.filter((item) => item.kind === "fve").length;
+
+/**
+ * 소개·포트폴리오 본문에 넣을 CVE 내역 문자열.
+ * 예: "Kernel 16 + IoT 5 + LLM 3"
+ * 하드코딩하면 CVE 추가할 때마다 썩는다 — 데이터에서 파생시킨다.
+ */
+export const CVE_BREAKDOWN = CVE_GROUP_DEFINITIONS.map((group) => ({
+  label: group.shortLabel,
+  count: CVE_ITEMS.filter((item) => item.groupKey === group.key && item.kind === "cve").length,
+}))
+  .filter((group) => group.count > 0)
+  .map((group) => `${group.label} ${group.count}`)
+  .join(" + ");
+
 export const CVE_GROUPS: CveGroupSummary[] = CVE_GROUP_DEFINITIONS.map((group) => ({
   key: group.key,
   label: group.label,
