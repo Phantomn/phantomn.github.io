@@ -17,7 +17,14 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CertificationsSection } from "@/components/skills/certifications-section";
-import { CVE_COUNT, CVE_GROUPS, CVE_ITEMS } from "@/data/cves";
+import {
+  CVE_BREAKDOWN,
+  CVE_COUNT,
+  CVE_GROUPS,
+  CVE_ITEMS,
+  CVE_ONLY_COUNT,
+  FVE_COUNT,
+} from "@/data/cves";
 import type {
   CertCompanyGroup,
   ExperienceItem,
@@ -46,7 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const PROFILE = {
   name: "홍승표 (ph4nt0m)",
   headline:
-    `Offensive Security Researcher | Web/App · OT/ICS Pentesting | CVE ${CVE_COUNT} | AI Security Automation`,
+    `Offensive Security Researcher | Web/App · OT/ICS · LLM Pentesting | CVE ${CVE_ONLY_COUNT} · FVE ${FVE_COUNT} | AI Security Automation`,
   location: "Seoul, South Korea",
   website: "mailto:newbiepwner@kakao.com",
   connections: String(CVE_COUNT),
@@ -58,7 +65,7 @@ const PROFILE = {
   },
 } as const;
 
-const ABOUT_TEXT = `Offensive Security Researcher. CVE ${CVE_COUNT}건(Kernel 16 + IoT 5) 보유. 금융권 Web/App과 OT/ICS 점검, BoB 8기 커널 퍼징, 그리고 AI 기반 점검 자동화에 집중하고 있습니다. 상세 레지스트리는 /cves에서 관리합니다.`;
+const ABOUT_TEXT = `Offensive Security Researcher. CVE ${CVE_ONLY_COUNT}건(${CVE_BREAKDOWN})과 FVE ${FVE_COUNT}건 보유. 금융권 Web/App과 OT/ICS 점검, BoB 8기 커널 퍼징, 최근에는 llama.cpp 등 LLM 추론 엔진 취약점 연구와 AI 기반 점검 자동화에 집중하고 있습니다. 상세 레지스트리는 /cves에서 관리합니다.`;
 
 const EXPERIENCE: ExperienceItem[] = [
   {
@@ -171,6 +178,15 @@ const EDUCATION: EducationRow[] = [
 ];
 
 const PROJECTS: ProjectItem[] = [
+  {
+    title: "LLM 추론 엔진 취약점 연구 (llama.cpp)",
+    meta: "취약점 분석 (2026)",
+    bullets: [
+      "llama.cpp 서버 대상 취약점 분석 → CVE 3건 도출 (CVE-2026-52130 / 52131 / 52132)",
+      "json-schema-to-grammar 무제어 재귀 DoS(CWE-674, CVSS 7.5) — /completions 경로만 영향, jinja 경유 /v1/chat/completions는 비해당까지 경로별 검증",
+      "GGUF 파서 도달 가능한 어서션(CWE-617)·/rerank 음수 top_n 정수 오버플로 DoS(CWE-190) 식별",
+    ],
+  },
   {
     title: "AI Orchestration Framework for Security",
     meta: "개인 연구 (2024 — Present)",

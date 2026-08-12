@@ -21,7 +21,13 @@ import {
   FEATURED_PROJECTS,
   PORTFOLIO_PROJECT_COUNT,
 } from "@/data/portfolio";
-import { CVE_COUNT, CVE_ITEMS } from "@/data/cves";
+import {
+  CVE_BREAKDOWN,
+  CVE_COUNT,
+  CVE_ITEMS,
+  CVE_ONLY_COUNT,
+  FVE_COUNT,
+} from "@/data/cves";
 import type { ExperienceItem } from "@/types/profile";
 
 interface Props {
@@ -42,7 +48,7 @@ const PROFILE = {
   name: "홍승표 (ph4nt0m)",
   headline:
     "Offensive Security Researcher · Web/App · OT/ICS Pentesting · 보안 컨설팅",
-  summary: `금융권 Web/App 모의해킹부터 OT/ICS(IEC 62443)·IoT·의료기기(FDA) 보안, 사이버 공방 훈련 개발까지 ${PORTFOLIO_PROJECT_COUNT}건 이상의 프로젝트를 수행했습니다. LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득, NATO CCDCOE Locked Shields 2025 DFIR CTF 1위, Linux Kernel CVE 16건·IoT CVE 5건·FVE 3건 보유.`,
+  summary: `금융권 Web/App 모의해킹부터 OT/ICS(IEC 62443)·IoT·의료기기(FDA) 보안, 사이버 공방 훈련 개발까지 ${PORTFOLIO_PROJECT_COUNT}건 이상의 프로젝트를 수행했습니다. LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득, NATO CCDCOE Locked Shields 2025 DFIR CTF 1위, CVE ${CVE_ONLY_COUNT}건(${CVE_BREAKDOWN})·FVE ${FVE_COUNT}건 보유.`,
   location: "Seoul, South Korea",
   email: "newbiepwner@kakao.com",
   avatar: "/images/avatar.jpg",
@@ -52,6 +58,7 @@ const CORE_COMPETENCIES: string[] = [
   "금융·공공 전자금융기반시설 Web/App 모의해킹 — 저축은행·캐피탈·증권·보험·제조 등 12개 사이트 수행 (A3 Security)",
   "OT/ICS 보안 — IEC 62443-4-2 기반 Threat Modeling·모의해킹, LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득",
   "IoT 취약점 분석·보안 도구 개발 — 스마트빌딩 IoT 탐지 기술, IoT/CCTV 침해사고 조사 도구, Linux Kernel File System Fuzzer로 CVE 16건 도출",
+  "LLM·AI 인프라 보안 — llama.cpp 추론 엔진 취약점 분석으로 CVE 3건 도출(DoS·도달 가능 어서션·정수 오버플로), MCP 기반 점검 자동화 연구",
   "의료기기 보안 — FDA eSTAR 컨설팅 및 Web/App·의료기기 모의해킹, 보안인증 취득 지원",
   "사이버 공방 훈련 개발·운영 — 한국전력 ELECCON, NATO CCDCOE Locked Shields 2025 DFIR CTF 1위, APEX CTF 2025 문제 개발",
 ];
