@@ -15,7 +15,7 @@ cv:
 
   sections:
     요약:
-      - "금융권 Web/App 모의해킹부터 OT/ICS(IEC 62443)·IoT·의료기기(FDA) 보안, 사이버 공방 훈련 개발까지 24건 이상의 프로젝트를 수행한 Offensive Security Researcher. LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득, NATO CCDCOE Locked Shields 2025 DFIR CTF 1위, Linux Kernel CVE 16건 + IoT CVE 5건 + FVE 3건 보유."
+      - "금융권 Web/App 모의해킹부터 OT/ICS(IEC 62443)·IoT·의료기기(FDA) 보안, 사이버 공방 훈련 개발까지 24건 이상의 프로젝트를 수행한 Offensive Security Researcher. LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득, NATO CCDCOE Locked Shields 2025 DFIR CTF 1위, Linux Kernel CVE 16건 + IoT CVE 5건 + LLM 추론 엔진 CVE 3건 + FVE 4건 보유."
 
     핵심_역량:
       - bullet: "금융·공공 전자금융기반시설 Web/App 모의해킹 — 저축은행·캐피탈·증권·보험·제조 등 12개 사이트 수행 (A3 Security)"
@@ -219,8 +219,10 @@ cv:
         details: "커스텀 File System Fuzzer 설계·구현으로 Linux Kernel CVE 16건(0-day 포함) 도출. CodeBlue 2019(도쿄)·Hack In The Box 2019(암스테르담) 발표."
       - label: "IoT CVE 5건 — 개인 연구"
         details: "임베디드/IoT 장비 취약점 분석. CVE-2024-33788/33789/33791/33792/33793 (CVSS 최대 9.8 CRITICAL)."
-      - label: "FVE 3건 — Findthegap 버그바운티"
-        details: "버그바운티 플랫폼 대상 웹 취약점 보고 3건 (상세 비공개)."
+      - label: "LLM CVE 3건 — 개인 연구"
+        details: "llama.cpp 추론 엔진 취약점 분석. CVE-2026-52130/52131/52132 (원격 비인증 DoS 2건 CVSS 7.5, 악성 GGUF 모델 로드 시 abort 1건)."
+      - label: "FVE 4건 — Findthegap 버그바운티"
+        details: "버그바운티 플랫폼 대상 웹 취약점 보고 4건 (상세 비공개)."
 
     자격증 · 교육:
       - bullet: "리눅스 마스터 2급 (KAIT, 2021.07)"

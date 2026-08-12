@@ -13,7 +13,7 @@ cv:
 
   sections:
     summary:
-      - "Offensive Security Researcher with 6 years of hands-on penetration testing and vulnerability research. Derived **21 CVEs** (OS Kernel 16 + IoT 5) through independent fuzzing and reverse engineering. Built an AI Orchestration Framework that autonomously identifies vulnerabilities on live targets — using IDA Pro, Burp Suite, Frida, and CodeQL orchestrated via MCP + A2A. NATO CCDCOE Locked Shields 2025 DFIR CTF #1."
+      - "Offensive Security Researcher with 6 years of hands-on penetration testing and vulnerability research. Derived **24 CVEs** (OS Kernel 16 + IoT 5 + LLM 3) through independent fuzzing and reverse engineering. Built an AI Orchestration Framework that autonomously identifies vulnerabilities on live targets — using IDA Pro, Burp Suite, Frida, and CodeQL orchestrated via MCP + A2A. NATO CCDCOE Locked Shields 2025 DFIR CTF #1."
 
     experience:
       - company: CoreSecurity
@@ -55,6 +55,12 @@ cv:
 
       - label: "IoT CVEs (5) — Independent Research, 2024"
         details: "Reverse-engineered embedded firmware; identified and reproduced vulnerabilities with full PoC chains. CVE-2024-33789 & CVE-2024-33792 (CVSS **9.8 CRITICAL**), CVE-2024-33788 (CVSS 8.0 HIGH), CVE-2024-33791 (CVSS 4.6), CVE-2024-33793 (CVSS 5.3)"
+
+      - label: "LLM Inference Engine CVEs (3) — Independent Research, 2026"
+        details: "Audited llama.cpp's HTTP server and model loader by fuzzing structured inputs (JSON schemas, GGUF files, REST parameters), then hand-tracing each crash to root cause. CVE-2026-52130 (CVSS **7.5 HIGH**, CWE-674): unbounded recursion in json-schema-to-grammar — reproduced 8 MB stack exhaustion at recursion depth 7000+, and separated the vulnerable path (`/completions`) from the non-vulnerable one (`/v1/chat/completions`, which routes through jinja) to scope impact precisely. CVE-2026-52132 (CVSS **7.5 HIGH**, CWE-190): integer overflow from a negative `top_n` on `/rerank`, driving an oversized allocation and remote DoS. CVE-2026-52131 (CVSS 5.5, CWE-617): reachable assertion in `gguf_reader::read` — a crafted GGUF model aborts the process on load. Each finding shipped with a minimal PoC and an upstream patch-level root cause writeup."
+
+      - label: "Bug Bounty — 4 FVEs (FindTheGap)"
+        details: "Black-box web/API testing on live production targets. Four access control and authentication findings: missing authentication permitting account takeover across an entire user base, an unauthorized identity-verification endpoint leaking real names and phone numbers, and unauthenticated APIs enumerable for personal data (CVSS up to **9.8 CRITICAL**; CWE-284, CWE-306, CWE-200). All validated with reproducible request chains and reported through coordinated disclosure. Vendor and technical details withheld under program policy."
 
     projects:
       - name: AI Offensive Security Orchestration Framework
