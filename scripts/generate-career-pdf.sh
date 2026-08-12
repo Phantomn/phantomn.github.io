@@ -24,16 +24,23 @@ CV_DIR="$ROOT/scripts/cv"
 OUT="$CV_DIR/rendercv_output"
 DOCS_DIR="$ROOT/public/docs"
 
-command -v rendercv >/dev/null 2>&1 || {
-  echo "✗ rendercv 미설치 — 'pip install \"rendercv[full]\"' 실행" >&2
+# rendercv 실행 방법 결정.
+# 전역 설치가 깨져 있어도(예: pydantic 버전 충돌) uv 가 있으면 격리 실행으로 우회한다.
+if rendercv --version >/dev/null 2>&1; then
+  RENDERCV=(rendercv)
+elif command -v uv >/dev/null 2>&1; then
+  RENDERCV=(uv tool run --from "rendercv[full]" rendercv)
+  echo "· 전역 rendercv 사용 불가 → uv 격리 실행"
+else
+  echo "✗ rendercv 실행 불가 — 'pip install \"rendercv[full]\"' 또는 uv 설치 필요" >&2
   exit 1
-}
+fi
 mkdir -p "$DOCS_DIR"
 
 # render <yaml> <rendercv출력pdf명> <목적지파일명>
 render() {
   local yaml="$1" generated="$2" target="$3"
-  ( cd "$CV_DIR" && rendercv render "$yaml" >/dev/null )
+  ( cd "$CV_DIR" && "${RENDERCV[@]}" render "$yaml" >/dev/null )
   if [ ! -f "$OUT/$generated" ]; then
     echo "✗ $yaml 렌더 실패 ($generated 없음)" >&2
     exit 1
@@ -46,5 +53,11 @@ render "career-statement-ko.yaml"   "홍승표_CV.pdf"        "career-statement-
 render "Hong_Seungpyo_CV_kor.yaml"  "홍승표_CV.pdf"        "resume-ko.pdf"
 render "Hong_Seungpyo_CV.yaml"      "Seungpyo_Hong_CV.pdf" "resume-en.pdf"
 render "Hong_Seungpyo_CV_xbow.yaml" "Seungpyo_Hong_CV.pdf" "resume-xbow.pdf"
+
+# 사이트에서 참조되지 않는 구 잔재 파일. 내용이 낡지 않도록 영문판과 동일하게 유지한다.
+for legacy in resume-enus.pdf resume-ptbr.pdf; do
+  cp "$DOCS_DIR/resume-en.pdf" "$DOCS_DIR/$legacy"
+  echo "✓ $legacy (resume-en.pdf 사본)"
+done
 
 echo "완료 — public/docs/ 갱신"
