@@ -16,7 +16,7 @@ cv:
 
   sections:
     summary:
-      - "OT/ICS and embedded security specialist with 6 years across industrial control systems, IoT, and medical devices. Took an LS ELECTRIC PLC line through IEC 62443-4-2 Threat Analysis & Risk Assessment (TARA) to Achilles Level 2 certification, and hold 21 CVEs (16 Linux kernel + 5 IoT). Strong in penetration testing, exploit development, and turning findings into audit evidence that passes certification review — a foundation that transfers directly to RED (EN 18031), Cyber Resilience Act, and NIS2 compliance assessment. NATO CCDCOE Locked Shields 2025 DFIR CTF #1."
+      - "OT/ICS and embedded security specialist with 6 years across industrial control systems, IoT, and medical devices. Took an LS ELECTRIC PLC line through IEC 62443-4-2 Threat Analysis & Risk Assessment (TARA) to Achilles Level 2 certification, and hold 24 CVEs (16 Linux kernel + 5 IoT + 3 LLM). Strong in penetration testing, exploit development, and turning findings into audit evidence that passes certification review — a foundation that transfers directly to RED (EN 18031), Cyber Resilience Act, and NIS2 compliance assessment. NATO CCDCOE Locked Shields 2025 DFIR CTF #1."
 
     experience:
       - company: CoreSecurity
@@ -64,6 +64,12 @@ cv:
 
       - label: "IoT CVEs (5) — Independent Research"
         details: "Embedded/IoT device vulnerability analysis (firmware over UART, binwalk flash extraction). CVE-2024-33788 (CVSS 8.0 HIGH), CVE-2024-33789 (CVSS 9.8 CRITICAL), CVE-2024-33791 (CVSS 4.6 MEDIUM), CVE-2024-33792 (CVSS 9.8 CRITICAL), CVE-2024-33793 (CVSS 5.3 MEDIUM)"
+
+      - label: "LLM CVEs (3) — Independent Research"
+        details: "Robustness and supply-chain review of an AI inference component (llama.cpp) embedded into products, assessed from a standards perspective. CVE-2026-52130 (CVSS 7.5 HIGH, uncontrolled recursion DoS), CVE-2026-52132 (CVSS 7.5 HIGH, integer overflow DoS via negative parameter), CVE-2026-52131 (CVSS 5.5 MEDIUM, reachable assertion when loading a malicious model file)"
+
+      - label: "Bug Bounty FVEs (4) — FindTheGap"
+        details: "Reported access control and missing authentication defects in production web/API services: 1 account takeover (CVSS 9.8 Critical) and 3 personal data exposures (CVSS 7.5 High) — root cause identified at source-code level and reproduced 100% across distinct accounts"
 
     projects:
       - name: "ELECCON — KEPCO Cyber Warfare Exercise"

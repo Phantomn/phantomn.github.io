@@ -16,7 +16,7 @@ cv:
 
   sections:
     요약:
-      - "산업 제어(OT/ICS)·의료기기·선박 등 제조 제품의 사이버보안 인증과 규제 대응을 수행한 보안 엔지니어. LS ELECTRIC 자동화기기를 위협 모델링부터 IEC 62443-4-2 컴포넌트 인증(Achilles Level 2)까지 지원해 취득에 기여했고, 신약개발 연합학습 플랫폼(K-MELLODDY)에서 NIST SSDF 기반 보안 개발 생명주기(SDL) 정의와 공급망 보안 체계(SBOM/VEX/EoS)를 수립하며 EU CRA·IEC 62443·FDA를 검토했습니다. 금융/공공 Web/App 모의해킹 12개 사이트, Linux Kernel CVE 16건, IoT CVE 5건, NATO Locked Shields 2025 DFIR CTF 1위 보유."
+      - "산업 제어(OT/ICS)·의료기기·선박 등 제조 제품의 사이버보안 인증과 규제 대응을 수행한 보안 엔지니어. LS ELECTRIC 자동화기기를 위협 모델링부터 IEC 62443-4-2 컴포넌트 인증(Achilles Level 2)까지 지원해 취득에 기여했고, 신약개발 연합학습 플랫폼(K-MELLODDY)에서 NIST SSDF 기반 보안 개발 생명주기(SDL) 정의와 공급망 보안 체계(SBOM/VEX/EoS)를 수립하며 EU CRA·IEC 62443·FDA를 검토했습니다. 금융/공공 Web/App 모의해킹 12개 사이트, Linux Kernel CVE 16건, IoT CVE 5건, LLM 추론 엔진 CVE 3건, NATO Locked Shields 2025 DFIR CTF 1위 보유."
 
     핵심_역량:
       - bullet: "OT/ICS 제품 인증 — IEC 62443-4-2 위협 모델링·컴포넌트 요구사항(CR) 점검·모의해킹, LS ELECTRIC Achilles Level 2 통신 견고성 인증 취득 및 자동 점검 도구 개발"
@@ -220,8 +220,10 @@ cv:
         details: "커스텀 File System Fuzzer 설계·구현으로 Linux Kernel CVE 16건(0-day 포함) 도출. CodeBlue 2019(도쿄)·Hack In The Box 2019(암스테르담) 발표."
       - label: "IoT CVE 5건 — 개인 연구"
         details: "임베디드/IoT 장비 취약점 분석. CVE-2024-33788/33789/33791/33792/33793 (CVSS 최대 9.8 CRITICAL)."
-      - label: "FVE 3건 — Findthegap 버그바운티"
-        details: "버그바운티 플랫폼 대상 웹 취약점 보고 3건 (상세 비공개)."
+      - label: "LLM CVE 3건 — 개인 연구"
+        details: "llama.cpp 추론 엔진 취약점 분석. CVE-2026-52130/52131/52132 (원격 비인증 DoS 2건 CVSS 7.5 포함)."
+      - label: "FVE 4건 — Findthegap 버그바운티"
+        details: "버그바운티 플랫폼 대상 웹 취약점 보고 4건 (상세 비공개)."
 
     자격증 · 교육:
       - bullet: "리눅스 마스터 2급 (KAIT, 2021.07)"

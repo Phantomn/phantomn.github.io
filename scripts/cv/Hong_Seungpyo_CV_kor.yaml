@@ -13,7 +13,7 @@ cv:
 
   sections:
     요약:
-      - "NATO CCDCOE Locked Shields 2025 DFIR CTF 1위 · CVE 21건 (OS Kernel 16 + IoT 5). 금융권 Web/App 모의해킹 1년, OT/ICS 보안 약 5년 경력의 Offensive Security Researcher. IDA · Burp Suite · Frida · CodeQL을 MCP + A2A로 연결한 AI Orchestration Framework를 구현해 실제 점검 대상에서 Low~Medium 취약점을 자동 식별."
+      - "NATO CCDCOE Locked Shields 2025 DFIR CTF 1위 · CVE 24건 (OS Kernel 16 + IoT 5 + LLM 3). 금융권 Web/App 모의해킹 1년, OT/ICS 보안 약 5년 경력의 Offensive Security Researcher. IDA · Burp Suite · Frida · CodeQL을 MCP + A2A로 연결한 AI Orchestration Framework를 구현해 실제 점검 대상에서 Low~Medium 취약점을 자동 식별."
 
     경력:
       - company: 코어시큐리티 (CoreSecurity)
@@ -68,8 +68,11 @@ cv:
       - label: "IoT CVE 5건 — 개인 연구"
         details: "임베디드/IoT 장비 취약점 분석. CVE-2024-33788 (CVSS 8.0 HIGH), CVE-2024-33789 (CVSS 9.8 CRITICAL), CVE-2024-33791 (CVSS 4.6 MEDIUM), CVE-2024-33792 (CVSS 9.8 CRITICAL), CVE-2024-33793 (CVSS 5.3 MEDIUM)"
 
-      - label: "버그바운티 FVE 3건 — FindTheGap (GS리테일)"
-        details: "GS리테일 / 우리동네GS 웹 서비스 취약점 신고. FVE-2026-8617-74507: 인증 없이 GS ALL 전 회원 비밀번호 변경 가능 (CVSS 9.8 Critical, Broken Access Control + Missing Authentication) · FVE-2026-8617-74513: 본인인증 엔드포인트 인가 미적용 — 주민번호 기반 연계정보(CI)·전화번호·실명 노출 (CVSS 7.5 High) · FVE-2026-8617-74526: 배달 주문 조회 API 인증 미적용 — 순차 열거로 타인 전화번호·이름·결제수단 노출 (CVSS 7.5 High)"
+      - label: "LLM CVE 3건 — 개인 연구"
+        details: "LLM 추론 엔진(llama.cpp) 취약점 분석. CVE-2026-52130 (CVSS 7.5 HIGH, CWE-674 json-schema-to-grammar 무제어 재귀 DoS), CVE-2026-52132 (CVSS 7.5 HIGH, CWE-190 /rerank 음수 top_n 정수 오버플로 DoS), CVE-2026-52131 (CVSS 5.5 MEDIUM, CWE-617 악성 GGUF 모델 로드 시 gguf_reader::read 도달 가능 어서션)"
+
+      - label: "버그바운티 FVE 4건 — FindTheGap"
+        details: "GS리테일 / 우리동네GS 웹 서비스 취약점 신고 3건. FVE-2026-8617-74507: 인증 없이 GS ALL 전 회원 비밀번호 변경 가능 (CVSS 9.8 Critical, Broken Access Control + Missing Authentication) · FVE-2026-8617-74513: 본인인증 엔드포인트 인가 미적용 — 주민번호 기반 연계정보(CI)·전화번호·실명 노출 (CVSS 7.5 High) · FVE-2026-8617-74526: 배달 주문 조회 API 인증 미적용 — 순차 열거로 타인 전화번호·이름·결제수단 노출 (CVSS 7.5 High) · 별도 데이터 플랫폼 신고 1건 — FVE-2026-8617-75112: 데이터 API 인증 미적용 — 실명 명부·연락처 무단 열람 (CVSS 7.5 High)"
 
     프로젝트:
       - name: AI Orchestration Framework for Security

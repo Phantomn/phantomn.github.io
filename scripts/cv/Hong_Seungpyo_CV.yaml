@@ -13,7 +13,7 @@ cv:
 
   sections:
     summary:
-      - "NATO CCDCOE Locked Shields 2025 DFIR CTF #1 · 21 CVEs (OS Kernel 16 + IoT 5). Offensive Security Researcher with 6 years across financial Web/App pentesting and OT/ICS security. Built an AI Orchestration Framework (IDA · Burp Suite · Frida · CodeQL via MCP + A2A) that auto-identifies Low–Medium vulnerabilities on live targets."
+      - "NATO CCDCOE Locked Shields 2025 DFIR CTF #1 · 24 CVEs (OS Kernel 16 + IoT 5 + LLM 3). Offensive Security Researcher with 6 years across financial Web/App pentesting and OT/ICS security. Built an AI Orchestration Framework (IDA · Burp Suite · Frida · CodeQL via MCP + A2A) that auto-identifies Low–Medium vulnerabilities on live targets."
 
     experience:
       - company: CoreSecurity
@@ -61,6 +61,12 @@ cv:
 
       - label: "IoT CVEs (5) — Independent Research"
         details: "Embedded/IoT device vulnerability analysis. CVE-2024-33788 (CVSS 8.0 HIGH), CVE-2024-33789 (CVSS 9.8 CRITICAL), CVE-2024-33791 (CVSS 4.6 MEDIUM), CVE-2024-33792 (CVSS 9.8 CRITICAL), CVE-2024-33793 (CVSS 5.3 MEDIUM)"
+
+      - label: "LLM CVEs (3) — Independent Research"
+        details: "LLM inference engine (llama.cpp) vulnerability analysis. CVE-2026-52130 (CVSS 7.5 HIGH, CWE-674 uncontrolled recursion DoS in json-schema-to-grammar), CVE-2026-52132 (CVSS 7.5 HIGH, CWE-190 integer overflow DoS via /rerank negative top_n), CVE-2026-52131 (CVSS 5.5 MEDIUM, CWE-617 reachable assertion in gguf_reader::read on malicious model load)"
+
+      - label: "Bug Bounty — 4 FVEs (FindTheGap)"
+        details: "Access control and authentication flaws reported through a private bug bounty program: missing authentication enabling account takeover, unauthorized identity-verification data exposure, and unauthenticated API access leaking personal data (CVSS up to 9.8 CRITICAL; CWE-284, CWE-306, CWE-200). Target and technical details withheld under disclosure policy."
 
     projects:
       - name: AI Orchestration Framework for Security
