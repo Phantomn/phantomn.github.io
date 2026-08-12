@@ -457,6 +457,78 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "nvdStatus": "Analyzed"
   },
   {
+    "id": "CVE-2026-52130",
+    "title": "llama.cpp json-schema-to-grammar uncontrolled recursion",
+    "year": 2026,
+    "groupKey": "llm",
+    "groupLabel": "LLM",
+    "severity": "high",
+    "status": "published",
+    "href": "https://github.com/ggml-org/llama.cpp",
+    "nvdHref": "https://nvd.nist.gov/vuln/detail/CVE-2026-52130",
+    "summary": "llama.cpp <=b5693 is vulnerable to uncontrolled recursion in common/json-schema-to-grammar.cpp (SchemaConverter::visit, _generate_union_rule), resulting in a denial of service. Only POST /completions is affected; POST /v1/chat/completions routes json_schema through the jinja engine and is not vulnerable. Reproducible at recursion depth >= 7000 with the default 8 MB thread stack.",
+    "cvssBaseScore": 7.5,
+    "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-674",
+    "published": "2026-08-12",
+    "lastModified": "2026-08-12",
+    "nvdStatus": "Awaiting Analysis"
+  },
+  {
+    "id": "CVE-2026-52131",
+    "title": "llama.cpp gguf_reader::read reachable assertion",
+    "year": 2026,
+    "groupKey": "llm",
+    "groupLabel": "LLM",
+    "severity": "medium",
+    "status": "published",
+    "href": "https://github.com/ggml-org/llama.cpp",
+    "nvdHref": "https://nvd.nist.gov/vuln/detail/CVE-2026-52131",
+    "summary": "llama.cpp <=b5693 has a reachable assertion via the gguf_reader::read function in ggml/src/gguf.cpp. Discovered via libFuzzer; the minimal trigger file is 28 bytes and the empty-key path (key_len=0) is always taken, aborting any llama.cpp binary that loads a crafted GGUF file.",
+    "cvssBaseScore": 5.5,
+    "cvssVector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-617",
+    "published": "2026-08-12",
+    "lastModified": "2026-08-12",
+    "nvdStatus": "Awaiting Analysis"
+  },
+  {
+    "id": "CVE-2026-52132",
+    "title": "llama.cpp /rerank negative top_n denial of service",
+    "year": 2026,
+    "groupKey": "llm",
+    "groupLabel": "LLM",
+    "severity": "high",
+    "status": "published",
+    "href": "https://github.com/ggml-org/llama.cpp",
+    "nvdHref": "https://nvd.nist.gov/vuln/detail/CVE-2026-52132",
+    "summary": "llama.cpp through commit 97f06e9, when started with the --reranking flag, allows remote attackers to cause a denial of service (std::bad_alloc and HTTP 500) via a negative top_n value in a POST request to /rerank. Requires the non-default --reranking server flag; the server returns HTTP 500 and survives the request.",
+    "cvssBaseScore": 7.5,
+    "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-190",
+    "published": "2026-08-12",
+    "lastModified": "2026-08-12",
+    "nvdStatus": "Awaiting Analysis"
+  },
+  {
+    "id": "FVE-2026-8617-75112",
+    "title": "Masked web disclosure from Findthegap bug bounty platform",
+    "year": 2026,
+    "groupKey": "web",
+    "groupLabel": "Web",
+    "severity": "high",
+    "status": "published",
+    "href": "#",
+    "nvdHref": "#",
+    "summary": "Public details are intentionally redacted. Product, vendor, endpoint, parameter, and reproduction steps are withheld.",
+    "cvssBaseScore": 7.5,
+    "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-306 / CWE-200 / CWE-284",
+    "published": "2026-08-10",
+    "lastModified": "2026-08-10",
+    "nvdStatus": "Redacted"
+  },
+  {
     "id": "FVE-2026-8617-74507",
     "title": "Masked web disclosure from Findthegap bug bounty platform",
     "year": 2026,
@@ -528,6 +600,11 @@ const CVE_GROUP_DEFINITIONS = [
     label: "Web",
     shortLabel: "Web",
   },
+  {
+    key: "llm",
+    label: "LLM",
+    shortLabel: "LLM",
+  },
 ] as const;
 
 function splitCwe(cwe: string) {
@@ -551,6 +628,13 @@ function toVisibility(entry: LegacyCveEntry): CveVisibility {
 function toEvaluation(entry: LegacyCveEntry): CveEvaluation | undefined {
   if (!entry.id.startsWith("FVE-")) {
     return undefined;
+  }
+
+  if (entry.id === "FVE-2026-8617-75112") {
+    return {
+      label: "Low",
+      vector: "AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N/SH:D/DO:A",
+    };
   }
 
   if (entry.id === "FVE-2026-8617-74507") {
@@ -618,13 +702,17 @@ function normalizeCveEntry(entry: LegacyCveEntry): CveEntry {
         ? "2026-05-18"
         : entry.id === "FVE-2026-8617-74513"
           ? "2026-05-20"
-          : undefined,
+          : entry.id === "FVE-2026-8617-75112"
+            ? "2026-07-19"
+            : undefined,
     issuedAt:
       entry.id === "FVE-2026-8617-74507"
         ? "2026-05-29"
         : entry.id === "FVE-2026-8617-74513"
           ? "2026-06-05"
-          : undefined,
+          : entry.id === "FVE-2026-8617-75112"
+            ? "2026-08-10"
+            : undefined,
     tags: [
       kind,
       entry.groupKey,
