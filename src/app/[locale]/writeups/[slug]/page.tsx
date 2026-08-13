@@ -5,6 +5,11 @@ import fs from "fs";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getAllSlugs, hasLocaleOverride } from "@/lib/content";
 import { routing, toBcp47 } from "@/i18n/routing";
+import {
+  buildContentMetadata,
+  buildContentJsonLd,
+  type SeoFrontmatter,
+} from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -46,8 +51,12 @@ async function importWriteup(locale: string, slug: string) {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const mod = await importWriteup(locale, slug);
-  const title = (mod.frontmatter?.title as string) ?? slug;
-  return { title };
+  return buildContentMetadata({
+    section: "writeups",
+    slug,
+    locale,
+    fm: (mod.frontmatter ?? {}) as SeoFrontmatter,
+  });
 }
 
 export default async function WriteupPage({ params }: Props) {
@@ -73,6 +82,17 @@ export default async function WriteupPage({ params }: Props) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: buildContentJsonLd({
+            section: "writeups",
+            slug,
+            locale,
+            fm: fm as SeoFrontmatter,
+          }),
+        }}
+      />
       <ReadingProgress />
 
       <div className="mx-auto w-[90vw] max-w-[1200px] px-4 py-8">

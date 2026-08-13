@@ -11,6 +11,11 @@ import { ProseImageLightbox } from "@/components/blog/prose-image-lightbox";
 import { ReadingProgress } from "@/components/blog/reading-progress";
 import { ScrollToTop } from "@/components/blog/scroll-to-top";
 import { routing, toBcp47 } from "@/i18n/routing";
+import {
+  buildContentMetadata,
+  buildContentJsonLd,
+  type SeoFrontmatter,
+} from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 import {
   getAllSlugs,
@@ -57,9 +62,12 @@ async function importCve(locale: string, slug: string) {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const mod = await importCve(locale, slug);
-  const title = (mod.frontmatter?.title as string) ?? slug;
-  const description = (mod.frontmatter?.summary as string) ?? undefined;
-  return { title, description };
+  return buildContentMetadata({
+    section: "cves",
+    slug,
+    locale,
+    fm: (mod.frontmatter ?? {}) as SeoFrontmatter,
+  });
 }
 
 export default async function CvePage({ params }: Props) {
@@ -139,6 +147,17 @@ export default async function CvePage({ params }: Props) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: buildContentJsonLd({
+            section: "cves",
+            slug,
+            locale,
+            fm: fm as SeoFrontmatter,
+          }),
+        }}
+      />
       <ReadingProgress />
 
       <div className="mx-auto w-[90vw] max-w-[1200px] px-4 py-8">
