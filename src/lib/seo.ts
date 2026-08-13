@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { routing, toBcp47 } from "@/i18n/routing";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
 
+/** Site-wide fallback OG image (1200x630) when a post declares none. */
+const DEFAULT_OG_IMAGE = "/og-default.png";
+
 /**
  * Single source of truth for per-content-page metadata (SEO + AEO).
  *
@@ -66,7 +69,8 @@ export function buildContentMetadata({
   const description = fm.description ?? fm.summary ?? undefined;
   const canonical = pagePath(locale, section, slug);
   const authorNames = (fm.authors ?? []).map((a) => a.name);
-  const images = fm.image ? [{ url: fm.image, alt: title }] : undefined;
+  const ogImage = fm.image ?? DEFAULT_OG_IMAGE;
+  const images = [{ url: ogImage, alt: title }];
 
   return {
     title,
@@ -94,7 +98,7 @@ export function buildContentMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: fm.image ? [fm.image] : undefined,
+      images: [ogImage],
     },
     robots: { index: true, follow: true },
   };
@@ -127,7 +131,7 @@ export function buildContentJsonLd({
     datePublished: fm.date,
     dateModified: fm.modified ?? fm.date,
     keywords: (fm.tags ?? []).join(", ") || undefined,
-    image: fm.image ? base + fm.image : undefined,
+    image: base + (fm.image ?? DEFAULT_OG_IMAGE),
     author: (fm.authors ?? []).map((a) => ({
       "@type": "Person",
       name: a.name,
