@@ -1,6 +1,6 @@
 ---
 title: "Achilles 인증 해부 — 산업제어기기는 어떻게 퍼징당하는가"
-date: 2026-08-13
+date: 2026-08-10
 description: "Achilles 통신 견고성 인증(ACC)이 PLC·RTU·산업 스위치를 어떻게 시험하는지 해부한다. L1 31개 / L2 54개 테스트케이스 분류, Scans·Storms·Fuzzers·Grammars 7가지 테스트 유형, IP 스택부터 DNP3·Modbus·IEC 61850까지 제어 프로토콜 커버리지, 그리고 Normal/Warning/Failure 모니터가 실제로 무엇을 판정하는지 정리한다."
 tags: ["ICS", "OT", "fuzzing", "Achilles", "IEC-62443", "protocol", "vulnerability-research", "robustness-testing"]
 categories: ["Research"]

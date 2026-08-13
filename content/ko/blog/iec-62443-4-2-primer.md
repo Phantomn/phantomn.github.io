@@ -1,6 +1,6 @@
 ---
 title: "IEC 62443-4-2 입문 — FR1~7과 컴포넌트 요구사항 지도"
-date: 2026-08-13
+date: 2026-08-09
 description: "IEC 62443-4-2를 처음 접하는 사람을 위한 입문 지도. 62443 시리즈가 왜 주제가 아니라 독자로 분할되는지, SL의 네 얼굴과 SL 0의 세 얼굴, 7개 기반 요구사항(FR1~7)의 컴포넌트 요구사항(CR), SAR/EDR/HDR/NDR 컴포넌트 타입, 그리고 'DoS를 막아라가 아니라 저하모드를 유지하라'는 산업 보안 특유의 발상까지 정리한다."
 tags: ["IEC-62443", "ICS", "OT", "component-security", "foundational-requirements", "security-level", "PLC", "compliance"]
 categories: ["Research"]

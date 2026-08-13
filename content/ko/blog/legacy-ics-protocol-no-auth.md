@@ -1,6 +1,6 @@
 ---
 title: "레거시 ICS 프로토콜은 왜 인증이 없는가 — 2000년대 설계 결정의 유산"
-date: 2026-08-13
+date: 2026-08-06
 description: "많은 레거시 산업제어 프로토콜은 인증도, 무결성 보증도 없이 설계됐다. 이것은 실수가 아니라 폐쇄망을 전제한 2000년대의 합리적 선택이었고, 그 선택이 오늘날 어떻게 보안 부채로 남았는지를 공개 프로토콜(Modbus·DNP3)을 예로 살펴본다."
 tags: ["ICS", "OT-Security", "Modbus", "DNP3", "Protocol-Security"]
 categories: ["Research"]

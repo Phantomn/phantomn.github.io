@@ -105,8 +105,13 @@ export function getContentList(section: string, hrefLocale: string = DEFAULT_LOC
     .sort((a, b) => {
       if (a.meta.weight !== undefined && b.meta.weight !== undefined)
         return a.meta.weight - b.meta.weight;
-      if (a.meta.date && b.meta.date)
-        return new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime();
+      if (a.meta.date && b.meta.date) {
+        const diff =
+          new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime();
+        // Same-day tie-break: fall back to slug for a stable, deterministic order.
+        if (diff !== 0) return diff;
+        return a.slug.localeCompare(b.slug);
+      }
       return a.meta.title.localeCompare(b.meta.title);
     });
 }
@@ -213,8 +218,12 @@ export function getAllWriteups(hrefLocale: string = DEFAULT_LOCALE): WriteupItem
   });
 
   return items.sort((a, b) => {
-    if (a.date && b.date)
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    if (a.date && b.date) {
+      const diff = new Date(b.date).getTime() - new Date(a.date).getTime();
+      // Same-day tie-break: fall back to name for a stable, deterministic order.
+      if (diff !== 0) return diff;
+      return a.name.localeCompare(b.name);
+    }
     return a.name.localeCompare(b.name);
   });
 }

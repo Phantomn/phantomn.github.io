@@ -1,6 +1,6 @@
 ---
 title: "RAG를 넘어서 — 8가지 RAG 변형과 에이전트 메모리 설계"
-date: 2026-08-13
+date: 2026-08-01
 description: "Naive RAG의 7가지 한계에서 출발해 Graph RAG·RAPTOR·Agentic RAG 등 8가지 변형을 비교하고, 임베딩 차원·청킹·하이브리드 검색의 실전 설계와 에이전트 메모리 3레벨까지 정리한다."
 tags: ["RAG", "Agent-Memory", "Embeddings", "Retrieval", "AI-Agents"]
 categories: ["Research"]

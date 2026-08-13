@@ -1,6 +1,6 @@
 ---
 title: "LLM은 자기가 끝냈는지 모른다 — 완료 판정을 모델 밖으로 빼는 하네스 설계"
-date: 2026-08-13
+date: 2026-08-11
 description: "LLM 에이전트의 완료편향·과잉확신은 프롬프트로 교정되지 않는다는 것이 여러 연구의 결론이다. '전수 조사했다'·'취약점 0건'을 모델 서사가 아니라 HMAC receipt 원장과 결정론 훅으로 계산하게 만든, 취약점 점검 자동화 하네스의 설계 원리를 정리한다. negative-control 없는 '200 OK'는 확증이 아니다."
 tags: ["LLM", "AI-agents", "harness", "vulnerability-research", "automation", "completion-bias", "security-automation"]
 categories: ["Research"]
