@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
 import { routing, toBcp47 } from "@/i18n/routing";
 import { getAllSlugs } from "@/lib/content";
+import { SITE_URL } from "@/lib/site";
 
 // Required for `output: export` — emit sitemap.xml as a static file at build.
 export const dynamic = "force-static";
 
-const BASE = "https://phantomn.github.io";
+const BASE = SITE_URL;
 
 const STATIC_PAGES = ["", "about", "portfolio", "toolbox", "blog", "writeups", "cves"];
 const CONTENT_SECTIONS = ["blog", "writeups", "cves"];
