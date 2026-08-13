@@ -11,17 +11,26 @@ const BASE = "https://phantomn.github.io";
  * (AEO). Search crawlers get the same open access; nothing here is private.
  */
 export default function robots(): MetadataRoute.Robots {
+  // Three crawler roles per AI vendor: training / search-index / live-agent.
+  // Search-index bots are the ones that decide citation eligibility.
   const aiCrawlers = [
-    "GPTBot", // OpenAI / ChatGPT
-    "OAI-SearchBot", // ChatGPT search
-    "ChatGPT-User", // ChatGPT browsing
-    "ClaudeBot", // Anthropic Claude
-    "Claude-Web",
-    "PerplexityBot", // Perplexity
-    "Perplexity-User",
-    "Google-Extended", // Gemini training/grounding
+    // OpenAI
+    "GPTBot", // training
+    "OAI-SearchBot", // ChatGPT search index → citation eligibility
+    "ChatGPT-User", // live user-triggered fetch
+    // Anthropic
+    "ClaudeBot", // training
+    "Claude-SearchBot", // Claude search index → citation eligibility
+    "Claude-User", // live user-triggered fetch
+    // Perplexity
+    "PerplexityBot", // search index
+    "Perplexity-User", // live fetch
+    // Google (Gemini) — robots token, no distinct HTTP UA; Googlebot does the crawl
+    "Google-Extended",
+    // Apple Intelligence
     "Applebot-Extended",
-    "CCBot", // Common Crawl (feeds many models)
+    // Common Crawl (feeds many models)
+    "CCBot",
   ];
 
   return {
