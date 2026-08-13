@@ -1,6 +1,6 @@
 ---
 title: "LLM을 노리는 CTF 설계 — 트랜스포머의 구조적 약점"
-date: 2026-08-13
+date: 2026-07-31
 description: "LLM 에이전트가 CTF를 자동으로 풀기 시작한 시대에, '기계는 어려워하되 숙련된 인간은 합리적 시간에 푸는' 챌린지는 어떻게 설계하는가. 트랜스포머의 구조적 한계 — 상태 추적, 캐리 전파, 토큰화, 컨텍스트 손실 — 를 겨냥한 anti-LLM 출제 원리를 정리한다."
 tags: ["CTF", "LLM", "AI-Security", "Anti-LLM", "Red-Teaming"]
 categories: ["Research"]

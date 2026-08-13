@@ -1,6 +1,6 @@
 ---
 title: "'IEC 62443-4-2 인증 취득'이 아무 뜻도 없는 이유"
-date: 2026-08-13
+date: 2026-08-08
 description: "제조사가 'IEC 62443-4-2 SL2 인증을 받았다'고 말할 때 실제로 무엇이 검증됐는지는 그 문장만으로 알 수 없다. 인증서에 찍힌 (RA, NAR, TR) 세 숫자의 산수, N/A와 범위 밖의 결정적 차이, 그리고 SL-T/SL-C/SL-D/SL-A 혼동이 왜 인증서 해석을 망치는지 해부한다."
 tags: ["IEC-62443", "certification", "ICS", "OT", "security-level", "compliance", "ISASecure", "IECEE"]
 categories: ["Research"]

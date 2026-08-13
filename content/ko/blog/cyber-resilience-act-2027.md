@@ -1,6 +1,6 @@
 ---
 title: "CRA가 2027년에 바꾸는 것 — 62443이 CE 마킹의 기반 규격이 되기까지"
-date: 2026-08-13
+date: 2026-08-07
 description: "EU Cyber Resilience Act(Regulation (EU) 2024/2847)는 디지털 요소를 가진 물리 제품에 사이버보안을 강제하는 세계 최초의 법이다. 2026-09-11 신고 의무, 2027-12-11 전면 적용으로 다가오는 일정, 62443이 조화표준으로 CE 마킹의 기반이 되는 구조, 그리고 62443이 못 덮는 6가지 CRA 고유 요구를 정리한다."
 tags: ["CRA", "Cyber-Resilience-Act", "IEC-62443", "EU-regulation", "CE-marking", "OT", "ICS", "compliance", "SBOM"]
 categories: ["Research"]
