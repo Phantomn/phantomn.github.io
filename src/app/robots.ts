@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site";
 
 // Required for `output: export` — emit robots.txt as a static file at build.
 export const dynamic = "force-static";
 
-const BASE = "https://phantomn.github.io";
+const BASE = SITE_URL;
 
 /**
  * robots.txt — explicitly allow AI answer-engine crawlers so the site is

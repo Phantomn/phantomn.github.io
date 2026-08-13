@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { SITE_URL, SITE_NAME } from "@/lib/site";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Ph4nt0m",
-    template: "%s — Ph4nt0m",
+    default: SITE_NAME,
+    template: `%s — ${SITE_NAME}`,
   },
   description: "Hacking and general cybersecurity.",
-  metadataBase: new URL("https://phantomn.github.io"),
+  metadataBase: new URL(SITE_URL),
 };
 
 export default function RootLayout({

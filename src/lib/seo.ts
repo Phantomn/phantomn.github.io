@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { routing, toBcp47 } from "@/i18n/routing";
+import { SITE_URL, SITE_NAME } from "@/lib/site";
 
 /**
  * Single source of truth for per-content-page metadata (SEO + AEO).
@@ -12,8 +13,6 @@ import { routing, toBcp47 } from "@/i18n/routing";
  * Domain resolution relies on `metadataBase` (set once in the root layout), so
  * the relative paths returned here are expanded to absolute URLs by Next.js.
  */
-
-const SITE_NAME = "Ph4nt0m";
 
 /** Frontmatter fields this builder reads. All optional except title. */
 export interface SeoFrontmatter {
@@ -112,7 +111,7 @@ export function buildContentJsonLd({
   locale,
   fm,
 }: BuildMetaInput): string {
-  const base = "https://phantomn.github.io";
+  const base = SITE_URL;
   const url = base + pagePath(locale, section, slug);
   const title = fm.title ?? slug;
   const description = fm.description ?? fm.summary ?? undefined;
