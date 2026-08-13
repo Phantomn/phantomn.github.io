@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
@@ -41,6 +42,7 @@ export default function RootLayout({
           <TooltipProvider>{children}</TooltipProvider>
         </ThemeProvider>
       </body>
+      <GoogleAnalytics gaId="G-KV41V41G5J" />
     </html>
   );
 }
