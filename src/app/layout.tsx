@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   },
   description: "Hacking and general cybersecurity.",
   metadataBase: new URL(SITE_URL),
+  verification: {
+    other: { "msvalidate.01": "E505121A3A724E9FA08F34071E4F8D0C" },
+  },
 };
 
 export default function RootLayout({
