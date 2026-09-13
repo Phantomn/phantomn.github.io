@@ -250,13 +250,11 @@ PWNED_1000
 
 ### PoC 코드
 
-13.1.0 로컬 체인에 사용된 파이썬 익스플로잇 스크립트 3종(`t16_e2e.py`, `na_frm_rce2_exploit.py`, `target_reliable.py`)을 HackerOne 리포트 원본 첨부 그대로 내려받을 수 있다.
-
-[13.1.0_poc.7z 다운로드](/files/blog/mariadb-frm-oob-rce/13.1.0_poc.7z)
-
-전체 실험 환경(빌드 스크립트 포함)은 배대식(pinebudweiser)의 저장소를 참고한다.
+전체 실험 환경(빌드 스크립트, 익스플로잇 코드 포함)은 배대식(pinebudweiser)의 저장소에 공개돼 있다.
 
 - [pinebudweiser/mariadb-13.1.0-rce-lab](https://github.com/pinebudweiser/mariadb-13.1.0-rce-lab)
+  - 원격 체인(10.4.18): [`exploit/10.4.18/`](https://github.com/pinebudweiser/mariadb-13.1.0-rce-lab/tree/main/exploit/10.4.18) — `t16_e2e.py`, `na_frm_rce2_exploit.py`, `target_reliable.py`
+  - 로컬 체인(13.1.0): [`exploit/13.1.0/lab_exploit.py`](https://github.com/pinebudweiser/mariadb-13.1.0-rce-lab/blob/main/exploit/13.1.0/lab_exploit.py)
 
 > 이미 벤더 패치가 나온 뒤 책임 있는 공개 절차(HackerOne 공개 동의, GHSA 발행)를 거쳐 공유하는 것이다. 패치 전 버전을 운영 중이라면 아래 [패치 상태](#패치-상태) 섹션을 먼저 확인해 업그레이드부터 진행할 것.
 
