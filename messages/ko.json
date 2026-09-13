@@ -6,7 +6,6 @@
     "blog": "블로그",
     "cves": "CVE",
     "writeups": "라이트업",
-    "toolbox": "도구",
     "toggleMenu": "메뉴 토글",
     "menu": "메뉴",
     "language": "언어"
@@ -27,10 +26,6 @@
       "writeups": {
         "label": "라이트업",
         "description": "CTF 대회 및 모의해킹 라이트업 아카이브."
-      },
-      "toolbox": {
-        "label": "도구",
-        "description": "오펜시브 & 디펜시브 보안 도구 큐레이션."
       }
     }
   },
@@ -98,11 +93,6 @@
     "tags": "태그",
     "foundCount": "{count, plural, other {# 개 라이트업}}",
     "notFound": "라이트업을 찾을 수 없습니다"
-  },
-  "toolbox": {
-    "title": "도구",
-    "subtitle": "보안 도구, 리소스 & 레퍼런스 큐레이션.",
-    "searchPlaceholder": "도구 검색..."
   },
   "about": {
     "title": "소개",

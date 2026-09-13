@@ -8,7 +8,7 @@ export const dynamic = "force-static";
 
 const BASE = SITE_URL;
 
-const STATIC_PAGES = ["", "about", "portfolio", "toolbox", "blog", "writeups", "cves"];
+const STATIC_PAGES = ["", "about", "portfolio", "blog", "writeups", "cves"];
 const CONTENT_SECTIONS = ["blog", "writeups", "cves"];
 
 /** Full URL for a locale + path, trailing slash (site uses trailingSlash: true). */

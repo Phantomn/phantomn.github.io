@@ -6,7 +6,6 @@
     "blog": "Blog",
     "cves": "CVE",
     "writeups": "Writeups",
-    "toolbox": "Toolbox",
     "toggleMenu": "Toggle menu",
     "menu": "Menu",
     "language": "Language"
@@ -27,10 +26,6 @@
       "writeups": {
         "label": "Writeups",
         "description": "CTF competition and red team exercise writeup archive."
-      },
-      "toolbox": {
-        "label": "Toolbox",
-        "description": "Curated offensive & defensive security tools."
       }
     }
   },
@@ -104,11 +99,6 @@
     "tags": "Tags",
     "foundCount": "{count, plural, one {# writeup found} other {# writeups found}}",
     "notFound": "No writeups found"
-  },
-  "toolbox": {
-    "title": "Toolbox",
-    "subtitle": "Curated collection of cybersecurity tools, resources & references.",
-    "searchPlaceholder": "Search tools..."
   },
   "about": {
     "title": "About",

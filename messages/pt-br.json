@@ -6,7 +6,6 @@
     "blog": "Blog",
     "cves": "CVE",
     "writeups": "Writeups",
-    "toolbox": "Ferramentas",
     "toggleMenu": "Alternar menu",
     "menu": "Menu",
     "language": "Idioma"
@@ -27,10 +26,6 @@
       "writeups": {
         "label": "Writeups",
         "description": "Walkthroughs do HackTheBox, CyberDefenders e PortSwigger."
-      },
-      "toolbox": {
-        "label": "Ferramentas",
-        "description": "Ferramentas selecionadas para segurança ofensiva e defensiva."
       }
     }
   },
@@ -104,11 +99,6 @@
     "tags": "Tags",
     "foundCount": "{count, plural, one {# writeup encontrado} other {# writeups encontrados}}",
     "notFound": "Nenhum writeup encontrado"
-  },
-  "toolbox": {
-    "title": "Ferramentas",
-    "subtitle": "Coleção selecionada de ferramentas, recursos e referências de cibersegurança.",
-    "searchPlaceholder": "Buscar ferramentas..."
   },
   "about": {
     "title": "Sobre",
