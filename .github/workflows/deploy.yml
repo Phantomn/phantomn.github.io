@@ -36,6 +36,8 @@ jobs:
             ${{ runner.os }}-next-
 
       - run: npm run build
+        env:
+          LOCK_PASSWORD: ${{ secrets.LOCK_PASSWORD }}
 
       - uses: actions/upload-pages-artifact@v3
         with:

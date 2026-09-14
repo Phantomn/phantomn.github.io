@@ -30,6 +30,8 @@ export interface ContentMeta {
   image?: string;
   difficulty?: string;
   draft?: boolean;
+  /** Built and served, but hidden from listings/sitemap/feed and password-gated at build time (see scripts/lock-posts.mjs). */
+  locked?: boolean;
   [key: string]: unknown;
 }
 
@@ -101,7 +103,10 @@ export function getContentList(section: string, hrefLocale: string = DEFAULT_LOC
       if (item) item.href = `/${hrefLocale}/${section}/${item.slug}/`;
       return item;
     })
-    .filter((item): item is ContentItem => item !== null && !item.meta.draft)
+    .filter(
+      (item): item is ContentItem =>
+        item !== null && !item.meta.draft && !item.meta.locked,
+    )
     .sort((a, b) => {
       if (a.meta.weight !== undefined && b.meta.weight !== undefined)
         return a.meta.weight - b.meta.weight;
@@ -233,8 +238,14 @@ export function getAllWriteups(hrefLocale: string = DEFAULT_LOCALE): WriteupItem
  * folder. Used by `generateStaticParams` for [slug] routes — the same set of
  * slugs is generated under every locale, with per-locale override or dynamic
  * translation at render time.
+ *
+ * `locked` posts are still built (pass `excludeLocked: true` to omit them,
+ * e.g. for sitemap.xml — the page exists but must stay unlisted/unindexed).
  */
-export function getAllSlugs(section: string): string[] {
+export function getAllSlugs(
+  section: string,
+  excludeLocked: boolean = false,
+): string[] {
   const dirPath = path.join(CONTENT_DIR, DEFAULT_LOCALE, section);
   if (!fs.existsSync(dirPath)) return [];
 
@@ -243,7 +254,9 @@ export function getAllSlugs(section: string): string[] {
     .filter((f) => CONTENT_EXT_RE.test(f) && !INDEX_RE.test(f))
     .filter((f) => {
       const item = getContent(path.join(DEFAULT_LOCALE, section, f));
-      return item !== null && !item.meta.draft;
+      if (item === null || item.meta.draft) return false;
+      if (excludeLocked && item.meta.locked) return false;
+      return true;
     })
     .map((f) => f.replace(CONTENT_EXT_RE, ""));
 }

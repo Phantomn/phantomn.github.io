@@ -40,7 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Content detail pages.
   for (const section of CONTENT_SECTIONS) {
-    for (const slug of getAllSlugs(section)) {
+    for (const slug of getAllSlugs(section, true)) {
       const subpath = `${section}/${slug}`;
       entries.push({
         url: url(routing.defaultLocale, subpath),
