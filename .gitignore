@@ -48,4 +48,4 @@ Notion_export/
 
 # RenderCV build output
 scripts/cv/rendercv_output/
-scratchpad/
+package-lock.json

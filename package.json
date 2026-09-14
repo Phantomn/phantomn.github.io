@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Personal cybersecurity site and blog",
   "private": true,
+  "packageManager": "pnpm@11.2.2",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
