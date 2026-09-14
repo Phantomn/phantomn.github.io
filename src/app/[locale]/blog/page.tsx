@@ -25,6 +25,7 @@ function serialize(item: ReturnType<typeof getContentList>[number]): SerializedP
     image: item.meta.image,
     readingTime: item.readingTime,
     href: item.href,
+    locked: item.meta.locked,
   };
 }
 
@@ -43,6 +44,7 @@ export default async function BlogPage({ params }: Props) {
     title: p.meta.title,
     date: p.meta.date,
     href: p.href,
+    locked: p.meta.locked,
   }));
 
   const allTags = Array.from(

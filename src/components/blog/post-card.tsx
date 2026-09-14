@@ -17,8 +17,12 @@ import type { SerializedPost } from "./types";
 export function PostCard({ post }: { post: SerializedPost }) {
   const t = useTranslations("blog");
   const locale = useLocale();
+  // Locked posts must hard-navigate (plain <a>) — Next's <Link> soft
+  // navigation fetches a plaintext RSC payload that bypasses the password
+  // gate entirely (the gate only lives in the server-rendered index.html).
+  const LinkOrAnchor = post.locked ? "a" : Link;
   return (
-    <Link href={post.href} className="group block">
+    <LinkOrAnchor href={post.href} className="group block">
       <Card className="h-full transition-colors hover:border-primary/40">
         {post.image && (
           <div className="overflow-hidden rounded-t-lg">
@@ -72,6 +76,6 @@ export function PostCard({ post }: { post: SerializedPost }) {
           )}
         </CardFooter>
       </Card>
-    </Link>
+    </LinkOrAnchor>
   );
 }

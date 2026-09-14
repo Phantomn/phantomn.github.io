@@ -64,10 +64,24 @@ function main() {
 
   for (const { section, slug } of locked) {
     for (const locale of LOCALES) {
-      const filePath = path.join(OUT_DIR, locale, section, slug, "index.html");
-      if (!fs.existsSync(filePath)) continue;
-      encryptInPlace(filePath, password);
-      console.log(`[lock-posts] encrypted ${path.relative(ROOT, filePath)}`);
+      const pageDir = path.join(OUT_DIR, locale, section, slug);
+      const htmlPath = path.join(pageDir, "index.html");
+      if (fs.existsSync(htmlPath)) {
+        encryptInPlace(htmlPath, password);
+        console.log(`[lock-posts] encrypted ${path.relative(ROOT, htmlPath)}`);
+      }
+
+      // Next.js also emits index.txt — the RSC Flight payload used for
+      // client-side <Link> navigation. It contains the full plaintext page
+      // and staticrypt never touches it, so a soft navigation (clicking a
+      // link instead of a full page load) would bypass the password gate
+      // entirely. Delete it: the router falls back to a hard navigation,
+      // which correctly hits the encrypted index.html.
+      const txtPath = path.join(pageDir, "index.txt");
+      if (fs.existsSync(txtPath)) {
+        fs.rmSync(txtPath);
+        console.log(`[lock-posts] removed ${path.relative(ROOT, txtPath)}`);
+      }
     }
   }
 }

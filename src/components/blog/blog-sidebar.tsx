@@ -15,7 +15,7 @@ import { SITE_AUTHOR } from "@/lib/profile";
 import { formatDate } from "@/lib/utils";
 
 interface BlogSidebarProps {
-  recentPosts: { title: string; date?: string; href: string }[];
+  recentPosts: { title: string; date?: string; href: string; locked?: boolean }[];
   allTags: string[];
   activeTag?: string;
   onTagClick?: (tag: string) => void;
@@ -62,25 +62,29 @@ export function BlogSidebar({
           </CardHeader>
           <CardContent className="space-y-3">
             <Separator />
-            {recentPosts.map((post) => (
-              <Link
-                key={post.href}
-                href={post.href}
-                className="group block"
-              >
-                <p className="text-sm font-medium leading-snug transition-colors group-hover:text-primary">
-                  {post.title}
-                </p>
-                {post.date && (
-                  <time className="text-[11px] text-muted-foreground">
-                    {formatDate(post.date, {
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </time>
-                )}
-              </Link>
-            ))}
+            {recentPosts.map((post) => {
+              // See PostCard: locked posts must hard-navigate, not soft-navigate via <Link>.
+              const LinkOrAnchor = post.locked ? "a" : Link;
+              return (
+                <LinkOrAnchor
+                  key={post.href}
+                  href={post.href}
+                  className="group block"
+                >
+                  <p className="text-sm font-medium leading-snug transition-colors group-hover:text-primary">
+                    {post.title}
+                  </p>
+                  {post.date && (
+                    <time className="text-[11px] text-muted-foreground">
+                      {formatDate(post.date, {
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </time>
+                  )}
+                </LinkOrAnchor>
+              );
+            })}
           </CardContent>
         </Card>
       )}

@@ -17,8 +17,10 @@ import type { SerializedPost } from "./types";
 export function FeaturedPostCard({ post }: { post: SerializedPost }) {
   const t = useTranslations("blog");
   const locale = useLocale();
+  // See PostCard: locked posts must hard-navigate, not soft-navigate via <Link>.
+  const LinkOrAnchor = post.locked ? "a" : Link;
   return (
-    <Link href={post.href} className="group block">
+    <LinkOrAnchor href={post.href} className="group block">
       <Card className="overflow-hidden transition-colors hover:border-primary/40">
         {post.image && (
           <div className="overflow-hidden">
@@ -78,6 +80,6 @@ export function FeaturedPostCard({ post }: { post: SerializedPost }) {
           )}
         </CardFooter>
       </Card>
-    </Link>
+    </LinkOrAnchor>
   );
 }
