@@ -34,7 +34,7 @@ export default async function BlogPage({ params }: Props) {
   const t = await getTranslations({ locale, namespace: "blog" });
 
   const section = getSectionIndex("blog");
-  const posts = getContentList("blog", locale);
+  const posts = getContentList("blog", locale, true);
 
   const featuredPost = posts.length > 0 ? serialize(posts[0]) : null;
   const remainingPosts = posts.slice(1).map(serialize);

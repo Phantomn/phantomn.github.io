@@ -89,8 +89,16 @@ export function getSectionIndex(section: string): ContentItem | null {
  * Lists all content files in a section from the default-locale folder, with
  * hrefs rewritten to include `/{hrefLocale}/` so links stay within the
  * visitor's current language. Sorted by weight, then date, then title.
+ *
+ * `locked` posts are excluded by default (feed.xml, related-posts) — pass
+ * `includeLocked: true` for the blog listing page, where the card should
+ * show (title/description) but the post itself is still password-gated.
  */
-export function getContentList(section: string, hrefLocale: string = DEFAULT_LOCALE): ContentItem[] {
+export function getContentList(
+  section: string,
+  hrefLocale: string = DEFAULT_LOCALE,
+  includeLocked: boolean = false,
+): ContentItem[] {
   const sourceRel = `${DEFAULT_LOCALE}/${section}`;
   const dirPath = path.join(CONTENT_DIR, sourceRel);
   if (!fs.existsSync(dirPath)) return [];
@@ -105,7 +113,9 @@ export function getContentList(section: string, hrefLocale: string = DEFAULT_LOC
     })
     .filter(
       (item): item is ContentItem =>
-        item !== null && !item.meta.draft && !item.meta.locked,
+        item !== null &&
+        !item.meta.draft &&
+        (includeLocked || !item.meta.locked),
     )
     .sort((a, b) => {
       if (a.meta.weight !== undefined && b.meta.weight !== undefined)
