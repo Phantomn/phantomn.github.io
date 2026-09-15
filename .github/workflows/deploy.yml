@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  qa:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -48,6 +48,20 @@ jobs:
       - name: Dead code / unused dependency check
         run: pnpm knip
 
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
       - name: Cache Next.js build artifacts
         uses: actions/cache@v4
         with:
@@ -60,6 +74,32 @@ jobs:
       - run: pnpm build
         env:
           LOCK_PASSWORD: ${{ secrets.LOCK_PASSWORD }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site-out
+          path: out
+          retention-days: 1
+
+  e2e:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: site-out
+          path: out
 
       - name: Get Playwright version
         run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./node_modules/@playwright/test/package.json').version)")" >> "$GITHUB_ENV"
@@ -82,16 +122,21 @@ jobs:
       - name: E2E smoke tests
         run: pnpm test:e2e
 
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: out
-
   deploy:
-    needs: build
+    needs: [qa, e2e]
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: site-out
+          path: out
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
       - id: deployment
         uses: actions/deploy-pages@v4
