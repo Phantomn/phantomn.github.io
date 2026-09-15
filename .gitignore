@@ -2,6 +2,7 @@
 .next/
 out/
 *.tsbuildinfo
+.eslintcache
 
 # Node
 node_modules/
@@ -41,6 +42,8 @@ tasks/
 # Playwright
 tests/.output/
 tests/playwright-report/
+playwright-report/
+test-results/
 .playwright/
 /tasks/
 Obsidian/

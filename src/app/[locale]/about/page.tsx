@@ -20,7 +20,6 @@ import { CertificationsSection } from "@/components/skills/certifications-sectio
 import {
   CVE_BREAKDOWN,
   CVE_COUNT,
-  CVE_GROUPS,
   CVE_ITEMS,
   CVE_ONLY_COUNT,
   FVE_COUNT,

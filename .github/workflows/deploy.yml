@@ -28,6 +28,26 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      - name: Cache lint/typecheck artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            *.tsbuildinfo
+            .eslintcache
+          key: ${{ runner.os }}-qa-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('src/**/*.ts', 'src/**/*.tsx', 'tsconfig.json', 'eslint.config.mjs') }}
+          restore-keys: |
+            ${{ runner.os }}-qa-${{ hashFiles('pnpm-lock.yaml') }}-
+            ${{ runner.os }}-qa-
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Dead code / unused dependency check
+        run: pnpm knip
+
       - name: Cache Next.js build artifacts
         uses: actions/cache@v4
         with:
@@ -40,6 +60,27 @@ jobs:
       - run: pnpm build
         env:
           LOCK_PASSWORD: ${{ secrets.LOCK_PASSWORD }}
+
+      - name: Get Playwright version
+        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./node_modules/@playwright/test/package.json').version)")" >> "$GITHUB_ENV"
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ env.PLAYWRIGHT_VERSION }}
+
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Install Playwright OS dependencies only
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: pnpm exec playwright install-deps chromium
+
+      - name: E2E smoke tests
+        run: pnpm test:e2e
 
       - uses: actions/upload-pages-artifact@v3
         with:
