@@ -611,6 +611,25 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "lastModified": "2026-06-11",
     "nvdStatus": "Redacted",
     "topics": ["web", "authorization-bypass", "authentication"]
+  },
+  {
+    "id": "CVE-UNASSIGNED-MDEV-40571",
+    "title": "MariaDB .frm parsing OOB read leads to vtable hijacking RCE",
+    "year": 2026,
+    "groupKey": "database",
+    "groupLabel": "Database",
+    "severity": "high",
+    "status": "pending",
+    "href": "https://blog.ph4nt0m.xyz/ko/blog/mariadb-frm-oob-read-vtable-hijack-rce/",
+    "nvdHref": "https://github.com/MariaDB/server/security/advisories/GHSA-c4gx-34mg-95q5",
+    "summary": "MariaDB's .frm table-metadata parser fails to validate key_part->fieldnr against share->fields when opening a table, allowing an out-of-bounds read of share->field[] that can be coerced into a fake Field object with an attacker-controlled vtable, leading to remote code execution as the mariadbd process via a crafted .frm file (MDEV-40571).",
+    "cvssBaseScore": 8.0,
+    "cvssVector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-1285",
+    "published": "2026-09-07",
+    "lastModified": "2026-09-07",
+    "nvdStatus": "CVE not yet assigned (MariaDB has requested one; GHSA-c4gx-34mg-95q5 published)",
+    "topics": ["mariadb", "database", "out-of-bounds-read", "vtable-hijacking", "remote-code-execution"]
   }
 ];
 
