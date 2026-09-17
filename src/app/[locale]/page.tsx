@@ -24,8 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const HERO_VIDEO =
   "https://res.cloudinary.com/a88188f90768a608fc75048188ef19e7/video/upload/q_auto/f_auto/v1776380472/Website/Homepage/912938669731443170483_b9tluh.mp4";
-const HERO_AVATAR =
-  "https://res.cloudinary.com/a88188f90768a608fc75048188ef19e7/image/upload/q_auto/f_auto/v1776380450/Website/Homepage/54879845732140987541253743874983361_hfxt3v.gif";
+const HERO_AVATAR = "/images/avatar-glitch.gif";
 
 const SECTION_KEYS = ["blog", "cves", "writeups"] as const;
 
