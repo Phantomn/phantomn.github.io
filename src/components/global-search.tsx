@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslations } from "next-intl";
@@ -14,6 +14,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { icons } from "@/lib/icons";
+import { useUrlState } from "@/hooks/use-url-state";
 
 interface SearchEntry {
   type: "blog" | "cve" | "writeup";
@@ -41,10 +42,19 @@ function score(entry: SearchEntry, query: string): number {
 }
 
 export function GlobalSearch() {
+  return (
+    <Suspense>
+      <GlobalSearchInner />
+    </Suspense>
+  );
+}
+
+function GlobalSearchInner() {
   const t = useTranslations("search");
   const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useUrlState("q", "");
   const [entries, setEntries] = useState<SearchEntry[]>([]);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!open || entries.length > 0) return;
@@ -53,6 +63,16 @@ export function GlobalSearch() {
       .then(setEntries)
       .catch(() => setEntries([]));
   }, [open, entries.length]);
+
+  useEffect(() => {
+    // GlobalSearch renders twice (desktop nav + mobile nav, CSS-toggled by
+    // breakpoint) - only the visible trigger's instance should auto-open,
+    // or two simultaneous Radix dialogs fight over aria-hidden/focus.
+    if (query.trim().length >= 2 && triggerRef.current?.offsetParent !== null) {
+      setOpen(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- open on mount-with-query only, not every query change
+  }, []);
 
   const results = useMemo(() => {
     if (query.trim().length < 2) return [];
@@ -67,7 +87,7 @@ export function GlobalSearch() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="outline" size="icon" aria-label={t("open")}>
+        <Button ref={triggerRef} variant="outline" size="icon" aria-label={t("open")}>
           <FontAwesomeIcon icon={icons.magnifyingGlass} className="h-4 w-4" />
         </Button>
       </SheetTrigger>

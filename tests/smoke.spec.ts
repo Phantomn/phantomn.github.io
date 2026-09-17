@@ -99,3 +99,12 @@ test("global search finds results across sections", async ({ page }) => {
   await page.getByRole("textbox").fill("pwn");
   await expect(page.getByRole("link").filter({ hasText: /pwn/i }).first()).toBeVisible();
 });
+
+test("search query is reflected in the URL and restored on reload", async ({ page }) => {
+  await page.goto("/en/");
+  await page.getByRole("button", { name: /search/i }).click();
+  await page.getByRole("textbox").fill("pwn");
+  await expect(page).toHaveURL(/[?&]q=pwn/);
+  await page.reload();
+  await expect(page.getByRole("textbox")).toHaveValue("pwn");
+});
