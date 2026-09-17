@@ -4,7 +4,7 @@ import path from "path";
 import matter from "gray-matter";
 
 const CONTENT_DIR = path.join(process.cwd(), "content", "ko");
-const OUT_PATH = path.join(process.cwd(), "public", "search-index.json");
+const OUT_PATH = path.join(process.cwd(), "out", "search-index.json");
 const LOCALE = "ko";
 
 function listSection(section) {
@@ -23,7 +23,6 @@ function listSection(section) {
         title: data.title ?? slug,
         description: data.description ?? "",
         tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
-        date: data.date ? String(data.date) : "",
         href: `/${LOCALE}/${section}/${slug}/`,
       };
     })
@@ -51,7 +50,6 @@ function listCves() {
         title: data.title ?? slug,
         description: data.summary ?? "",
         tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
-        date: data.date ? String(data.date) : "",
         href: `/${LOCALE}/cves/${slug}/`,
       };
     });

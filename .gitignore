@@ -53,5 +53,3 @@ Notion_export/
 scripts/cv/rendercv_output/
 package-lock.json
 
-# Build artifacts
-/public/search-index.json
