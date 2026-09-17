@@ -50,7 +50,7 @@ export default async function HomePage({ params }: Props) {
           <img
             src={HERO_AVATAR}
             alt="Ph4nt0m"
-            className="mb-6 h-56 w-56 sm:h-72 sm:w-72 aspect-square rounded-full object-cover border-4 border-primary shadow-[0_0_40px_rgba(159,239,0,0.3)]"
+            className="mb-6 h-56 w-56 sm:h-72 sm:w-72 aspect-square rounded-full object-contain bg-black border-4 border-primary shadow-[0_0_40px_rgba(159,239,0,0.3)]"
           />
 
           <h1 className="mb-4 text-4xl font-bold font-heading sm:text-5xl">
