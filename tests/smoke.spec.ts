@@ -49,6 +49,16 @@ test("writeup list rows are real anchors", async ({ page }) => {
   expect(page.url()).not.toContain("/en/writeups/\n");
 });
 
+test("blog pagination reflects in the URL and survives reload", async ({ page }) => {
+  await page.goto("/en/blog/");
+  const firstPageTitle = await page.locator("a.group.block").first().textContent();
+  await page.goto("/en/blog/?page=2");
+  const response = await page.reload();
+  expect(response?.status()).toBeLessThan(400);
+  const secondPageTitle = await page.locator("a.group.block").first().textContent();
+  expect(secondPageTitle).not.toBe(firstPageTitle);
+});
+
 test("writeup detail body is server-rendered (no JS)", async ({ request }) => {
   const response = await request.get("/en/writeups/alert-to-win-xss/");
   expect(response.status()).toBeLessThan(400);
