@@ -77,7 +77,7 @@
     "openRegistry": "열기",
     "openNvd": "NVD 열기",
     "openDisclosure": "원문 열기",
-    "redacted": "비공개",
+    "redacted": "마스킹 공개",
     "redactedDetails": "이 항목은 제품, 벤더, 경로, 파라미터, 재현 절차가 마스킹되었습니다.",
     "detail": "상세",
     "external": "외부 링크",
