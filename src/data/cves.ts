@@ -591,7 +591,7 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "published": "2026-06-07",
     "lastModified": "2026-06-07",
     "nvdStatus": "Redacted",
-    "topics": ["web", "bug-bounty", "redacted-disclosure"]
+    "topics": ["web", "redacted-disclosure"]
   },
   {
     "id": "FVE-2026-8617-74526",
