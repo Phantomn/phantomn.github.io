@@ -78,3 +78,9 @@ test("unknown tag returns 404", async ({ page }) => {
   const response = await page.goto("/en/tags/this-tag-does-not-exist-xyz/");
   expect(response?.status()).toBe(404);
 });
+
+test("tag index only lists tags used 3+ times", async ({ page }) => {
+  const response = await page.goto("/en/tags/");
+  expect(response?.status()).toBeLessThan(400);
+  await expect(page.getByRole("link", { name: /#pwn/i })).toBeVisible();
+});

@@ -167,6 +167,8 @@
     "poweredBy": "Tradução via Lingva"
   },
   "tags": {
-    "heading": "Marcado"
+    "heading": "Marcado",
+    "indexHeading": "Todas as Tags",
+    "indexHint": "Tags que aparecem em 3 ou mais itens em blog, CVEs e writeups."
   }
 }

@@ -167,6 +167,8 @@
     "poweredBy": "Translation by Lingva"
   },
   "tags": {
-    "heading": "Tagged"
+    "heading": "Tagged",
+    "indexHeading": "All Tags",
+    "indexHint": "Tags appearing in 3 or more items across blog, CVEs, and writeups."
   }
 }
