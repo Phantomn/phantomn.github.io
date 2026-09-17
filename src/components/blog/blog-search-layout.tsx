@@ -71,8 +71,8 @@ function PaginationControls({
           <PaginationPrevious
             href={currentPage > 1 ? `?page=${currentPage - 1}` : "#"}
             onClick={(e) => {
-              if (currentPage <= 1) e.preventDefault();
-              else onPageChange(currentPage - 1);
+              e.preventDefault();
+              if (currentPage > 1) onPageChange(currentPage - 1);
             }}
             className={currentPage <= 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
             aria-disabled={currentPage <= 1}
@@ -105,8 +105,8 @@ function PaginationControls({
           <PaginationNext
             href={currentPage < totalPages ? `?page=${currentPage + 1}` : "#"}
             onClick={(e) => {
-              if (currentPage >= totalPages) e.preventDefault();
-              else onPageChange(currentPage + 1);
+              e.preventDefault();
+              if (currentPage < totalPages) onPageChange(currentPage + 1);
             }}
             className={currentPage >= totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
             aria-disabled={currentPage >= totalPages}

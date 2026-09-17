@@ -59,6 +59,23 @@ test("blog pagination reflects in the URL and survives reload", async ({ page })
   expect(secondPageTitle).not.toBe(firstPageTitle);
 });
 
+test("blog pagination next/prev clicks navigate without a full page reload", async ({
+  page,
+}) => {
+  await page.goto("/en/blog/");
+  let fullPageLoads = 0;
+  page.on("load", () => {
+    fullPageLoads++;
+  });
+
+  await page.getByLabel("Go to next page").click();
+  await expect(page).toHaveURL(/\?page=2/);
+  await page.getByLabel("Go to previous page").click();
+  await expect(page).toHaveURL(/\?page=1|\/en\/blog\/$/);
+
+  expect(fullPageLoads).toBe(0);
+});
+
 test("writeup detail body is server-rendered (no JS)", async ({ request }) => {
   const response = await request.get("/en/writeups/alert-to-win-xss/");
   expect(response.status()).toBeLessThan(400);
