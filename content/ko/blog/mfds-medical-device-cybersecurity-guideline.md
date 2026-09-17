@@ -1,13 +1,22 @@
 ---
-title: "식약처 의료기기 사이버보안 가이드라인 읽기 — 안내서-0995-05"
-date: 2026-07-30
-description: "식약처의 의료기기 사이버보안 허가·심사 가이드라인(안내서-0995-05, 2025.01.10)을 IEC 62443-4-2 기반으로 해설한다. 6개 카테고리 35개 요구사항의 구조, IEC 62443 FR/CR 체계와의 매핑, 허가 제출 자료 요건, 개정 전후 전환 일정까지 규제 실무자와 개발자 관점에서 정리했다."
-tags: ["의료기기", "IEC-62443", "MFDS", "Medical-Device-Security", "규제"]
-categories: ["Research"]
+title: 식약처 의료기기 사이버보안 가이드라인 읽기 — 안내서-0995-05
+date: 2026-07-30T00:00:00.000Z
+description: >-
+  식약처의 의료기기 사이버보안 허가·심사 가이드라인(안내서-0995-05, 2025.01.10)을 IEC 62443-4-2 기반으로 해설한다.
+  6개 카테고리 35개 요구사항의 구조, IEC 62443 FR/CR 체계와의 매핑, 허가 제출 자료 요건, 개정 전후 전환 일정까지 규제
+  실무자와 개발자 관점에서 정리했다.
+tags:
+  - 의료기기
+  - iec-62443
+  - mfds
+  - medical-device-security
+  - 규제
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 통신 경로가 있는 의료기기를 국내에 허가받으려면, 2025년부터는 **IEC 62443-4-2 기반의 사이버보안 요구사항 35개**를 충족하고 그 검증 자료를 식약처에 제출해야 한다. 그 기준을 담은 문서가 **식약처 「의료기기 사이버보안 허가·심사 가이드라인」(안내서-0995-05, 2025.01.10)** 이다.

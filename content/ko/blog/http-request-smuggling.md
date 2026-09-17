@@ -1,13 +1,23 @@
 ---
-title: "HTTP Request Smuggling: CL.TE와 TE.CL 공격 기법"
-date: 2021-01-01
-description: "HTTP Request Smuggling(HTTP DeSync Attack) 공격 분석: CL.TE, TE.CL 역직렬화 취약점이 프론트엔드 보안 통제를 우회하고 백엔드 요청 큐를 오염시키는 방법"
-tags: ["HTTP", "request-smuggling", "web", "CL.TE", "TE.CL", "desync", "web-security"]
-categories: ["Research"]
+title: 'HTTP Request Smuggling: CL.TE와 TE.CL 공격 기법'
+date: 2021-01-01T00:00:00.000Z
+description: >-
+  HTTP Request Smuggling(HTTP DeSync Attack) 공격 분석: CL.TE, TE.CL 역직렬화 취약점이 프론트엔드
+  보안 통제를 우회하고 백엔드 요청 큐를 오염시키는 방법
+tags:
+  - http
+  - request-smuggling
+  - web
+  - cl.te
+  - te.cl
+  - desync
+  - web-security
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 취약점 개요

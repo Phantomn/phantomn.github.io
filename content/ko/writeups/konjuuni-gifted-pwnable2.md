@@ -4,7 +4,7 @@ date: "2023-08-27"
 description: "공주대 영재원 pwnable2 문제 — Sleep NOP 패치로 플래그 즉시 출력"
 tags: ["pwn", "patching", "sleep", "linux", "ctf"]
 platform: "ctf"
-category: "redteam"
+category: "pwn"
 difficulty: "Easy"
 authors:
   - name: "Ph4nt0m"

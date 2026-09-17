@@ -16,6 +16,7 @@ import {
   type SeoFrontmatter,
 } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
+import { normalizeTag } from "@/lib/taxonomy";
 import { Badge } from "@/components/ui/badge";
 import { PostSidebar } from "@/components/blog/post-sidebar";
 import { ProseImageLightbox } from "@/components/blog/prose-image-lightbox";
@@ -223,9 +224,11 @@ export default async function BlogPostPage({ params }: Props) {
             {fm.tags && fm.tags.length > 0 && (
               <div className="mt-4 flex flex-wrap gap-2">
                 {fm.tags.map((tag) => (
-                  <Badge key={tag} variant="outline" className="text-xs">
-                    {tag}
-                  </Badge>
+                  <Link key={tag} href={`/${locale}/tags/${normalizeTag(tag)}/`}>
+                    <Badge variant="outline" className="text-xs">
+                      {tag}
+                    </Badge>
+                  </Link>
                 ))}
               </div>
             )}

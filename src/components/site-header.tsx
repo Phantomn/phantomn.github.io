@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { icons } from "@/lib/icons";
+import { GlobalSearch } from "@/components/global-search";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { Button } from "@/components/ui/button";
@@ -110,11 +111,13 @@ export function SiteHeader() {
             />
           ))}
           <Separator orientation="vertical" className="h-5 mx-1" />
+          <GlobalSearch />
           <LanguageSwitcher />
           <ThemeToggle />
         </nav>
 
         <div className="flex items-center gap-2 md:hidden">
+          <GlobalSearch />
           <LanguageSwitcher />
           <ThemeToggle />
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>

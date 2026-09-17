@@ -5,7 +5,7 @@ description: "Reversing.kr 이지 시리즈 풀이: Easy CrackMe, Easy ELF, Easy
 tags: ["reversing", "Reversing.kr", "crackme", "IDA", "GDB", "wargame"]
 platform: "wargame"
 category: "reversing"
-difficulty: "easy"
+difficulty: "Easy"
 categories: ["CTF"]
 authors:
   - name: "ph4nt0m"

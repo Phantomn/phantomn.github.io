@@ -5,7 +5,7 @@ description: "picoCTF 2018 pwn 및 어셈블리 챌린지 풀이: 버퍼 오버�
 tags: ["picoCTF", "pwn", "buffer-overflow", "assembly", "shellcode", "CTF"]
 platform: "ctf"
 category: "pwn"
-difficulty: "easy"
+difficulty: "Easy"
 categories: ["CTF"]
 authors:
   - name: "ph4nt0m"

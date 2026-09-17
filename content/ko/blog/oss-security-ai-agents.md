@@ -1,13 +1,21 @@
 ---
-title: "오픈소스 보안 AI 에이전트 해부 — CAI·PentAGI·OpenManus·CRS"
-date: 2026-08-04
-description: "네 개의 오픈소스 에이전트 프레임워크(CAI, PentAGI, OpenManus, CRS)를 실제 코드와 논문 기준으로 분해하고, DARPA AIxCC가 드러낸 자율 취약점 발견·패치의 현실을 정리한다."
-tags: ["Security", "AI-Agents", "AIxCC", "CRS", "Offensive-Security"]
-categories: ["Research"]
+title: 오픈소스 보안 AI 에이전트 해부 — CAI·PentAGI·OpenManus·CRS
+date: 2026-08-04T00:00:00.000Z
+description: >-
+  네 개의 오픈소스 에이전트 프레임워크(CAI, PentAGI, OpenManus, CRS)를 실제 코드와 논문 기준으로 분해하고, DARPA
+  AIxCC가 드러낸 자율 취약점 발견·패치의 현실을 정리한다.
+tags:
+  - security
+  - ai-agents
+  - aixcc
+  - crs
+  - offensive-security
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 두괄식 요약

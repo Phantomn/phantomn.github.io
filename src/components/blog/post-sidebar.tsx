@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatDate } from "@/lib/utils";
+import { normalizeTag } from "@/lib/taxonomy";
 import { TableOfContents } from "./table-of-contents";
 import type { SerializedPost } from "./types";
 
@@ -79,7 +80,7 @@ export function PostSidebar({ relatedPosts, relatedTags }: PostSidebarProps) {
             <Separator className="mb-3" />
             <div className="flex flex-wrap gap-2">
               {relatedTags.map((tag) => (
-                <Link key={tag} href={`/${locale}/blog/`}>
+                <Link key={tag} href={`/${locale}/tags/${normalizeTag(tag)}/`}>
                   <Badge
                     variant="secondary"
                     className="cursor-pointer text-[11px] transition-all hover:bg-primary/20 hover:text-primary"

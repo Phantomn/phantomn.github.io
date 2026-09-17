@@ -1,13 +1,21 @@
 ---
-title: "Best of the Best 8기: 커널 익스플로잇과 파일시스템 퍼저"
-date: 2019-07-01
-description: "BoB(Best of the Best) 8기 활동 회고 — 파일시스템 퍼저 구축, CVE 16개 발견, CodeBlue·HITB 발표"
-tags: ["BoB", "fuzzing", "kernel", "CVE", "filesystem", "CodeBlue", "HITB"]
-categories: ["Research"]
+title: 'Best of the Best 8기: 커널 익스플로잇과 파일시스템 퍼저'
+date: 2019-07-01T00:00:00.000Z
+description: 'BoB(Best of the Best) 8기 활동 회고 — 파일시스템 퍼저 구축, CVE 16개 발견, CodeBlue·HITB 발표'
+tags:
+  - bob
+  - fuzzing
+  - kernel
+  - cve
+  - filesystem
+  - codeblue
+  - hitb
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## BoB을 향한 여정

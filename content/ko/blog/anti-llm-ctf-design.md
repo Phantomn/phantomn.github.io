@@ -1,13 +1,21 @@
 ---
-title: "LLM을 노리는 CTF 설계 — 트랜스포머의 구조적 약점"
-date: 2026-07-31
-description: "LLM 에이전트가 CTF를 자동으로 풀기 시작한 시대에, '기계는 어려워하되 숙련된 인간은 합리적 시간에 푸는' 챌린지는 어떻게 설계하는가. 트랜스포머의 구조적 한계 — 상태 추적, 캐리 전파, 토큰화, 컨텍스트 손실 — 를 겨냥한 anti-LLM 출제 원리를 정리한다."
-tags: ["CTF", "LLM", "AI-Security", "Anti-LLM", "Red-Teaming"]
-categories: ["Research"]
+title: LLM을 노리는 CTF 설계 — 트랜스포머의 구조적 약점
+date: 2026-07-31T00:00:00.000Z
+description: >-
+  LLM 에이전트가 CTF를 자동으로 풀기 시작한 시대에, '기계는 어려워하되 숙련된 인간은 합리적 시간에 푸는' 챌린지는 어떻게 설계하는가.
+  트랜스포머의 구조적 한계 — 상태 추적, 캐리 전파, 토큰화, 컨텍스트 손실 — 를 겨냥한 anti-LLM 출제 원리를 정리한다.
+tags:
+  - ctf
+  - llm
+  - ai-security
+  - anti-llm
+  - red-teaming
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 LLM 에이전트는 이제 CTF를 푼다. 고교 수준 챌린지에서는 자동 풀이가 거의 포화 상태에 이르렀다고 알려져 있다. 그러나 결선급 pwn·web·rev로 올라가면 성공률은 여전히 낮다. **이 격차는 우연이 아니라 트랜스포머의 구조적 한계에서 비롯된다는 것이 anti-LLM CTF 설계의 핵심 전제다.**

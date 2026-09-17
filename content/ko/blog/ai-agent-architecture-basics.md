@@ -1,13 +1,21 @@
 ---
-title: "AI 에이전트 아키텍처 기본기 — 서브에이전트·멀티에이전트 패턴·하네스"
-date: 2026-08-03
-description: "에이전트란 무엇인가부터 서브에이전트 상호작용, 멀티에이전트 패턴 카탈로그, 그리고 이 모든 것을 감싸는 하네스 엔지니어링까지. AI 에이전트 시스템 설계의 기본기를 한 편으로 정리한다."
-tags: ["AI-Agents", "Multi-Agent-Systems", "Architecture", "Sub-Agents", "Harness"]
-categories: ["Research"]
+title: AI 에이전트 아키텍처 기본기 — 서브에이전트·멀티에이전트 패턴·하네스
+date: 2026-08-03T00:00:00.000Z
+description: >-
+  에이전트란 무엇인가부터 서브에이전트 상호작용, 멀티에이전트 패턴 카탈로그, 그리고 이 모든 것을 감싸는 하네스 엔지니어링까지. AI 에이전트
+  시스템 설계의 기본기를 한 편으로 정리한다.
+tags:
+  - ai-agents
+  - multi-agent-systems
+  - architecture
+  - sub-agents
+  - harness
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 두괄식 요약

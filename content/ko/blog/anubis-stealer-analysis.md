@@ -1,13 +1,20 @@
 ---
-title: "Anubis Stealer: 악성코드 분석"
-date: 2021-01-01
-description: "Anubis 뱅킹 트로이/스틸러의 정적·동적 분석: 지속성 메커니즘, C2 통신, 자격증명 탈취 기법"
-tags: ["malware", "stealer", "Anubis", "banking-trojan", "reverse-engineering", "analysis"]
-categories: ["Research"]
+title: 'Anubis Stealer: 악성코드 분석'
+date: 2021-01-01T00:00:00.000Z
+description: 'Anubis 뱅킹 트로이/스틸러의 정적·동적 분석: 지속성 메커니즘, C2 통신, 자격증명 탈취 기법'
+tags:
+  - malware
+  - stealer
+  - anubis
+  - banking-trojan
+  - reverse-engineering
+  - analysis
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 샘플 정보

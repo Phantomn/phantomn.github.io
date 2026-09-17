@@ -4,7 +4,7 @@ date: "2023-08-27"
 description: "one_gadget을 이용한 libc leak → one-shot RCE 풀이 예시 — printf@PLT로 scanf@GOT 릭 후 one_gadget 점프"
 tags: ["pwn", "rop", "one-gadget", "aslr", "libc", "linux"]
 platform: "ctf"
-category: "redteam"
+category: "pwn"
 difficulty: "Easy"
 authors:
   - name: "Ph4nt0m"

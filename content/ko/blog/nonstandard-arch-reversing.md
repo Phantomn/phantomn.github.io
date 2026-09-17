@@ -1,13 +1,26 @@
 ---
-title: "비표준 아키텍처 리버싱: PPC-VLE·TriCore 디스어셈블러를 직접 만들다"
-date: 2026-08-12
-description: "IDA·Ghidra·Binary Ninja가 기본 지원하지 않는 자동차 ECU 아키텍처(PPC-VLE, TriCore)를 분석하는 방법. IR을 공통어로 삼는 RE 도구 구조, 아키텍처 플러그인 구현 공식, 그리고 비표준 calling convention이 data-flow 분석을 오염시키는 문제와 해법."
-tags: ["reversing", "PPC-VLE", "TriCore", "binary-ninja", "IDA", "IR", "automotive", "ECU", "embedded"]
-categories: ["Research"]
+title: '비표준 아키텍처 리버싱: PPC-VLE·TriCore 디스어셈블러를 직접 만들다'
+date: 2026-08-12T00:00:00.000Z
+description: >-
+  IDA·Ghidra·Binary Ninja가 기본 지원하지 않는 자동차 ECU 아키텍처(PPC-VLE, TriCore)를 분석하는 방법.
+  IR을 공통어로 삼는 RE 도구 구조, 아키텍처 플러그인 구현 공식, 그리고 비표준 calling convention이 data-flow
+  분석을 오염시키는 문제와 해법.
+tags:
+  - reversing
+  - ppc-vle
+  - tricore
+  - binary-ninja
+  - ida
+  - ir
+  - automotive
+  - ecu
+  - embedded
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 들어가며

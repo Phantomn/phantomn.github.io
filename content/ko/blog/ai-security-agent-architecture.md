@@ -1,13 +1,22 @@
 ---
-title: "AI 보안 에이전트 아키텍처: 정찰에서 익스플로잇까지"
-date: 2026-05-23
-description: "네트워크 정찰부터 익스플로잇 검증까지 자율적 취약점 평가를 수행하는 계층적 멀티 에이전트 시스템의 아키텍처. 7개 스페셜리스트, 5단계 워크플로우, 그리고 판정 권한을 모델 밖으로 빼는 확증 오라클·실행 격리·RoE 레퍼런스 모니터까지."
-tags: ["AI-Agents", "VoltAgent", "Security", "Architecture", "Multi-Agent-Systems", "vulnerability-research"]
-categories: ["Research"]
+title: 'AI 보안 에이전트 아키텍처: 정찰에서 익스플로잇까지'
+date: 2026-05-23T00:00:00.000Z
+description: >-
+  네트워크 정찰부터 익스플로잇 검증까지 자율적 취약점 평가를 수행하는 계층적 멀티 에이전트 시스템의 아키텍처. 7개 스페셜리스트, 5단계
+  워크플로우, 그리고 판정 권한을 모델 밖으로 빼는 확증 오라클·실행 격리·RoE 레퍼런스 모니터까지.
+tags:
+  - ai-agents
+  - voltagent
+  - security
+  - architecture
+  - multi-agent-systems
+  - vulnerability-research
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 개요

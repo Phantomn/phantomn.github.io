@@ -41,6 +41,7 @@ interface LegacyCveEntry {
   published: string;
   lastModified: string;
   nvdStatus: string;
+  topics: string[];
 }
 
 export interface CveEntry {
@@ -67,6 +68,7 @@ export interface CveEntry {
   submittedAt?: string;
   issuedAt?: string;
   tags: string[];
+  topics: string[];
   nvdStatus: string;
 }
 
@@ -94,7 +96,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-476",
     "published": "2019-11-14",
     "lastModified": "2024-11-21",
-    "nvdStatus": "Modified"
+    "nvdStatus": "Modified",
+    "topics": ["kernel", "btrfs", "null-pointer-dereference", "filesystem"]
   },
   {
     "id": "CVE-2019-19036",
@@ -112,7 +115,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-476",
     "published": "2019-11-21",
     "lastModified": "2024-11-21",
-    "nvdStatus": "Modified"
+    "nvdStatus": "Modified",
+    "topics": ["kernel", "btrfs", "null-pointer-dereference", "filesystem"]
   },
   {
     "id": "CVE-2019-19037",
@@ -130,7 +134,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-476",
     "published": "2019-11-21",
     "lastModified": "2024-11-21",
-    "nvdStatus": "Modified"
+    "nvdStatus": "Modified",
+    "topics": ["kernel", "ext4", "null-pointer-dereference", "filesystem"]
   },
   {
     "id": "CVE-2019-19039",
@@ -148,7 +153,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-532",
     "published": "2019-11-21",
     "lastModified": "2024-11-21",
-    "nvdStatus": "Modified"
+    "nvdStatus": "Modified",
+    "topics": ["kernel", "btrfs", "information-disclosure", "sensitive-data-in-logs"]
   },
   {
     "id": "CVE-2019-19318",
@@ -166,7 +172,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-416",
     "published": "2019-11-28",
     "lastModified": "2024-11-21",
-    "nvdStatus": "Modified"
+    "nvdStatus": "Modified",
+    "topics": ["kernel", "btrfs", "use-after-free", "filesystem"]
   },
   {
     "id": "CVE-2019-19319",
@@ -184,7 +191,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-416",
     "published": "2019-11-27",
     "lastModified": "2024-11-21",
-    "nvdStatus": "Modified"
+    "nvdStatus": "Modified",
+    "topics": ["kernel", "ext4", "use-after-free", "out-of-bounds-write"]
   },
   {
     "id": "CVE-2019-19377",
@@ -202,7 +210,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-416",
     "published": "2019-11-29",
     "lastModified": "2024-11-21",
-    "nvdStatus": "Modified"
+    "nvdStatus": "Modified",
+    "topics": ["kernel", "btrfs", "use-after-free", "filesystem"]
   },
   {
     "id": "CVE-2019-19378",
@@ -220,7 +229,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-787",
     "published": "2019-11-29",
     "lastModified": "2026-05-28",
-    "nvdStatus": "Modified"
+    "nvdStatus": "Modified",
+    "topics": ["kernel", "btrfs", "out-of-bounds-write", "raid"]
   },
   {
     "id": "CVE-2019-19447",
@@ -238,7 +248,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-416",
     "published": "2019-12-08",
     "lastModified": "2024-11-21",
-    "nvdStatus": "Modified"
+    "nvdStatus": "Modified",
+    "topics": ["kernel", "ext4", "use-after-free", "filesystem"]
   },
   {
     "id": "CVE-2019-19448",
@@ -256,7 +267,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-416",
     "published": "2019-12-08",
     "lastModified": "2024-11-21",
-    "nvdStatus": "Modified"
+    "nvdStatus": "Modified",
+    "topics": ["kernel", "btrfs", "use-after-free", "filesystem"]
   },
   {
     "id": "CVE-2019-19449",
@@ -274,7 +286,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-125",
     "published": "2019-12-08",
     "lastModified": "2024-11-21",
-    "nvdStatus": "Modified"
+    "nvdStatus": "Modified",
+    "topics": ["kernel", "f2fs", "out-of-bounds-read", "filesystem"]
   },
   {
     "id": "CVE-2019-19813",
@@ -292,7 +305,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-416",
     "published": "2019-12-17",
     "lastModified": "2024-11-21",
-    "nvdStatus": "Modified"
+    "nvdStatus": "Modified",
+    "topics": ["kernel", "btrfs", "use-after-free", "filesystem"]
   },
   {
     "id": "CVE-2019-19814",
@@ -310,7 +324,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-787",
     "published": "2019-12-17",
     "lastModified": "2024-11-21",
-    "nvdStatus": "Modified"
+    "nvdStatus": "Modified",
+    "topics": ["kernel", "f2fs", "out-of-bounds-write", "filesystem"]
   },
   {
     "id": "CVE-2019-19815",
@@ -328,7 +343,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-476",
     "published": "2019-12-17",
     "lastModified": "2024-11-21",
-    "nvdStatus": "Modified"
+    "nvdStatus": "Modified",
+    "topics": ["kernel", "f2fs", "null-pointer-dereference", "filesystem"]
   },
   {
     "id": "CVE-2019-19816",
@@ -346,7 +362,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-787",
     "published": "2019-12-17",
     "lastModified": "2024-11-21",
-    "nvdStatus": "Modified"
+    "nvdStatus": "Modified",
+    "topics": ["kernel", "btrfs", "out-of-bounds-write", "filesystem"]
   },
   {
     "id": "CVE-2019-19927",
@@ -364,7 +381,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-125",
     "published": "2019-12-31",
     "lastModified": "2024-11-21",
-    "nvdStatus": "Modified"
+    "nvdStatus": "Modified",
+    "topics": ["kernel", "gpu", "ttm", "out-of-bounds-read"]
   },
   {
     "id": "CVE-2024-33788",
@@ -382,7 +400,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-77",
     "published": "2024-05-06",
     "lastModified": "2025-06-11",
-    "nvdStatus": "Analyzed"
+    "nvdStatus": "Analyzed",
+    "topics": ["iot", "router", "command-injection", "linksys"]
   },
   {
     "id": "CVE-2024-33789",
@@ -400,7 +419,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-77",
     "published": "2024-05-03",
     "lastModified": "2025-06-10",
-    "nvdStatus": "Analyzed"
+    "nvdStatus": "Analyzed",
+    "topics": ["iot", "router", "command-injection", "linksys"]
   },
   {
     "id": "CVE-2024-33791",
@@ -418,7 +438,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-79",
     "published": "2024-05-03",
     "lastModified": "2025-06-17",
-    "nvdStatus": "Analyzed"
+    "nvdStatus": "Analyzed",
+    "topics": ["iot", "router", "cross-site-scripting", "netis"]
   },
   {
     "id": "CVE-2024-33792",
@@ -436,7 +457,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-78",
     "published": "2024-05-03",
     "lastModified": "2025-06-17",
-    "nvdStatus": "Analyzed"
+    "nvdStatus": "Analyzed",
+    "topics": ["iot", "router", "os-command-injection", "netis"]
   },
   {
     "id": "CVE-2024-33793",
@@ -454,7 +476,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-78",
     "published": "2024-05-03",
     "lastModified": "2025-06-17",
-    "nvdStatus": "Analyzed"
+    "nvdStatus": "Analyzed",
+    "topics": ["iot", "router", "os-command-injection", "netis"]
   },
   {
     "id": "CVE-2026-52130",
@@ -472,7 +495,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-674",
     "published": "2026-08-12",
     "lastModified": "2026-08-12",
-    "nvdStatus": "Awaiting Analysis"
+    "nvdStatus": "Awaiting Analysis",
+    "topics": ["llm", "llama.cpp", "denial-of-service", "uncontrolled-recursion"]
   },
   {
     "id": "CVE-2026-52131",
@@ -490,7 +514,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-617",
     "published": "2026-08-12",
     "lastModified": "2026-08-12",
-    "nvdStatus": "Awaiting Analysis"
+    "nvdStatus": "Awaiting Analysis",
+    "topics": ["llm", "llama.cpp", "reachable-assertion", "denial-of-service"]
   },
   {
     "id": "CVE-2026-52132",
@@ -508,7 +533,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-190",
     "published": "2026-08-12",
     "lastModified": "2026-08-12",
-    "nvdStatus": "Awaiting Analysis"
+    "nvdStatus": "Awaiting Analysis",
+    "topics": ["llm", "llama.cpp", "denial-of-service", "integer-overflow"]
   },
   {
     "id": "FVE-2026-8617-75112",
@@ -526,7 +552,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-306 / CWE-200 / CWE-284",
     "published": "2026-08-10",
     "lastModified": "2026-08-10",
-    "nvdStatus": "Redacted"
+    "nvdStatus": "Redacted",
+    "topics": ["web", "authentication", "sensitive-data-exposure", "access-control"]
   },
   {
     "id": "FVE-2026-8617-74507",
@@ -544,7 +571,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-620 / CWE-306",
     "published": "2026-06-07",
     "lastModified": "2026-06-07",
-    "nvdStatus": "Redacted"
+    "nvdStatus": "Redacted",
+    "topics": ["web", "authentication", "password-change"]
   },
   {
     "id": "FVE-2026-8617-74513",
@@ -562,7 +590,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-unknown",
     "published": "2026-06-07",
     "lastModified": "2026-06-07",
-    "nvdStatus": "Redacted"
+    "nvdStatus": "Redacted",
+    "topics": ["web", "redacted-disclosure"]
   },
   {
     "id": "FVE-2026-8617-74526",
@@ -580,7 +609,8 @@ const CVE_SOURCE_ITEMS: LegacyCveEntry[] = [
     "cwe": "CWE-639 / CWE-306",
     "published": "2026-06-11",
     "lastModified": "2026-06-11",
-    "nvdStatus": "Redacted"
+    "nvdStatus": "Redacted",
+    "topics": ["web", "authorization-bypass", "authentication"]
   }
 ];
 
@@ -718,6 +748,7 @@ function normalizeCveEntry(entry: LegacyCveEntry): CveEntry {
       entry.groupKey,
       ...(entry.id.startsWith("FVE-") ? ["redacted"] : []),
     ],
+    topics: entry.topics,
     nvdStatus: entry.nvdStatus,
   };
 }

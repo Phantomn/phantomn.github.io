@@ -1,13 +1,24 @@
 ---
-title: "Ryuk 랜섬웨어 샘플 정적 분석 (Hermes 변종)"
-date: 2022-03-04
-description: "Ryuk 랜섬웨어(Hermes 변종)로 식별된 32-bit PE 바이너리 두 개의 정적 리버스 엔지니어링. 드로퍼/로더와 암호화 페이로드를 분석하고 지속성 확보, 프로세스 인젝션, VSS 삭제 동작을 다룬다."
-tags: ["malware", "ransomware", "Ryuk", "Hermes", "reverse-engineering", "PE32", "static-analysis", "Windows"]
-categories: ["Research"]
+title: Ryuk 랜섬웨어 샘플 정적 분석 (Hermes 변종)
+date: 2022-03-04T00:00:00.000Z
+description: >-
+  Ryuk 랜섬웨어(Hermes 변종)로 식별된 32-bit PE 바이너리 두 개의 정적 리버스 엔지니어링. 드로퍼/로더와 암호화 페이로드를
+  분석하고 지속성 확보, 프로세스 인젝션, VSS 삭제 동작을 다룬다.
+tags:
+  - malware
+  - ransomware
+  - ryuk
+  - hermes
+  - reverse-engineering
+  - pe32
+  - static-analysis
+  - windows
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 **샘플**: 32-bit PE 바이너리 두 개 (Sample1, Sample2)  

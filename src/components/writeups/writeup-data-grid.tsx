@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { cn, formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -116,7 +116,6 @@ export function WriteupDataGrid({
 }: {
   writeups: WriteupEntry[];
 }) {
-  const router = useRouter();
   const t = useTranslations("writeups");
   const [search, setSearch] = useState("");
   const [sortField, setSortField] = useState<SortField>("date");
@@ -281,9 +280,8 @@ export function WriteupDataGrid({
                 rows.map((w, i) => (
                   <tr
                     key={w.href}
-                    onClick={() => router.push(w.href)}
                     className={cn(
-                      "group cursor-pointer border-b border-border/30 transition-all hover:bg-primary/5 dark:hover:bg-primary/[0.03]",
+                      "group relative border-b border-border/30 transition-all hover:bg-primary/5 dark:hover:bg-primary/[0.03]",
                       i % 2 === 0
                         ? "bg-card"
                         : "bg-muted/20 dark:bg-muted/10"
@@ -303,8 +301,9 @@ export function WriteupDataGrid({
                     </td>
 
                     {/* Name */}
-                    <td className="px-4 py-3 font-medium text-foreground group-hover:text-primary transition-colors">
-                      {w.name}
+                    <td className="px-4 py-3 font-medium text-foreground">
+                      <Link href={w.href} className="absolute inset-0" aria-label={w.name} />
+                      <span className="pointer-events-none group-hover:text-primary transition-colors">{w.name}</span>
                     </td>
 
                     {/* Category */}

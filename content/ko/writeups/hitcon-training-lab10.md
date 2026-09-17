@@ -4,7 +4,7 @@ date: "2023-08-27"
 description: "HITCON Training LAB10 HackNote 풀이 — Heap Use-After-Free를 이용한 magic 함수 실행"
 tags: ["pwn", "heap", "uaf", "use-after-free", "linux"]
 platform: "ctf"
-category: "redteam"
+category: "pwn"
 difficulty: "Medium"
 authors:
   - name: "Ph4nt0m"

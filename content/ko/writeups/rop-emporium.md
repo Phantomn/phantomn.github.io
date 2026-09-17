@@ -5,7 +5,7 @@ description: "ROP Emporium 챌린지 풀이: ret2win(기본 ROP 제어 흐름 �
 tags: ["ROP", "ROP-Emporium", "pwn", "binary-exploitation", "ret2win", "callme"]
 platform: "wargame"
 category: "pwn"
-difficulty: "easy"
+difficulty: "Easy"
 categories: ["CTF"]
 authors:
   - name: "ph4nt0m"

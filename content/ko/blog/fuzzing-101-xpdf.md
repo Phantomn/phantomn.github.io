@@ -1,13 +1,20 @@
 ---
-title: "Fuzzing 101: AFL로 xpdf에서 버그 찾기"
-date: 2021-06-01
-description: "AFL을 이용한 커버리지 가이드 퍼징 입문: xpdf 계측, 크래시 트리아지, CVE-2019-13288 재현까지"
-tags: ["fuzzing", "AFL", "xpdf", "coverage-guided", "bug-finding", "CVE-2019-13288"]
-categories: ["Research"]
+title: 'Fuzzing 101: AFL로 xpdf에서 버그 찾기'
+date: 2021-06-01T00:00:00.000Z
+description: 'AFL을 이용한 커버리지 가이드 퍼징 입문: xpdf 계측, 크래시 트리아지, CVE-2019-13288 재현까지'
+tags:
+  - fuzzing
+  - afl
+  - xpdf
+  - coverage-guided
+  - bug-finding
+  - cve-2019-13288
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 fuzzing에 대해 "정확히" 모르는 것들이 너무 많아 fuzzing 101을 통해 공부하자는 결론을 냈다.

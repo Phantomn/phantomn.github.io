@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { Suspense, useState, useEffect, useCallback, useRef } from "react";
 import { useTranslations } from "next-intl";
+import { useUrlState } from "@/hooks/use-url-state";
 import { Input } from "@/components/ui/input";
 import { FeaturedPostCard } from "./featured-post-card";
 import { PostCard } from "./post-card";
@@ -68,7 +69,7 @@ function PaginationControls({
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            href="#"
+            href={currentPage > 1 ? `?page=${currentPage - 1}` : "#"}
             onClick={(e) => {
               e.preventDefault();
               if (currentPage > 1) onPageChange(currentPage - 1);
@@ -86,7 +87,7 @@ function PaginationControls({
           ) : (
             <PaginationItem key={page}>
               <PaginationLink
-                href="#"
+                href={`?page=${page}`}
                 isActive={page === currentPage}
                 onClick={(e) => {
                   e.preventDefault();
@@ -102,7 +103,7 @@ function PaginationControls({
 
         <PaginationItem>
           <PaginationNext
-            href="#"
+            href={currentPage < totalPages ? `?page=${currentPage + 1}` : "#"}
             onClick={(e) => {
               e.preventDefault();
               if (currentPage < totalPages) onPageChange(currentPage + 1);
@@ -116,14 +117,24 @@ function PaginationControls({
   );
 }
 
-export function BlogSearchLayout({
+export function BlogSearchLayout(props: BlogSearchLayoutProps) {
+  return (
+    <Suspense>
+      <BlogSearchLayoutInner {...props} />
+    </Suspense>
+  );
+}
+
+function BlogSearchLayoutInner({
   featuredPost,
   posts,
   externalQuery = "",
 }: BlogSearchLayoutProps) {
   const t = useTranslations("blog");
   const [query, setQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [pageParam, setPageParam] = useUrlState("page", "1");
+  const currentPage = Number(pageParam) || 1;
+  const setCurrentPage = (page: number) => setPageParam(String(page));
 
   const activeQuery = externalQuery || query;
   const allPosts = featuredPost ? [featuredPost, ...posts] : posts;
@@ -152,8 +163,14 @@ export function BlogSearchLayout({
 
   const isSearching = activeQuery.trim().length > 0;
 
-  // Reset to page 1 when search query changes
+  // Reset to page 1 when search query changes (not on initial mount, so a
+  // deep-linked ?page=N survives hydration instead of being wiped)
+  const isFirstRender = useRef(true);
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     setCurrentPage(1);
   }, [query, externalQuery]);
 

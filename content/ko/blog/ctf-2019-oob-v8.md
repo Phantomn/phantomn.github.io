@@ -1,13 +1,21 @@
 ---
-title: "CTF 2019 oob-v8: V8 Out-of-Bounds 읽기/쓰기 익스플로잇"
-date: 2019-06-01
-description: "V8 OOB 익스플로잇 단계별 분석: 타입 혼동, addrOf/fakeObj 프리미티브, WASM RWX 셸코드 실행"
-tags: ["CTF", "V8", "Chrome", "OOB", "browser-exploitation", "JavaScript", "WASM"]
-categories: ["Research"]
+title: 'CTF 2019 oob-v8: V8 Out-of-Bounds 읽기/쓰기 익스플로잇'
+date: 2019-06-01T00:00:00.000Z
+description: 'V8 OOB 익스플로잇 단계별 분석: 타입 혼동, addrOf/fakeObj 프리미티브, WASM RWX 셸코드 실행'
+tags:
+  - ctf
+  - v8
+  - chrome
+  - oob
+  - browser-exploitation
+  - javascript
+  - wasm
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 취약한 소스

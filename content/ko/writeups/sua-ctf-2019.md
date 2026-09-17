@@ -5,7 +5,7 @@ description: "SUA CTF 2019 챌린지 풀이: pwn 및 리버싱 카테고리"
 tags: ["SUA", "CTF", "pwn", "reversing"]
 platform: "ctf"
 category: "pwn"
-difficulty: "medium"
+difficulty: "Medium"
 categories: ["CTF"]
 authors:
   - name: "ph4nt0m"

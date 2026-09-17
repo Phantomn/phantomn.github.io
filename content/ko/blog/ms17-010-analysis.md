@@ -1,13 +1,23 @@
 ---
-title: "MS17-010 (EternalBlue): SMBv1 익스플로잇 분석"
-date: 2017-03-14
-description: "MS17-010 EternalBlue 분석 — WannaCry와 NotPetya에 사용된 SMBv1 버퍼 오버플로우 익스플로잇과 Metasploit 모듈 패킷 분석"
-tags: ["MS17-010", "EternalBlue", "SMB", "Windows", "exploit", "Metasploit", "WannaCry"]
-categories: ["Research"]
+title: 'MS17-010 (EternalBlue): SMBv1 익스플로잇 분석'
+date: 2017-03-14T00:00:00.000Z
+description: >-
+  MS17-010 EternalBlue 분석 — WannaCry와 NotPetya에 사용된 SMBv1 버퍼 오버플로우 익스플로잇과
+  Metasploit 모듈 패킷 분석
+tags:
+  - ms17-010
+  - eternalblue
+  - smb
+  - windows
+  - exploit
+  - metasploit
+  - wannacry
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 개요

@@ -165,5 +165,15 @@
     "translating": "Traduciendo contenido...",
     "translationFailed": "Traducción no disponible — mostrando original",
     "poweredBy": "Traducción por Lingva"
+  },
+  "tags": {
+    "heading": "Etiquetado",
+    "indexHeading": "Todas las Etiquetas",
+    "indexHint": "Etiquetas que aparecen en 3 o más elementos en blog, CVEs y writeups."
+  },
+  "search": {
+    "open": "Buscar",
+    "title": "Buscar",
+    "placeholder": "Buscar posts, CVEs y writeups..."
   }
 }

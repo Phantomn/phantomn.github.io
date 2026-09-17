@@ -5,7 +5,7 @@ description: "DEF CON 23 babycmd 풀이: 블랙리스트 우회를 통한 명령
 tags: ["DEF CON", "CTF", "command-injection", "pwn", "64-bit", "bypass"]
 platform: "ctf"
 category: "pwn"
-difficulty: "medium"
+difficulty: "Medium"
 categories: ["CTF"]
 authors:
   - name: "ph4nt0m"

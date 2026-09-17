@@ -1,13 +1,22 @@
 ---
-title: "라우터 보안 리뷰 — MikroTik RB4011 공개 취약점 회고"
-date: 2026-08-05
-description: "공개된 하드웨어 사양과 이미 패치된 CVE만으로 MikroTik RB4011의 공격 표면을 방어자 관점에서 회고한다. Pwn2Own Toronto 2022의 CVE-2023-32154 사례를 중심으로 라우터 하드닝 원칙을 정리한다."
-tags: ["MikroTik", "RouterOS", "라우터보안", "공격표면", "CVE-2023-32154", "네트워크보안"]
-categories: ["Research"]
+title: 라우터 보안 리뷰 — MikroTik RB4011 공개 취약점 회고
+date: 2026-08-05T00:00:00.000Z
+description: >-
+  공개된 하드웨어 사양과 이미 패치된 CVE만으로 MikroTik RB4011의 공격 표면을 방어자 관점에서 회고한다. Pwn2Own
+  Toronto 2022의 CVE-2023-32154 사례를 중심으로 라우터 하드닝 원칙을 정리한다.
+tags:
+  - mikrotik
+  - routeros
+  - 라우터보안
+  - 공격표면
+  - cve-2023-32154
+  - 네트워크보안
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 요약
