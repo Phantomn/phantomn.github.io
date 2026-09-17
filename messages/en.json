@@ -170,5 +170,10 @@
     "heading": "Tagged",
     "indexHeading": "All Tags",
     "indexHint": "Tags appearing in 3 or more items across blog, CVEs, and writeups."
+  },
+  "search": {
+    "open": "Search",
+    "title": "Search",
+    "placeholder": "Search posts, CVEs, and writeups..."
   }
 }

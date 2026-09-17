@@ -164,5 +164,10 @@
     "heading": "태그",
     "indexHeading": "모든 태그",
     "indexHint": "블로그, CVE, 라이트업에서 3회 이상 나타난 태그입니다."
+  },
+  "search": {
+    "open": "검색",
+    "title": "검색",
+    "placeholder": "블로그, CVE, 라이트업 검색..."
   }
 }

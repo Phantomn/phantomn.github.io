@@ -92,3 +92,10 @@ test("blog post tag badges link to /tags/", async ({ page }) => {
   const href = await tagLink.getAttribute("href");
   expect(href).not.toBe("/en/blog/");
 });
+
+test("global search finds results across sections", async ({ page }) => {
+  await page.goto("/en/");
+  await page.getByRole("button", { name: /search/i }).click();
+  await page.getByRole("textbox").fill("pwn");
+  await expect(page.getByRole("link").filter({ hasText: /pwn/i }).first()).toBeVisible();
+});

@@ -170,5 +170,10 @@
     "heading": "Marcado",
     "indexHeading": "Todas as Tags",
     "indexHint": "Tags que aparecem em 3 ou mais itens em blog, CVEs e writeups."
+  },
+  "search": {
+    "open": "Buscar",
+    "title": "Buscar",
+    "placeholder": "Buscar posts, CVEs e writeups..."
   }
 }

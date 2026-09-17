@@ -6,6 +6,7 @@
 import {
   faBars,
   faDownload,
+  faMagnifyingGlass,
   faMoon,
   faSun,
 } from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +19,7 @@ import {
 export const icons = {
   bars: faBars,
   download: faDownload,
+  magnifyingGlass: faMagnifyingGlass,
   moon: faMoon,
   sun: faSun,
   github: faGithub,
