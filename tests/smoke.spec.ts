@@ -48,3 +48,12 @@ test("writeup list rows are real anchors", async ({ page }) => {
   expect(page.url()).toContain("/writeups/");
   expect(page.url()).not.toContain("/en/writeups/\n");
 });
+
+test("writeup detail body is server-rendered (no JS)", async ({ request }) => {
+  const response = await request.get("/en/writeups/alert-to-win-xss/");
+  expect(response.status()).toBeLessThan(400);
+  const html = await response.text();
+  // The real body should contain prose, not just the Suspense placeholder.
+  expect(html.length).toBeGreaterThan(3000);
+  expect(html).not.toMatch(/self\.__next_f\.push.*"children".*null/);
+});
