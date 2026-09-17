@@ -17,3 +17,12 @@ test("portfolio page loads", async ({ page }) => {
   expect(response?.status()).toBeLessThan(400);
   await expect(page).toHaveTitle(/Portfolio/);
 });
+
+test("writeup list rows are real anchors", async ({ page }) => {
+  const response = await page.goto("/en/writeups/");
+  expect(response?.status()).toBeLessThan(400);
+  const anchorCount = await page
+    .locator('a[href*="/writeups/"]:not([href="/en/writeups/"])')
+    .count();
+  expect(anchorCount).toBeGreaterThanOrEqual(28);
+});
