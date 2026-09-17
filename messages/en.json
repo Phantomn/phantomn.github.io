@@ -165,5 +165,8 @@
     "translating": "Translating content...",
     "translationFailed": "Translation unavailable — showing original",
     "poweredBy": "Translation by Lingva"
+  },
+  "tags": {
+    "heading": "Tagged"
   }
 }

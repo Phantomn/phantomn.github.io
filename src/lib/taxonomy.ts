@@ -1,4 +1,7 @@
 import { TAG_SYNONYMS } from "@/data/taxonomy";
+import { getContentList, getAllWriteups } from "@/lib/content";
+import { CVE_ITEMS } from "@/data/cves";
+import { routing } from "@/i18n/routing";
 
 export function normalizeTag(raw: string): string {
   const lower = raw.trim().toLowerCase();
@@ -31,4 +34,39 @@ export function buildTagIndex(items: TaggedItem[]): Map<string, TaggedItem[]> {
     }
   }
   return index;
+}
+
+export function getAllTaggedItems(locale: string = routing.defaultLocale): TaggedItem[] {
+  const blogItems: TaggedItem[] = getContentList("blog", locale).map((item) => ({
+    type: "blog",
+    slug: item.slug,
+    title: item.meta.title,
+    href: item.href,
+    tags: item.meta.tags ?? [],
+    date: (() => {
+      const rawDate = item.meta.date as unknown;
+      if (!rawDate) return "";
+      return rawDate instanceof Date ? rawDate.toISOString().split("T")[0] : String(rawDate);
+    })(),
+  }));
+
+  const writeupItems: TaggedItem[] = getAllWriteups(locale).map((item) => ({
+    type: "writeup",
+    slug: item.slug,
+    title: item.name,
+    href: item.href,
+    tags: item.tags,
+    date: item.date,
+  }));
+
+  const cveItems: TaggedItem[] = CVE_ITEMS.map((item) => ({
+    type: "cve",
+    slug: item.slug,
+    title: item.title,
+    href: `/${locale}/cves/${item.slug}/`,
+    tags: item.topics,
+    date: item.published,
+  }));
+
+  return [...blogItems, ...writeupItems, ...cveItems];
 }

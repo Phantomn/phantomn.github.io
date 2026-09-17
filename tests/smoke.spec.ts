@@ -67,3 +67,14 @@ test("writeup detail body is server-rendered (no JS)", async ({ request }) => {
   expect(html.length).toBeGreaterThan(3000);
   expect(html).not.toMatch(/self\.__next_f\.push.*"children".*null/);
 });
+
+test("tag page shows items from multiple sections", async ({ page }) => {
+  const response = await page.goto("/en/tags/pwn/");
+  expect(response?.status()).toBeLessThan(400);
+  await expect(page.getByText(/writeup/i).first()).toBeVisible();
+});
+
+test("unknown tag returns 404", async ({ page }) => {
+  const response = await page.goto("/en/tags/this-tag-does-not-exist-xyz/");
+  expect(response?.status()).toBe(404);
+});

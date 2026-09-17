@@ -159,5 +159,8 @@
     "translating": "콘텐츠 번역 중...",
     "translationFailed": "번역 불가 — 원문 표시",
     "poweredBy": "Lingva 번역"
+  },
+  "tags": {
+    "heading": "태그"
   }
 }

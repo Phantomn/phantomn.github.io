@@ -165,5 +165,8 @@
     "translating": "Traduzindo conteúdo...",
     "translationFailed": "Tradução indisponível — exibindo original",
     "poweredBy": "Tradução via Lingva"
+  },
+  "tags": {
+    "heading": "Marcado"
   }
 }
