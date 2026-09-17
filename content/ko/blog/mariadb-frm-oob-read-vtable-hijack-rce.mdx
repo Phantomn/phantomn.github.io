@@ -1,16 +1,26 @@
 ---
-title: "MariaDB .frm 파싱 OOB Read를 통한 vtable Hijacking RCE"
-date: "2026-09-13"
-description: "MariaDB의 .frm 메타데이터 파싱 과정에서 발생하는 배열 범위 초과 읽기(OOB Read)가 조작된 C++ 객체와 vtable 위조로 이어져 mariadbd 프로세스 권한의 임의 코드 실행에 도달하는 과정 분석 (MDEV-40571)"
-tags: ["CVE", "MariaDB", "OOB", "RCE", "vtable", "database", "exploitation"]
-categories: ["Research"]
+title: MariaDB .frm 파싱 OOB Read를 통한 vtable Hijacking RCE
+date: '2026-09-13'
+description: >-
+  MariaDB의 .frm 메타데이터 파싱 과정에서 발생하는 배열 범위 초과 읽기(OOB Read)가 조작된 C++ 객체와 vtable 위조로
+  이어져 mariadbd 프로세스 권한의 임의 코드 실행에 도달하는 과정 분석 (MDEV-40571)
+tags:
+  - cve
+  - mariadb
+  - oob
+  - rce
+  - vtable
+  - database
+  - exploitation
+categories:
+  - Research
 authors:
-  - name: "pinebudweiser"
-    link: "https://github.com/pinebudweiser"
-    image: "https://github.com/pinebudweiser.png"
-  - name: "Ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: pinebudweiser
+    link: 'https://github.com/pinebudweiser'
+    image: 'https://github.com/pinebudweiser.png'
+  - name: Ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 개요
