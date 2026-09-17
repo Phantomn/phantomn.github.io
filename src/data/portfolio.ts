@@ -397,6 +397,17 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     ],
     stack: ["NIST SSDF", "Threat Modeling", "SBOM/VEX", "IEC 62443", "FDA Cybersecurity"],
   },
+  {
+    title: "코스모로보틱스 MFDS 인증 컨설팅",
+    client: "코스모로보틱스",
+    period: "2025.10 — 2026.12",
+    category: "medical",
+    role: "모의해킹",
+    contribution: 40,
+    featured: false,
+    actions: [],
+    results: ["코스모로보틱스 MFDS(식약처) 의료기기 보안인증 컨설팅 모의해킹 수행 (기여도 40%)"],
+  },
 
   /* ── 사이버훈련장·CTF 개발 ──────────────────────────────────── */
   {
@@ -486,6 +497,42 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     actions: ["DFIR Network Forensics 카테고리 문제 개발 — 실제 침해사고 기반 포렌식 시나리오"],
     results: ["APEX CTF 2025 DFIR Network Forensics 문제 개발 (기여도 45%)"],
     stack: ["DFIR", "Network Forensics", "Wireshark"],
+  },
+  {
+    title: "APEX 2026 DFIR Green Team — Tazuko Voyager FOR400 문제 출제",
+    client: "APEX CTF 2026",
+    period: "2026.06 — 2026.09",
+    category: "cyber-range",
+    role: "DFIR Green Team / FOR400 문제 출제",
+    contribution: 100,
+    featured: true,
+    background:
+      "APEX 2026 DFIR Green Team으로 참가해 FOR400(포렌식 최상위 난이도) 카테고리 문제를 단독 출제했다. 위성통신(VSAT)·AIS·펌웨어 리버싱을 엮은 해상 침해사고 멀티플래그 시나리오 'Tazuko Voyager'를 설계했다.",
+    actions: [
+      "선박 위성통신 단말 커맨드 트래픽(capture.pcap)과 ECDIS 항법 디스플레이 조작을 엮은 멀티플래그 포렌식 시나리오 설계",
+      "CCSDS 커맨드 인터페이스 프로빙 -> AIS 스푸핑 -> 펌웨어 변조로 이어지는 침해 타임라인 구성",
+      "Ground Truth 리포트·채점 루브릭·인시던트 리포트(SatCom Mojopok) 등 출제 산출물 작성",
+    ],
+    results: ["APEX 2026 DFIR Green Team으로 FOR400 최상위 난이도 문제 'Tazuko Voyager' 단독 출제 (기여도 100%)"],
+    stack: ["DFIR", "CCSDS", "AIS", "Firmware Reversing", "PCAP Analysis"],
+  },
+  {
+    title: "부산정보산업진흥원 사이버공방전(HACKSIUM) 운영 용역",
+    client: "부산정보산업진흥원",
+    period: "2026.06 — 2026.09",
+    category: "cyber-range",
+    role: "예선·본선 문제 출제 및 대회 운영",
+    contribution: 70,
+    featured: true,
+    background:
+      "HACKSIUM 예선·본선 문제 출제 및 대회 운영을 수행했다. 본선은 해상물류 그룹 대상 실시간 방어 시나리오 'Anchor Watch'를 설계하고, Tazuko Voyager(APEX 2026 별도 출제)를 제외한 본선·예선 나머지 문제를 출제했다.",
+    actions: [
+      "본선 LiveFire 블루팀 방어 시나리오 'Anchor Watch' 설계 — 위성·선박·항만·본사IT 4개 Zone, 6시간(3 Phase) 실시간 침해대응 채점 체계 구축",
+      "Tazuko Voyager를 제외한 본선·예선 나머지 문제 출제",
+      "대회 운영 지원",
+    ],
+    results: ["HACKSIUM 예선·본선 문제 출제 및 대회 운영 수행 (기여도 70%)"],
+    stack: ["LiveFire", "Blue Team Defense", "ICS/OT", "Scenario Design", "CTF Ops"],
   },
 
   /* ── 보안 컨설팅·인증 ───────────────────────────────────────── */
