@@ -287,8 +287,9 @@ export function WriteupDataGrid({
                         : "bg-muted/20 dark:bg-muted/10"
                     )}
                   >
+                    <Link href={w.href} className="absolute inset-0 z-0 block" aria-label={w.name} />
                     {/* Source */}
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3 pointer-events-none">
                       <Badge
                         variant="outline"
                         className={cn(
@@ -301,13 +302,12 @@ export function WriteupDataGrid({
                     </td>
 
                     {/* Name */}
-                    <td className="relative px-4 py-3 font-medium text-foreground">
-                      <Link href={w.href} className="absolute inset-0" aria-label={w.name} />
-                      <span className="pointer-events-none group-hover:text-primary transition-colors">{w.name}</span>
+                    <td className="px-4 py-3 font-medium text-foreground pointer-events-none">
+                      <span className="group-hover:text-primary transition-colors">{w.name}</span>
                     </td>
 
                     {/* Category */}
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3 pointer-events-none">
                       <Badge
                         variant="outline"
                         className={cn(
@@ -320,7 +320,7 @@ export function WriteupDataGrid({
                     </td>
 
                     {/* Difficulty */}
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3 pointer-events-none">
                       <Badge
                         variant="outline"
                         className={cn(
@@ -333,7 +333,7 @@ export function WriteupDataGrid({
                     </td>
 
                     {/* Tags */}
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3 pointer-events-none">
                       <div className="flex flex-wrap gap-1">
                         {w.tags.slice(0, 3).map((tag) => (
                           <Badge
@@ -353,7 +353,7 @@ export function WriteupDataGrid({
                     </td>
 
                     {/* Date */}
-                    <td className="px-4 py-3 whitespace-nowrap font-mono text-xs text-muted-foreground">
+                    <td className="px-4 py-3 whitespace-nowrap font-mono text-xs text-muted-foreground pointer-events-none">
                       {w.date
                         ? formatDate(w.date, {
                             year: "numeric",

@@ -25,4 +25,14 @@ test("writeup list rows are real anchors", async ({ page }) => {
     .locator('a[href*="/writeups/"]:not([href="/en/writeups/"])')
     .count();
   expect(anchorCount).toBeGreaterThanOrEqual(28);
+
+  // Verify whole row is clickable: the Link overlay covers entire row
+  const secondRowLink = page.locator("tbody tr").nth(1).locator("a").first();
+  const linkHref = await secondRowLink.getAttribute("href");
+  expect(linkHref).toContain("/writeups/");
+
+  // Verify link navigates when clicked
+  await secondRowLink.click();
+  expect(page.url()).toContain("/writeups/");
+  expect(page.url()).not.toContain("/en/writeups/\n");
 });
