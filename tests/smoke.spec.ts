@@ -84,3 +84,11 @@ test("tag index only lists tags used 3+ times", async ({ page }) => {
   expect(response?.status()).toBeLessThan(400);
   await expect(page.getByRole("link", { name: /#pwn/i })).toBeVisible();
 });
+
+test("blog post tag badges link to /tags/", async ({ page }) => {
+  await page.goto("/en/blog/grammar-based-fuzzing/");
+  const tagLink = page.locator('a[href*="/tags/"]').first();
+  await expect(tagLink).toBeVisible();
+  const href = await tagLink.getAttribute("href");
+  expect(href).not.toBe("/en/blog/");
+});
