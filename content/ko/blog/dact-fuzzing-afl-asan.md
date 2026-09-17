@@ -1,13 +1,22 @@
 ---
-title: "AFL + ASan으로 dact 0.8.42 퍼징: dact_process_file의 스택 버퍼 오버플로우"
-date: 2022-03-13
-description: "AFL과 AddressSanitizer를 활용해 압축 유틸리티 dact에서 스택 버퍼 오버플로우를 발견한 과정. 조작된 DACT 헤더를 통한 file_extd_urls 배열 오버플로우의 근본 원인 분석."
-tags: ["fuzzing", "AFL", "ASan", "stack-buffer-overflow", "vulnerability-research", "C"]
-categories: ["Research"]
+title: 'AFL + ASan으로 dact 0.8.42 퍼징: dact_process_file의 스택 버퍼 오버플로우'
+date: 2022-03-13T00:00:00.000Z
+description: >-
+  AFL과 AddressSanitizer를 활용해 압축 유틸리티 dact에서 스택 버퍼 오버플로우를 발견한 과정. 조작된 DACT 헤더를 통한
+  file_extd_urls 배열 오버플로우의 근본 원인 분석.
+tags:
+  - fuzzing
+  - afl
+  - asan
+  - stack-buffer-overflow
+  - vulnerability-research
+  - c
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 **대상**: dact 0.8.42 (`dact_common.c`)  

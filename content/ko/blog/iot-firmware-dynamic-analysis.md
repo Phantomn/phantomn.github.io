@@ -1,13 +1,24 @@
 ---
-title: "IoT 펌웨어 동적 분석: FIRMADYNE으로 임베디드 리눅스 펌웨어 에뮬레이션하기"
-date: 2021-01-01
-description: "리눅스 기반 임베디드 펌웨어의 자동화된 동적 분석 기법을 다루는 연구 정리. FIRMADYNE의 에뮬레이션 전략, 주변장치 모델링, 취약점 발견 방법론을 설명한다."
-tags: ["IoT", "firmware", "fuzzing", "dynamic-analysis", "embedded", "router", "research", "QEMU"]
-categories: ["Research"]
+title: 'IoT 펌웨어 동적 분석: FIRMADYNE으로 임베디드 리눅스 펌웨어 에뮬레이션하기'
+date: 2021-01-01T00:00:00.000Z
+description: >-
+  리눅스 기반 임베디드 펌웨어의 자동화된 동적 분석 기법을 다루는 연구 정리. FIRMADYNE의 에뮬레이션 전략, 주변장치 모델링, 취약점
+  발견 방법론을 설명한다.
+tags:
+  - iot
+  - firmware
+  - fuzzing
+  - dynamic-analysis
+  - embedded
+  - router
+  - research
+  - qemu
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 개요

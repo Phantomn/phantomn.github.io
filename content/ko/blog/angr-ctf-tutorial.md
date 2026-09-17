@@ -1,13 +1,22 @@
 ---
-title: "CTF를 위한 Angr: 심볼릭 실행 튜토리얼"
-date: 2020-01-01
-description: "angr를 CTF 바이너리 분석에 활용하는 실용 가이드: 심볼릭 실행 기초, find/avoid 전략, 심볼릭 레지스터·스택 인자 설정, 크랙미 자동 풀기"
-tags: ["angr", "symbolic-execution", "CTF", "binary-analysis", "Python", "automation"]
-categories: ["Research"]
+title: 'CTF를 위한 Angr: 심볼릭 실행 튜토리얼'
+date: 2020-01-01T00:00:00.000Z
+description: >-
+  angr를 CTF 바이너리 분석에 활용하는 실용 가이드: 심볼릭 실행 기초, find/avoid 전략, 심볼릭 레지스터·스택 인자 설정,
+  크랙미 자동 풀기
+tags:
+  - angr
+  - symbolic-execution
+  - ctf
+  - binary-analysis
+  - python
+  - automation
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## angr란?

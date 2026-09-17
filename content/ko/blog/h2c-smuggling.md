@@ -1,13 +1,22 @@
 ---
-title: "H2C Smuggling: HTTP/2 Cleartext 업그레이드를 통한 리버스 프록시 우회"
-date: 2021-03-01
-description: "H2C Smuggling 기법: HTTP/2 cleartext 업그레이드를 악용하여 리버스 프록시의 접근 제어를 우회하고 내부 엔드포인트에 접근하는 방법"
-tags: ["HTTP2", "H2C", "smuggling", "proxy", "web-security", "bypass"]
-categories: ["Research"]
+title: 'H2C Smuggling: HTTP/2 Cleartext 업그레이드를 통한 리버스 프록시 우회'
+date: 2021-03-01T00:00:00.000Z
+description: >-
+  H2C Smuggling 기법: HTTP/2 cleartext 업그레이드를 악용하여 리버스 프록시의 접근 제어를 우회하고 내부 엔드포인트에
+  접근하는 방법
+tags:
+  - http2
+  - h2c
+  - smuggling
+  - proxy
+  - web-security
+  - bypass
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 개요

@@ -1,13 +1,20 @@
 ---
-title: "E5600 라우터 WPS PIN 커맨드 인젝션"
-date: 2021-01-01
-description: "E5600 라우터의 WPS PIN 처리 과정에서 발견된 커맨드 인젝션 취약점 — 조작된 WPS PIN 파라미터를 통한 인증된 원격 코드 실행"
-tags: ["IoT", "router", "command-injection", "WPS", "embedded", "RCE"]
-categories: ["Research"]
+title: E5600 라우터 WPS PIN 커맨드 인젝션
+date: 2021-01-01T00:00:00.000Z
+description: E5600 라우터의 WPS PIN 처리 과정에서 발견된 커맨드 인젝션 취약점 — 조작된 WPS PIN 파라미터를 통한 인증된 원격 코드 실행
+tags:
+  - iot
+  - router
+  - command-injection
+  - wps
+  - embedded
+  - rce
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 대상

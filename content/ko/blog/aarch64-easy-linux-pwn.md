@@ -1,13 +1,20 @@
 ---
-title: "AArch64 바이너리 익스플로잇: easy_linux_pwn"
-date: 2020-01-01
-description: "AArch64 호출 규약, x86-64와의 스택 레이아웃 차이, ROP 체인 구성을 다루는 ARM64 익스플로잇 실습 워크스루"
-tags: ["AArch64", "ARM64", "pwn", "ROP", "binary-exploitation", "Linux"]
-categories: ["Research"]
+title: 'AArch64 바이너리 익스플로잇: easy_linux_pwn'
+date: 2020-01-01T00:00:00.000Z
+description: 'AArch64 호출 규약, x86-64와의 스택 레이아웃 차이, ROP 체인 구성을 다루는 ARM64 익스플로잇 실습 워크스루'
+tags:
+  - aarch64
+  - arm64
+  - pwn
+  - rop
+  - binary-exploitation
+  - linux
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 소개

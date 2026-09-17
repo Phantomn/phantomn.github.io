@@ -1,13 +1,20 @@
 ---
-title: "RAUC: 임베디드 리눅스 펌웨어 업데이트 프레임워크 분석"
-date: 2021-01-01
-description: "임베디드 리눅스 시스템에서 사용되는 견고한 자동 업데이트 메커니즘 RAUC의 보안 분석. 업데이트 체인 무결성과 공격 표면에 초점을 맞춘다."
-tags: ["embedded", "RAUC", "firmware-update", "Linux", "IoT", "security-analysis"]
-categories: ["Research"]
+title: 'RAUC: 임베디드 리눅스 펌웨어 업데이트 프레임워크 분석'
+date: 2021-01-01T00:00:00.000Z
+description: 임베디드 리눅스 시스템에서 사용되는 견고한 자동 업데이트 메커니즘 RAUC의 보안 분석. 업데이트 체인 무결성과 공격 표면에 초점을 맞춘다.
+tags:
+  - embedded
+  - rauc
+  - firmware-update
+  - linux
+  - iot
+  - security-analysis
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 개요

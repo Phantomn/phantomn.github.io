@@ -1,13 +1,24 @@
 ---
-title: "checkm8 익스플로잇 기술 분석"
-date: 2019-10-05
-description: "Apple A5~A11 SoC의 BootROM 익스플로잇 checkm8에 대한 심층 분석: USB DFU 스택 Use-After-Free, 힙 그루밍, AArch64 셸코드 실행"
-tags: ["checkm8", "iPhone", "AArch64", "iOS", "bootrom", "UAF", "jailbreak", "hardware-security"]
-categories: ["Research"]
+title: checkm8 익스플로잇 기술 분석
+date: 2019-10-05T00:00:00.000Z
+description: >-
+  Apple A5~A11 SoC의 BootROM 익스플로잇 checkm8에 대한 심층 분석: USB DFU 스택 Use-After-Free,
+  힙 그루밍, AArch64 셸코드 실행
+tags:
+  - checkm8
+  - iphone
+  - aarch64
+  - ios
+  - bootrom
+  - uaf
+  - jailbreak
+  - hardware-security
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ![checkm8 배너](/images/blog/checkm8-technical-analysis/Untitled.png)

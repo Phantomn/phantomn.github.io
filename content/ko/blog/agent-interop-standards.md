@@ -1,13 +1,21 @@
 ---
-title: "에이전트 상호운용 표준 — MCP·A2A·AGENTS.md·SKILL.md"
-date: 2026-08-02
-description: "에이전트 생태계의 네 가지 표준을 한 장으로 정리한다. MCP(도구 접근), A2A(에이전트 간 통신), AGENTS.md(프로젝트 규칙), SKILL.md(작업 절차) — 각각 무엇을 표준화하고 서로 어떻게 보완하는가."
-tags: ["AI-Agents", "MCP", "A2A", "Standards", "Interoperability"]
-categories: ["Research"]
+title: 에이전트 상호운용 표준 — MCP·A2A·AGENTS.md·SKILL.md
+date: 2026-08-02T00:00:00.000Z
+description: >-
+  에이전트 생태계의 네 가지 표준을 한 장으로 정리한다. MCP(도구 접근), A2A(에이전트 간 통신), AGENTS.md(프로젝트 규칙),
+  SKILL.md(작업 절차) — 각각 무엇을 표준화하고 서로 어떻게 보완하는가.
+tags:
+  - ai-agents
+  - mcp
+  - a2a
+  - standards
+  - interoperability
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 두괄식 요약

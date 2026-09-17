@@ -1,13 +1,24 @@
 ---
-title: "SMBGhost & SMBleed: CVE-2020-0796 + CVE-2020-1206 분석"
-date: 2020-06-20
-description: "SMBv3.1.1 압축 해제 루틴의 Integer Overflow(SMBGhost)와 초기화되지 않은 커널 메모리 릭(SMBleed), 그리고 두 버그를 체이닝한 Pre-Auth RCE 분석"
-tags: ["CVE", "SMB", "Windows", "kernel", "buffer-overflow", "memory-leak", "RCE", "exploitation"]
-categories: ["Research"]
+title: 'SMBGhost & SMBleed: CVE-2020-0796 + CVE-2020-1206 분석'
+date: 2020-06-20T00:00:00.000Z
+description: >-
+  SMBv3.1.1 압축 해제 루틴의 Integer Overflow(SMBGhost)와 초기화되지 않은 커널 메모리 릭(SMBleed),
+  그리고 두 버그를 체이닝한 Pre-Auth RCE 분석
+tags:
+  - cve
+  - smb
+  - windows
+  - kernel
+  - buffer-overflow
+  - memory-leak
+  - rce
+  - exploitation
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 # SMBGhost (CVE-2020-0796) 분석

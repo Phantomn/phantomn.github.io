@@ -1,13 +1,24 @@
 ---
-title: "LS Electric PLC 프로토콜 분석을 위한 퍼저 설계"
-date: 2022-01-15
-description: "XGT 프로토콜 분석을 기반으로 한 LS Electric PLC 시스템의 블랙박스 퍼징 설계 초안. 자동화된 뮤테이션 전략, 크래시 트리아지, 산업 제어 시스템 취약점 발견을 위한 모니터링 인프라를 다룬다."
-tags: ["fuzzing", "PLC", "ICS", "OT", "embedded", "LS-Electric", "protocol", "vulnerability-research"]
-categories: ["Research"]
+title: LS Electric PLC 프로토콜 분석을 위한 퍼저 설계
+date: 2022-01-15T00:00:00.000Z
+description: >-
+  XGT 프로토콜 분석을 기반으로 한 LS Electric PLC 시스템의 블랙박스 퍼징 설계 초안. 자동화된 뮤테이션 전략, 크래시
+  트리아지, 산업 제어 시스템 취약점 발견을 위한 모니터링 인프라를 다룬다.
+tags:
+  - fuzzing
+  - plc
+  - ics
+  - ot
+  - embedded
+  - ls-electric
+  - protocol
+  - vulnerability-research
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 1. 소개

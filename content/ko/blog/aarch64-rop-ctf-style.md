@@ -1,13 +1,20 @@
 ---
-title: "AArch64에서 ROP하기: CTF 스타일"
-date: 2020-02-10
-description: "AArch64 호출 규약, Link Register 제어, CTF 스타일 익스플로잇을 위한 ROP 체인 구성 실습"
-tags: ["AArch64", "ARM64", "ROP", "pwn", "CTF", "exploit"]
-categories: ["Research"]
+title: 'AArch64에서 ROP하기: CTF 스타일'
+date: 2020-02-10T00:00:00.000Z
+description: 'AArch64 호출 규약, Link Register 제어, CTF 스타일 익스플로잇을 위한 ROP 체인 구성 실습'
+tags:
+  - aarch64
+  - arm64
+  - rop
+  - pwn
+  - ctf
+  - exploit
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 소개

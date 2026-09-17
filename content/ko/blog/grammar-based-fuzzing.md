@@ -1,13 +1,24 @@
 ---
-title: "Grammar 기반 퍼징: 랜덤 뮤테이션이 놓치는 것"
-date: 2026-08-13
-description: "무작위 뮤테이션 퍼저가 구조화된 프로토콜에서 커버리지를 잃는 이유와, Grammar로 PDU를 모델링해 필드 조합을 체계적으로 순회하는 방법. And/Or 조합 폭발 제어, 경계값 자동 생성, Size 필드 자동 계산, Lua 기반 체크섬 재계산까지."
-tags: ["fuzzing", "grammar-fuzzing", "protocol", "ICS", "OT", "vulnerability-research", "AFL", "boofuzz"]
-categories: ["Research"]
+title: 'Grammar 기반 퍼징: 랜덤 뮤테이션이 놓치는 것'
+date: 2026-08-13T00:00:00.000Z
+description: >-
+  무작위 뮤테이션 퍼저가 구조화된 프로토콜에서 커버리지를 잃는 이유와, Grammar로 PDU를 모델링해 필드 조합을 체계적으로 순회하는
+  방법. And/Or 조합 폭발 제어, 경계값 자동 생성, Size 필드 자동 계산, Lua 기반 체크섬 재계산까지.
+tags:
+  - fuzzing
+  - grammar-fuzzing
+  - protocol
+  - ics
+  - ot
+  - vulnerability-research
+  - afl
+  - boofuzz
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 ## 들어가며

@@ -1,13 +1,25 @@
 ---
-title: "공격적 보안 툴킷: 바이너리 익스플로잇 & 펌웨어 분석 레퍼런스"
-date: 2022-03-08
-description: "바이너리 익스플로잇과 펌웨어 분석 실무 레퍼런스: 셸코드 추출, libc /bin/sh 주소 탐색, pwn 컴파일 플래그, BinDiff 설치, binwalk/sasquatch 오류 수정, AFL 크래시 트리아지."
-tags: ["binary-exploitation", "firmware", "AFL", "IDA", "BinDiff", "binwalk", "shellcode", "pwn", "toolkit"]
-categories: ["Research"]
+title: '공격적 보안 툴킷: 바이너리 익스플로잇 & 펌웨어 분석 레퍼런스'
+date: 2022-03-08T00:00:00.000Z
+description: >-
+  바이너리 익스플로잇과 펌웨어 분석 실무 레퍼런스: 셸코드 추출, libc /bin/sh 주소 탐색, pwn 컴파일 플래그, BinDiff
+  설치, binwalk/sasquatch 오류 수정, AFL 크래시 트리아지.
+tags:
+  - binary-exploitation
+  - firmware
+  - afl
+  - ida
+  - bindiff
+  - binwalk
+  - shellcode
+  - pwn
+  - toolkit
+categories:
+  - Research
 authors:
-  - name: "ph4nt0m"
-    link: "https://github.com/Phantomn"
-    image: "https://github.com/Phantomn.png"
+  - name: ph4nt0m
+    link: 'https://github.com/Phantomn'
+    image: 'https://github.com/Phantomn.png'
 ---
 
 CTF 대회와 취약점 연구 과정에서 반복적으로 사용하게 되는 바이너리 익스플로잇 및 펌웨어 보안 작업의 실무 레퍼런스를 정리한 문서다. 실제 워크플로우에서 축적된 내용이다.
