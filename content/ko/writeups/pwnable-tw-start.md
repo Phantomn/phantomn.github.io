@@ -5,7 +5,7 @@ description: "Pwnable.tw Start 챌린지: NX 미적용 최소 32비트 Linux 바
 tags: ["pwnable.tw", "pwn", "shellcode", "buffer-overflow", "32-bit"]
 platform: "wargame"
 category: "pwn"
-difficulty: "easy"
+difficulty: "Easy"
 categories: ["CTF"]
 authors:
   - name: "ph4nt0m"

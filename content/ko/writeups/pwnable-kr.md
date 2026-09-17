@@ -6,7 +6,7 @@ tags: ["pwnable.kr", "pwn", "ARM", "ROP", "GOT", "writeup"]
 categories: ["CTF"]
 platform: "ctf"
 category: "pwn"
-difficulty: "easy-medium"
+difficulty: "Medium"
 authors:
   - name: "ph4nt0m"
     link: "https://github.com/Phantomn"

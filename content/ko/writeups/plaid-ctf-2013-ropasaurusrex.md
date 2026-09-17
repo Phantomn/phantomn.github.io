@@ -6,7 +6,7 @@ tags: ["CTF", "PlaidCTF", "pwn", "ROP", "ret2libc", "writeup"]
 categories: ["CTF"]
 platform: "ctf"
 category: "pwn"
-difficulty: "medium"
+difficulty: "Medium"
 authors:
   - name: "ph4nt0m"
     link: "https://github.com/Phantomn"

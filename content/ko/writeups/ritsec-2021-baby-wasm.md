@@ -5,7 +5,7 @@ description: "RITSEC CTF 2021 baby WASM 풀이: WebAssembly 바이트코드 리�
 tags: ["RITSEC", "CTF", "WebAssembly", "WASM", "reversing", "browser"]
 platform: "ctf"
 category: "reversing"
-difficulty: "easy-medium"
+difficulty: "Hard"
 categories: ["CTF"]
 authors:
   - name: "ph4nt0m"

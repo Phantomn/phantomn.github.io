@@ -5,7 +5,7 @@ description: "LOB(Lord of Buffer Overflow) 워게임 진행: Gate(기본 BOF), I
 tags: ["LOB", "pwn", "buffer-overflow", "ASLR", "NX", "RELRO", "GOT-overwrite", "wargame"]
 platform: "wargame"
 category: "pwn"
-difficulty: "medium"
+difficulty: "Medium"
 categories: ["CTF"]
 authors:
   - name: "ph4nt0m"

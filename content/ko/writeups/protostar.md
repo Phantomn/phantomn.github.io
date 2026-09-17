@@ -5,7 +5,7 @@ description: "Protostar 워게임 풀이: 스택 버퍼 오버플로우, 포맷 
 tags: ["Protostar", "pwn", "buffer-overflow", "format-string", "heap", "wargame"]
 platform: "wargame"
 category: "pwn"
-difficulty: "easy-medium"
+difficulty: "Medium"
 categories: ["CTF"]
 authors:
   - name: "ph4nt0m"

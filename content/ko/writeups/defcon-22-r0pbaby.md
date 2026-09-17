@@ -5,7 +5,7 @@ description: "DEF CON 22 CTF 예선 r0pbaby 풀이: 공유 라이브러리 베�
 tags: ["DEF CON", "CTF", "ROP", "64-bit", "pwn", "PLT", "GOT", "libc"]
 platform: "ctf"
 category: "pwn"
-difficulty: "medium"
+difficulty: "Medium"
 categories: ["CTF"]
 authors:
   - name: "ph4nt0m"

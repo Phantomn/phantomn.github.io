@@ -5,7 +5,7 @@ description: "HackCTF pwn 카테고리 풀이: 기본 BOF, 포맷 스트링 버�
 tags: ["HackCTF", "pwn", "buffer-overflow", "format-string", "heap", "RTL", "wargame"]
 platform: "wargame"
 category: "pwn"
-difficulty: "easy-medium"
+difficulty: "Medium"
 categories: ["CTF"]
 authors:
   - name: "ph4nt0m"
