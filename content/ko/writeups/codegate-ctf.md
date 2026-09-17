@@ -4,7 +4,7 @@ date: "2023-08-27"
 description: "Codegate CTF 문제 풀이 모음 — 2014 Nuclear, 2018 PreQual RedVelvet"
 tags: ["pwn", "rev", "ctf", "codegate"]
 platform: "ctf"
-category: "redteam"
+category: "reversing"
 difficulty: "Medium"
 authors:
   - name: "Ph4nt0m"
