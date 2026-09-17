@@ -525,11 +525,12 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     contribution: 70,
     featured: true,
     background:
-      "HACKSIUM 예선·본선 문제 출제 및 대회 운영을 수행했다. 본선은 해상물류 그룹 대상 실시간 방어 시나리오 'Anchor Watch'를 설계하고, Tazuko Voyager(APEX 2026 별도 출제)를 제외한 본선·예선 나머지 문제를 출제했다.",
+      "HACKSIUM 예선·본선 문제 출제 및 대회 운영을 수행했다. 본선은 해상물류 그룹 대상 실시간 방어 시나리오 'Anchor Watch'를 설계하고 Tazuko Voyager(APEX 2026 별도 출제)를 제외한 나머지 본선 문제를 출제했으며, 예선은 전 문제를 출제했다.",
     actions: [
       "본선 LiveFire 블루팀 방어 시나리오 'Anchor Watch' 설계 — 위성·선박·항만·본사IT 4개 Zone, 6시간(3 Phase) 실시간 침해대응 채점 체계 구축",
-      "Tazuko Voyager를 제외한 본선·예선 나머지 문제 출제",
-      "대회 운영 지원",
+      "본선 나머지 문제 출제 (Tazuko Voyager 제외)",
+      "예선 전 문제 출제",
+      "예선·본선 대회 운영 지원",
     ],
     results: ["HACKSIUM 예선·본선 문제 출제 및 대회 운영 수행 (기여도 70%)"],
     stack: ["LiveFire", "Blue Team Defense", "ICS/OT", "Scenario Design", "CTF Ops"],
