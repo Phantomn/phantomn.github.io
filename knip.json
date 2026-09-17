@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
-  "entry": ["scripts/sync-cve-status.mjs"],
+  "entry": ["scripts/sync-cve-status.mjs", "scripts/normalize-tags.mjs"],
   "ignore": ["content/**"],
   "ignoreDependencies": ["staticrypt", "eslint-config-next", "serve"],
   "rules": {
