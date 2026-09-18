@@ -163,7 +163,7 @@ export default async function PortfolioPage({ params }: Props) {
                 <h1 className="font-heading text-2xl font-bold" data-notranslate>
                   {PROFILE.name}
                 </h1>
-                <ShieldCheck className="h-5 w-5 text-primary" />
+                <ShieldCheck className="h-5 w-5 text-muted-foreground" />
               </div>
               <p className="mt-1 text-sm text-muted-foreground">{PROFILE.headline}</p>
               <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
@@ -208,7 +208,7 @@ export default async function PortfolioPage({ params }: Props) {
             <ul className="space-y-2">
               {CORE_COMPETENCIES.map((c, i) => (
                 <li key={i} className="flex gap-2 text-sm text-muted-foreground">
-                  <span className="mt-0.5 shrink-0 text-primary" data-notranslate>
+                  <span className="mt-0.5 shrink-0 text-muted-foreground" data-notranslate>
                     ▹
                   </span>
                   <span>{c}</span>
@@ -222,7 +222,7 @@ export default async function PortfolioPage({ params }: Props) {
         <Card className="mt-4">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-xl">
-              <Star className="h-5 w-5 text-primary" />
+              <Star className="h-5 w-5 text-muted-foreground" />
               {t("sectionFeatured")}
             </CardTitle>
           </CardHeader>

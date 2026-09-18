@@ -88,7 +88,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-14 w-[90vw] max-w-[1400px] items-center justify-between px-4">
         <Button variant="ghost" size="sm" className="font-heading text-lg font-bold tracking-tight text-primary px-2 gap-2" asChild>
           <Link href={`/${locale}/`} className="flex items-center gap-2">
-            <span className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full border-[3px] border-muted-foreground bg-muted dark:border-primary">
+            <span className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full border-[3px] border-muted-foreground bg-muted">
               <Image
                 src="https://res.cloudinary.com/a88188f90768a608fc75048188ef19e7/image/upload/q_auto/f_auto/v1776380690/Website/Logos/logo_bzdu8d.svg"
                 alt=""

@@ -294,7 +294,7 @@ export default async function AboutPage({ params }: Props) {
                 <h1 className="text-2xl font-bold font-heading">
                   {PROFILE.name}
                 </h1>
-                <ShieldCheck className="h-5 w-5 text-primary" />
+                <ShieldCheck className="h-5 w-5 text-muted-foreground" />
               </div>
 
               <p className="mt-1 text-sm text-muted-foreground">
@@ -317,7 +317,7 @@ export default async function AboutPage({ params }: Props) {
                 </a>
               </div>
 
-              <div className="mt-1 flex items-center gap-1 text-sm text-primary">
+              <div className="mt-1 flex items-center gap-1 text-sm text-muted-foreground">
                 <Users className="h-3.5 w-3.5" />
                 {t("connections", { count: PROFILE.connections })}
               </div>
