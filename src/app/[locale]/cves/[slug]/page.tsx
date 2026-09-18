@@ -223,7 +223,7 @@ export default async function CvePage({ params }: Props) {
               <ProseImageLightbox>
                 <div
                   data-prose-content
-                  className="prose prose-neutral max-w-none dark:prose-invert"
+                  className="prose prose-neutral max-w-[75ch] dark:prose-invert"
                 >
                   <Content />
                 </div>
