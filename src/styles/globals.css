@@ -96,7 +96,6 @@
 
   /* Avatar glow (home hero) - much softer than dark mode's version */
   --avatar-glow: rgba(180, 83, 9, 0.12);
-  --prose-code-fg: #92400e;
 }
 
 /*  Dark mode — the signature Ph4nt0m palette  */
@@ -152,7 +151,6 @@
 
   /* Avatar glow (home hero) - replaces hardcoded rgba(159,239,0,...) */
   --avatar-glow: rgba(245, 158, 11, 0.35);
-  --prose-code-fg: var(--primary);
 }
 
 @layer base {
@@ -179,59 +177,21 @@
 /*  Prose (MDX content) — comprehensive themed markdown styling       */
 /*                                                                    */
 /*  All rules use CSS custom properties so the same declarations      */
-/*  render differently in light vs. dark mode automatically. The      */
-/*  heading hierarchy uses two accent colors (--primary and           */
-/*  --prose-h-accent) so levels are immediately distinguishable.      */
+/*  render differently in light vs. dark mode automatically. Headings */
+/*  are neutral (--foreground) - brand accent is reserved for links   */
+/*  (hover), buttons, and other real interactive elements, matching   */
+/*  Linear/Vercel's own blog typography (verified against their live  */
+/*  production CSS - see docs/specs/blog-visual-redesign.md).         */
 /*                                                                    */
 /*  ⚠ The rehype-pretty-code syntax-highlighting block at the very    */
 /*    bottom of this section must remain untouched — it controls the  */
 /*    shiki-generated code blocks.                                    */
 /* ══════════════════════════════════════════════════════════════════ */
 
-.prose {
-  /* Override the Tailwind typography plugin's CSS variables so both
-     the normal and prose-invert (dark) variants draw from our theme */
-  --tw-prose-body: var(--foreground);
-  --tw-prose-headings: var(--foreground);
-  --tw-prose-lead: var(--muted-foreground);
-  --tw-prose-links: var(--primary);
-  --tw-prose-bold: var(--foreground);
-  --tw-prose-counters: var(--primary);
-  --tw-prose-bullets: var(--primary);
-  --tw-prose-hr: var(--border);
-  --tw-prose-quotes: var(--muted-foreground);
-  --tw-prose-quote-borders: var(--primary);
-  --tw-prose-captions: var(--muted-foreground);
-  --tw-prose-code: var(--primary);
-  --tw-prose-pre-code: var(--foreground);
-  --tw-prose-pre-bg: var(--card);
-  --tw-prose-th-borders: var(--border);
-  --tw-prose-td-borders: var(--border);
-  --tw-prose-invert-body: var(--foreground);
-  --tw-prose-invert-headings: var(--foreground);
-  --tw-prose-invert-lead: var(--muted-foreground);
-  --tw-prose-invert-links: var(--primary);
-  --tw-prose-invert-bold: var(--foreground);
-  --tw-prose-invert-counters: var(--primary);
-  --tw-prose-invert-bullets: var(--primary);
-  --tw-prose-invert-hr: var(--border);
-  --tw-prose-invert-quotes: var(--muted-foreground);
-  --tw-prose-invert-quote-borders: var(--primary);
-  --tw-prose-invert-captions: var(--muted-foreground);
-  --tw-prose-invert-code: var(--primary);
-  --tw-prose-invert-pre-code: var(--foreground);
-  --tw-prose-invert-pre-bg: var(--card);
-  --tw-prose-invert-th-borders: var(--border);
-  --tw-prose-invert-td-borders: var(--border);
-}
-
 /* ── Headings ────────────────────────────────────────────────────── */
-/*  H1 : primary color + bottom accent rule, glow in dark mode        */
-/*  H2 : foreground + primary-colored left bar                        */
-/*  H3 : prose-h-accent (teal/blue) + # glyph prefix                  */
-/*  H4 : foreground + › glyph prefix                                  */
-/*  H5 : muted italic                                                 */
-/*  H6 : muted small caps                                             */
+/*  전부 중립색(--foreground) - 레퍼런스(Linear/Vercel) 실측 결과 헤딩에    */
+/*  브랜드 악센트를 쓰는 곳이 없어 통일. 악센트(--primary)는 링크 hover/   */
+/*  버튼/CVE 배지 등 실제 상호작용 요소에만 남긴다.                        */
 
 .prose h1 {
   font-family: var(--font-heading);
@@ -239,16 +199,12 @@
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.025em;
-  color: var(--primary);
+  color: var(--foreground);
   margin-top: 3rem;
   margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--primary);
+  border-bottom: 2px solid var(--border);
   scroll-margin-top: 5rem;
-}
-
-.dark .prose h1 {
-  text-shadow: 0 0 32px color-mix(in oklab, var(--primary) 35%, transparent);
 }
 
 .prose h2 {
@@ -260,7 +216,7 @@
   margin-top: 2.75rem;
   margin-bottom: 1rem;
   padding-left: 0.875rem;
-  border-left: 4px solid var(--primary);
+  border-left: 4px solid var(--border);
   scroll-margin-top: 5rem;
 }
 
@@ -269,7 +225,7 @@
   font-size: 1.5rem;
   font-weight: 700;
   line-height: 1.3;
-  color: var(--prose-h-accent);
+  color: var(--foreground);
   margin-top: 2.25rem;
   margin-bottom: 0.75rem;
   scroll-margin-top: 5rem;
@@ -280,7 +236,7 @@
 
 .prose h3::before {
   content: "#";
-  color: var(--prose-h-accent);
+  color: var(--muted-foreground);
   opacity: 0.45;
   font-weight: 400;
 }
@@ -301,7 +257,7 @@
 
 .prose h4::before {
   content: "›";
-  color: var(--primary);
+  color: var(--muted-foreground);
   font-weight: 700;
 }
 
@@ -361,33 +317,36 @@
 }
 
 /* ── Links ───────────────────────────────────────────────────────── */
+/*  기본색은 중립(본문과 구분은 밑줄로만) - hover에서만 악센트로 전환.       */
+/*  Linear의 실제 링크 컴포넌트(variant-underline)와 동일한 패턴.          */
 
 .prose a {
-  color: var(--primary);
+  color: var(--foreground);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
+  text-decoration-color: var(--muted-foreground);
   font-weight: 500;
-  transition: opacity 150ms ease, text-decoration-thickness 150ms ease;
+  transition: color 150ms ease, text-decoration-color 150ms ease, text-decoration-thickness 150ms ease;
 }
 
 .prose a:hover {
-  opacity: 0.85;
+  color: var(--prose-link-hover);
+  text-decoration-color: var(--prose-link-hover);
   text-decoration-thickness: 2px;
 }
 
 /* ── Inline code ─────────────────────────────────────────────────── */
+/*  중립색 - 레퍼런스(Vercel) 실측 결과 인라인 코드에 브랜드 색을 쓰지      */
+/*  않음. 전용 --prose-code-fg 토큰(WCAG 우회용)은 이제 불필요해 제거함.   */
 
 .prose :not(pre) > code {
   font-family: var(--font-mono);
   font-size: 0.85em;
   font-weight: 500;
-  color: var(--prose-code-fg);
-  /* Fallback for browsers without color-mix support */
+  color: var(--foreground);
   background-color: var(--muted);
   border: 1px solid var(--border);
-  background-color: color-mix(in oklab, var(--primary) 12%, transparent);
-  border-color: color-mix(in oklab, var(--primary) 25%, transparent);
   padding: 0.125rem 0.4rem;
   border-radius: 0.375rem;
   white-space: nowrap;
@@ -414,10 +373,10 @@
 /* ── Blockquote ──────────────────────────────────────────────────── */
 
 .prose blockquote {
-  border-left: 4px solid var(--primary);
+  border-left: 4px solid var(--border);
   padding: 0.875rem 1.25rem;
   margin: 1.5rem 0;
-  background-color: color-mix(in oklab, var(--primary) 5%, transparent);
+  background-color: var(--muted);
   border-radius: 0 0.5rem 0.5rem 0;
   font-style: italic;
   color: var(--muted-foreground);
@@ -444,7 +403,7 @@
 /* Nested blockquotes */
 .prose blockquote blockquote {
   margin: 0.75rem 0;
-  background-color: color-mix(in oklab, var(--primary) 8%, transparent);
+  background-color: color-mix(in oklab, var(--foreground) 6%, transparent);
 }
 
 /* ── Lists ───────────────────────────────────────────────────────── */
@@ -462,11 +421,11 @@
 }
 
 .prose ul > li::marker {
-  color: var(--primary);
+  color: var(--muted-foreground);
 }
 
 .prose ol > li::marker {
-  color: var(--primary);
+  color: var(--muted-foreground);
   font-weight: 700;
 }
 
@@ -516,7 +475,6 @@
     to right,
     transparent 0%,
     var(--border) 20%,
-    var(--primary) 50%,
     var(--border) 80%,
     transparent 100%
   );
@@ -543,7 +501,7 @@
   text-align: left;
   font-weight: 600;
   color: var(--foreground);
-  border-bottom: 2px solid var(--primary);
+  border-bottom: 2px solid var(--border);
 }
 
 .prose td {
@@ -556,7 +514,7 @@
 }
 
 .prose tbody tr:hover {
-  background-color: color-mix(in oklab, var(--primary) 6%, transparent);
+  background-color: var(--muted);
 }
 
 /* ── Images ──────────────────────────────────────────────────────── */
@@ -600,11 +558,11 @@
 }
 
 .prose details:hover {
-  border-color: color-mix(in oklab, var(--primary) 40%, var(--border));
+  border-color: color-mix(in oklab, var(--foreground) 25%, var(--border));
 }
 
 .prose details[open] {
-  border-color: color-mix(in oklab, var(--primary) 55%, var(--border));
+  border-color: color-mix(in oklab, var(--foreground) 35%, var(--border));
 }
 
 .prose details[open] > summary {
@@ -631,7 +589,7 @@
 
 .prose summary::before {
   content: "▶";
-  color: var(--primary);
+  color: var(--muted-foreground);
   font-size: 0.75em;
   transition: transform 200ms ease;
   display: inline-block;
@@ -642,7 +600,7 @@
 }
 
 .prose summary:hover {
-  color: var(--primary);
+  opacity: 0.8;
 }
 
 /* ── Superscript / Subscript ─────────────────────────────────────── */
@@ -650,7 +608,7 @@
 .prose sup {
   font-size: 0.75em;
   vertical-align: super;
-  color: var(--primary);
+  color: var(--muted-foreground);
   font-weight: 500;
 }
 
@@ -688,16 +646,21 @@
 }
 
 .prose .footnotes a {
-  color: var(--primary);
+  color: var(--foreground);
+}
+
+.prose .footnotes a:hover {
+  color: var(--prose-link-hover);
 }
 
 .prose sup a {
-  color: var(--primary);
+  color: var(--muted-foreground);
   text-decoration: none;
   font-weight: 600;
 }
 
 .prose sup a:hover {
+  color: var(--prose-link-hover);
   text-decoration: underline;
 }
 
