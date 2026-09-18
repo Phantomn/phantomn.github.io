@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source not "docs/**";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -95,6 +96,7 @@
 
   /* Avatar glow (home hero) - much softer than dark mode's version */
   --avatar-glow: rgba(180, 83, 9, 0.12);
+  --prose-code-fg: #92400e;
 }
 
 /*  Dark mode — the signature Ph4nt0m palette  */
@@ -150,6 +152,7 @@
 
   /* Avatar glow (home hero) - replaces hardcoded rgba(159,239,0,...) */
   --avatar-glow: rgba(245, 158, 11, 0.35);
+  --prose-code-fg: var(--primary);
 }
 
 @layer base {
@@ -379,8 +382,8 @@
   font-family: var(--font-mono);
   font-size: 0.85em;
   font-weight: 500;
-  color: var(--primary);
-  /* Fallback for browsers without color-mix support — readable solid tone */
+  color: var(--prose-code-fg);
+  /* Fallback for browsers without color-mix support */
   background-color: var(--muted);
   border: 1px solid var(--border);
   background-color: color-mix(in oklab, var(--primary) 12%, transparent);
