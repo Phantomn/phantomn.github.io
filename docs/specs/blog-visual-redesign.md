@@ -73,8 +73,15 @@ blog.ph4nt0m.xyz의 시각 정체성을 "Linear/Raycast/Cursor류 프리미엄 �
 
 Next.js 15 App Router, `output: "export"` 정적 export, Tailwind CSS v4(`@theme inline`
 + CSS 커스텀 프로퍼티 방식, `tailwind.config.*` 없음 - `src/styles/globals.css`의
-`@theme inline` 블록이 곧 설정), shadcn/ui(Radix 프리미티브 + `class-variance-authority`),
-`@tailwindcss/typography`(`.prose` 클래스).
+`@theme inline` 블록이 곧 설정), shadcn/ui(Radix 프리미티브 + `class-variance-authority`).
+
+**정정(final-review에서 발견)**: `@tailwindcss/typography` 플러그인은 이 저장소에
+설치돼 있지 않다(`package.json`/`globals.css`의 `@plugin` 선언 어디에도 없음, 직접
+grep으로 확인). `.prose`/`prose-neutral`/`dark:prose-invert` 클래스는 이 플러그인이
+생성하는 CSS가 아니라, `globals.css`가 `--tw-prose-*` 변수 오버라이드와 `.prose h1`
+`.prose p` `.prose :not(pre) > code` 등 명시적 셀렉터로 직접 수기 작성한 커스텀
+타이포그래피 시스템이다. 아래 E 섹션의 "플러그인 기본값 65ch" 서술은 이 오류를
+반영해 정정했다.
 
 ## Commands
 
@@ -196,11 +203,12 @@ margin-bottom: 1.25rem; }`가 이미 존재한다. 타이포그래피 리서치�
 
 ### D. 본문 폰트 크기 (정정됨 - 이미 정상, 변경 불필요)
 
-`.prose` 클래스에 크기 수정자(`prose-sm`/`prose-lg` 등)가 없으므로 `@tailwindcss/
-typography`의 기본 크기(`1rem` = 16px)가 적용된다. 타이포그래피 리서치가 권장한
-15-25px(모바일 최소 16px) 범위 안. **변경하지 않는다.** (UI 크롬 텍스트 - 카드 메타,
-배지 등 - 는 의도적으로 `text-xs`/`text-sm`을 쓰며 이는 본문이 아니라 부가 정보이므로
-별개 - 변경 범위 아님.)
+`.prose` 클래스에 크기 수정자(`prose-sm`/`prose-lg` 등)가 없고, 이 저장소의 `.prose`는
+Typography 플러그인이 아니라 수기 CSS로 구현돼 있어(위 Tech Stack 정정 참조) 별도
+font-size 규칙도 없다 - 결과적으로 CSS 기본값인 `1rem` = 16px이 그대로 적용된다.
+타이포그래피 리서치가 권장한 15-25px(모바일 최소 16px) 범위 안. **변경하지 않는다.**
+(UI 크롬 텍스트 - 카드 메타, 배지 등 - 는 의도적으로 `text-xs`/`text-sm`을 쓰며 이는
+본문이 아니라 부가 정보이므로 별개 - 변경 범위 아님.)
 
 ### E. 줄 길이(measure) - 실제 결함 (유일한 레이아웃 버그)
 
@@ -220,9 +228,11 @@ grep -n "prose prose-neutral max-w-none" 결과:
 같은 결함을 가진다(각 파일의 바깥 컨테이너 폭은 파일별로 다를 수 있으니 구현 시
 개별 확인).
 
-**근본 원인**: `max-w-none`이 Tailwind Typography 플러그인의 기본 `max-width: 65ch`
-(플러그인 자체 기본값)를 명시적으로 해제한 것. 왜 해제했는지의 의도는 불명(주석 없음) -
-아마 "본문을 넓게 쓰고 싶었다"는 의도로 추정되나 결과적으로 가독성을 해쳤다.
+**근본 원인(정정됨)**: `max-w-none`은 Tailwind 코어의 표준 `max-width` 유틸리티이고
+(Typography 플러그인은 애초에 미설치이므로 "플러그인 기본값을 해제"한 게 아니다),
+`.prose` 자체에는 폭 제약이 전혀 없다(수기 CSS에 `max-width` 규칙 없음) - 즉
+`max-w-none`은 문자 그대로 "폭 제약 없음"을 명시한 것뿐이며, 왜 이렇게 썼는지의
+의도는 불명(주석 없음). 결과적으로 가독성을 해쳤다는 결론 자체는 변하지 않는다.
 
 ### F. 홈페이지 하드코딩 색상 (정체성 분열의 물리적 증거)
 
@@ -411,11 +421,37 @@ WCAG 검증: `#b45309`(amber-700) on `#fafaf9`(background) 대비비 약 4.81:1(
 견고하다(사용자가 브라우저 폰트 크기를 키워도 측정 원칙이 유지됨). `75ch`는 WCAG
 상한(80) 안쪽이면서 연구가 권장한 60-90자 범위 중간대.
 
-**주의**: Tailwind Typography 플러그인의 `.prose` 기본값 자체가 `65ch`이므로, 이 수정은
-사실상 "커스텀 해제를 없던 일로 되돌리는" 원상복구에 가깝다 - `max-w-none`을 완전히
-삭제하기만 해도 플러그인 기본값(65ch)이 적용되어 목표를 달성한다. `max-w-[75ch]`로
-명시하는 이유는 "기본값에 우연히 의존"이 아니라 "60-90자 권장 범위 안에서 의도적으로
-고른 값"임을 코드에 남기기 위함(다음 사람이 왜 65도 90도 아닌 값인지 알 수 있도록).
+**주의(정정됨)**: Typography 플러그인이 미설치이므로 "플러그인 기본값 65ch로
+되돌아간다"는 원래 서술은 틀렸다 - `max-w-none`을 단순 삭제해도 `.prose`엔 아무
+폭 제약도 없어 원상복구되지 않는다. `max-w-[75ch]`는 원상복구가 아니라 **신규
+도입된 제약**이며, `.prose` 자체에 `margin-inline: auto`가 없으므로 이 값만으로는
+본문이 컬럼 중앙에 오지 않고 좌측 정렬된다(final-review에서 발견). `75ch`
+값 자체을 고른 근거(WCAG 1.4.8, 60-90자 권장 범위)는 이 정정과 무관하게 유효하다.
+
+### final-review에서 발견한 교차 이슈 2건 (구현 완료, 구현 시점 이후 추가)
+
+Task 1-4 구현 완료 후 최종 whole-branch 리뷰(개별 태스크 리뷰가 놓친, 태스크 간
+상호작용에서만 드러나는 이슈 전담)에서 2건이 새로 발견되어 fix wave로 해소했다:
+
+1. **라이트모드 인라인 코드 WCAG AA 회귀**: `.prose :not(pre) > code`가
+   `color: var(--primary)` + `background-color: color-mix(in oklab, var(--primary)
+   12%, transparent)`로 전경/배경이 같은 색조라, 라이트 `--primary`를 `#121212`(구)
+   에서 `#b45309`(신)로 바꾸면서 대비가 14:1 -> 4.10:1로 붕괴(AA 4.5:1 미달). 해소:
+   `--primary`를 직접 바꾸는 대신 전용 토큰 `--prose-code-fg`를 신설(라이트
+   `#92400e` amber-800, 다크 `var(--primary)`)하고 인라인 코드 규칙만 이 토큰을
+   참조하도록 변경 - 버튼/링크/ring 등 이미 검증된 다른 `--primary` 소비처는
+   영향받지 않는다. 라이트 대비 재계산 약 5.66:1.
+2. **prose 컨테이너 중앙정렬 누락**: `<article>`(70-72% 컬럼)에도 `.prose` div
+   자체에도 `margin-inline: auto`가 없어 `max-w-[75ch]`가 좌측 정렬로 렌더되고
+   오른쪽에 빈 공간이 생김(Task 5 Step 4의 육안 검수 기준 "중앙에 좁게 모여
+   있는지"와 불일치). 해소: 3개 파일의 `data-prose-content` div className에
+   `mx-auto` 추가.
+
+두 항목 모두 `docs/superpowers/plans/2026-09-18-blog-visual-redesign.md`가 아닌
+별도 fix 커밋(`fix(review): address final-review findings ...`)으로 적용됐다 -
+이 계획 문서 자체는 갱신하지 않았으나 Task 1/2가 이미 정의한 다크/라이트 토큰
+블록에 `--prose-code-fg` 한 줄씩만 추가된 것이라 Global Constraints("CSS 커스텀
+프로퍼티 수준에서만")를 벗어나지 않는다.
 
 ### 컴포넌트 트리트먼트 규칙
 
