@@ -44,24 +44,24 @@
 /*  Light mode — from data/theme.json  */
 :root {
   --radius: 0.625rem;
-  --background: #ffffff;
-  --foreground: #121212;
-  --card: #f6f6f6;
-  --card-foreground: #040404;
+  --background: #fafaf9;
+  --foreground: #18181b;
+  --card: #ffffff;
+  --card-foreground: #18181b;
   --popover: #ffffff;
-  --popover-foreground: #121212;
-  --primary: #121212;
-  --primary-foreground: #ffffff;
-  --secondary: #f6f6f6;
-  --secondary-foreground: #121212;
-  --muted: #f6f6f6;
-  --muted-foreground: #717171;
-  --accent: #f6f6f6;
-  --accent-foreground: #121212;
+  --popover-foreground: #18181b;
+  --primary: #b45309;
+  --primary-foreground: #fffbeb;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #18181b;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --accent: #f4f4f5;
+  --accent-foreground: #18181b;
   --destructive: #dc2626;
-  --border: #eaeaea;
-  --input: #eaeaea;
-  --ring: #121212;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #b45309;
   --sidebar: hsl(0 0% 98%);
   --sidebar-foreground: hsl(240 5.3% 26.1%);
   --sidebar-primary: hsl(240 5.9% 10%);
@@ -71,27 +71,30 @@
   --sidebar-border: hsl(220 13% 91%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 
-  /* Prose accent colors — h3 gets a contrasting hue vs primary so
-     heading hierarchy is visually distinct in light mode */
-  --prose-h-accent: #0f766e;  /* teal */
-  --prose-link-hover: #0f766e;
+  /* Prose accent colors - h3 uses a blue that matches dark mode's
+     github-blue tone (sky-700 here for AA contrast on light bg) */
+  --prose-h-accent: #0369a1;
+  --prose-link-hover: var(--primary);
 
   /* CVE registry tokens */
-  --cve-surface: #f7f7f7;
+  --cve-surface: #f4f4f5;
   --cve-surface-strong: #ffffff;
-  --cve-surface-soft: #fbfbfb;
-  --cve-border: #e6e6e6;
-  --cve-border-strong: #cfcfcf;
-  --cve-accent: #121212;
-  --cve-accent-soft: rgba(18, 18, 18, 0.08);
+  --cve-surface-soft: #fafafa;
+  --cve-border: #e4e4e7;
+  --cve-border-strong: #d4d4d8;
+  --cve-accent: var(--primary);
+  --cve-accent-soft: rgba(180, 83, 9, 0.08);
   --cve-danger: #dc2626;
   --cve-warning: #d97706;
-  --cve-info: #0f766e;
-  --cve-muted: #717171;
-  --cve-focus: #121212;
+  --cve-info: #0369a1;
+  --cve-muted: #71717a;
+  --cve-focus: var(--primary);
   --cve-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
   --cve-radius: 18px;
   --cve-radius-inner: 14px;
+
+  /* Avatar glow (home hero) - much softer than dark mode's version */
+  --avatar-glow: rgba(180, 83, 9, 0.12);
 }
 
 /*  Dark mode — the signature Ph4nt0m palette  */
