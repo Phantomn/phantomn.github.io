@@ -54,8 +54,8 @@
   --card-foreground: #18181b;
   --popover: #ffffff;
   --popover-foreground: #18181b;
-  --primary: #0f766e;
-  --primary-foreground: #fffbeb;
+  --primary: #121212;
+  --primary-foreground: #ffffff;
   --secondary: #f4f4f5;
   --secondary-foreground: #18181b;
   --muted: color-mix(in oklab, #f4f4f5 92%, var(--primary) 8%);
@@ -67,7 +67,7 @@
   --destructive: #dc2626;
   --border: color-mix(in oklab, #e4e4e7 90%, var(--primary) 10%);
   --input: #e4e4e7;
-  --ring: #0f766e;
+  --ring: #121212;
   --sidebar: hsl(0 0% 98%);
   --sidebar-foreground: hsl(240 5.3% 26.1%);
   --sidebar-primary: hsl(240 5.9% 10%);
@@ -86,7 +86,7 @@
   --cve-border: #e4e4e7;
   --cve-border-strong: #d4d4d8;
   --cve-accent: var(--primary);
-  --cve-accent-soft: rgba(15, 118, 110, 0.08);
+  --cve-accent-soft: rgba(18, 18, 18, 0.08);
   --cve-danger: #dc2626;
   --cve-warning: #d97706;
   --cve-info: #0f766e;
@@ -97,7 +97,7 @@
   --cve-radius-inner: 14px;
 
   /* Avatar glow (home hero) - much softer than dark mode's version */
-  --avatar-glow: rgba(15, 118, 110, 0.12);
+  --avatar-glow: rgba(18, 18, 18, 0.12);
 }
 
 /*  Dark mode — the signature Ph4nt0m palette  */
@@ -111,8 +111,8 @@
   --card-foreground: #f5f4f2;
   --popover: #151517;
   --popover-foreground: #e8e6e3;
-  --primary: #58a6ff;
-  --primary-foreground: #0d0d0f;
+  --primary: #9fef00;
+  --primary-foreground: #0d1117;
   --secondary: #1c1c1f;
   --secondary-foreground: #e8e6e3;
   --muted: color-mix(in oklab, #1c1c1f 92%, var(--primary) 8%);
@@ -122,7 +122,7 @@
   --destructive: #ef4444;
   --border: color-mix(in oklab, #232326 91%, var(--primary) 9%);
   --input: #232326;
-  --ring: #58a6ff;
+  --ring: #9fef00;
   --sidebar: hsl(240 5.9% 10%);
   --sidebar-foreground: hsl(240 4.8% 95.9%);
   --sidebar-primary: hsl(224.3 76.3% 48%);
@@ -141,7 +141,7 @@
   --cve-border: #232326;
   --cve-border-strong: var(--primary);
   --cve-accent: var(--primary);
-  --cve-accent-soft: rgba(88, 166, 255, 0.08);
+  --cve-accent-soft: rgba(159, 239, 0, 0.08);
   --cve-danger: #ff5f57;
   --cve-warning: #f59e0b;
   --cve-info: #58a6ff;
@@ -152,7 +152,7 @@
   --cve-radius-inner: 14px;
 
   /* Avatar glow (home hero) - replaces hardcoded rgba(159,239,0,...) */
-  --avatar-glow: rgba(88, 166, 255, 0.35);
+  --avatar-glow: rgba(159, 239, 0, 0.35);
 }
 
 @layer base {
