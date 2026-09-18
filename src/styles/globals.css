@@ -54,7 +54,7 @@
   --card-foreground: #18181b;
   --popover: #ffffff;
   --popover-foreground: #18181b;
-  --primary: #b45309;
+  --primary: #0369a1;
   --primary-foreground: #fffbeb;
   --secondary: #f4f4f5;
   --secondary-foreground: #18181b;
@@ -67,7 +67,7 @@
   --destructive: #dc2626;
   --border: color-mix(in oklab, #e4e4e7 90%, var(--primary) 10%);
   --input: #e4e4e7;
-  --ring: #b45309;
+  --ring: #0369a1;
   --sidebar: hsl(0 0% 98%);
   --sidebar-foreground: hsl(240 5.3% 26.1%);
   --sidebar-primary: hsl(240 5.9% 10%);
@@ -77,9 +77,6 @@
   --sidebar-border: hsl(220 13% 91%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 
-  /* Prose accent colors - h3 uses a blue that matches dark mode's
-     github-blue tone (sky-700 here for AA contrast on light bg) */
-  --prose-h-accent: #0369a1;
   --prose-link-hover: var(--primary);
 
   /* CVE registry tokens */
@@ -89,7 +86,7 @@
   --cve-border: #e4e4e7;
   --cve-border-strong: #d4d4d8;
   --cve-accent: var(--primary);
-  --cve-accent-soft: rgba(180, 83, 9, 0.08);
+  --cve-accent-soft: rgba(3, 105, 161, 0.08);
   --cve-danger: #dc2626;
   --cve-warning: #d97706;
   --cve-info: #0369a1;
@@ -100,7 +97,7 @@
   --cve-radius-inner: 14px;
 
   /* Avatar glow (home hero) - much softer than dark mode's version */
-  --avatar-glow: rgba(180, 83, 9, 0.12);
+  --avatar-glow: rgba(3, 105, 161, 0.12);
 }
 
 /*  Dark mode — the signature Ph4nt0m palette  */
@@ -114,7 +111,7 @@
   --card-foreground: #f5f4f2;
   --popover: #151517;
   --popover-foreground: #e8e6e3;
-  --primary: #f59e0b;
+  --primary: #58a6ff;
   --primary-foreground: #0d0d0f;
   --secondary: #1c1c1f;
   --secondary-foreground: #e8e6e3;
@@ -125,7 +122,7 @@
   --destructive: #ef4444;
   --border: color-mix(in oklab, #232326 91%, var(--primary) 9%);
   --input: #232326;
-  --ring: #f59e0b;
+  --ring: #58a6ff;
   --sidebar: hsl(240 5.9% 10%);
   --sidebar-foreground: hsl(240 4.8% 95.9%);
   --sidebar-primary: hsl(224.3 76.3% 48%);
@@ -135,9 +132,6 @@
   --sidebar-border: hsl(240 3.7% 15.9%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 
-  /* Prose accent colors - h3 stays github-blue for level contrast against
-     the amber primary; link hover now derives from primary directly. */
-  --prose-h-accent: #58a6ff;
   --prose-link-hover: var(--primary);
 
   /* CVE registry tokens */
@@ -145,20 +139,20 @@
   --cve-surface-strong: #0d0d0f;
   --cve-surface-soft: #1c1c1f;
   --cve-border: #232326;
-  --cve-border-strong: #f59e0b;
-  --cve-accent: #f59e0b;
-  --cve-accent-soft: rgba(245, 158, 11, 0.08);
+  --cve-border-strong: var(--primary);
+  --cve-accent: var(--primary);
+  --cve-accent-soft: rgba(88, 166, 255, 0.08);
   --cve-danger: #ff5f57;
   --cve-warning: #f59e0b;
   --cve-info: #58a6ff;
   --cve-muted: #8b949e;
-  --cve-focus: #f59e0b;
+  --cve-focus: var(--primary);
   --cve-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
   --cve-radius: 18px;
   --cve-radius-inner: 14px;
 
   /* Avatar glow (home hero) - replaces hardcoded rgba(159,239,0,...) */
-  --avatar-glow: rgba(245, 158, 11, 0.35);
+  --avatar-glow: rgba(88, 166, 255, 0.35);
 }
 
 @layer base {
