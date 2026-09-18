@@ -53,3 +53,6 @@ Notion_export/
 scripts/cv/rendercv_output/
 package-lock.json
 
+# superpowers brainstorming companion mockups
+.superpowers/
+
