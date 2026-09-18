@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import { formatDate } from "@/lib/utils";
 import { toBcp47 } from "@/i18n/routing";
+import { CATEGORY_BADGE_CLASS } from "@/lib/category-badge";
 import type { SerializedPost } from "./types";
 
 export function FeaturedPostCard({ post }: { post: SerializedPost }) {
@@ -38,7 +39,7 @@ export function FeaturedPostCard({ post }: { post: SerializedPost }) {
             </Badge>
             {post.categories?.[0] &&
               post.categories[0].toLowerCase() !== "featured" && (
-                <Badge variant="secondary" className="text-[10px]">
+                <Badge variant="outline" className={`text-[10px] ${CATEGORY_BADGE_CLASS}`}>
                   {post.categories[0]}
                 </Badge>
               )}

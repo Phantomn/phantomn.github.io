@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import { formatDate } from "@/lib/utils";
 import { toBcp47 } from "@/i18n/routing";
+import { CATEGORY_BADGE_CLASS } from "@/lib/category-badge";
 import type { SerializedPost } from "./types";
 
 export function PostCard({ post }: { post: SerializedPost }) {
@@ -35,7 +36,7 @@ export function PostCard({ post }: { post: SerializedPost }) {
         )}
         <CardHeader className="pb-2">
           {post.categories?.[0] && (
-            <Badge variant="default" className="mb-1 w-fit text-[10px]">
+            <Badge variant="outline" className={`mb-1 w-fit text-[10px] ${CATEGORY_BADGE_CLASS}`}>
               {post.categories[0]}
             </Badge>
           )}

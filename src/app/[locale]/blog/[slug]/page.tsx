@@ -17,6 +17,7 @@ import {
 } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 import { normalizeTag } from "@/lib/taxonomy";
+import { CATEGORY_BADGE_CLASS } from "@/lib/category-badge";
 import { Badge } from "@/components/ui/badge";
 import { PostSidebar } from "@/components/blog/post-sidebar";
 import { ProseImageLightbox } from "@/components/blog/prose-image-lightbox";
@@ -161,7 +162,7 @@ export default async function BlogPostPage({ params }: Props) {
             {fm.categories && fm.categories.length > 0 && (
               <div className="mb-3 flex flex-wrap gap-2">
                 {fm.categories.map((cat) => (
-                  <Badge key={cat} variant="default" className="text-xs">
+                  <Badge key={cat} variant="outline" className={`text-xs ${CATEGORY_BADGE_CLASS}`}>
                     {cat}
                   </Badge>
                 ))}
