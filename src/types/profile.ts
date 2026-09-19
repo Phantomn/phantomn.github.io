@@ -19,14 +19,9 @@ export type ExperienceItem = {
   bullets: string[];
 };
 
-export type SkillBadge = {
-  label: string;
-  src: string;
-};
-
 export type SkillCategory = {
   title: string;
-  badges: SkillBadge[];
+  items: string[];
 };
 
 export type EducationRow = {

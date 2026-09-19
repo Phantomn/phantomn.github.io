@@ -8,6 +8,7 @@ import { routing } from "@/i18n/routing";
 import { DynamicTranslator } from "@/components/dynamic-translator";
 import { icons } from "@/lib/icons";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -101,49 +102,38 @@ const EXPERIENCE: ExperienceItem[] = [
 const SKILLS: SkillCategory[] = [
   {
     title: "Offensive Security",
-    badges: [
-      { label: "Web/App Pentesting", src: "https://img.shields.io/badge/-Web%2FApp%20Pentesting-7f1d1d?logo=owasp&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "OT/ICS Pentesting", src: "https://img.shields.io/badge/-OT%2FICS%20Pentesting-991b1b?logo=siemens&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "Red Team", src: "https://img.shields.io/badge/-Red%20Team-b91c1c?logo=hackthebox&logoColor=9FEF00&style=for-the-badge&labelColor=1f2937" },
-      { label: "Exploit Development", src: "https://img.shields.io/badge/-Exploit%20Dev-7f1d1d?logo=gnubash&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "Vulnerability Research", src: "https://img.shields.io/badge/-Vuln%20Research-c2410c?logo=bugcrowd&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "Fuzzing", src: "https://img.shields.io/badge/-Fuzzing-9a3412?logo=gnubash&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "Reverse Engineering", src: "https://img.shields.io/badge/-Reverse%20Engineering-4c1d95?logo=intel&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "Threat Modeling", src: "https://img.shields.io/badge/-Threat%20Modeling-d97706?logo=securityscorecard&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
+    items: [
+      "Web/App Pentesting",
+      "OT/ICS Pentesting",
+      "Red Team",
+      "Exploit Development",
+      "Vulnerability Research",
+      "Fuzzing",
+      "Reverse Engineering",
+      "Threat Modeling",
     ],
   },
   {
     title: "Standards & Compliance",
-    badges: [
-      { label: "IEC 62443-4-2", src: "https://img.shields.io/badge/-IEC%2062443--4--2-0f766e?logo=iec&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "FDA 510(k)", src: "https://img.shields.io/badge/-FDA%20510(k)-0369a1?logo=fda&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "Achilles Level 2", src: "https://img.shields.io/badge/-Achilles%20Level%202-155e75?logo=shield&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "ISO 27001", src: "https://img.shields.io/badge/-ISO%2027001-047857?logo=keybase&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "ISMS", src: "https://img.shields.io/badge/-ISMS-166534?logo=shield&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-    ],
+    items: ["IEC 62443-4-2", "FDA 510(k)", "Achilles Level 2", "ISO 27001", "ISMS"],
   },
   {
     title: "AI Security Automation",
-    badges: [
-      { label: "MCP + A2A", src: "https://img.shields.io/badge/-MCP%20%2B%20A2A-5b21b6?logo=anthropic&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "n8n Orchestration", src: "https://img.shields.io/badge/-n8n%20Orchestration-b45309?logo=n8n&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "RAG / pgvector", src: "https://img.shields.io/badge/-RAG%20%2F%20pgvector-1e40af?logo=postgresql&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "LLM Integration", src: "https://img.shields.io/badge/-LLM%20Integration-7b2d8e?logo=openai&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-    ],
+    items: ["MCP + A2A", "n8n Orchestration", "RAG / pgvector", "LLM Integration"],
   },
   {
     title: "Tools",
-    badges: [
-      { label: "IDA Pro", src: "https://img.shields.io/badge/-IDA%20Pro-1c1917?logo=intel&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "Burp Suite", src: "https://img.shields.io/badge/-Burp%20Suite-c2410c?logo=burpsuite&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "Frida", src: "https://img.shields.io/badge/-Frida-14532d?logo=gnubash&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "CodeQL", src: "https://img.shields.io/badge/-CodeQL-0c4a6e?logo=github&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "Ghidra", src: "https://img.shields.io/badge/-Ghidra-0e7490?logo=nsa&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "Wireshark", src: "https://img.shields.io/badge/-Wireshark-1e40af?logo=wireshark&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "Kali Linux", src: "https://img.shields.io/badge/-Kali%20Linux-557c3b?logo=kalilinux&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "Docker", src: "https://img.shields.io/badge/-Docker-0284c7?logo=docker&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "Python", src: "https://img.shields.io/badge/-Python-1e3a5f?logo=python&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
-      { label: "C / C++", src: "https://img.shields.io/badge/-C%20%2F%20C%2B%2B-0c4a6e?logo=c&logoColor=ffffff&style=for-the-badge&labelColor=1f2937" },
+    items: [
+      "IDA Pro",
+      "Burp Suite",
+      "Frida",
+      "CodeQL",
+      "Ghidra",
+      "Wireshark",
+      "Kali Linux",
+      "Docker",
+      "Python",
+      "C / C++",
     ],
   },
 ];
@@ -488,20 +478,11 @@ export default async function AboutPage({ params }: Props) {
               <div key={cat.title}>
                 {catIdx > 0 && <Separator className="mb-6" />}
                 <h3 className="mb-3 text-sm font-semibold">{cat.title}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {cat.badges.map((b) => (
-                    <div
-                      key={b.src}
-                      className="rounded-full border bg-muted/20 px-3 py-1.5"
-                      title={b.label}
-                    >
-                      <img
-                        src={b.src}
-                        alt={b.label}
-                        className="h-6 object-contain"
-                        loading="lazy"
-                      />
-                    </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {cat.items.map((item) => (
+                    <Badge key={item} variant="secondary">
+                      {item}
+                    </Badge>
                   ))}
                 </div>
               </div>
