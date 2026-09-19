@@ -46,7 +46,7 @@ export function PostCard({ post }: { post: SerializedPost }) {
         </CardHeader>
         <CardContent className="pb-2">
           {post.description && (
-            <p className="line-clamp-2 text-sm text-muted-foreground">
+            <p className="line-clamp-2 text-base leading-relaxed text-muted-foreground">
               {post.description}
             </p>
           )}

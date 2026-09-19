@@ -203,7 +203,7 @@ export default async function PortfolioPage({ params }: Props) {
             </h2>
           </CardHeader>
           <CardContent>
-            <p className="text-sm leading-relaxed text-muted-foreground">
+            <p className="text-base leading-relaxed text-muted-foreground">
               {PROFILE.summary}
             </p>
           </CardContent>
@@ -220,7 +220,7 @@ export default async function PortfolioPage({ params }: Props) {
           <CardContent>
             <ul className="space-y-2">
               {CORE_COMPETENCIES.map((c, i) => (
-                <li key={i} className="flex gap-2 text-sm text-muted-foreground">
+                <li key={i} className="flex gap-2 text-base leading-relaxed text-muted-foreground">
                   <span className="mt-0.5 shrink-0 text-muted-foreground" data-notranslate>
                     ▹
                   </span>
@@ -262,7 +262,7 @@ export default async function PortfolioPage({ params }: Props) {
                     <span>{p.role}</span>
                   </div>
                   {p.background && (
-                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    <p className="mt-3 text-base leading-relaxed text-muted-foreground">
                       {p.background}
                     </p>
                   )}
@@ -271,7 +271,7 @@ export default async function PortfolioPage({ params }: Props) {
                       <div className="text-xs font-semibold text-foreground/80">
                         {t("labelActions")}
                       </div>
-                      <ul className="mt-1 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+                      <ul className="mt-1 list-disc space-y-1.5 pl-5 text-base leading-relaxed text-muted-foreground">
                         {p.actions.map((a, i) => (
                           <li key={i}>{a}</li>
                         ))}
@@ -283,7 +283,7 @@ export default async function PortfolioPage({ params }: Props) {
                       <div className="text-xs font-semibold text-foreground/80">
                         {t("labelResults")}
                       </div>
-                      <ul className="mt-1 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+                      <ul className="mt-1 list-disc space-y-1.5 pl-5 text-base leading-relaxed text-muted-foreground">
                         {p.results.map((r, i) => (
                           <li key={i}>{r}</li>
                         ))}
@@ -336,7 +336,7 @@ export default async function PortfolioPage({ params }: Props) {
                       <div className="text-sm text-muted-foreground" data-notranslate>
                         {exp.dates} · {exp.location}
                       </div>
-                      <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+                      <ul className="mt-3 list-disc space-y-1.5 pl-5 text-base leading-relaxed text-muted-foreground">
                         {exp.bullets.map((b, bIdx) => (
                           <li key={bIdx}>{b}</li>
                         ))}
@@ -422,7 +422,7 @@ export default async function PortfolioPage({ params }: Props) {
                         {item.year}
                       </span>
                     </div>
-                    <div className="mt-2 text-sm text-muted-foreground">
+                    <div className="mt-2 text-base leading-relaxed text-muted-foreground">
                       {item.summary}
                     </div>
                   </a>

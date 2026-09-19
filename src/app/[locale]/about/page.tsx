@@ -343,7 +343,7 @@ export default async function AboutPage({ params }: Props) {
           <CardTitle className="text-xl">{t("sectionAbout")}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm leading-relaxed text-muted-foreground">
+          <p className="text-base leading-relaxed text-muted-foreground">
             {ABOUT_TEXT}
           </p>
         </CardContent>
@@ -385,7 +385,7 @@ export default async function AboutPage({ params }: Props) {
                       {exp.location}
                     </div>
                     {exp.bullets.length > 0 && (
-                      <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+                      <ul className="mt-3 list-disc space-y-1.5 pl-5 text-base leading-relaxed text-muted-foreground">
                         {exp.bullets.map((b, bIdx) => (
                           <li key={bIdx}>{b}</li>
                         ))}
@@ -453,7 +453,7 @@ export default async function AboutPage({ params }: Props) {
                     <span className="font-semibold">{item.id}</span>
                     <span className="text-xs text-muted-foreground">{item.year}</span>
                   </div>
-                  <div className="mt-2 text-sm text-muted-foreground">{item.summary}</div>
+                  <div className="mt-2 text-base leading-relaxed text-muted-foreground">{item.summary}</div>
                 </a>
               ))}
             </div>
@@ -564,7 +564,7 @@ export default async function AboutPage({ params }: Props) {
                       </div>
                     )}
                     {p.bullets.length > 0 && (
-                      <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+                      <ul className="mt-3 list-disc space-y-1.5 pl-5 text-base leading-relaxed text-muted-foreground">
                         {p.bullets.map((b, bIdx) => (
                           <li key={bIdx}>{b}</li>
                         ))}

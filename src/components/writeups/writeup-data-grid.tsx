@@ -297,7 +297,7 @@ export function WriteupDataGrid({
                       <Badge
                         variant="outline"
                         className={cn(
-                          "text-[11px] font-medium whitespace-nowrap",
+                          "text-[12px] font-medium whitespace-nowrap",
                           SOURCE_STYLES[w.sourceKey]
                         )}
                       >
@@ -316,7 +316,7 @@ export function WriteupDataGrid({
                       <Badge
                         variant="outline"
                         className={cn(
-                          "text-[11px] font-medium whitespace-nowrap",
+                          "text-[12px] font-medium whitespace-nowrap",
                           CATEGORY_STYLES[w.categoryKey]
                         )}
                       >
@@ -329,7 +329,7 @@ export function WriteupDataGrid({
                       <Badge
                         variant="outline"
                         className={cn(
-                          "text-[11px] font-medium whitespace-nowrap",
+                          "text-[12px] font-medium whitespace-nowrap",
                           DIFFICULTY_STYLES[w.difficulty]
                         )}
                       >
@@ -344,13 +344,13 @@ export function WriteupDataGrid({
                           <Badge
                             key={tag}
                             variant="outline"
-                            className="text-[10px] border-border/60 text-muted-foreground font-normal"
+                            className="text-[12px] border-border/60 text-muted-foreground font-normal"
                           >
                             {tag}
                           </Badge>
                         ))}
                         {w.tags.length > 3 && (
-                          <span className="self-center text-[10px] text-muted-foreground/60">
+                          <span className="self-center text-[12px] text-muted-foreground">
                             +{w.tags.length - 3}
                           </span>
                         )}

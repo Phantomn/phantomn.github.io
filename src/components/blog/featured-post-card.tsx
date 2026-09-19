@@ -50,7 +50,7 @@ export function FeaturedPostCard({ post }: { post: SerializedPost }) {
         </CardHeader>
         <CardContent className="pb-2">
           {post.description && (
-            <p className="line-clamp-3 text-sm text-muted-foreground">
+            <p className="line-clamp-3 text-base leading-relaxed text-muted-foreground">
               {post.description}
             </p>
           )}
