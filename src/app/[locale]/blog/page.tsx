@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getContentList, getSectionIndex } from "@/lib/content";
+import { routing } from "@/i18n/routing";
 import { BlogPageLayout } from "@/components/blog/blog-page-layout";
+import { DynamicTranslator } from "@/components/dynamic-translator";
 import type { SerializedPost } from "@/components/blog/types";
 
 interface Props {
@@ -57,12 +59,18 @@ export default async function BlogPage({ params }: Props) {
         {section?.meta.title ?? t("title")}
       </h1>
 
-      <BlogPageLayout
-        featuredPost={featuredPost}
-        posts={remainingPosts}
-        recentPosts={recentPosts}
-        allTags={allTags}
-      />
+      <DynamicTranslator
+        enabled={locale !== routing.defaultLocale}
+        targetLocale={locale}
+        contentKey="blog/index"
+      >
+        <BlogPageLayout
+          featuredPost={featuredPost}
+          posts={remainingPosts}
+          recentPosts={recentPosts}
+          allTags={allTags}
+        />
+      </DynamicTranslator>
     </div>
   );
 }

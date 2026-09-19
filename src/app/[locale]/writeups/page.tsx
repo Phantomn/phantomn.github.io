@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getAllWriteups } from "@/lib/content";
+import { routing } from "@/i18n/routing";
 import { WriteupDataGrid } from "@/components/writeups/writeup-data-grid";
+import { DynamicTranslator } from "@/components/dynamic-translator";
 import type { WriteupEntry } from "@/components/writeups/writeup-data-grid";
 
 interface Props {
@@ -41,7 +43,13 @@ export default async function WriteupsPage({ params }: Props) {
         <p className="text-muted-foreground">{t("subtitle")}</p>
       </div>
 
-      <WriteupDataGrid writeups={writeups} />
+      <DynamicTranslator
+        enabled={locale !== routing.defaultLocale}
+        targetLocale={locale}
+        contentKey="writeups/index"
+      >
+        <WriteupDataGrid writeups={writeups} />
+      </DynamicTranslator>
     </div>
   );
 }
