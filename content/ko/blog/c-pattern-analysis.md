@@ -17,7 +17,7 @@ authors:
 
 gcc -m32 -fno-stack-protector -mpreferred-stack-boundary=2 -z execstack -fno-pie -o
 
---------------------if_elseif_elseif_elseif_elseif_elseif_elseif_elseif_elseif_elseif_elseif_elseif_elseif_elseif_else--------------------
+## if / else if / else
 
 ![](/images/blog/c-pattern-analysis/untitled.png)
 
@@ -55,7 +55,7 @@ else if 문은 else 문 비교에서 0x4f와 비교하고 바로 작지 않게 �
 
 우리는 순서적으로 비교를 하지만 내부에서는 if -> else -> else if 순으로 처리를 하는것을 알게 되었다!
 
---------------------forforforforforforforforforforforforforforforforforforforfor--------------------
+## for
 
 ![](/images/blog/c-pattern-analysis/untitled%208.png)
 
@@ -99,7 +99,7 @@ ebp-0x4와 ebp-0x8을 곱하고 eax에 저장, 그리고 곱셈값, 2번째 인�
 
 N단을 출력하는 프로그램이었다.
 
-음.. 전체적인 구조를 보자면 입력인자를 가장 끝에 두고 ebp-0x4, ebp-0x8에각각 값을 할당 후 안쪽 Loop를 처리하고 바깥쪽 Loop를 처리한다.
+전체적인 구조를 보면, 입력 인자를 가장 끝에 두고 ebp-0x4, ebp-0x8에 각각 값을 할당한 후 안쪽 Loop를 먼저 처리하고 바깥쪽 Loop를 처리한다.
 
 그 사이에 분기문이 존재하게 되는것이다.
 
@@ -113,7 +113,7 @@ N단을 출력하는 프로그램이었다.
 
 ![](/images/blog/c-pattern-analysis/untitled%2014.png)
 
---------------------whilewhilewhilewhilewhilewhilewhilewhilewhilewhilewhilewhile--------------------
+## while
 
 이번엔 while문으로 프로그램을 재작성 해보겠다.
 
@@ -135,7 +135,7 @@ N단을 출력하는 프로그램이었다.
 
 수정할것이 별로 없다.
 
---------------------do_whiledo_whiledo_whiledo_whiledo_whiledo_whiledo_whiledo_whiledo_while--------------------
+## do-while
 
 마지막으로 do_while문이다.
 
@@ -143,24 +143,22 @@ N단을 출력하는 프로그램이었다.
 
 ![](/images/blog/c-pattern-analysis/untitled%2020.png)
 
-Do_While문으로 짜니 비교구문이 단 두개로 줄어든다.먼저 한번 처리하고 마지막에 비교만 하면되니 디버깅에 친숙한?문법이다!!
+do-while문으로 짜니 비교 구문이 두 개로 줄어든다. 먼저 한 번 처리하고 마지막에 비교만 하면 되니, 흐름을 따라가며 디버깅하기 편한 형태다.
 
 간단하게 Hand-ray하고 마치도록 하겠다.
 
 ![](/images/blog/c-pattern-analysis/untitled%2021.png)
 
-모의 코드는 이렇다 선 처리 후증가 후 jmp하게 된다.
+모의 코드는 이렇다 — 먼저 처리한 뒤 증가시키고 jmp한다.
 
-이형식은 기존 반복문과는 깔끔은 하나 다르기에 기억할 필요가 있을듯 하다.
+이 형식은 기존 반복문보다 어셈블리는 깔끔하지만 흐름이 다르므로 구분해서 기억해 둘 필요가 있다.
 
 형식에 맞춰서 다시 작성해보자.
 
 ![](/images/blog/c-pattern-analysis/untitled%2022.png)
 
-음.....do while문이 겹치게 되면 안쪽의 반복문으로만 분기하게 되어있다.
+do-while문이 중첩되면 안쪽 반복문으로만 분기하게 되어 있다.
 
-그래서 2개의 do_while문인지를 판별하려면 증감값의 개수가 1개이상이면 다중 반복문인지 의심해봐야 하고 비교문도 있다면 그건 다중 반복문이다.
+그래서 2개의 do-while문이 중첩됐는지 판별하려면, 증감 연산이 1개 이상이면서 비교문도 함께 있는지를 본다 — 둘 다 있다면 다중 반복문일 가능성이 높다.
 
-간단한것같으면서도 또한 알게 된것들이 많은 패턴 연습이다 많은 패턴을 공부해야 하는데 겨우 간단한 두가지를 알았다
-
-어떤 패턴이 더 있을지는 아직 잘 모르겠다.
+간단해 보이지만 실제로 손으로 따라가 보니 배운 게 많은 패턴 연습이었다. if/for/while/do-while 네 가지를 정리했고, switch-case 같은 나머지 패턴은 다음 기회에 다룰 예정이다.

@@ -10,6 +10,8 @@ authors:
 image: "/images/blog/v8-engine-build-guide/Untitled.png"
 ---
 
+V8 취약점을 디버그 빌드로 재현하려면 소스를 직접 빌드해야 한다. Windows/Linux 각각에서 V8 엔진을 빌드하는 절차를 정리한다.
+
 ## 크롬 업데이트 비활성화
 
 ### 크롬 업데이트 서비스 비활성화
@@ -168,7 +170,7 @@ gclient sync
 v8 디렉토리로 이동하여 다음 명령을 입력한다. release debug 둘 중 하나를 고른다.
 
 ```
-C:\v8_engine\source\v8>gn gen --ide=vs out\x64."release|debug" --args="is_debug=false is_componnent_build=true"
+C:\v8_engine\source\v8>gn gen --ide=vs out\x64."release|debug" --args="is_debug=false is_component_build=true"
 ```
 
 기본적으로 디버그 빌드가 활성화되며 'gn gen out.gn\x64.release –args="is_debug=false"'와같이 실행하면 릴리즈 모드로 빌드된다. (out.gn\x64.Debug는 그냥 경로지정일 뿐 디버그/릴리즈 x86/x64 타겟에는 영향없다.)

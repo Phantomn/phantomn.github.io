@@ -428,15 +428,12 @@ correct! here's your flag
 
 각 horcrux 함수를 순서대로 호출하는 ROP 체인을 구성한다:
 
-```python
-from pwn import *
+1. `pwntools`로 서버(`pwnable.kr:9032`)에 연결한다.
+2. 스택 오버플로로 리턴 주소를 제어할 수 있는 지점을 확보한다.
+3. horcrux a~g 함수의 주소를 순서대로 이어 붙인 ROP 체인을 payload로 전송한다.
+4. 각 함수 호출로 누적된 XP 합계가 목표치와 일치하면 flag를 얻는다.
 
-p = remote('pwnable.kr', 9032)
-
-# 스택 오버플로로 리턴 주소 제어
-# 각 horcrux 함수(a~g)를 순서대로 호출
-# 마지막으로 XP 합계를 계산해 플래그 획득
-```
+*(실제 익스플로잇 스크립트 전문은 이 글에 정리하지 않았다 — 위는 접근 방식 요약이다.)*
 
 **ROP(Return-Oriented Programming) 개념:**
 - `ret` 명령으로 끝나는 기존 코드 시퀀스(가젯)를 활용

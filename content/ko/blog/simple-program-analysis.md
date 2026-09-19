@@ -15,7 +15,7 @@ gcc -m32 -fno-stack-protector -mpreferred-stack-boundary=2 -z execstack -fno-pie
 
 ![](/images/blog/simple-program-analysis/untitled.png)
 
-Hello World 프로그램이다 아주 간단하다 디버깅을 해보도록 하자.
+Hello World 프로그램이다. 구조가 단순하니 먼저 이걸로 디버깅해본다.
 
 ![](/images/blog/simple-program-analysis/untitled%201.png)
 
@@ -37,11 +37,11 @@ mov esp, ebp 로 SFP로 돌아간 후 ret명령어로 종료한다.
 
 ![](/images/blog/simple-program-analysis/untitled%203.png)
 
-함수 프롤로그 이후 0x8의 공간을 확장하고 변수 두개를 받습니다.
+함수 프롤로그 이후 0x8의 공간을 확장하고 변수 두 개를 받는다.
 
-ebp-0x4에 0x5라는 값을 저장하고 ebp-0x8에 0xa(10)을 저장합니다.
+ebp-0x4에 0x5라는 값을 저장하고 ebp-0x8에 0xa(10)을 저장한다.
 
-값을 저장한후 2개의 레지스터에 값을 복사하고 add연산으로 덧셈연산을 하고 첫번째 operand에 저장합니다. 대부분 eax에 값을 저장합니다.
+값을 저장한 후 두 레지스터에 값을 복사하고, add 연산으로 덧셈을 수행해 결과를 첫 번째 operand(대부분 eax)에 저장한다.
 
 결과 값인 eax를 push하고 ebp-0x8, ebp-0x4를 push한다 그리고 마지막으로 문자열을 push하고 printf함수를 call한다
 
@@ -99,7 +99,7 @@ ebp+0xc에는 0x2b라는 값이 들어있었다. 이걸 아스키 코드로 바�
 
 그리고 나누기연산에서는 cdq라는 명령어가 끼어있는데 이것은 Convert DoubleWord to QuadWord라는 명령어다.
 
-더블워드에서 쿼드로, 8에서 16으로 변경한다는것인데..부동 소수점연산이라그런걸까? 자세히는 모르겠다.
+더블워드를 쿼드워드로, 즉 32비트를 64비트로 부호 확장하는 명령이다. 나눗셈(idiv) 전에 피제수를 64비트로 맞춰야 하기 때문에 쓰인 것으로 보인다.
 
 각 연산이 끝나고 사용공간을 정리한 후에 함수의 끝부분인 calc+160으로 jmp해서 함수를 종료하며 main함수로 돌아온다.
 

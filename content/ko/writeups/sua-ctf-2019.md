@@ -13,7 +13,7 @@ authors:
     image: "https://github.com/Phantomn.png"
 ---
 
-1점짜리 문제는 생략하겠다.
+1점짜리 문제(워밍업 성격의 초저난이도)는 생략하고, 그 외 문제만 기록한다.
 
 ## Welcome (100 pts)
 
