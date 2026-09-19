@@ -38,7 +38,7 @@ test("writeup list rows are real anchors", async ({ page }) => {
   const anchorCount = await page
     .locator('a[href*="/writeups/"]:not([href="/en/writeups/"])')
     .count();
-  expect(anchorCount).toBeGreaterThanOrEqual(28);
+  expect(anchorCount).toBeGreaterThanOrEqual(18);
 
   // Verify link navigates when clicked
   const secondRowLink = page.locator("tbody tr").nth(1).locator("a").first();

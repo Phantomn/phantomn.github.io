@@ -1,15 +1,3 @@
-export type CertItem = {
-  title: string;
-  src: string;
-  href?: string;
-};
-
-export type CertCompanyGroup = {
-  company: string;
-  logo?: string;
-  certs: CertItem[];
-};
-
 export type ExperienceItem = {
   role: string;
   company: string;
@@ -22,20 +10,6 @@ export type ExperienceItem = {
 export type SkillCategory = {
   title: string;
   items: string[];
-};
-
-export type EducationRow = {
-  degree: string;
-  institution: string;
-  location: string;
-  logo: string | null;
-  period: string;
-};
-
-export type ProjectItem = {
-  title: string;
-  meta: string;
-  bullets: string[];
 };
 
 export type AchievementItem = {
