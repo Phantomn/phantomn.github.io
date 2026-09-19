@@ -7,7 +7,7 @@ export function AppHeadLinks() {
     <>
       <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       <link
-        href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600&family=Signika:wght@500;700&family=Noto+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet"
       />
     </>
