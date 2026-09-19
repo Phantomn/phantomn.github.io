@@ -97,19 +97,18 @@
   "about": {
     "title": "소개",
     "sectionAbout": "소개",
-    "sectionExperience": "경력",
-    "sectionEducation": "학력",
-    "sectionCertifications": "자격증 & 수상",
-    "sectionCves": "CVEs",
     "sectionSkills": "기술",
     "sectionAchievements": "성과",
-    "sectionProjects": "프로젝트",
     "sectionLanguages": "언어",
     "sectionResume": "이력서",
     "contactInfo": "연락처",
     "connections": "CVE {count}건",
     "downloadPdf": "PDF 다운로드",
-    "openRegistry": "열기"
+    "portfolioCta": {
+      "heading": "경력, 프로젝트, 자격증, CVE 전체 목록",
+      "body": "포트폴리오 페이지에서 전체 경력과 프로젝트, 자격증, CVE 목록을 확인할 수 있습니다.",
+      "cta": "포트폴리오 보기"
+    }
   },
   "portfolio": {
     "title": "포트폴리오",

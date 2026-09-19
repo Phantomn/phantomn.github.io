@@ -78,10 +78,12 @@ const EXPERIENCE: ExperienceItem[] = [
     location: "Seoul, South Korea",
     dates: "2021.06 — Present",
     bullets: [
-      "OT/ICS 보안 — IEC 62443-4-2 Threat Modeling·모의해킹, LS ELECTRIC Achilles Level 2 인증 취득, 자동화 점검 도구 개발",
-      "IoT 보안 — 스마트빌딩 IoT 취약점 탐지 기술 개발·실증, IoT/CCTV 침해사고 조사 도구 개발",
-      "의료기기 보안 — FDA eSTAR 컨설팅 및 Web/App·의료기기 모의해킹",
-      "사이버 공방 훈련 — 한국전력 ELECCON 운영·문제 개발, Locked Shields 2025 DFIR CTF 1위, APEX CTF 2025 문제 개발",
+      "OT/ICS 보안 — IEC 62443-4-2 기반 Threat Modeling과 모의해킹을 수행했습니다.",
+      "LS ELECTRIC 자동화기기의 Achilles Level 2 인증 취득에 기여하고, 자동화 점검 도구를 개발했습니다.",
+      "IoT 보안 — 스마트빌딩 IoT 취약점 탐지 기술을 개발·실증하고, IoT/CCTV 침해사고 조사 도구를 만들었습니다.",
+      "의료기기 보안 — FDA eSTAR 컨설팅과 Web/App·의료기기 모의해킹을 수행했습니다.",
+      "사이버 공방 훈련 — 한국전력 ELECCON을 운영하고 문제를 개발했습니다.",
+      "Locked Shields 2025 DFIR CTF 1위, APEX CTF 2025 문제 개발에 참여했습니다.",
     ],
   },
   {
@@ -91,9 +93,9 @@ const EXPERIENCE: ExperienceItem[] = [
     location: "Seoul, South Korea",
     dates: "2020.06 — 2021.06",
     bullets: [
-      "금융권·공공기관 전자금융기반시설 모의해킹 — 참저축은행, 애큐온캐피탈, 금융투자협회, SBI저축은행, 현대자동차 HKMC, 농협중앙회 RPA 등",
-      "비정형 시스템 보안성 검토 — KT 기가지니 AI 스피커, IoT 열감지 장비, DB손해보험 클레임콜",
-      "ISMS/ISO27001 인증 취득 지원 컨설팅 (코웨이)",
+      "금융권·공공기관 전자금융기반시설 모의해킹을 수행했습니다. 참저축은행, 애큐온캐피탈, 금융투자협회, SBI저축은행, 현대자동차 HKMC, 농협중앙회 RPA 등이 대상이었습니다.",
+      "비정형 시스템 보안성 검토를 수행했습니다. KT 기가지니 AI 스피커, IoT 열감지 장비, DB손해보험 클레임콜이 대상이었습니다.",
+      "ISMS/ISO27001 인증 취득 지원 컨설팅에 참여했습니다 (코웨이).",
     ],
   },
 ];

@@ -17,20 +17,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { CertificationsSection } from "@/components/skills/certifications-section";
-import {
-  CVE_BREAKDOWN,
-  CVE_COUNT,
-  CVE_ITEMS,
-  CVE_ONLY_COUNT,
-  FVE_COUNT,
-} from "@/data/cves";
+import { CVE_COUNT, CVE_ONLY_COUNT, FVE_COUNT } from "@/data/cves";
 import type {
-  CertCompanyGroup,
-  ExperienceItem,
   SkillCategory,
-  EducationRow,
-  ProjectItem,
   AchievementItem,
   LanguageItem,
   ResumeLink,
@@ -65,39 +54,7 @@ const PROFILE = {
   },
 } as const;
 
-const ABOUT_TEXT = `Offensive Security Researcher. CVE ${CVE_ONLY_COUNT}건(${CVE_BREAKDOWN})과 FVE ${FVE_COUNT}건 보유. 금융권 Web/App과 OT/ICS 점검, BoB 8기 커널 퍼징, 최근에는 llama.cpp 등 LLM 추론 엔진 취약점 연구와 AI 기반 점검 자동화에 집중하고 있습니다. 상세 레지스트리는 /cves에서 관리합니다.`;
-
-const EXPERIENCE: ExperienceItem[] = [
-  {
-    role: "ICS Security Researcher (주임 연구원)",
-    company: "코어시큐리티 (CoreSecurity)",
-    logo: "/images/coresecurity.png",
-    location: "Seoul, South Korea",
-    dates: "2021.06 — Present",
-    bullets: [
-      "IEC 62443-4-2 기반 Threat Modeling 및 모의해킹 — LS ELECTRIC 자동화기기 Achilles Level 2 인증 취득 기여",
-      "FDA eSTAR 보안 컨설팅 및 의료기기 모의해킹 수행",
-      "스마트빌딩 IoT 취약점 탐지 기술 개발 및 실증, IoT/CCTV 침해사고 조사 도구 개발",
-      "한국전력 실전형 사이버 공방 훈련(ELECCON) 2021~2024 운영 및 문제 개발",
-      "NATO CCDCOE Locked Shields 2025 한국-캐나다 연합 DFIR 블루팀 참가 — 훈련 종합 6위, DFIR CTF 1위",
-      "APEX CTF 2025 DFIR 문제 개발 참여 (2025.05 ~ 2025.09)",
-      "NATO CCDCOE Locked Shields 2026 한국-헝가리 연합 Special System 블루팀 — 훈련 종합 9위",
-    ],
-  },
-  {
-    role: "Web/App Pentester (사원)",
-    company: "A3 Security",
-    logo: "/images/a3security.png",
-    location: "Seoul, South Korea",
-    dates: "2020.06 — 2021.06",
-    bullets: [
-      "금융권 및 공공기관 전자금융기반시설 모의해킹 12개 사이트 수행 — 고위험 취약점 평균 1~2건/사이트 식별",
-      "KT 기가지니 AI 스피커, 농협중앙회 RPA, IoT 열감지 장비 등 비정형 시스템 보안성 검토",
-      "ISMS/ISO27001 인증 취득 지원 컨설팅 참여 (코웨이)",
-      "참저축은행, 애큐온캐피탈, SBI저축은행, 현대자동차 HKMC 등 금융·제조 Web/App 모의해킹",
-    ],
-  },
-];
+const ABOUT_TEXT = `보안 리서처로 일하고 있습니다. 금융권 Web/App 모의해킹과 OT/ICS 점검을 거쳐, 지금은 LLM 추론 엔진(llama.cpp 등) 취약점 연구와 AI 기반 점검 자동화에 집중하고 있습니다. BoB 8기에서는 커널 퍼저를 직접 만들어 취약점을 찾았습니다. 지금까지 CVE ${CVE_ONLY_COUNT}건과 FVE ${FVE_COUNT}건을 발견해 등록했습니다. 전체 경력과 프로젝트는 포트폴리오에서 볼 수 있습니다.`;
 
 const SKILLS: SkillCategory[] = [
   {
@@ -138,79 +95,6 @@ const SKILLS: SkillCategory[] = [
   },
 ];
 
-const CERTIFICATIONS: CertCompanyGroup[] = [
-  {
-    company: "한국정보통신자격협회 (KAIT)",
-    logo: "",
-    certs: [
-      { title: "리눅스 마스터 2급", src: "" },
-      { title: "네트워크 관리사 2급", src: "" },
-    ],
-  },
-];
-
-const EDUCATION: EducationRow[] = [
-  {
-    degree: "컴퓨터공학부 (Computer Science)",
-    institution: "공주대학교 (Kongju National University)",
-    location: "Chungnam, South Korea",
-    logo: "/images/kongju.png",
-    period: "2012.02 — 2020.02",
-  },
-  {
-    degree: "정보처리과 (Information Processing)",
-    institution: "천안상업고등학교",
-    location: "Chungnam, South Korea",
-    logo: "",
-    period: "2009.03 — 2012.02",
-  },
-];
-
-const PROJECTS: ProjectItem[] = [
-  {
-    title: "LLM 추론 엔진 취약점 연구 (llama.cpp)",
-    meta: "취약점 분석 (2026)",
-    bullets: [
-      "llama.cpp 서버 대상 취약점 분석 → CVE 3건 도출 (CVE-2026-52130 / 52131 / 52132)",
-      "json-schema-to-grammar 무제어 재귀 DoS(CWE-674, CVSS 7.5) — /completions 경로만 영향, jinja 경유 /v1/chat/completions는 비해당까지 경로별 검증",
-      "GGUF 파서 도달 가능한 어서션(CWE-617)·/rerank 음수 top_n 정수 오버플로 DoS(CWE-190) 식별",
-    ],
-  },
-  {
-    title: "AI Orchestration Framework for Security",
-    meta: "개인 연구 (2024 — Present)",
-    bullets: [
-      "IDA Pro·Burp Suite·Frida·CodeQL을 MCP+A2A 프로토콜로 연결한 AI 기반 보안 점검 자동화 프레임워크 설계·구현",
-      "LLM이 도구 체인을 오케스트레이션해 Low~Medium 취약점 자동 식별 — 실 점검 대상 적용 검증",
-      "n8n·pgvector·RAG 파이프라인으로 과거 취약점 패턴 학습 및 신규 점검에 재활용",
-    ],
-  },
-  {
-    title: "ELECCON (한국전력 사이버 공방 훈련)",
-    meta: "운영 및 문제 개발 (2021 — 2024)",
-    bullets: [
-      "한국전력공사 주관 실전형 OT/ICS 사이버 공방 훈련 4년 연속 운영",
-      "SCADA·PLC 환경 기반 공격 시나리오 설계, 방어팀 평가 지표 수립",
-    ],
-  },
-  {
-    title: "APEX CTF 2025 — DFIR 문제 개발",
-    meta: "문제 출제 (2025.05 — 2025.09)",
-    bullets: [
-      "국내 CTF 대회 APEX CTF 2025 DFIR 카테고리 문제 개발 참여",
-      "실제 침해사고 기반 포렌식 시나리오 설계 및 검증",
-    ],
-  },
-  {
-    title: "File System Fuzzer (BoB 8기 프로젝트)",
-    meta: "구현 (2019)",
-    bullets: [
-      "커스텀 File System Fuzzer 설계·구현 → Linux Kernel OS CVE 16건 도출",
-      "CodeBlue 2019 (Tokyo) · Hack In The Box 2019 (Amsterdam) 발표",
-    ],
-  },
-];
-
 const ACHIEVEMENTS: AchievementItem[] = [
   {
     name: "NATO CCDCOE Locked Shields 2025 — DFIR CTF 1위",
@@ -228,10 +112,6 @@ const LANGUAGES: LanguageItem[] = [
   { flag: "kr", name: "한국어", level: "Native" },
   { flag: "us", name: "English", level: "Conversational" },
 ];
-
-const FEATURED_CVES = [...CVE_ITEMS]
-  .sort((a, b) => b.year - a.year || a.id.localeCompare(b.id))
-  .slice(0, 4);
 
 const RESUME_LINKS: ResumeLink[] = [
   { label: "한국어 이력서", href: "/docs/resume-ko.pdf", flag: "kr" },
@@ -339,131 +219,18 @@ export default async function AboutPage({ params }: Props) {
         </CardContent>
       </Card>
 
-      {/* ── Experience ──────────────────────────────────────────── */}
-      <Card className="mt-4">
-        <CardHeader>
-          <CardTitle className="text-xl">{t("sectionExperience")}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {EXPERIENCE.map((exp, idx) => (
-              <div key={`${exp.role}-${idx}`}>
-                {idx > 0 && <Separator className="mb-6" />}
-                <div className="flex gap-4">
-                  <div className="shrink-0 pt-0.5">
-                    {exp.logo ? (
-                      <img
-                        src={exp.logo}
-                        alt=""
-                        className="h-12 w-12 rounded-md border bg-background object-contain p-1"
-                      />
-                    ) : (
-                      <div className="flex h-12 w-12 items-center justify-center rounded-md border bg-muted text-lg font-bold text-muted-foreground">
-                        {exp.company.trim().slice(0, 1).toUpperCase()}
-                      </div>
-                    )}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-base font-semibold">{exp.role}</h3>
-                    <div className="text-sm text-foreground/80">
-                      {exp.company}
-                    </div>
-                    <div className="text-sm text-muted-foreground">
-                      {exp.dates}
-                    </div>
-                    <div className="text-sm text-muted-foreground">
-                      {exp.location}
-                    </div>
-                    {exp.bullets.length > 0 && (
-                      <ul className="mt-3 list-disc space-y-1.5 pl-5 text-base leading-relaxed text-muted-foreground">
-                        {exp.bullets.map((b, bIdx) => (
-                          <li key={bIdx}>{b}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
+      {/* ── Portfolio CTA (경력/프로젝트/자격증/CVE 전체는 포트폴리오가 전담) ── */}
+      <Card className="mt-4 border-primary/20 bg-primary/5">
+        <CardContent className="flex flex-col items-start justify-between gap-4 py-6 sm:flex-row sm:items-center">
+          <div>
+            <h2 className="text-lg font-semibold">{t("portfolioCta.heading")}</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {t("portfolioCta.body")}
+            </p>
           </div>
-        </CardContent>
-      </Card>
-
-      {/* ── Education ───────────────────────────────────────────── */}
-      <Card className="mt-4">
-        <CardHeader>
-          <CardTitle className="text-xl">{t("sectionEducation")}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {EDUCATION.map((row) => (
-              <div key={row.degree} className="flex gap-3 rounded-lg border bg-card p-4">
-                <div className="shrink-0 pt-0.5">
-                  {row.logo ? (
-                    <img
-                      src={row.logo}
-                      alt=""
-                      className="h-12 w-12 rounded-md border bg-background object-contain p-1"
-                    />
-                  ) : (
-                    <div className="flex h-12 w-12 items-center justify-center rounded-md border bg-muted text-lg font-bold text-muted-foreground">
-                      🎓
-                    </div>
-                  )}
-                </div>
-                <div className="min-w-0">
-                  <div className="text-sm font-semibold">{row.degree}</div>
-                  <div className="text-xs text-foreground/80">{row.institution}</div>
-                  <div className="text-xs text-muted-foreground">{row.period}</div>
-                  {row.location && (
-                    <div className="text-xs text-muted-foreground">{row.location}</div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* ── CVE Registry ───────────────────────────────────────── */}
-      <Card className="mt-4">
-        <CardHeader>
-          <CardTitle className="text-xl">{t("sectionCves")}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {FEATURED_CVES.map((item) => (
-                <a
-                  key={item.id}
-                  href={`/${locale}/cves/${item.slug}/`}
-                  className="rounded-lg border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-accent/30"
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="font-semibold">{item.id}</span>
-                    <span className="text-xs text-muted-foreground">{item.year}</span>
-                  </div>
-                  <div className="mt-2 text-base leading-relaxed text-muted-foreground">{item.summary}</div>
-                </a>
-              ))}
-            </div>
-
-            <div className="flex justify-end">
-              <Button asChild variant="outline">
-                <Link href={`/${locale}/cves/`}>{t("openRegistry")}</Link>
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* ── Licenses & Certifications ───────────────────────────── */}
-      <Card className="mt-4">
-        <CardHeader>
-          <CardTitle className="text-xl">{t("sectionCertifications")}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <CertificationsSection groups={CERTIFICATIONS} />
+          <Button asChild className="shrink-0">
+            <Link href={`/${locale}/portfolio/`}>{t("portfolioCta.cta")}</Link>
+          </Button>
         </CardContent>
       </Card>
 
@@ -518,42 +285,6 @@ export default async function AboutPage({ params }: Props) {
                   </div>
                 )}
               </a>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* ── Projects ────────────────────────────────────────────── */}
-      <Card className="mt-4">
-        <CardHeader>
-          <CardTitle className="text-xl">{t("sectionProjects")}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {PROJECTS.map((p, idx) => (
-              <div key={p.title}>
-                {idx > 0 && <Separator className="mb-6" />}
-                <div className="flex gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border bg-muted text-lg font-bold text-muted-foreground">
-                    📦
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="text-base font-semibold">{p.title}</div>
-                    {p.meta && (
-                      <div className="text-sm text-muted-foreground">
-                        {p.meta}
-                      </div>
-                    )}
-                    {p.bullets.length > 0 && (
-                      <ul className="mt-3 list-disc space-y-1.5 pl-5 text-base leading-relaxed text-muted-foreground">
-                        {p.bullets.map((b, bIdx) => (
-                          <li key={bIdx}>{b}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                </div>
-              </div>
             ))}
           </div>
         </CardContent>

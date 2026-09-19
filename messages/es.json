@@ -103,19 +103,18 @@
   "about": {
     "title": "Acerca",
     "sectionAbout": "Acerca",
-    "sectionExperience": "Experiencia",
-    "sectionEducation": "Educación",
-    "sectionCertifications": "Licencias y Certificaciones",
-    "sectionCves": "Registro de CVE",
     "sectionSkills": "Habilidades",
     "sectionAchievements": "Logros",
-    "sectionProjects": "Proyectos",
     "sectionLanguages": "Idiomas",
     "sectionResume": "Currículum",
     "contactInfo": "Contacto",
     "connections": "{count} CVE",
     "downloadPdf": "Descargar PDF",
-    "openRegistry": "Abrir registro"
+    "portfolioCta": {
+      "heading": "Experiencia, proyectos, certificaciones y CVEs completos",
+      "body": "Consulta el historial laboral completo, proyectos, certificaciones y la lista de CVEs en la página de Portafolio.",
+      "cta": "Ver portafolio"
+    }
   },
   "portfolio": {
     "title": "Portafolio",
