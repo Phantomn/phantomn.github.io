@@ -38,7 +38,7 @@ export default async function WriteupsPage({ params }: Props) {
 
   return (
     <div className="mx-auto w-[90vw] max-w-[1400px] px-4 py-8">
-      <div className="mb-6">
+      <div className="mb-6 border-l-4 border-primary pl-4">
         <h1 className="mb-1 text-3xl font-bold font-heading">{t("title")}</h1>
         <p className="text-muted-foreground">{t("subtitle")}</p>
       </div>

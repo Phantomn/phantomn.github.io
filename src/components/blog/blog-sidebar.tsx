@@ -14,6 +14,8 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { SITE_AUTHOR } from "@/lib/profile";
 import { formatDate } from "@/lib/utils";
 
+const TAG_DISPLAY_LIMIT = 20;
+
 interface BlogSidebarProps {
   recentPosts: { title: string; date?: string; href: string; locked?: boolean }[];
   allTags: string[];
@@ -98,7 +100,7 @@ export function BlogSidebar({
           <CardContent>
             <Separator className="mb-3" />
             <div className="flex flex-wrap gap-2">
-              {allTags.map((tag) => {
+              {allTags.slice(0, TAG_DISPLAY_LIMIT).map((tag) => {
                 const isActive = activeTag === tag;
                 return (
                   <button
@@ -120,6 +122,14 @@ export function BlogSidebar({
                 );
               })}
             </div>
+            {allTags.length > TAG_DISPLAY_LIMIT && (
+              <Link
+                href={`/${locale}/tags/`}
+                className="mt-3 inline-block text-xs font-medium text-primary hover:underline"
+              >
+                {tSidebar("viewAllTags")} ({allTags.length}) &rarr;
+              </Link>
+            )}
           </CardContent>
         </Card>
       )}

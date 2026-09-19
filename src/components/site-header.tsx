@@ -53,7 +53,7 @@ function NavLink({
       className={cn(
         "font-medium",
         isActive
-          ? "bg-accent text-accent-foreground"
+          ? "bg-primary/10 text-primary hover:bg-primary/15 hover:text-primary"
           : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
         className,
       )}

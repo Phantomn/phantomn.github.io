@@ -1,19 +1,26 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Mail, ShieldCheck, Star } from "lucide-react";
+import {
+  MapPin,
+  Mail,
+  ShieldCheck,
+  Star,
+  FileText,
+  Target,
+  Briefcase,
+  FolderKanban,
+  Wrench,
+  Bug,
+  Award,
+} from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { DynamicTranslator } from "@/components/dynamic-translator";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { PortfolioProjects } from "@/components/portfolio/portfolio-projects";
 import { PrintButton } from "@/components/portfolio/print-button";
@@ -190,7 +197,10 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── Summary ───────────────────────────────────────────── */}
         <Card className="mt-4">
           <CardHeader>
-            <CardTitle className="text-xl">{t("sectionSummary")}</CardTitle>
+            <h2 className="flex items-center gap-2 text-xl leading-none font-semibold">
+              <FileText className="h-5 w-5 text-primary" />
+              {t("sectionSummary")}
+            </h2>
           </CardHeader>
           <CardContent>
             <p className="text-sm leading-relaxed text-muted-foreground">
@@ -202,7 +212,10 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── Core Competencies ─────────────────────────────────── */}
         <Card className="mt-4">
           <CardHeader>
-            <CardTitle className="text-xl">{t("sectionCompetencies")}</CardTitle>
+            <h2 className="flex items-center gap-2 text-xl leading-none font-semibold">
+              <Target className="h-5 w-5 text-primary" />
+              {t("sectionCompetencies")}
+            </h2>
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
@@ -221,10 +234,10 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── Featured Projects ─────────────────────────────────── */}
         <Card className="mt-4">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-xl">
-              <Star className="h-5 w-5 text-muted-foreground" />
+            <h2 className="flex items-center gap-2 text-xl leading-none font-semibold">
+              <Star className="h-5 w-5 text-primary" />
               {t("sectionFeatured")}
-            </CardTitle>
+            </h2>
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
@@ -295,7 +308,10 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── Experience ────────────────────────────────────────── */}
         <Card className="mt-4">
           <CardHeader>
-            <CardTitle className="text-xl">{t("sectionExperience")}</CardTitle>
+            <h2 className="flex items-center gap-2 text-xl leading-none font-semibold">
+              <Briefcase className="h-5 w-5 text-primary" />
+              {t("sectionExperience")}
+            </h2>
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
@@ -336,12 +352,13 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── All Projects (filterable) ─────────────────────────── */}
         <Card className="mt-4">
           <CardHeader>
-            <CardTitle className="text-xl">
+            <h2 className="flex items-center gap-2 text-xl leading-none font-semibold">
+              <FolderKanban className="h-5 w-5 text-primary" />
               {t("sectionProjects")}{" "}
               <span className="text-sm font-normal text-muted-foreground tabular-nums">
                 ({PORTFOLIO_PROJECT_COUNT})
               </span>
-            </CardTitle>
+            </h2>
           </CardHeader>
           <CardContent>
             <PortfolioProjects />
@@ -351,7 +368,10 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── Skills ────────────────────────────────────────────── */}
         <Card className="mt-4">
           <CardHeader>
-            <CardTitle className="text-xl">{t("sectionSkills")}</CardTitle>
+            <h2 className="flex items-center gap-2 text-xl leading-none font-semibold">
+              <Wrench className="h-5 w-5 text-primary" />
+              {t("sectionSkills")}
+            </h2>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -377,12 +397,13 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── CVE / Vulnerability Research ──────────────────────── */}
         <Card className="mt-4">
           <CardHeader>
-            <CardTitle className="text-xl">
+            <h2 className="flex items-center gap-2 text-xl leading-none font-semibold">
+              <Bug className="h-5 w-5 text-primary" />
               {t("sectionCves")}{" "}
               <span className="text-sm font-normal text-muted-foreground tabular-nums">
                 ({CVE_COUNT})
               </span>
-            </CardTitle>
+            </h2>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -419,7 +440,10 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── Certifications & Education ────────────────────────── */}
         <Card className="mt-4">
           <CardHeader>
-            <CardTitle className="text-xl">{t("sectionCredentials")}</CardTitle>
+            <h2 className="flex items-center gap-2 text-xl leading-none font-semibold">
+              <Award className="h-5 w-5 text-primary" />
+              {t("sectionCredentials")}
+            </h2>
           </CardHeader>
           <CardContent className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div>

@@ -31,7 +31,7 @@ function ProjectCard({ project }: { project: PortfolioProject }) {
     <Card className="break-inside-avoid">
       <CardContent className="space-y-2 p-4">
         <div className="flex items-start justify-between gap-3">
-          <h4 className="text-sm font-semibold leading-snug">{project.title}</h4>
+          <h3 className="text-sm font-semibold leading-snug">{project.title}</h3>
           <ContributionBadge value={project.contribution} />
         </div>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-muted-foreground">

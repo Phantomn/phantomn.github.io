@@ -50,13 +50,18 @@ const SOURCE_STYLES: Record<string, string> = {
     "border-teal-600/40 bg-teal-500/10 text-teal-700 dark:border-teal-500/40 dark:text-teal-400",
 };
 
+/*
+ * CVE 심각도(critical/high/medium/low)와 개념적으로 동일한 "난이도 스케일"이므로
+ * cve-archive.tsx의 --cve-danger/warning/info 토큰을 공유한다. Easy는 브랜드
+ * 그린(--primary)을 재사용해 "쉬움 = 안전 = 브랜드 색"으로 자연스럽게 연결한다.
+ */
 const DIFFICULTY_STYLES: Record<string, string> = {
-  Easy: "border-green-600/40 bg-green-500/10 text-green-700 dark:border-green-500/40 dark:text-green-400",
+  Easy: "border-primary/40 bg-primary/10 text-primary",
   Medium:
-    "border-yellow-600/40 bg-yellow-500/10 text-yellow-700 dark:border-yellow-500/40 dark:text-yellow-400",
-  Hard: "border-orange-600/40 bg-orange-500/10 text-orange-700 dark:border-orange-500/40 dark:text-orange-400",
+    "border-[color:var(--cve-warning)]/40 bg-[color:var(--cve-warning)]/10 text-[color:var(--cve-warning)]",
+  Hard: "border-[color:var(--cve-warning)]/40 bg-[color:var(--cve-warning)]/20 text-[color:var(--cve-warning)] font-semibold",
   Insane:
-    "border-red-600/40 bg-red-500/10 text-red-700 dark:border-red-500/40 dark:text-red-400",
+    "border-[color:var(--cve-danger)]/40 bg-[color:var(--cve-danger)]/15 text-[color:var(--cve-danger)] font-semibold",
 };
 
 const CATEGORY_STYLES: Record<string, string> = {
