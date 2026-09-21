@@ -22,10 +22,15 @@ interface Props {
 
 type CardLabels = Pick<Props, "actionsLabel" | "resultsLabel">;
 
-function ProjectCard({ project, actionsLabel, resultsLabel }: { project: ProjectView } & CardLabels) {
+function ProjectCard({
+  project,
+  actionsLabel,
+  resultsLabel,
+  className,
+}: { project: ProjectView; className?: string } & CardLabels) {
   const detailed = project.actions.length > 0;
   return (
-    <Card className="break-inside-avoid">
+    <Card className={cn("break-inside-avoid", className)}>
       <CardContent className="space-y-2 p-4">
         <div className="flex items-start justify-between gap-3">
           <h3 className="text-body font-semibold leading-snug">{project.title}</h3>
@@ -106,12 +111,6 @@ export function PortfolioProjects({
     [allLabel, categories, projects.length],
   );
 
-  const visible = useMemo(
-    () =>
-      filter === "all" ? projects : projects.filter((p) => p.category === filter),
-    [filter, projects],
-  );
-
   return (
     <div className="space-y-4">
       {/* 필터 — 인쇄 시 숨김 */}
@@ -139,28 +138,15 @@ export function PortfolioProjects({
         ))}
       </div>
 
-      {/* 인쇄 시에는 항상 전체 노출 */}
-      <div className="hidden print:block">
-        <div className="grid grid-cols-1 gap-3">
-          {projects.map((p) => (
-            <ProjectCard
-              key={`print-${p.id}`}
-              project={p}
-              actionsLabel={actionsLabel}
-              resultsLabel={resultsLabel}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* 화면용 — 필터 적용 */}
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 print:hidden">
-        {visible.map((p) => (
+      {/* 카드는 한 번만 그린다. 화면에서는 필터에 맞지 않는 카드를 가리고, 인쇄에서는 전부 보인다(1열). */}
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 print:grid-cols-1">
+        {projects.map((p) => (
           <ProjectCard
             key={p.id}
             project={p}
             actionsLabel={actionsLabel}
             resultsLabel={resultsLabel}
+            className={filter === "all" || p.category === filter ? undefined : "hidden print:flex"}
           />
         ))}
       </div>

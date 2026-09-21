@@ -22,7 +22,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { PortfolioProjects } from "@/components/portfolio/portfolio-projects";
 import { PrintButton } from "@/components/portfolio/print-button";
-import { PORTFOLIO_CATEGORY_COUNTS, PORTFOLIO_CATEGORY_KEYS, PORTFOLIO_PROJECT_COUNT } from "@/data/portfolio";
+import { PORTFOLIO_CATEGORY_KEYS, PORTFOLIO_PROJECT_COUNT } from "@/data/portfolio";
 import { getLocalizedProjects } from "@/data/portfolio-i18n";
 import {
   CVE_BREAKDOWN,
@@ -92,11 +92,13 @@ export default async function PortfolioPage({ params }: Props) {
     contributionLabel: p.contribution > 0 ? t("contribution", { value: p.contribution }) : "",
   }));
   const featured = projects.filter((p) => p.featured);
+  // 대표 프로젝트는 위 "주요 프로젝트" 에서 이미 상세히 보여 준다. 아래 목록에 또 넣으면 같은 프로젝트가 화면과 인쇄물에 두 번 나온다.
+  const others = projects.filter((p) => !p.featured);
   const categories = PORTFOLIO_CATEGORY_KEYS.map((key) => ({
     key,
     label: t(`categories.${key}`),
-    count: PORTFOLIO_CATEGORY_COUNTS[key],
-  }));
+    count: others.filter((p) => p.category === key).length,
+  })).filter((c) => c.count > 0);
 
   const profile = {
     name: tAbout("name"),
@@ -345,13 +347,13 @@ export default async function PortfolioPage({ params }: Props) {
               <FolderKanban className="h-5 w-5 text-primary" />
               {t("sectionProjects")}{" "}
               <span className="text-body-sm font-normal text-muted-foreground tabular-nums">
-                ({PORTFOLIO_PROJECT_COUNT})
+                ({others.length})
               </span>
             </h2>
           </CardHeader>
           <CardContent>
             <PortfolioProjects
-              projects={projects}
+              projects={others}
               categories={categories}
               allLabel={t("filterAll")}
               actionsLabel={t("labelActions")}
