@@ -53,6 +53,9 @@ jobs:
       - name: Records consistency (competitions / CVE counts)
         run: pnpm check:records
 
+      - name: i18n key parity (ko / en / es / pt-br)
+        run: pnpm check:i18n
+
   build:
     runs-on: ubuntu-latest
     steps:
