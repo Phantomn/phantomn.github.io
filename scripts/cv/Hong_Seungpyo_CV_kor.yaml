@@ -13,7 +13,7 @@ cv:
 
   sections:
     요약:
-      - "NATO CCDCOE Locked Shields 2025 DFIR CTF 1위 · CVE 24건 (OS Kernel 16 + IoT 5 + LLM 3). 금융권 Web/App 모의해킹 1년, OT/ICS 보안 약 5년 경력의 Offensive Security Researcher. IDA · Burp Suite · Frida · CodeQL을 MCP + A2A로 연결한 AI Orchestration Framework를 구현해 실제 점검 대상에서 Low~Medium 취약점을 자동 식별."
+      - "NATO CCDCOE Locked Shields 2025 종합 6위(DFIR CTF 부문 1위) · CVE 24건 (OS Kernel 16 + IoT 5 + LLM 3). 금융권 Web/App 모의해킹 1년, OT/ICS 보안 약 5년 경력의 Offensive Security Researcher. IDA · Burp Suite · Frida · CodeQL을 MCP + A2A로 연결한 AI Orchestration Framework를 구현해 실제 점검 대상에서 Low~Medium 취약점을 자동 식별."
 
     경력:
       - company: 코어시큐리티 (CoreSecurity)

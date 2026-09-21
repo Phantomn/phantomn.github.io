@@ -16,7 +16,7 @@ cv:
 
   sections:
     요약:
-      - "산업제어시스템(OT/ICS)·임베디드 보안 6년 경력. LS ELECTRIC 자동화기기를 IEC 62443-4-2 위협분석 및 위험평가(TARA)부터 Achilles Level 2 인증까지 지원했으며, CVE 24건(Linux Kernel 16 + IoT 5 + LLM 3) 보유. 모의해킹·익스플로잇 개발과 결함을 인증 심사를 통과하는 감사 증적으로 옮기는 데 강점 — RED(EN 18031)·Cyber Resilience Act·NIS2 컴플라이언스 평가로 직접 전이 가능한 기반. NATO CCDCOE Locked Shields 2025 DFIR CTF 1위."
+      - "산업제어시스템(OT/ICS)·임베디드 보안 6년 경력. LS ELECTRIC 자동화기기를 IEC 62443-4-2 위협분석 및 위험평가(TARA)부터 Achilles Level 2 인증까지 지원했으며, CVE 24건(Linux Kernel 16 + IoT 5 + LLM 3) 보유. 모의해킹·익스플로잇 개발과 결함을 인증 심사를 통과하는 감사 증적으로 옮기는 데 강점 — RED(EN 18031)·Cyber Resilience Act·NIS2 컴플라이언스 평가로 직접 전이 가능한 기반. NATO CCDCOE Locked Shields 2025 종합 6위(DFIR CTF 부문 1위)."
 
     경력:
       - company: 코어시큐리티 (CoreSecurity)

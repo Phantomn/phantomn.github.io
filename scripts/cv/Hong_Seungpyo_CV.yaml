@@ -13,7 +13,7 @@ cv:
 
   sections:
     summary:
-      - "NATO CCDCOE Locked Shields 2025 DFIR CTF #1 · 24 CVEs (OS Kernel 16 + IoT 5 + LLM 3). Offensive Security Researcher with 6 years across financial Web/App pentesting and OT/ICS security. Built an AI Orchestration Framework (IDA · Burp Suite · Frida · CodeQL via MCP + A2A) that auto-identifies Low–Medium vulnerabilities on live targets."
+      - "NATO CCDCOE Locked Shields 2025 overall 6th (DFIR CTF #1) · 24 CVEs (OS Kernel 16 + IoT 5 + LLM 3). Offensive Security Researcher with 6 years across financial Web/App pentesting and OT/ICS security. Built an AI Orchestration Framework (IDA · Burp Suite · Frida · CodeQL via MCP + A2A) that auto-identifies Low–Medium vulnerabilities on live targets."
 
     experience:
       - company: CoreSecurity

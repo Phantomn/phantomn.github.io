@@ -15,7 +15,7 @@ cv:
 
   sections:
     요약:
-      - "금융·공공 Web/App/API 모의해킹부터 레드팀 훈련까지 6년 경력의 Offensive Security Researcher. 국내 대형 유통사 프로덕션에서 회원번호 하나로 임의 계정을 탈취하는 경로(CVSS 9.8)를 포함한 버그바운티를 제보했고, NATO Locked Shields·한국전력 ELECCON에서 MITRE ATT&CK 기반 공격 시나리오를 설계했습니다. Burp Suite·Metasploit·Nmap 기반 침투 테스트와 Python 자동화 도구 개발에 강점. Linux Kernel CVE 16건 + IoT CVE 5건 + LLM 추론 엔진 CVE 3건, Locked Shields 2025 DFIR CTF 1위."
+      - "금융·공공 Web/App/API 모의해킹부터 레드팀 훈련까지 6년 경력의 Offensive Security Researcher. 국내 대형 유통사 프로덕션에서 회원번호 하나로 임의 계정을 탈취하는 경로(CVSS 9.8)를 포함한 버그바운티를 제보했고, NATO Locked Shields·한국전력 ELECCON에서 MITRE ATT&CK 기반 공격 시나리오를 설계했습니다. Burp Suite·Metasploit·Nmap 기반 침투 테스트와 Python 자동화 도구 개발에 강점. Linux Kernel CVE 16건 + IoT CVE 5건 + LLM 추론 엔진 CVE 3건, Locked Shields 2025 종합 6위(DFIR CTF 부문 1위)."
 
     경력:
       - company: 코어시큐리티 (CoreSecurity)

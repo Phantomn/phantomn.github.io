@@ -16,7 +16,7 @@ cv:
 
   sections:
     요약:
-      - "산업제어시스템(OT/ICS)·제조 제품 사이버보안 6년 경력. LS ELECTRIC 자동화기기를 위협 모델링부터 IEC 62443-4-2 컴포넌트 인증(Achilles Level 2)까지 지원해 취득에 기여했고, 신약개발 연합학습 플랫폼(K-MELLODDY)에서 NIST SSDF 기반 보안 개발 생명주기(SDL) 정의와 공급망 보안 체계(SBOM/VEX/EoS)를 수립하며 EU CRA·IEC 62443·FDA를 검토했습니다. 결함을 인증 심사를 통과하는 감사 증적으로 옮기는 데 강점. CVE 24건, NATO Locked Shields 2025 DFIR CTF 1위."
+      - "산업제어시스템(OT/ICS)·제조 제품 사이버보안 6년 경력. LS ELECTRIC 자동화기기를 위협 모델링부터 IEC 62443-4-2 컴포넌트 인증(Achilles Level 2)까지 지원해 취득에 기여했고, 신약개발 연합학습 플랫폼(K-MELLODDY)에서 NIST SSDF 기반 보안 개발 생명주기(SDL) 정의와 공급망 보안 체계(SBOM/VEX/EoS)를 수립하며 EU CRA·IEC 62443·FDA를 검토했습니다. 결함을 인증 심사를 통과하는 감사 증적으로 옮기는 데 강점. CVE 24건, NATO Locked Shields 2025 종합 6위(DFIR CTF 부문 1위)."
 
     경력:
       - company: 코어시큐리티 (CoreSecurity)
