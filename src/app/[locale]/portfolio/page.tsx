@@ -15,8 +15,6 @@ import {
   Award,
 } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { routing } from "@/i18n/routing";
-import { DynamicTranslator } from "@/components/dynamic-translator";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -24,10 +22,8 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { PortfolioProjects } from "@/components/portfolio/portfolio-projects";
 import { PrintButton } from "@/components/portfolio/print-button";
-import {
-  FEATURED_PROJECTS,
-  PORTFOLIO_PROJECT_COUNT,
-} from "@/data/portfolio";
+import { PORTFOLIO_CATEGORY_COUNTS, PORTFOLIO_CATEGORY_KEYS, PORTFOLIO_PROJECT_COUNT } from "@/data/portfolio";
+import { getLocalizedProjects } from "@/data/portfolio-i18n";
 import {
   CVE_BREAKDOWN,
   CVE_ITEMS,
@@ -35,13 +31,9 @@ import {
   CVE_PENDING_COUNT,
   FVE_COUNT,
 } from "@/data/cves";
-import { formatResult, getCompetition, tKo } from "@/data/competitions";
+import { formatResult, getCompetition } from "@/data/competitions";
 import { SITE_AUTHOR } from "@/lib/profile";
 import type { ExperienceItem } from "@/types/profile";
-
-/** 순위 문구는 competitions.json 에서만 만든다. */
-const LS2025 = getCompetition("ls2025");
-const LS2025_TEXT = `Locked Shields ${LS2025.year} ${formatResult(LS2025, tKo)}`;
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -53,58 +45,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: t("title") };
 }
 
-/* ────────────────────────────────────────────────────────────────── */
-/*  Static profile data                                              */
-/* ────────────────────────────────────────────────────────────────── */
-
-const PROFILE = {
-  name: "홍승표 (ph4nt0m)",
-  headline:
-    "Offensive Security Researcher · Web/App · OT/ICS Pentesting · 보안 컨설팅",
-  summary: `금융권 Web/App 모의해킹부터 OT/ICS(IEC 62443)·IoT·의료기기(FDA) 보안, 사이버 공방 훈련 개발까지 ${PORTFOLIO_PROJECT_COUNT}건 이상의 프로젝트를 수행했습니다. LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득, NATO CCDCOE ${LS2025_TEXT}, CVE ${CVE_ONLY_COUNT}건(${CVE_BREAKDOWN})·FVE ${FVE_COUNT}건 보유.`,
-  location: "Seoul, South Korea",
-  email: SITE_AUTHOR.email,
-  avatar: "/images/avatar.jpg",
-} as const;
-
-const CORE_COMPETENCIES: string[] = [
-  "금융·공공 전자금융기반시설 Web/App 모의해킹 — 저축은행·캐피탈·증권·보험·제조 등 12개 사이트 수행 (A3 Security)",
-  "OT/ICS 보안 — IEC 62443-4-2 기반 Threat Modeling·모의해킹, LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득",
-  "IoT 취약점 분석·보안 도구 개발 — 스마트빌딩 IoT 탐지 기술, IoT/CCTV 침해사고 조사 도구, Linux Kernel File System Fuzzer로 CVE 16건 도출",
-  "LLM·AI 인프라 보안 — llama.cpp 추론 엔진 취약점 분석으로 CVE 3건 도출(DoS·도달 가능 어서션·정수 오버플로), MCP 기반 점검 자동화 연구",
-  "의료기기 보안 — FDA eSTAR 컨설팅 및 Web/App·의료기기 모의해킹, 보안인증 취득 지원",
-  `사이버 공방 훈련 개발·운영 — 한국전력 ELECCON, NATO CCDCOE ${LS2025_TEXT}, APEX CTF 2025 문제 개발`,
-];
-
-const EXPERIENCE: ExperienceItem[] = [
-  {
-    role: "ICS Security Researcher (주임 연구원)",
-    company: "코어시큐리티 (CoreSecurity)",
-    logo: "/images/coresecurity.png",
-    location: "Seoul, South Korea",
-    dates: "2021.06 — Present",
-    bullets: [
-      "OT/ICS 보안 — IEC 62443-4-2 기반 Threat Modeling과 모의해킹을 수행했습니다.",
-      "LS ELECTRIC 자동화기기의 Achilles Level 2 인증 취득에 기여하고, 자동화 점검 도구를 개발했습니다.",
-      "IoT 보안 — 스마트빌딩 IoT 취약점 탐지 기술을 개발·실증하고, IoT/CCTV 침해사고 조사 도구를 만들었습니다.",
-      "의료기기 보안 — FDA eSTAR 컨설팅과 Web/App·의료기기 모의해킹을 수행했습니다.",
-      "사이버 공방 훈련 — 한국전력 ELECCON을 운영하고 문제를 개발했습니다.",
-      `${LS2025_TEXT}, APEX CTF 2025 문제 개발에 참여했습니다.`,
-    ],
-  },
-  {
-    role: "Web/App Pentester (사원)",
-    company: "A3 Security",
-    logo: "/images/a3security.png",
-    location: "Seoul, South Korea",
-    dates: "2020.06 — 2021.06",
-    bullets: [
-      "금융권·공공기관 전자금융기반시설 모의해킹을 수행했습니다. 참저축은행, 애큐온캐피탈, 금융투자협회, SBI저축은행, 현대자동차 HKMC, 농협중앙회 RPA 등이 대상이었습니다.",
-      "비정형 시스템 보안성 검토를 수행했습니다. KT 기가지니 AI 스피커, IoT 열감지 장비, DB손해보험 클레임콜이 대상이었습니다.",
-      "ISMS/ISO27001 인증 취득 지원 컨설팅에 참여했습니다 (코웨이).",
-    ],
-  },
-];
+/* 이 페이지의 모든 문장은 messages(portfolio.*)와 src/data/portfolio-text/<locale>.json 에서 온다.
+   데이터에 한국어 문장을 두고 런타임 기계 번역에 맡기지 않는다 - 고유명사와 숫자가 깨진다. */
 
 const SKILL_GROUPS: { title: string; items: string[] }[] = [
   {
@@ -128,17 +70,6 @@ const SKILL_GROUPS: { title: string; items: string[] }[] = [
     items: ["IDA Pro", "Ghidra", "Burp Suite", "Frida", "Wireshark", "Python", "C/C++"],
   },
 ];
-
-const CERTIFICATIONS = [
-  "리눅스 마스터 2급 (KAIT, 2021.07)",
-  "네트워크 관리사 2급 (KAIT, 2024.07)",
-];
-
-const EDUCATION = [
-  "공주대학교 컴퓨터공학부 (2012.02 — 2020.02)",
-  "천안상업고등학교 정보처리과 (2009.03 — 2012.02)",
-];
-
 const FEATURED_CVES = [...CVE_ITEMS]
   .sort((a, b) => b.year - a.year || a.id.localeCompare(b.id))
   .slice(0, 4);
@@ -151,22 +82,72 @@ export default async function PortfolioPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "portfolio" });
-  const shouldTranslate = locale !== routing.defaultLocale;
+  const tr = await getTranslations({ locale, namespace: "records" });
+  const tAbout = await getTranslations({ locale, namespace: "about" });
+
+  const ls2025 = getCompetition("ls2025");
+  const ls2025Text = `${ls2025.name} ${ls2025.year} ${formatResult(ls2025, tr)}`;
+  const projects = getLocalizedProjects(locale, tr).map((p) => ({
+    ...p,
+    contributionLabel: p.contribution > 0 ? t("contribution", { value: p.contribution }) : "",
+  }));
+  const featured = projects.filter((p) => p.featured);
+  const categories = PORTFOLIO_CATEGORY_KEYS.map((key) => ({
+    key,
+    label: t(`categories.${key}`),
+    count: PORTFOLIO_CATEGORY_COUNTS[key],
+  }));
+
+  const profile = {
+    name: tAbout("name"),
+    headline: t("headline"),
+    summary: t("summary", {
+      projects: PORTFOLIO_PROJECT_COUNT,
+      ls2025: ls2025Text,
+      cve: CVE_ONLY_COUNT,
+      breakdown: CVE_BREAKDOWN,
+      fve: FVE_COUNT,
+    }),
+    location: "Seoul, South Korea",
+    email: SITE_AUTHOR.email,
+    avatar: "/images/avatar.jpg",
+  };
+  const competencies = ["fintech", "ot", "iot", "llm", "medical", "cyberRange"].map((k) =>
+    t(`competencies.${k}`, { ls2025: ls2025Text }),
+  );
+  const experience: ExperienceItem[] = [
+    {
+      role: t("experience.coresec.role"),
+      company: t("experience.coresec.company"),
+      logo: "/images/coresecurity.png",
+      location: "Seoul, South Korea",
+      dates: `2021.06 — ${t("present")}`,
+      bullets: ["ot", "achilles", "iot", "medical", "eleccon", "lockedShields"].map((k) =>
+        t(`experience.coresec.bullets.${k}`, { ls2025: ls2025Text }),
+      ),
+    },
+    {
+      role: t("experience.a3.role"),
+      company: "A3 Security",
+      logo: "/images/a3security.png",
+      location: "Seoul, South Korea",
+      dates: "2020.06 — 2021.06",
+      bullets: ["financial", "review", "isms"].map((k) => t(`experience.a3.bullets.${k}`)),
+    },
+  ];
+  const certifications = ["linux", "network"].map((k) => t(`certifications.${k}`));
+  const education = ["kongju", "cheonan"].map((k) => t(`education.${k}`));
 
   return (
-    <DynamicTranslator
-      enabled={shouldTranslate}
-      targetLocale={locale}
-      contentKey="portfolio"
-    >
+    <>
       <div className="mx-auto w-[90vw] max-w-[900px] py-6 print:w-full print:max-w-none print:py-0">
         {/* ── Hero ──────────────────────────────────────────────── */}
         <Card className="overflow-hidden">
           <CardContent className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center">
             <div className="h-24 w-24 shrink-0 overflow-hidden rounded-full border-4 border-background shadow">
               <Image
-                src={PROFILE.avatar}
-                alt={PROFILE.name}
+                src={profile.avatar}
+                alt={profile.name}
                 width={96}
                 height={96}
                 priority
@@ -176,23 +157,23 @@ export default async function PortfolioPage({ params }: Props) {
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
                 <h1 className="font-heading text-2xl font-bold" data-notranslate>
-                  {PROFILE.name}
+                  {profile.name}
                 </h1>
                 <ShieldCheck className="h-5 w-5 text-muted-foreground" />
               </div>
-              <p className="mt-1 text-sm text-muted-foreground">{PROFILE.headline}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{profile.headline}</p>
               <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
                 <span className="inline-flex items-center gap-1" data-notranslate>
                   <MapPin className="h-3.5 w-3.5" />
-                  {PROFILE.location}
+                  {profile.location}
                 </span>
                 <a
-                  href={`mailto:${PROFILE.email}`}
+                  href={`mailto:${profile.email}`}
                   className="inline-flex items-center gap-1 text-primary hover:underline"
                   data-notranslate
                 >
                   <Mail className="h-3.5 w-3.5" />
-                  {PROFILE.email}
+                  {profile.email}
                 </a>
               </div>
             </div>
@@ -212,7 +193,7 @@ export default async function PortfolioPage({ params }: Props) {
           </CardHeader>
           <CardContent>
             <p className="text-base leading-relaxed text-muted-foreground">
-              {PROFILE.summary}
+              {profile.summary}
             </p>
           </CardContent>
         </Card>
@@ -227,7 +208,7 @@ export default async function PortfolioPage({ params }: Props) {
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
-              {CORE_COMPETENCIES.map((c, i) => (
+              {competencies.map((c, i) => (
                 <li key={i} className="flex gap-2 text-base leading-relaxed text-muted-foreground">
                   <span className="mt-0.5 shrink-0 text-muted-foreground" data-notranslate>
                     ▹
@@ -249,14 +230,14 @@ export default async function PortfolioPage({ params }: Props) {
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
-              {FEATURED_PROJECTS.map((p, idx) => (
+              {featured.map((p, idx) => (
                 <div key={p.title} className="break-inside-avoid">
                   {idx > 0 && <Separator className="mb-6" />}
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="text-base font-semibold">{p.title}</h3>
                     {p.contribution > 0 && (
                       <Badge variant="outline" className="shrink-0 tabular-nums" data-notranslate>
-                        기여도 {p.contribution}%
+                        {p.contributionLabel}
                       </Badge>
                     )}
                   </div>
@@ -323,7 +304,7 @@ export default async function PortfolioPage({ params }: Props) {
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
-              {EXPERIENCE.map((exp, idx) => (
+              {experience.map((exp, idx) => (
                 <div key={`${exp.role}-${idx}`} className="break-inside-avoid">
                   {idx > 0 && <Separator className="mb-6" />}
                   <div className="flex gap-4">
@@ -369,7 +350,13 @@ export default async function PortfolioPage({ params }: Props) {
             </h2>
           </CardHeader>
           <CardContent>
-            <PortfolioProjects />
+            <PortfolioProjects
+              projects={projects}
+              categories={categories}
+              allLabel={t("filterAll")}
+              actionsLabel={t("labelActions")}
+              resultsLabel={t("labelResults")}
+            />
           </CardContent>
         </Card>
 
@@ -410,7 +397,7 @@ export default async function PortfolioPage({ params }: Props) {
               {t("sectionCves")}{" "}
               <span className="text-sm font-normal text-muted-foreground tabular-nums">
                 (CVE {CVE_ONLY_COUNT} · FVE {FVE_COUNT}
-                {CVE_PENDING_COUNT > 0 ? ` · 번호 대기 ${CVE_PENDING_COUNT}` : ""})
+                {CVE_PENDING_COUNT > 0 ? ` · ${tAbout("pendingLabel")} ${CVE_PENDING_COUNT}` : ""})
               </span>
             </h2>
           </CardHeader>
@@ -458,7 +445,7 @@ export default async function PortfolioPage({ params }: Props) {
             <div>
               <h3 className="mb-2 text-sm font-semibold">{t("labelCertifications")}</h3>
               <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-                {CERTIFICATIONS.map((c) => (
+                {certifications.map((c) => (
                   <li key={c}>{c}</li>
                 ))}
               </ul>
@@ -466,7 +453,7 @@ export default async function PortfolioPage({ params }: Props) {
             <div>
               <h3 className="mb-2 text-sm font-semibold">{t("labelEducation")}</h3>
               <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-                {EDUCATION.map((e) => (
+                {education.map((e) => (
                   <li key={e}>{e}</li>
                 ))}
               </ul>
@@ -474,6 +461,6 @@ export default async function PortfolioPage({ params }: Props) {
           </CardContent>
         </Card>
       </div>
-    </DynamicTranslator>
+    </>
   );
 }

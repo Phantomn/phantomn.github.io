@@ -131,7 +131,59 @@
     "labelCertifications": "Certifications",
     "labelEducation": "Education",
     "downloadPdf": "Download Career Statement",
-    "openRegistry": "View All"
+    "openRegistry": "View All",
+    "headline": "Offensive Security Researcher · Web/App · OT/ICS Pentesting · Security Consulting",
+    "summary": "Delivered {projects}+ projects, from financial-sector Web/App pentesting to OT/ICS (IEC 62443), IoT, and medical device (FDA) security and cyber exercise development. Earned the Achilles Communication Certificate Level 2 for LS ELECTRIC automation devices. Results include NATO CCDCOE {ls2025}, {cve} CVEs ({breakdown}) and {fve} FVEs.",
+    "filterAll": "All",
+    "contribution": "Contribution {value}%",
+    "present": "Present",
+    "categories": {
+      "fintech": "Financial/Public Web/App Pentesting",
+      "ics-ot": "OT/ICS Security (IEC 62443)",
+      "iot": "IoT Vulnerabilities and Tool Development",
+      "medical": "Medical Device Security (FDA/eSTAR)",
+      "cyber-range": "Cyber Range and CTF Development",
+      "consulting": "Security Consulting and Certification",
+      "vuln-research": "Vulnerability Research (CVE/FVE)"
+    },
+    "competencies": {
+      "fintech": "Web/App pentesting of financial and public-sector electronic finance infrastructure - 12 sites across savings banks, capital, securities, insurance, and manufacturing (A3 Security)",
+      "ot": "OT/ICS security - IEC 62443-4-2-based Threat Modeling and pentesting; obtained LS ELECTRIC automation device Achilles Communication Certificate Level 2 certification",
+      "iot": "IoT vulnerability analysis and security tool development - smart building IoT detection technology, IoT/CCTV incident investigation tool, and 16 CVEs derived with a Linux Kernel File System Fuzzer",
+      "llm": "LLM and AI infrastructure security - 3 CVEs from vulnerability analysis of the llama.cpp inference engine (DoS, reachable assertion, integer overflow); research on MCP-based assessment automation",
+      "medical": "Medical device security - FDA eSTAR consulting, Web/App and medical device pentesting, and security certification support",
+      "cyberRange": "Cyber attack-defense exercise development and operation - KEPCO ELECCON, NATO CCDCOE {ls2025}, and APEX CTF 2025 challenge development"
+    },
+    "experience": {
+      "coresec": {
+        "role": "ICS Security Researcher (Senior)",
+        "company": "CoreSecurity",
+        "bullets": {
+          "ot": "OT/ICS security - performed Threat Modeling and pentesting based on IEC 62443-4-2.",
+          "achilles": "Contributed to obtaining Achilles Level 2 certification for LS ELECTRIC automation devices and developed an automated assessment tool.",
+          "iot": "IoT security - developed and field-validated smart building IoT vulnerability detection technology and built an IoT/CCTV incident investigation tool.",
+          "medical": "Medical device security - performed FDA eSTAR consulting and Web/App and medical device pentesting.",
+          "eleccon": "Cyber attack-defense exercises - operated KEPCO ELECCON and developed its challenges.",
+          "lockedShields": "Participated in NATO CCDCOE {ls2025} and developed APEX CTF 2025 challenges."
+        }
+      },
+      "a3": {
+        "role": "Web/App Pentester",
+        "bullets": {
+          "financial": "Performed pentests on electronic finance infrastructure of financial institutions and public agencies. Targets included Cham Savings Bank, Acuon Capital, Korea Financial Investment Association, SBI Savings Bank, Hyundai Motor (HKMC), and NongHyup (NACF) RPA.",
+          "review": "Performed security reviews of non-standard systems. Targets were the KT GiGA Genie AI speaker, an IoT thermal detection device, and DB Insurance claim call.",
+          "isms": "Participated in ISMS/ISO27001 certification support consulting (Coway)."
+        }
+      }
+    },
+    "certifications": {
+      "linux": "Linux Master 2nd Grade (KAIT, Korea Association for ICT Promotion, 2021.07)",
+      "network": "Network Administrator 2nd Grade (KAIT, Korea Association for ICT Promotion, 2024.07)"
+    },
+    "education": {
+      "kongju": "Kongju National University, Dept. of Computer Science and Engineering (2012.02 — 2020.02)",
+      "cheonan": "Cheonan Commercial High School, Information Processing (2009.03 — 2012.02)"
+    }
   },
   "sidebar": {
     "relatedPosts": "Related Posts",

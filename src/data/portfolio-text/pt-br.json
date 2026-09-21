@@ -1,0 +1,382 @@
+{
+  "achilles-l2": {
+    "title": "Obtenção da certificação Achilles Communication Certificate Level 2 para equipamentos de automação da LS ELECTRIC",
+    "client": "LS ELECTRIC",
+    "role": "Responsável principal (coordenação da verificação e dos testes de certificação)",
+    "background": "Era necessário realizar verificação prévia, testes e correções para a obtenção da certificação internacional de robustez de comunicação (Achilles Communication Certificate Level 2) da linha de produtos PLC da LS ELECTRIC. Era preciso atender a critérios de aprovação rigorosos, que exigem a manutenção das funções de controle mesmo sob DoS, storms e tráfego anômalo.",
+    "actions": [
+      "Verificação da robustez de comunicação em todos os itens de teste do Achilles Communication Certificate Level 2 para a linha de produtos PLC",
+      "Validação da resistência a storm, fuzzing e pacotes anômalos em pilhas de comunicação como o XGT Protocol, com reprodução de falhas",
+      "Projeto de cenários de teste de certificação e atendimento a retestes, validando o cumprimento dos critérios de aprovação"
+    ],
+    "results": [
+      "Obtenção da certificação Achilles Communication Certificate Level 2 para a linha de produtos PLC da LS ELECTRIC",
+      "Identificação de falhas de robustez de comunicação e aplicação das correções no firmware do produto"
+    ]
+  },
+  "locked-shields": {
+    "title": "NATO CCDCOE Locked Shields 2025 — Equipe Azul DFIR combinada Coreia-Canadá",
+    "client": "NATO CCDCOE",
+    "role": "Membro da Equipe Azul DFIR (forense e resposta a incidentes)",
+    "background": "Participei do Locked Shields, o maior exercício internacional de defesa cibernética do mundo, como Equipe Azul DFIR (forense digital e resposta a incidentes) da equipe combinada Coreia-Canadá. É um treinamento de alta intensidade em que se analisam vestígios de intrusão e se reporta a resposta em um ambiente de ataque em tempo real. (Em 2026, participação na Equipe Azul de Special System combinada Coreia-Hungria)",
+    "actions": [
+      "Análise forense de incidentes de intrusão e reconstrução de linha do tempo sob cenários de ataque em tempo real",
+      "Execução de desafios DFIR CTF — análise de artefatos e triagem de malware",
+      "Operação de um sistema de relatórios de resposta a incidentes baseado na colaboração da equipe combinada"
+    ],
+    "results": [
+      "{ls2025}",
+      "{ls2026}"
+    ]
+  },
+  "llama-cpp-cve": {
+    "title": "Pesquisa de vulnerabilidades no motor de inferência de LLM llama.cpp (3 CVEs)",
+    "client": "ggml-org/llama.cpp (código aberto)",
+    "role": "Responsável principal pela análise e pelo reporte das vulnerabilidades",
+    "background": "Motores de inferência de LLM estão sendo rapidamente incorporados às infraestruturas internas e de produtos, mas a superfície de ataque exposta pelo modo servidor havia sido pouco verificada. Verificou-se a viabilidade de ataques remotos não autenticados nos caminhos de tratamento de entrada externa do servidor llama.cpp (conversão de gramática, parser de modelos, API de ranking).",
+    "actions": [
+      "Análise da recursão sem controle em SchemaConverter::visit e _generate_union_rule de json-schema-to-grammar — reprodução de DoS por esgotamento da pilha padrão de 8MB da thread com profundidade de recursão a partir de 7000 (CVE-2026-52130, CWE-674, CVSS 7.5)",
+      "Verificação delimitada do caminho de impacto — confirmado que somente POST /completions é afetado e que /v1/chat/completions não é, por passar pelo motor jinja, permitindo dimensionar o escopo do impacto sem falsos positivos",
+      "Indução de abort do processo ao carregar um modelo GGUF malicioso por meio de uma assertion alcançável em gguf_reader::read (CVE-2026-52131, CWE-617)",
+      "Identificação de DoS por integer overflow com top_n negativo no endpoint /rerank e elaboração de PoC (CVE-2026-52132, CWE-190)"
+    ],
+    "results": [
+      "3 CVEs atribuídos ao llama.cpp — CVE-2026-52130 / 52131 / 52132",
+      "Inclui 2 DoS remotos não autenticados (CVSS 7.5); procedimento de reprodução que distingue caminhos vulneráveis e não vulneráveis entregue ao upstream"
+    ]
+  },
+  "data-platform-idor": {
+    "title": "Reporte de vulnerabilidade IDOR sem autenticação em plataforma de dados (FVE)",
+    "client": "Confidencial (bug bounty Findthegap)",
+    "role": "Análise e reporte da vulnerabilidade",
+    "background": "Verificamos a autenticação e o controle de acesso de uma API de dados por meio de uma plataforma de bug bounty. Conforme a política de divulgação, produto, fornecedor, endpoint, parâmetros e procedimento de reprodução não são divulgados.",
+    "actions": [
+      "Confirmação da ausência de autenticação e da verificação insuficiente de referência a objetos na API de consulta de dados (CWE-306 / CWE-200 / CWE-284)",
+      "Verificação da possibilidade de contornar o mascaramento de dados pessoais e reporte conforme a política da plataforma"
+    ],
+    "results": [
+      "FVE-2026-8617-75112 atribuído — IDOR sem autenticação e bypass de mascaramento (detalhes omitidos)"
+    ]
+  },
+  "iot-cctv-forensics": {
+    "title": "Desenvolvimento de ferramenta de investigação de incidentes em IoT/CCTV",
+    "client": "CoreSecurity (R&D)",
+    "role": "Responsável principal pelo projeto e desenvolvimento da ferramenta",
+    "background": "Em equipamentos IoT como CCTV, os procedimentos e ferramentas de coleta de evidências em incidentes de intrusão não são padronizados. Era necessária uma ferramenta de investigação automatizada capaz de obter rapidamente arquivos de configuração e logs de dentro do firmware.",
+    "actions": [
+      "Projeto e implementação de uma ferramenta de coleta automatizada de evidências de incidentes para 40 modelos de CCTV nacionais e estrangeiros",
+      "Desenvolvimento de módulo de coleta completa de arquivos de configuração e logs, com extração de firmware via acesso UART, dump de flash e binwalk",
+      "Coleta de vestígios de incidentes em 40 modelos reais de equipamentos em campo, em órgão público"
+    ],
+    "results": [
+      "Desenvolvimento de ferramenta de coleta automatizada de evidências de incidentes para 40 modelos de CCTV nacionais e estrangeiros",
+      "Demonstração em órgão público — coleta e análise de vestígios de intrusão em 40 modelos de equipamentos"
+    ]
+  },
+  "a3-financial-pentest": {
+    "title": "Pentest de infraestrutura de finanças eletrônicas dos setores financeiro e público (12 sites)",
+    "client": "A3 Security",
+    "role": "Pentest Web/App e avaliação de análise de vulnerabilidades",
+    "background": "Durante o período na A3 Security, realizei diversos pentests Web/App e avaliações de análise de vulnerabilidades em infraestruturas de finanças eletrônicas de instituições financeiras e órgãos públicos. O objetivo era verificar a possibilidade de vazamento de informações e de ataques de 2º estágio e propor melhorias.",
+    "actions": [
+      "Avaliação de análise de vulnerabilidades de infraestrutura de finanças eletrônicas — pentest Web/App no setor financeiro, incluindo Cham Savings Bank, Acuon Capital e Korea Financial Investment Association",
+      "Revisão de segurança de sistemas financeiros, de seguros e industriais — SBI Savings Bank (Open Banking, guichê digital), Hyundai Motor (HKMC), DB Insurance Claim Call",
+      "Diagnóstico do código-fonte de RPA da NongHyup (NACF); pentest da plataforma de educação integrada da Daekyo, Autohands, UNTAC e outros"
+    ],
+    "results": [
+      "Pentest de 12 sites de infraestrutura de finanças eletrônicas dos setores financeiro e público, com identificação média de 1 a 2 vulnerabilidades de alto risco por site",
+      "Proposta de melhorias por vulnerabilidade e apoio à revisão de segurança"
+    ]
+  },
+  "kt-gigagenie": {
+    "title": "Pentest do dispositivo AI speaker KT GiGA Genie",
+    "client": "KT",
+    "role": "Pentest de dispositivo IoT",
+    "actions": [
+      "Análise da interface de debug UART do dispositivo AI speaker GiGA Genie",
+      "Verificação da superfície de ataque por meio da análise da comunicação Bluetooth e do APK Android"
+    ],
+    "results": [
+      "Execução de pentest de segurança do dispositivo AI speaker GiGA Genie em múltiplos vetores: UART, Bluetooth e APK"
+    ]
+  },
+  "smartbuilding-y1": {
+    "title": "Desenvolvimento e demonstração de tecnologia de detecção de vulnerabilidades em dispositivos IoT de smart buildings (1º ano)",
+    "client": "CoreSecurity (R&D)",
+    "role": "Desenvolvimento de cenários de detecção e testbed, validação da ferramenta",
+    "background": "Os dispositivos IoT em smart buildings são baseados em Linux embarcado, o que dificulta o scan convencional, e a mistura de protocolos padrão tornava difícil identificar ativos e vulnerabilidades. Eram necessários uma tecnologia de detecção que automatizasse desde o scanning até o mapeamento de vulnerabilidades e um testbed para validá-la.",
+    "actions": [
+      "Validação da tecnologia de scanning de IoT baseada em descoberta de protocolos com fio (BACNet, KNXNet, Modbus) e sem fio (Wi-Fi, BLE)",
+      "Mapeamento das informações coletadas (SO, protocolo, firmware, modelo) com CVE/CWE do NVD e desenvolvimento de cenários de validação baseados em PoC",
+      "Construção de um testbed com funções reais de smart building e validação da maturidade da ferramenta de detecção"
+    ],
+    "results": [
+      "Desenvolvimento de testbed para validação da ferramenta de detecção de vulnerabilidades IoT em smart buildings e de cenários de detecção (contribuição 40%)",
+      "Estabelecimento do fluxo: identificação de ativos por protocolos com e sem fio -> mapeamento CVE/CWE -> validação por PoC"
+    ]
+  },
+  "smartbuilding-y2": {
+    "title": "Desenvolvimento e demonstração de tecnologia de detecção de vulnerabilidades em dispositivos IoT de smart buildings (2º ano)",
+    "client": "CoreSecurity (R&D)",
+    "role": "Execução da demonstração e validação da taxa de identificação da detecção",
+    "background": "Era necessário aplicar a tecnologia de detecção desenvolvida no 1º ano a um ambiente de smart building em operação real, para validar e melhorar a precisão da detecção.",
+    "actions": [
+      "Demonstração em um smart building real — coleta de informações de dispositivos, sensores e protocolos e execução da detecção de vulnerabilidades",
+      "Identificação de verdadeiros positivos, falsos positivos e falsos negativos e derivação da taxa de identificação da detecção",
+      "Levantamento de melhorias na detecção com base na análise dos resultados da demonstração e atualização do banco de dados de vulnerabilidades"
+    ],
+    "results": [
+      "Demonstração da tecnologia de detecção em um smart building real e validação da taxa de identificação (contribuição 40%)",
+      "Definição de ações para melhorar a precisão da detecção com base na análise de verdadeiros positivos, falsos positivos e falsos negativos"
+    ]
+  },
+  "qud-081871": {
+    "title": "Projeto de segurança IoT QUD-081871",
+    "client": "CoreSecurity (R&D)",
+    "role": "Execução da pesquisa",
+    "actions": [],
+    "results": [
+      "Execução de projeto de pesquisa em segurança IoT"
+    ]
+  },
+  "ls-threat-modeling": {
+    "title": "Consultoria de Threat Modeling para equipamentos de automação da LS ELECTRIC",
+    "client": "LS ELECTRIC",
+    "role": "Consultoria de Threat Modeling e pentest",
+    "background": "Para a certificação IEC 62443-4-2 do equipamento de automação da LS ELECTRIC (XGI-CPUZ), eram necessários um threat modeling sistemático e um pentest para validá-lo.",
+    "actions": [
+      "Análise na sequência System Definition -> Function Point Definition -> Data Flow Analysis, com elaboração do DFD",
+      "Execução de Threat & Risk Assessment baseado em STRIDE + DREAD",
+      "Validação das ameaças por meio de pentest baseado na metodologia de avaliação de análise de vulnerabilidades de infraestruturas críticas de informação e comunicação"
+    ],
+    "results": [
+      "Produção do relatório de Threat Modeling e do relatório de pentest para o XGI-CPUZ da LS ELECTRIC",
+      "Fornecimento de base para a avaliação de ameaças e riscos necessária à certificação IEC 62443-4-2"
+    ]
+  },
+  "ls-62443-tool": {
+    "title": "Desenvolvimento de ferramenta de verificação automatizada IEC 62443-4-2 para a LS ELECTRIC",
+    "client": "LS ELECTRIC",
+    "role": "Responsável principal pelo projeto e desenvolvimento da ferramenta de automação",
+    "background": "Na preparação da certificação IEC 62443-4-2 da linha de produtos PLC da LS ELECTRIC, a verificação dos requisitos de segurança de componentes (CR) era feita majoritariamente de forma manual. Era preciso transformar em ferramenta os requisitos verificáveis automaticamente por comunicação, para reduzir o custo das verificações repetitivas.",
+    "actions": [
+      "Seleção, entre os requisitos SL1 da IEC 62443-4-2, dos itens passíveis de automação por comunicação e projeto da ferramenta de verificação",
+      "Implementação da verificação automatizada nas áreas FR2 (controle de uso), FR3 (integridade do sistema), FR4 (confidencialidade dos dados) e FR7 (disponibilidade de recursos)",
+      "Construção de uma UI web e de um pipeline de armazenamento de resultados para gerenciar alvos e resultados das verificações"
+    ],
+    "results": [
+      "Desenvolvimento de ferramenta de verificação automática dos requisitos IEC 62443-4-2 baseados em comunicação para a linha de produtos PLC da LS ELECTRIC (contribuição 90%)",
+      "Redução do tempo de verificação em relação ao processo manual"
+    ]
+  },
+  "smartship": {
+    "title": "Desenvolvimento de ferramentas de análise e validação de vulnerabilidades e de tecnologias de segurança para infraestrutura de smart ships",
+    "client": "CoreSecurity (R&D)",
+    "role": "Desenvolvimento de ferramentas de análise e validação de vulnerabilidades",
+    "background": "No CBS (Computer Based System) interno de navios inteligentes, coexistem PCs Windows/Linux e equipamentos IoT/IIoT embarcados, o que dificultava a identificação de ativos e vulnerabilidades por scan convencional. Era necessária uma ferramenta de verificação baseada no guia de análise de vulnerabilidades de infraestruturas críticas de informação e comunicação.",
+    "actions": [
+      "Desenvolvimento de checklists de verificação para Windows/Linux com base no guia de análise de vulnerabilidades de infraestruturas críticas de informação e comunicação",
+      "Coleta de informações de SO, host e dispositivo por sensoriamento IoT/IIoT baseado em SSDP Discovery (validação da extensão com WS-Discovery e SNMP)",
+      "Mapeamento de CVE e CWE do NVD/MITRE para o CBS com base em CPE e validação de vulnerabilidades de execução de comandos e de código por meio de código PoC",
+      "Construção de módulos de automação de verificação por SO em Shell/Powershell e de um banco de dados de vulnerabilidades com 5 entidades (ERD)"
+    ],
+    "results": [
+      "Desenvolvimento de ferramenta de automação da análise e validação de vulnerabilidades para o CBS de smart ships (contribuição 25%)",
+      "Entrega, em formatos como CSV, do mapeamento CVE/CWE e dos resultados de validação por PoC com base nos ativos identificados"
+    ]
+  },
+  "fda-consulting": {
+    "title": "Consultoria de segurança FDA para dispositivos médicos",
+    "client": "Fabricante de dispositivos médicos",
+    "role": "Consultoria de Threat Modeling, pentest e eSTAR",
+    "background": "Para que um fabricante de dispositivos médicos, em preparação para a certificação pré-mercado da FDA dos EUA, atendesse aos requisitos de cibersegurança, era necessário apoio integral: desde o threat modeling da infraestrutura e o pentest do dispositivo e dos sistemas integrados até a documentação da submissão eSTAR.",
+    "actions": [
+      "Execução de Threat Modeling da infraestrutura alvo da certificação FDA e levantamento de ameaças e medidas de mitigação",
+      "Validação de vulnerabilidades reais por pentest do dispositivo médico e de seus Web/App integrados",
+      "Consultoria na documentação da submissão eSTAR com base nos requisitos de Premarket Cybersecurity da FDA"
+    ],
+    "results": [
+      "Execução de Threat Modeling da infraestrutura alvo da certificação FDA e de pentest Web/App e do dispositivo médico (contribuição 30%)",
+      "Apoio de consultoria aos documentos de cibersegurança da submissão eSTAR"
+    ]
+  },
+  "medical-controls": {
+    "title": "Consultoria para certificação de segurança de dispositivos médicos (Cybersecurity Controls)",
+    "client": "Fabricante de dispositivos médicos",
+    "role": "Consultoria de projeto e documentação de controles de segurança",
+    "background": "Para obter a certificação de segurança de um dispositivo médico eletrocêutico (estimulador elétrico transcutâneo para tratamento de TDAH), era necessário projetar os controles de cibersegurança de todo o sistema, composto por dispositivo, base station, aplicativo móvel e servidor, e elaborar os documentos de submissão da certificação.",
+    "actions": [
+      "Análise dos caminhos de comunicação e dos fluxos de dados: dispositivo-app (BLE), app-servidor (LTE/5G), web (HTTPS) e base station (Wi-Fi)",
+      "Projeto e validação de controles de segurança como autenticação de usuário (JWT HS256, RTR), autenticação de cadastro por OTP, política de senhas e RBAC do dashboard",
+      "Elaboração dos documentos de submissão de certificação de Cybersecurity Controls, incluindo limite de conexões múltiplas, gerenciamento de sessão e separação de funções"
+    ],
+    "results": [
+      "Projeto dos controles de cibersegurança de todo o sistema do dispositivo médico e elaboração dos documentos de submissão da certificação (Cybersecurity Controls) (contribuição 45%)",
+      "Estabelecimento de um esquema de criptografia, autenticação e controle de acesso por caminho de comunicação"
+    ]
+  },
+  "k-melloddy": {
+    "title": "Projeto de aceleração do desenvolvimento de fármacos com aprendizado federado (K-MELLODDY)",
+    "client": "Consórcio K-MELLODDY",
+    "role": "Projeto de segurança e pentest da plataforma de aprendizado federado",
+    "background": "Como a plataforma de aprendizado federado (Federated Learning) para desenvolvimento de fármacos (FDD) lida com dados e modelos de várias instituições, eram necessários incorporar segurança em todo o ciclo de vida de desenvolvimento e controlar ameaças reais.",
+    "actions": [
+      "Análise e definição do processo de desenvolvimento seguro da plataforma FDD com base no NIST SSDF (revisão dos padrões IEC 62443, FDA, ISO 27001 e EU CRA)",
+      "Identificação de ameaças reais com base no threat modeling da plataforma FDD e aplicação de controles de segurança em nível de código-fonte (segurança de API)",
+      "Estabelecimento de um sistema de gestão de segurança da cadeia de suprimentos (SBOM+VEX+EoS) e execução de 2 pentests no ambiente de produção"
+    ],
+    "results": [
+      "Estabelecimento do processo de desenvolvimento seguro da plataforma de fármacos com aprendizado federado (FDD) e aplicação de controles de ameaças (contribuição 30%)",
+      "Estabelecimento do sistema de segurança da cadeia de suprimentos e incorporação de medidas de segurança com base nos resultados do pentest"
+    ]
+  },
+  "cosmo-mfds": {
+    "title": "Consultoria de certificação MFDS da Cosmo Robotics",
+    "client": "Cosmo Robotics",
+    "role": "Pentest",
+    "actions": [],
+    "results": [
+      "Execução de pentest para a consultoria de certificação de segurança de dispositivos médicos MFDS (Ministry of Food and Drug Safety) da Cosmo Robotics (contribuição 40%)"
+    ]
+  },
+  "c2021-eleccon": {
+    "title": "Evento C2021 (operação da competição ELECCON)",
+    "client": "CoreSecurity / KEPCO",
+    "role": "Apoio à operação da competição",
+    "actions": [
+      "Apoio à operação da competição de ataque e defesa cibernética ELECCON"
+    ],
+    "results": [
+      "Apoio à operação da competição ELECCON (contribuição 30%)"
+    ]
+  },
+  "cyber-training-upgrade": {
+    "title": "Aprimoramento do sistema de treinamento de segurança cibernética em cenários reais",
+    "client": "CoreSecurity",
+    "role": "Desenvolvimento de desafios classificatórios e cenários da final",
+    "actions": [
+      "Desenvolvimento de desafios classificatórios para o treinamento de ataque e defesa cibernética em cenários reais",
+      "Desenvolvimento de cenários de ataque e defesa da final baseados em ambiente de rede elétrica (OT/ICS)"
+    ],
+    "results": [
+      "Desenvolvimento de desafios classificatórios do sistema de treinamento em cenários reais e de cenários da final em rede elétrica (contribuição 40%)"
+    ]
+  },
+  "kepco-eleccon-2023": {
+    "title": "Reforço do sistema de treinamento de segurança cibernética em cenários reais da KEPCO (ELECCON)",
+    "client": "KEPCO (Korea Electric Power Corporation)",
+    "role": "Desenvolvimento de desafios classificatórios e cenários da final",
+    "actions": [
+      "Desenvolvimento de desafios CTF classificatórios do ELECCON",
+      "Projeto e desenvolvimento de cenários de ataque e defesa da final baseados em ambiente de rede elétrica (OT/ICS)"
+    ],
+    "results": [
+      "Desenvolvimento de desafios classificatórios do ELECCON da KEPCO e de cenários da final em rede elétrica (contribuição 30%)"
+    ]
+  },
+  "smartship-port-training": {
+    "title": "'24 Operação do curso de treinamento no cyber range de cenários reais (porto de smart ships)",
+    "client": "CoreSecurity",
+    "role": "Desenvolvimento de conteúdo de treinamento para smart ships",
+    "actions": [
+      "Desenvolvimento de conteúdo de treinamento cibernético para ambientes de smart ships"
+    ],
+    "results": [
+      "Desenvolvimento de conteúdo de treinamento para o cyber range de cenários reais de smart ships e portos (contribuição 20%)"
+    ]
+  },
+  "training-upgrade-2024": {
+    "title": "Reforço do sistema de treinamento de segurança cibernética em cenários reais (2024)",
+    "client": "CoreSecurity",
+    "role": "Desenvolvimento de cenários da final",
+    "actions": [
+      "Desenvolvimento de cenários de ataque e defesa da final baseados em ambiente de rede elétrica (OT/ICS)"
+    ],
+    "results": [
+      "Desenvolvimento de cenários da final em rede elétrica para o sistema de treinamento em cenários reais (contribuição 30%)"
+    ]
+  },
+  "hacking-booth": {
+    "title": "Operação de experiência de hacking baseada em cenários de hacking",
+    "client": "CoreSecurity",
+    "role": "Operação de estande de experiência de hacking IoT",
+    "actions": [
+      "Operação de estande de experiência de hacking em dispositivos IoT"
+    ],
+    "results": [
+      "Operação de estande de experiência de hacking em dispositivos IoT (contribuição 45%)"
+    ]
+  },
+  "apex-2025": {
+    "title": "Desenvolvimento de desafios do APEX 2025 (DFIR)",
+    "client": "APEX CTF 2025",
+    "role": "Desenvolvimento de desafios de DFIR Network Forensics",
+    "actions": [
+      "Desenvolvimento de desafios da categoria DFIR Network Forensics — cenários forenses baseados em incidentes de intrusão reais"
+    ],
+    "results": [
+      "Desenvolvimento de desafios de DFIR Network Forensics do APEX CTF 2025 (contribuição 45%)"
+    ]
+  },
+  "apex-2026": {
+    "title": "APEX 2026 DFIR Green Team — Elaboração do desafio Tazuko Voyager FOR400",
+    "client": "APEX CTF 2026",
+    "role": "DFIR Green Team / Elaboração de desafios FOR400",
+    "background": "Participei do DFIR Green Team do APEX 2026 e elaborei sozinho um desafio da categoria FOR400 (o maior nível de dificuldade em forense). Projetei o cenário multiflag de incidente marítimo 'Tazuko Voyager', que combina comunicação por satélite (VSAT), AIS e engenharia reversa de firmware.",
+    "actions": [
+      "Projeto de um cenário forense multiflag que combina o tráfego de comandos de um terminal de comunicação por satélite de navio (capture.pcap) e a manipulação do display de navegação ECDIS",
+      "Composição da linha do tempo da intrusão: sondagem da interface de comandos CCSDS -> AIS spoofing -> adulteração de firmware",
+      "Elaboração dos artefatos do desafio, como relatório Ground Truth, rubrica de pontuação e relatório de incidente (SatCom Mojopok)"
+    ],
+    "results": [
+      "Elaboração individual do desafio 'Tazuko Voyager', de nível FOR400 (o mais difícil), como APEX 2026 DFIR Green Team (contribuição 100%)"
+    ]
+  },
+  "hacksium": {
+    "title": "Serviço de operação do exercício cibernético de ataque e defesa (HACKSIUM) da Busan Information Industry Promotion Agency",
+    "client": "Busan Information Industry Promotion Agency",
+    "role": "Elaboração de desafios classificatórios e da final e operação da competição",
+    "background": "Realizei a elaboração dos desafios classificatórios e da final e a operação do HACKSIUM. Para a final, projetei o cenário de defesa em tempo real 'Anchor Watch' para um grupo de logística marítima; para a fase classificatória, elaborei todos os 16 desafios, com nomes de lugares de Busan como codinomes, em Forensics, Crypto, Pwn, Rev, Web e Misc.",
+    "actions": [
+      "Projeto do cenário de defesa da Equipe Azul LiveFire da final, 'Anchor Watch' — construção de um sistema de pontuação de resposta a incidentes em tempo real, com 4 zonas (satélite, navio, porto e TI da sede) e 6 horas (3 fases)",
+      "Elaboração completa dos 16 desafios classificatórios (deadreckon, dilift, dualdoc, gratuitous, hollowshell, lacuna, lighttrap, musefault, neurovault, offbeat, scheming, shardvault, slashcore, urlrift, vaultburn, whisper) — codinomes de lugares de Busan, todas as categorias: Forensics/Crypto/Pwn/Rev/Web/Misc",
+      "Apoio à operação das fases classificatória e final da competição"
+    ],
+    "results": [
+      "Projeto do cenário LiveFire da final do HACKSIUM, elaboração completa dos 16 desafios classificatórios e operação da competição (contribuição 70%)"
+    ]
+  },
+  "coway-isms": {
+    "title": "Consultoria de apoio à obtenção de auditoria de certificação (ISMS, ISO27001) da Coway",
+    "client": "Coway",
+    "role": "Consultoria de obtenção de certificação",
+    "actions": [],
+    "results": [
+      "Execução de consultoria de apoio à obtenção da auditoria de certificação ISMS e ISO27001"
+    ]
+  },
+  "infinitt-dps": {
+    "title": "Pentest da plataforma de imagens médicas INFINITT DPS",
+    "client": "INFINITT Healthcare",
+    "role": "Responsável principal pelo pentest (autor principal do relatório)",
+    "background": "Era necessário verificar a possibilidade de vazamento de informações e de ataques de 2º estágio nos serviços Web e móveis (Android/iOS) da plataforma de imagens médicas (DPS), por meio de diagnóstico de vulnerabilidades baseado em checklist e de tentativas reais de intrusão.",
+    "actions": [
+      "Diagnóstico manual Web/Mobile baseado no guia de análise de vulnerabilidades de infraestruturas críticas de informação e comunicação + OWASP Top 10 2021",
+      "Verificação de vulnerabilidades de autenticação, controle de acesso e validação de entrada com Burp Suite, Wireshark, APKTool e outras ferramentas",
+      "Elaboração do relatório de resultados e validação da conclusão das correções por meio de verificação de conformidade (reteste)"
+    ],
+    "results": [
+      "Pentest Web/Mobile do INFINITT DPS com 14 vulnerabilidades identificadas no total (risco médio: 3, risco baixo: 11), todas corrigidas no reteste",
+      "Autoria principal do relatório de resultados em inglês (contribuição 70%)"
+    ]
+  },
+  "infosec-consulting": {
+    "title": "Serviço de consultoria em segurança da informação",
+    "client": "Confidencial",
+    "role": "Consultoria em segurança da informação",
+    "actions": [],
+    "results": [
+      "Execução de serviço de consultoria em segurança da informação"
+    ]
+  }
+}

@@ -131,7 +131,59 @@
     "labelCertifications": "자격증",
     "labelEducation": "학력",
     "downloadPdf": "경력기술서 다운로드",
-    "openRegistry": "전체 보기"
+    "openRegistry": "전체 보기",
+    "headline": "Offensive Security Researcher · Web/App · OT/ICS Pentesting · 보안 컨설팅",
+    "summary": "금융권 Web/App 모의해킹부터 OT/ICS(IEC 62443)·IoT·의료기기(FDA) 보안, 사이버 공방 훈련 개발까지 {projects}건 이상의 프로젝트를 수행했습니다. LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득, NATO CCDCOE {ls2025}, CVE {cve}건({breakdown})·FVE {fve}건 보유.",
+    "filterAll": "전체",
+    "contribution": "기여도 {value}%",
+    "present": "현재",
+    "categories": {
+      "fintech": "금융·공공 Web/App 모의해킹",
+      "ics-ot": "OT/ICS 보안 (IEC 62443)",
+      "iot": "IoT 취약점·도구 개발",
+      "medical": "의료기기 보안 (FDA/eSTAR)",
+      "cyber-range": "사이버훈련장·CTF 개발",
+      "consulting": "보안 컨설팅·인증",
+      "vuln-research": "취약점 연구 (CVE/FVE)"
+    },
+    "competencies": {
+      "fintech": "금융·공공 전자금융기반시설 Web/App 모의해킹 — 저축은행·캐피탈·증권·보험·제조 등 12개 사이트 수행 (A3 Security)",
+      "ot": "OT/ICS 보안 — IEC 62443-4-2 기반 Threat Modeling·모의해킹, LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득",
+      "iot": "IoT 취약점 분석·보안 도구 개발 — 스마트빌딩 IoT 탐지 기술, IoT/CCTV 침해사고 조사 도구, Linux Kernel File System Fuzzer로 CVE 16건 도출",
+      "llm": "LLM·AI 인프라 보안 — llama.cpp 추론 엔진 취약점 분석으로 CVE 3건 도출(DoS·도달 가능 어서션·정수 오버플로), MCP 기반 점검 자동화 연구",
+      "medical": "의료기기 보안 — FDA eSTAR 컨설팅 및 Web/App·의료기기 모의해킹, 보안인증 취득 지원",
+      "cyberRange": "사이버 공방 훈련 개발·운영 — 한국전력 ELECCON, NATO CCDCOE {ls2025}, APEX CTF 2025 문제 개발"
+    },
+    "experience": {
+      "coresec": {
+        "role": "ICS Security Researcher (주임 연구원)",
+        "company": "코어시큐리티 (CoreSecurity)",
+        "bullets": {
+          "ot": "OT/ICS 보안 — IEC 62443-4-2 기반 Threat Modeling과 모의해킹을 수행했습니다.",
+          "achilles": "LS ELECTRIC 자동화기기의 Achilles Level 2 인증 취득에 기여하고, 자동화 점검 도구를 개발했습니다.",
+          "iot": "IoT 보안 — 스마트빌딩 IoT 취약점 탐지 기술을 개발·실증하고, IoT/CCTV 침해사고 조사 도구를 만들었습니다.",
+          "medical": "의료기기 보안 — FDA eSTAR 컨설팅과 Web/App·의료기기 모의해킹을 수행했습니다.",
+          "eleccon": "사이버 공방 훈련 — 한국전력 ELECCON을 운영하고 문제를 개발했습니다.",
+          "lockedShields": "NATO CCDCOE {ls2025}, APEX CTF 2025 문제 개발에 참여했습니다."
+        }
+      },
+      "a3": {
+        "role": "Web/App Pentester (사원)",
+        "bullets": {
+          "financial": "금융권·공공기관 전자금융기반시설 모의해킹을 수행했습니다. 참저축은행, 애큐온캐피탈, 금융투자협회, SBI저축은행, 현대자동차 HKMC, 농협중앙회 RPA 등이 대상이었습니다.",
+          "review": "비정형 시스템 보안성 검토를 수행했습니다. KT 기가지니 AI 스피커, IoT 열감지 장비, DB손해보험 클레임콜이 대상이었습니다.",
+          "isms": "ISMS/ISO27001 인증 취득 지원 컨설팅에 참여했습니다 (코웨이)."
+        }
+      }
+    },
+    "certifications": {
+      "linux": "리눅스 마스터 2급 (KAIT, 2021.07)",
+      "network": "네트워크 관리사 2급 (KAIT, 2024.07)"
+    },
+    "education": {
+      "kongju": "공주대학교 컴퓨터공학부 (2012.02 — 2020.02)",
+      "cheonan": "천안상업고등학교 정보처리과 (2009.03 — 2012.02)"
+    }
   },
   "sidebar": {
     "relatedPosts": "관련 게시물",

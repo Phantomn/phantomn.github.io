@@ -1,0 +1,382 @@
+{
+  "achilles-l2": {
+    "title": "LS ELECTRIC Automation Device Achilles Communication Certificate Level 2 Certification",
+    "client": "LS ELECTRIC",
+    "role": "Lead (Certification Assessment and Testing)",
+    "background": "The LS ELECTRIC PLC product line needed pre-assessment, testing, and remediation to obtain the international communication robustness certification (Achilles Communication Certificate Level 2). It had to meet demanding pass criteria: control functions must keep working under DoS, storm, and abnormal-traffic conditions.",
+    "actions": [
+      "Assessed communication robustness of the PLC product line across all Achilles Communication Certificate Level 2 test items",
+      "Verified storm/fuzzing/malformed-packet resilience of communication stacks such as XGT Protocol and reproduced defects",
+      "Designed certification test scenarios and handled re-tests to verify the pass criteria were met"
+    ],
+    "results": [
+      "Obtained Achilles Communication Certificate Level 2 for the LS ELECTRIC PLC product line",
+      "Identified communication robustness defects -> reflected fixes in product firmware"
+    ]
+  },
+  "locked-shields": {
+    "title": "NATO CCDCOE Locked Shields 2025 — Korea-Canada Joint DFIR Blue Team",
+    "client": "NATO CCDCOE",
+    "role": "DFIR Blue Team Member (Forensics and Incident Response)",
+    "background": "Participated in Locked Shields, the world's largest international cyber defense exercise, as a DFIR (digital forensics and incident response) blue team member of the joint Korea-Canada team. It is an intensive exercise in which participants analyze compromise traces and report responses in a live attack environment. (In 2026, participated as a Special System blue team in the joint Korea-Hungary team)",
+    "actions": [
+      "Performed forensic analysis of security incidents and reconstructed timelines under live attack scenarios",
+      "Completed DFIR CTF tasks - artifact analysis and malware triage",
+      "Operated the incident response reporting process in collaboration with the joint team"
+    ],
+    "results": [
+      "{ls2025}",
+      "{ls2026}"
+    ]
+  },
+  "llama-cpp-cve": {
+    "title": "llama.cpp LLM Inference Engine Vulnerability Research (3 CVEs)",
+    "client": "ggml-org/llama.cpp (open source)",
+    "role": "Lead (Vulnerability Analysis and Reporting)",
+    "background": "LLM inference engines are being adopted quickly into in-house and product infrastructure, yet the attack surface exposed in server mode had received little scrutiny. Targeting the external-input paths of the llama.cpp server (grammar conversion, model parser, ranking API), verified the feasibility of remote unauthenticated attacks.",
+    "actions": [
+      "Analyzed uncontrolled recursion in json-schema-to-grammar SchemaConverter::visit and _generate_union_rule - reproduced DoS by exhausting the default 8MB thread stack at recursion depth 7000 or more (CVE-2026-52130, CWE-674, CVSS 7.5)",
+      "Verified the affected path precisely - confirmed that only POST /completions is affected while /v1/chat/completions is not (it goes through the jinja engine), yielding a false-positive-free impact scope",
+      "Triggered process abort via a reachable assertion in gguf_reader::read when loading a malicious GGUF model (CVE-2026-52131, CWE-617)",
+      "Identified a DoS based on integer overflow from a negative top_n on the /rerank endpoint and wrote a PoC (CVE-2026-52132, CWE-190)"
+    ],
+    "results": [
+      "Assigned 3 CVEs against llama.cpp - CVE-2026-52130 / 52131 / 52132",
+      "Included 2 remote unauthenticated DoS issues (CVSS 7.5); provided upstream with reproduction steps that distinguish vulnerable from non-vulnerable paths"
+    ]
+  },
+  "data-platform-idor": {
+    "title": "Data Platform Unauthenticated IDOR Vulnerability Report (FVE)",
+    "client": "Undisclosed (Findthegap bug bounty)",
+    "role": "Vulnerability Analysis and Reporting",
+    "background": "Assessed authentication and access control of a data API through a bug bounty platform. Per the reporting policy, the product, vendor, endpoint, parameters, and reproduction steps are not disclosed.",
+    "actions": [
+      "Confirmed missing authentication and insufficient object reference validation in the data query API (CWE-306 / CWE-200 / CWE-284)",
+      "Verified the possibility of bypassing personal-information masking, then reported it per platform policy"
+    ],
+    "results": [
+      "Assigned FVE-2026-8617-75112 - unauthenticated IDOR and masking bypass (details redacted)"
+    ]
+  },
+  "iot-cctv-forensics": {
+    "title": "IoT/CCTV Incident Investigation Tool Development",
+    "client": "CoreSecurity (R&D)",
+    "role": "Lead (Tool Design and Development)",
+    "background": "For IoT devices such as CCTV, evidence collection procedures and tools for security incidents are not standardized. An automated investigation tool was needed to quickly acquire configuration files and logs inside the firmware.",
+    "actions": [
+      "Designed and implemented an automated incident evidence collection tool for 40 domestic and international CCTV models",
+      "Developed modules for firmware extraction based on UART access, flash dump, and binwalk, and for exhaustive collection of configuration files and logs",
+      "Collected incident traces from 40 real devices on site at a public institution"
+    ],
+    "results": [
+      "Developed an automated incident evidence collection tool for 40 domestic and international CCTV models",
+      "Field validation at a public institution - collected and analyzed compromise traces from 40 devices"
+    ]
+  },
+  "a3-financial-pentest": {
+    "title": "Financial and Public-Sector Electronic Finance Infrastructure Pentests (12 Sites)",
+    "client": "A3 Security",
+    "role": "Web/App Pentesting and Vulnerability Assessment",
+    "background": "While at A3 Security, performed numerous Web/App pentests and vulnerability assessments on electronic finance infrastructure of financial institutions and public agencies. The goal was to assess the possibility of data leakage and 2nd-stage attacks and to propose improvements.",
+    "actions": [
+      "Vulnerability assessment of electronic finance infrastructure - Web/App pentests of financial institutions including Cham Savings Bank, Acuon Capital, and Korea Financial Investment Association",
+      "Security reviews of finance, insurance, and manufacturing systems - SBI Savings Bank (Open Banking, digital counter), Hyundai Motor (HKMC), DB Insurance claim call",
+      "Pentests including source code assessment of NongHyup (NACF) RPA, and Daekyo integrated education platform, Autohands, and UNTAC"
+    ],
+    "results": [
+      "Performed pentests on 12 financial and public-sector electronic finance infrastructure sites, identifying an average of 1-2 high-risk vulnerabilities per site",
+      "Proposed remediation for each vulnerability and supported security review"
+    ]
+  },
+  "kt-gigagenie": {
+    "title": "KT GiGA Genie AI Speaker Device Pentest",
+    "client": "KT",
+    "role": "IoT Device Pentesting",
+    "actions": [
+      "Analyzed the UART debug interface of the GiGA Genie AI speaker device",
+      "Assessed the attack surface through Bluetooth communication and Android APK analysis"
+    ],
+    "results": [
+      "Performed a multi-vector security pentest of the GiGA Genie AI speaker device covering UART, Bluetooth, and APK"
+    ]
+  },
+  "smartbuilding-y1": {
+    "title": "Smart Building IoT Device Vulnerability Detection Technology Development and Field Validation (Year 1)",
+    "client": "CoreSecurity (R&D)",
+    "role": "Detection Scenario and Testbed Development, Tool Validation",
+    "background": "IoT devices in smart buildings run embedded Linux, which makes ordinary scanning difficult, and mixed standard protocols made asset and vulnerability identification hard. Detection technology automating everything from scanning to vulnerability mapping, plus a testbed to validate it, was needed.",
+    "actions": [
+      "Validated IoT scanning technology based on protocol discovery for wired (BACNet, KNXNet, Modbus) and wireless (Wi-Fi, BLE) protocols",
+      "Mapped collected information (OS, protocol, firmware, model) to NVD CVE/CWE and developed PoC-based validation scenarios",
+      "Built a testbed with real smart building functions and validated the completeness of the detection tool"
+    ],
+    "results": [
+      "Developed a testbed and detection scenarios for validating the smart building IoT vulnerability detection tool (contribution 40%)",
+      "Established the flow of wired/wireless protocol asset identification -> CVE/CWE mapping -> PoC validation"
+    ]
+  },
+  "smartbuilding-y2": {
+    "title": "Smart Building IoT Device Vulnerability Detection Technology Development and Field Validation (Year 2)",
+    "client": "CoreSecurity (R&D)",
+    "role": "Field Validation and Detection Identification Rate Verification",
+    "background": "The detection technology developed in Year 1 had to be applied to a live smart building environment to verify and improve detection accuracy.",
+    "actions": [
+      "Field validation on a real smart building - collected device, sensor, and protocol information and performed vulnerability detection",
+      "Identified true positives, false positives, and false negatives and derived the detection identification rate",
+      "Derived detection improvements from the field validation results and updated the vulnerability DB"
+    ],
+    "results": [
+      "Validated the detection technology on a real smart building and verified the identification rate (contribution 40%)",
+      "Derived corrective actions to improve detection accuracy based on TP/FP/FN analysis"
+    ]
+  },
+  "qud-081871": {
+    "title": "QUD-081871 IoT Security Project",
+    "client": "CoreSecurity (R&D)",
+    "role": "Research",
+    "actions": [],
+    "results": [
+      "Carried out an IoT security research project"
+    ]
+  },
+  "ls-threat-modeling": {
+    "title": "LS ELECTRIC Automation Device Threat Modeling Consulting",
+    "client": "LS ELECTRIC",
+    "role": "Threat Modeling Consulting and Pentesting",
+    "background": "For IEC 62443-4-2 certification of the LS ELECTRIC automation device (XGI-CPUZ), systematic threat modeling and a pentest to validate it were needed.",
+    "actions": [
+      "Analyzed in the order System Definition -> Function Point Definition -> Data Flow Analysis and produced the DFD",
+      "Performed Threat & Risk Assessment based on STRIDE + DREAD",
+      "Validated threats through a pentest based on the critical information infrastructure vulnerability assessment methodology"
+    ],
+    "results": [
+      "Delivered a Threat Modeling report and a pentest report for the LS ELECTRIC XGI-CPUZ",
+      "Provided threat and risk assessment evidence for IEC 62443-4-2 certification"
+    ]
+  },
+  "ls-62443-tool": {
+    "title": "LS ELECTRIC IEC 62443-4-2 Automated Assessment Tool Development",
+    "client": "LS ELECTRIC",
+    "role": "Lead (Automation Tool Design and Development)",
+    "background": "While preparing the LS ELECTRIC PLC product line for IEC 62443-4-2 certification, checking component security requirements (CR) was mostly manual. Requirements that can be checked automatically over communication needed to be turned into a tool to cut the cost of repeated checks.",
+    "actions": [
+      "Selected the communication-based automatable items among the IEC 62443-4-2 SL1 requirements and designed the assessment tool",
+      "Implemented automated checks for FR2 (use control), FR3 (system integrity), FR4 (data confidentiality), and FR7 (resource availability)",
+      "Built a web-based UI for managing targets and results, and a result storage pipeline"
+    ],
+    "results": [
+      "Developed an automated tool for checking IEC 62443-4-2 communication-based requirements of the LS ELECTRIC PLC product line (contribution 90%)",
+      "Reduced assessment time compared with manual checks"
+    ]
+  },
+  "smartship": {
+    "title": "Smart Ship Infrastructure Vulnerability Analysis and Validation Tool and Security Technology Development",
+    "client": "CoreSecurity (R&D)",
+    "role": "Vulnerability Analysis and Validation Tool Development",
+    "background": "The CBS (Computer Based System) inside a smart ship mixes Windows/Linux PCs with embedded IoT and IIoT devices, so ordinary scanning could not identify assets and vulnerabilities. An assessment tool based on the critical information infrastructure vulnerability analysis guide was needed.",
+    "actions": [
+      "Developed Windows/Linux assessment checklists based on the critical information infrastructure vulnerability analysis guide",
+      "Collected OS, host, and device information through SSDP Discovery-based IoT/IIoT sensing (validated WS-Discovery and SNMP extensions)",
+      "Mapped CVE and CWE from NVD/MITRE to the CBS based on CPE, and validated command execution and code execution vulnerabilities with PoC code",
+      "Built per-OS assessment automation modules based on Shell/Powershell and a vulnerability DB with 5 entities (ERD)"
+    ],
+    "results": [
+      "Developed an automated vulnerability analysis and validation tool for the smart ship CBS (contribution 25%)",
+      "Provided CVE/CWE mapping of identified assets and PoC validation results in formats such as CSV"
+    ]
+  },
+  "fda-consulting": {
+    "title": "Medical Device FDA Security Consulting",
+    "client": "Medical device manufacturer",
+    "role": "Threat Modeling, Pentesting, and eSTAR Consulting",
+    "background": "To meet the cybersecurity requirements of a medical device manufacturer preparing for US FDA premarket clearance, end-to-end support was needed: from infrastructure threat modeling and pentesting of the device and connected systems to eSTAR submission documentation.",
+    "actions": [
+      "Performed Threat Modeling of the infrastructure subject to FDA certification and derived threats and mitigations",
+      "Validated real vulnerabilities by pentesting the medical device itself and its connected Web/App",
+      "Consulted on eSTAR submission documentation based on the FDA Premarket Cybersecurity requirements"
+    ],
+    "results": [
+      "Performed Threat Modeling of the FDA-certified infrastructure and pentests of the Web/App and medical device (contribution 30%)",
+      "Supported eSTAR cybersecurity submission document consulting"
+    ]
+  },
+  "medical-controls": {
+    "title": "Medical Device Security Certification Consulting (Cybersecurity Controls)",
+    "client": "Medical device manufacturer",
+    "role": "Security Control Design and Documentation Consulting",
+    "background": "To obtain security certification for an electroceutical medical device (a transcutaneous electrical nerve stimulator for ADHD treatment), cybersecurity controls had to be designed across the system, consisting of the device, base station, mobile app, and server, and the certification submission documents had to be written.",
+    "actions": [
+      "Analyzed communication paths and data flows: device-app (BLE), app-server (LTE/5G), web (HTTPS), and base station (Wi-Fi)",
+      "Designed and validated security controls such as user authentication (JWT HS256, RTR), OTP sign-up authentication, password policy, and dashboard RBAC",
+      "Wrote the Cybersecurity Controls certification submission documents covering concurrent connection limits, session management, and separation of roles"
+    ],
+    "results": [
+      "Designed system-wide cybersecurity controls for the medical device and wrote the certification submission documents (Cybersecurity Controls) (contribution 45%)",
+      "Established encryption, authentication, and access control for each communication path"
+    ]
+  },
+  "k-melloddy": {
+    "title": "Federated Learning-Based Drug Discovery Acceleration Project (K-MELLODDY)",
+    "client": "K-MELLODDY Consortium",
+    "role": "Federated Learning Platform Security Design and Pentesting",
+    "background": "A federated learning platform (FDD) for drug discovery handles multi-institution data and models, so security had to be built into the whole development lifecycle and real threats had to be controlled.",
+    "actions": [
+      "Analyzed and defined a secure development process for the FDD platform based on NIST SSDF (reviewed IEC 62443, FDA, ISO 27001, and EU CRA standards)",
+      "Identified real threats through FDD platform threat modeling and applied source-code-level security controls (API security)",
+      "Established a supply chain security management framework (SBOM+VEX+EoS) and performed 2 pentests in the live operating environment"
+    ],
+    "results": [
+      "Established a secure development process for the federated learning drug discovery platform (FDD) and applied threat controls (contribution 30%)",
+      "Established the supply chain security framework and reflected pentest-based security measures"
+    ]
+  },
+  "cosmo-mfds": {
+    "title": "Cosmo Robotics MFDS Certification Consulting",
+    "client": "Cosmo Robotics",
+    "role": "Pentesting",
+    "actions": [],
+    "results": [
+      "Performed pentests for Cosmo Robotics MFDS (Ministry of Food and Drug Safety) medical device security certification consulting (contribution 40%)"
+    ]
+  },
+  "c2021-eleccon": {
+    "title": "C2021 Event (ELECCON Competition Operations)",
+    "client": "CoreSecurity / KEPCO",
+    "role": "Competition Operations Support",
+    "actions": [
+      "Supported operations of the ELECCON cyber attack-defense competition"
+    ],
+    "results": [
+      "Supported ELECCON competition operations (contribution 30%)"
+    ]
+  },
+  "cyber-training-upgrade": {
+    "title": "Realistic Cybersecurity Training System Upgrade",
+    "client": "CoreSecurity",
+    "role": "Qualifier Challenge and Final Scenario Development",
+    "actions": [
+      "Developed qualifier challenges for the realistic cyber attack-defense exercise",
+      "Developed final attack-defense scenarios based on a power grid (OT/ICS) environment"
+    ],
+    "results": [
+      "Developed qualifier challenges and power grid final scenarios for the realistic training system (contribution 40%)"
+    ]
+  },
+  "kepco-eleccon-2023": {
+    "title": "KEPCO Realistic Cybersecurity Training System Enhancement (ELECCON)",
+    "client": "KEPCO (Korea Electric Power Corporation)",
+    "role": "Qualifier Challenge and Final Scenario Development",
+    "actions": [
+      "Developed ELECCON qualifier CTF challenges",
+      "Designed and developed final attack-defense scenarios based on a power grid (OT/ICS) environment"
+    ],
+    "results": [
+      "Developed KEPCO ELECCON qualifier challenges and power grid final scenarios (contribution 30%)"
+    ]
+  },
+  "smartship-port-training": {
+    "title": "'24 Realistic Cyber Range Training Program Operation (Smart Ship Port)",
+    "client": "CoreSecurity",
+    "role": "Smart Ship Training Content Development",
+    "actions": [
+      "Developed cyber training content for a smart ship environment"
+    ],
+    "results": [
+      "Developed training content for the realistic smart ship and port cyber range (contribution 20%)"
+    ]
+  },
+  "training-upgrade-2024": {
+    "title": "Realistic Cybersecurity Training System Enhancement (2024)",
+    "client": "CoreSecurity",
+    "role": "Final Scenario Development",
+    "actions": [
+      "Developed final attack-defense scenarios based on a power grid (OT/ICS) environment"
+    ],
+    "results": [
+      "Developed power grid final scenarios for the realistic training system (contribution 30%)"
+    ]
+  },
+  "hacking-booth": {
+    "title": "Hacking Scenario-Based Hands-On Hacking Experience Operation",
+    "client": "CoreSecurity",
+    "role": "IoT Hacking Experience Booth Operation",
+    "actions": [
+      "Operated a hands-on hacking booth using IoT devices"
+    ],
+    "results": [
+      "Operated an IoT device hacking experience booth (contribution 45%)"
+    ]
+  },
+  "apex-2025": {
+    "title": "APEX 2025 Challenge Development (DFIR)",
+    "client": "APEX CTF 2025",
+    "role": "DFIR Network Forensics Challenge Development",
+    "actions": [
+      "Developed DFIR Network Forensics category challenges - forensic scenarios based on real security incidents"
+    ],
+    "results": [
+      "Developed APEX CTF 2025 DFIR Network Forensics challenges (contribution 45%)"
+    ]
+  },
+  "apex-2026": {
+    "title": "APEX 2026 DFIR Green Team — Tazuko Voyager FOR400 Challenge Authoring",
+    "client": "APEX CTF 2026",
+    "role": "DFIR Green Team / FOR400 Challenge Author",
+    "background": "Participated as the APEX 2026 DFIR Green Team and single-handedly authored the FOR400 (top forensics difficulty) category challenge. Designed 'Tazuko Voyager', a multi-flag maritime security incident scenario combining satellite communication (VSAT), AIS, and firmware reversing.",
+    "actions": [
+      "Designed a multi-flag forensic scenario combining ship satellite terminal command traffic (capture.pcap) with ECDIS navigation display manipulation",
+      "Built an intrusion timeline running from CCSDS command interface probing -> AIS spoofing -> firmware tampering",
+      "Wrote the authoring deliverables including the Ground Truth report, scoring rubric, and incident report (SatCom Mojopok)"
+    ],
+    "results": [
+      "Single-handedly authored the top-difficulty FOR400 challenge 'Tazuko Voyager' as the APEX 2026 DFIR Green Team (contribution 100%)"
+    ]
+  },
+  "hacksium": {
+    "title": "Busan Information Industry Promotion Agency Cyber Attack-Defense Competition (HACKSIUM) Operation Service",
+    "client": "Busan Information Industry Promotion Agency",
+    "role": "Qualifier and Final Challenge Authoring and Competition Operations",
+    "background": "Authored the HACKSIUM qualifier and final challenges and operated the competition. For the final, designed 'Anchor Watch', a real-time defense scenario against a maritime logistics group; for the qualifier, authored all 16 challenges in Forensics, Crypto, Pwn, Rev, Web, and Misc, codenamed after Busan place names.",
+    "actions": [
+      "Designed the final LiveFire blue team defense scenario 'Anchor Watch' - built a real-time incident response scoring system over 4 zones (satellite, ship, port, HQ IT) and 6 hours (3 phases)",
+      "Authored all 16 qualifier challenges (deadreckon, dilift, dualdoc, gratuitous, hollowshell, lacuna, lighttrap, musefault, neurovault, offbeat, scheming, shardvault, slashcore, urlrift, vaultburn, whisper) - codenamed after Busan place names, covering all categories: Forensics/Crypto/Pwn/Rev/Web/Misc",
+      "Supported qualifier and final competition operations"
+    ],
+    "results": [
+      "Designed the HACKSIUM final LiveFire scenario, authored all 16 qualifier challenges, and operated the competition (contribution 70%)"
+    ]
+  },
+  "coway-isms": {
+    "title": "Coway Certification Audit Support (ISMS, ISO27001) Consulting",
+    "client": "Coway",
+    "role": "Certification Consulting",
+    "actions": [],
+    "results": [
+      "Performed ISMS and ISO27001 certification audit support consulting"
+    ]
+  },
+  "infinitt-dps": {
+    "title": "INFINITT DPS Medical Imaging Platform Pentest",
+    "client": "INFINITT Healthcare",
+    "role": "Lead (Report Lead Author)",
+    "background": "For the Web and mobile (Android/iOS) services of a medical imaging platform (DPS), the possibility of data leakage and 2nd-stage attacks had to be assessed through checklist-based vulnerability assessment and real penetration attempts.",
+    "actions": [
+      "Manual Web/Mobile assessment based on the critical information infrastructure vulnerability analysis guide + OWASP Top 10 2021",
+      "Assessed authentication, access control, and input validation vulnerabilities with Burp Suite, Wireshark, APKTool, and others",
+      "Wrote the result report and verified remediation through a follow-up re-assessment"
+    ],
+    "results": [
+      "Identified 14 vulnerabilities in the INFINITT DPS Web/Mobile pentest (3 medium-risk, 11 low-risk); all were remediated in the re-assessment",
+      "Served as lead author of the English result report (contribution 70%)"
+    ]
+  },
+  "infosec-consulting": {
+    "title": "Information Security Consulting Service",
+    "client": "Undisclosed",
+    "role": "Information Security Consulting",
+    "actions": [],
+    "results": [
+      "Performed an information security consulting service"
+    ]
+  }
+}

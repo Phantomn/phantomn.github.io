@@ -131,7 +131,59 @@
     "labelCertifications": "Certificaciones",
     "labelEducation": "Educación",
     "downloadPdf": "Descargar Currículum",
-    "openRegistry": "Ver Todo"
+    "openRegistry": "Ver Todo",
+    "headline": "Offensive Security Researcher · Web/App · OT/ICS Pentesting · Consultoría de seguridad",
+    "summary": "Más de {projects} proyectos, desde el pentesting Web/App en el sector financiero hasta la seguridad OT/ICS (IEC 62443), IoT y dispositivos médicos (FDA) y el desarrollo de ejercicios de ciberdefensa. Certificación Achilles Communication Certificate Level 2 obtenida para los equipos de automatización de LS ELECTRIC. Logros: NATO CCDCOE {ls2025}, {cve} CVE ({breakdown}) y {fve} FVE.",
+    "filterAll": "Todos",
+    "contribution": "Contribución {value}%",
+    "present": "Actualidad",
+    "categories": {
+      "fintech": "Pentesting Web/App financiero y público",
+      "ics-ot": "Seguridad OT/ICS (IEC 62443)",
+      "iot": "Vulnerabilidades IoT y desarrollo de herramientas",
+      "medical": "Seguridad de dispositivos médicos (FDA/eSTAR)",
+      "cyber-range": "Campos de ciberentrenamiento y desarrollo de CTF",
+      "consulting": "Consultoría y certificación de seguridad",
+      "vuln-research": "Investigación de vulnerabilidades (CVE/FVE)"
+    },
+    "competencies": {
+      "fintech": "Pentesting Web/App de infraestructuras de finanzas electrónicas financieras y públicas - 12 sitios entre bancos de ahorro, financieras, valores, seguros y manufactura (A3 Security)",
+      "ot": "Seguridad OT/ICS - Threat Modeling y pentesting basados en IEC 62443-4-2, obtención de la certificación Achilles Communication Certificate Level 2 para equipos de automatización de LS ELECTRIC",
+      "iot": "Análisis de vulnerabilidades IoT y desarrollo de herramientas de seguridad - tecnología de detección IoT para edificios inteligentes, herramienta de investigación de incidentes en IoT/CCTV, 16 CVE derivados con un Linux Kernel File System Fuzzer",
+      "llm": "Seguridad de LLM e infraestructura de IA - 3 CVE derivados del análisis de vulnerabilidades del motor de inferencia llama.cpp (DoS, aserción alcanzable y desbordamiento de enteros), investigación de automatización de inspecciones basada en MCP",
+      "medical": "Seguridad de dispositivos médicos - consultoría FDA eSTAR y pentesting Web/App y de dispositivos médicos, apoyo a la obtención de certificaciones de seguridad",
+      "cyberRange": "Desarrollo y operación de entrenamientos de ataque y defensa cibernéticos - ELECCON de KEPCO, NATO CCDCOE {ls2025}, desarrollo de retos de APEX CTF 2025"
+    },
+    "experience": {
+      "coresec": {
+        "role": "Investigador de Seguridad ICS (Senior)",
+        "company": "CoreSecurity",
+        "bullets": {
+          "ot": "Seguridad OT/ICS: se realizaron Threat Modeling y pentesting basados en IEC 62443-4-2.",
+          "achilles": "Se contribuyó a la obtención de la certificación Achilles Level 2 para equipos de automatización de LS ELECTRIC y se desarrolló una herramienta de inspección automatizada.",
+          "iot": "Seguridad IoT: se desarrolló y validó en campo una tecnología de detección de vulnerabilidades IoT para edificios inteligentes y se creó una herramienta de investigación de incidentes en IoT/CCTV.",
+          "medical": "Seguridad de dispositivos médicos: se realizaron consultoría FDA eSTAR y pentesting Web/App y de dispositivos médicos.",
+          "eleccon": "Entrenamiento de ataque y defensa cibernéticos: se operó ELECCON de KEPCO y se desarrollaron sus retos.",
+          "lockedShields": "Se participó en NATO CCDCOE {ls2025} y en el desarrollo de retos de APEX CTF 2025."
+        }
+      },
+      "a3": {
+        "role": "Pentester Web/App",
+        "bullets": {
+          "financial": "Se realizó pentesting de infraestructuras de finanzas electrónicas de entidades financieras e instituciones públicas. Los objetivos incluyeron Cham Savings Bank, Acuon Capital, Korea Financial Investment Association, SBI Savings Bank, Hyundai Motor (HKMC) y RPA de NongHyup (NACF).",
+          "review": "Se realizaron revisiones de seguridad de sistemas no estándar. Los objetivos fueron el altavoz IA KT GiGA Genie, un equipo IoT de detección térmica y el claim call de DB Insurance.",
+          "isms": "Se participó en la consultoría de apoyo a la obtención de certificaciones ISMS/ISO27001 (Coway)."
+        }
+      }
+    },
+    "certifications": {
+      "linux": "Linux Master de 2.º grado (KAIT, 2021.07)",
+      "network": "Administrador de Redes de 2.º grado (KAIT, 2024.07)"
+    },
+    "education": {
+      "kongju": "Universidad Nacional de Kongju, Departamento de Ingeniería Informática (2012.02 — 2020.02)",
+      "cheonan": "Escuela Secundaria Comercial de Cheonan, Procesamiento de la Información (2009.03 — 2012.02)"
+    }
   },
   "sidebar": {
     "relatedPosts": "Posts Relacionados",

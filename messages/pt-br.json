@@ -131,7 +131,59 @@
     "labelCertifications": "Certificações",
     "labelEducation": "Educação",
     "downloadPdf": "Baixar Currículo",
-    "openRegistry": "Ver Tudo"
+    "openRegistry": "Ver Tudo",
+    "headline": "Offensive Security Researcher · Web/App · OT/ICS Pentesting · Consultoria de segurança",
+    "summary": "Mais de {projects} projetos, do pentest Web/App no setor financeiro à segurança de OT/ICS (IEC 62443), IoT e dispositivos médicos (FDA), passando pelo desenvolvimento de exercícios de ataque e defesa cibernética. Certificação Achilles Communication Certificate Level 2 obtida para os equipamentos de automação da LS ELECTRIC. Resultados: NATO CCDCOE {ls2025}, {cve} CVEs ({breakdown}) e {fve} FVEs.",
+    "filterAll": "Todos",
+    "contribution": "Contribuição {value}%",
+    "present": "Atual",
+    "categories": {
+      "fintech": "Pentest Web/App financeiro e público",
+      "ics-ot": "Segurança OT/ICS (IEC 62443)",
+      "iot": "Vulnerabilidades e ferramentas IoT",
+      "medical": "Segurança de dispositivos médicos (FDA/eSTAR)",
+      "cyber-range": "Cyber range e desenvolvimento de CTF",
+      "consulting": "Consultoria e certificação de segurança",
+      "vuln-research": "Pesquisa de vulnerabilidades (CVE/FVE)"
+    },
+    "competencies": {
+      "fintech": "Pentest Web/App de infraestrutura de finanças eletrônicas dos setores financeiro e público — 12 sites entre bancos de poupança, financeiras, corretoras, seguradoras e indústria (A3 Security)",
+      "ot": "Segurança OT/ICS — Threat Modeling e pentest baseados na IEC 62443-4-2, obtenção da certificação Achilles Communication Certificate Level 2 para equipamentos de automação da LS ELECTRIC",
+      "iot": "Análise de vulnerabilidades IoT e desenvolvimento de ferramentas de segurança — tecnologia de detecção de IoT em smart buildings, ferramenta de investigação de incidentes em IoT/CCTV, 16 CVEs obtidos com um File System Fuzzer do Linux Kernel",
+      "llm": "Segurança de infraestrutura de LLM e IA — 3 CVEs obtidos na análise de vulnerabilidades do motor de inferência llama.cpp (DoS, assertion alcançável, integer overflow), pesquisa de automação de verificações baseada em MCP",
+      "medical": "Segurança de dispositivos médicos — consultoria FDA eSTAR, pentest Web/App e de dispositivos médicos, apoio à obtenção de certificação de segurança",
+      "cyberRange": "Desenvolvimento e operação de exercícios de ataque e defesa cibernética — ELECCON da KEPCO, NATO CCDCOE {ls2025}, desenvolvimento de desafios do APEX CTF 2025"
+    },
+    "experience": {
+      "coresec": {
+        "role": "Pesquisador de Segurança ICS (Sênior)",
+        "company": "CoreSecurity",
+        "bullets": {
+          "ot": "Segurança OT/ICS — realizei Threat Modeling e pentest baseados na IEC 62443-4-2.",
+          "achilles": "Contribuí para a obtenção da certificação Achilles Level 2 dos equipamentos de automação da LS ELECTRIC e desenvolvi uma ferramenta de verificação automatizada.",
+          "iot": "Segurança IoT — desenvolvi e demonstrei tecnologia de detecção de vulnerabilidades IoT em smart buildings e criei uma ferramenta de investigação de incidentes em IoT/CCTV.",
+          "medical": "Segurança de dispositivos médicos — realizei consultoria FDA eSTAR e pentest Web/App e de dispositivos médicos.",
+          "eleccon": "Exercícios de ataque e defesa cibernética — operei o ELECCON da KEPCO e desenvolvi os desafios.",
+          "lockedShields": "Participei do NATO CCDCOE {ls2025} e do desenvolvimento de desafios do APEX CTF 2025."
+        }
+      },
+      "a3": {
+        "role": "Pentester Web/App",
+        "bullets": {
+          "financial": "Realizei pentests em infraestruturas de finanças eletrônicas de instituições financeiras e órgãos públicos. Os alvos incluíram Cham Savings Bank, Acuon Capital, Korea Financial Investment Association, SBI Savings Bank, Hyundai Motor (HKMC) e o RPA da NongHyup (NACF).",
+          "review": "Realizei revisões de segurança de sistemas não padronizados. Os alvos foram o AI speaker KT GiGA Genie, um equipamento IoT de sensor térmico e o DB Insurance Claim Call.",
+          "isms": "Participei da consultoria de apoio à obtenção das certificações ISMS/ISO27001 (Coway)."
+        }
+      }
+    },
+    "certifications": {
+      "linux": "Linux Master Nível 2 (KAIT, 2021.07)",
+      "network": "Administrador de Redes Nível 2 (KAIT, 2024.07)"
+    },
+    "education": {
+      "kongju": "Universidade Nacional de Kongju, Departamento de Ciência da Computação (2012.02 — 2020.02)",
+      "cheonan": "Escola Técnica Comercial de Cheonan, Processamento de Informação (2009.03 — 2012.02)"
+    }
   },
   "sidebar": {
     "relatedPosts": "Posts Relacionados",
