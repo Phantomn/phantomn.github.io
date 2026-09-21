@@ -319,27 +319,27 @@
     ]
   },
   "apex-2026": {
-    "title": "APEX 2026 DFIR Green Team - Autoría del reto FOR400 Tazuko Voyager",
+    "title": "APEX 2026 DFIR Green Team - Autoría del reto FOR400",
     "client": "APEX CTF 2026",
     "role": "DFIR Green Team / Autoría de retos FOR400",
-    "background": "Como parte del DFIR Green Team de APEX 2026, se creó en solitario un reto de la categoría FOR400 (el nivel de mayor dificultad en forense). Se diseñó 'Tazuko Voyager', un escenario marítimo de incidente de intrusión con múltiples flags que combina comunicaciones satelitales (VSAT), AIS e ingeniería inversa de firmware.",
+    "background": "Como parte del DFIR Green Team de APEX 2026, se creó en solitario un reto de la categoría FOR400 (el nivel de mayor dificultad en forense). Se diseñó un escenario marítimo de incidente de intrusión con múltiples flags que combina comunicaciones satelitales (VSAT), AIS e ingeniería inversa de firmware.",
     "actions": [
       "Diseño de un escenario forense con múltiples flags que combina el tráfico de comandos de un terminal satelital de buque (capture.pcap) con la manipulación de la pantalla de navegación ECDIS",
       "Construcción de la línea de tiempo de intrusión: sondeo de la interfaz de comandos CCSDS -> AIS spoofing -> manipulación del firmware",
-      "Elaboración de los entregables del reto, como el informe Ground Truth, la rúbrica de puntuación y el informe de incidente (SatCom Mojopok)"
+      "Elaboración de los entregables del reto, como el informe Ground Truth, la rúbrica de puntuación y el informe de incidente"
     ],
     "results": [
-      "Autoría en solitario del reto 'Tazuko Voyager', de nivel de dificultad máximo FOR400, como DFIR Green Team de APEX 2026 (contribución 100%)"
+      "Autoría en solitario de un reto de nivel de dificultad máximo FOR400, como DFIR Green Team de APEX 2026 (contribución 100%)"
     ]
   },
   "hacksium": {
     "title": "Servicio de operación de la competencia de ciberataque y defensa HACKSIUM de la Busan Information Industry Promotion Agency",
     "client": "Busan Information Industry Promotion Agency",
     "role": "Autoría de retos de clasificación y de la fase final, y operación de la competencia",
-    "background": "Se realizó la autoría de los retos de clasificación y de la fase final de HACKSIUM y la operación de la competencia. Para la fase final se diseñó el escenario de defensa en tiempo real 'Anchor Watch' para un grupo de logística marítima, y para la clasificación se crearon los 16 retos completos de Forensics, Crypto, Pwn, Rev, Web y Misc, con topónimos de la ciudad de Busan como nombres en clave.",
+    "background": "Se realizó la autoría de los retos de clasificación y de la fase final de HACKSIUM y la operación de la competencia. Para la fase final se diseñó el escenario de defensa en tiempo real para un grupo de logística marítima, y para la clasificación se crearon los 16 retos completos de Forensics, Crypto, Pwn, Rev, Web y Misc, con topónimos de la ciudad de Busan como nombres en clave.",
     "actions": [
-      "Diseño del escenario de defensa del Equipo Azul LiveFire de la fase final, 'Anchor Watch' - construcción de un esquema de puntuación de respuesta a incidentes en tiempo real de 6 horas (3 Phase) con 4 Zone: satélite, buque, puerto y TI de la sede",
-      "Autoría de los 16 retos de clasificación (deadreckon, dilift, dualdoc, gratuitous, hollowshell, lacuna, lighttrap, musefault, neurovault, offbeat, scheming, shardvault, slashcore, urlrift, vaultburn, whisper) - nombres en clave con topónimos de Busan, todas las categorías: Forensics/Crypto/Pwn/Rev/Web/Misc",
+      "Diseño del escenario de defensa del Equipo Azul LiveFire de la fase final - construcción de un esquema de puntuación de respuesta a incidentes en tiempo real de 6 horas (3 Phase) con 4 Zone: satélite, buque, puerto y TI de la sede",
+      "Autoría de los 16 retos de clasificación - nombres en clave con topónimos de Busan, todas las categorías: Forensics/Crypto/Pwn/Rev/Web/Misc",
       "Apoyo en la operación de la fase de clasificación y la fase final"
     ],
     "results": [

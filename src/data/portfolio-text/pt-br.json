@@ -319,27 +319,27 @@
     ]
   },
   "apex-2026": {
-    "title": "APEX 2026 DFIR Green Team — Elaboração do desafio Tazuko Voyager FOR400",
+    "title": "APEX 2026 DFIR Green Team — Elaboração do desafio FOR400",
     "client": "APEX CTF 2026",
     "role": "DFIR Green Team / Elaboração de desafios FOR400",
-    "background": "Participei do DFIR Green Team do APEX 2026 e elaborei sozinho um desafio da categoria FOR400 (o maior nível de dificuldade em forense). Projetei o cenário multiflag de incidente marítimo 'Tazuko Voyager', que combina comunicação por satélite (VSAT), AIS e engenharia reversa de firmware.",
+    "background": "Participei do DFIR Green Team do APEX 2026 e elaborei sozinho um desafio da categoria FOR400 (o maior nível de dificuldade em forense). Projetei o cenário multiflag de incidente marítimo que combina comunicação por satélite (VSAT), AIS e engenharia reversa de firmware.",
     "actions": [
       "Projeto de um cenário forense multiflag que combina o tráfego de comandos de um terminal de comunicação por satélite de navio (capture.pcap) e a manipulação do display de navegação ECDIS",
       "Composição da linha do tempo da intrusão: sondagem da interface de comandos CCSDS -> AIS spoofing -> adulteração de firmware",
-      "Elaboração dos artefatos do desafio, como relatório Ground Truth, rubrica de pontuação e relatório de incidente (SatCom Mojopok)"
+      "Elaboração dos artefatos do desafio, como relatório Ground Truth, rubrica de pontuação e relatório de incidente"
     ],
     "results": [
-      "Elaboração individual do desafio 'Tazuko Voyager', de nível FOR400 (o mais difícil), como APEX 2026 DFIR Green Team (contribuição 100%)"
+      "Elaboração individual de um desafio de nível FOR400 (o mais difícil), como APEX 2026 DFIR Green Team (contribuição 100%)"
     ]
   },
   "hacksium": {
     "title": "Serviço de operação do exercício cibernético de ataque e defesa (HACKSIUM) da Busan Information Industry Promotion Agency",
     "client": "Busan Information Industry Promotion Agency",
     "role": "Elaboração de desafios classificatórios e da final e operação da competição",
-    "background": "Realizei a elaboração dos desafios classificatórios e da final e a operação do HACKSIUM. Para a final, projetei o cenário de defesa em tempo real 'Anchor Watch' para um grupo de logística marítima; para a fase classificatória, elaborei todos os 16 desafios, com nomes de lugares de Busan como codinomes, em Forensics, Crypto, Pwn, Rev, Web e Misc.",
+    "background": "Realizei a elaboração dos desafios classificatórios e da final e a operação do HACKSIUM. Para a final, projetei o cenário de defesa em tempo real para um grupo de logística marítima; para a fase classificatória, elaborei todos os 16 desafios, com nomes de lugares de Busan como codinomes, em Forensics, Crypto, Pwn, Rev, Web e Misc.",
     "actions": [
-      "Projeto do cenário de defesa da Equipe Azul LiveFire da final, 'Anchor Watch' — construção de um sistema de pontuação de resposta a incidentes em tempo real, com 4 zonas (satélite, navio, porto e TI da sede) e 6 horas (3 fases)",
-      "Elaboração completa dos 16 desafios classificatórios (deadreckon, dilift, dualdoc, gratuitous, hollowshell, lacuna, lighttrap, musefault, neurovault, offbeat, scheming, shardvault, slashcore, urlrift, vaultburn, whisper) — codinomes de lugares de Busan, todas as categorias: Forensics/Crypto/Pwn/Rev/Web/Misc",
+      "Projeto do cenário de defesa da Equipe Azul LiveFire da final — construção de um sistema de pontuação de resposta a incidentes em tempo real, com 4 zonas (satélite, navio, porto e TI da sede) e 6 horas (3 fases)",
+      "Elaboração completa dos 16 desafios classificatórios — codinomes de lugares de Busan, todas as categorias: Forensics/Crypto/Pwn/Rev/Web/Misc",
       "Apoio à operação das fases classificatória e final da competição"
     ],
     "results": [
