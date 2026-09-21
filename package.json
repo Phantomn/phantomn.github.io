@@ -13,7 +13,9 @@
     "typecheck": "tsc --noEmit",
     "knip": "knip",
     "check:records": "node scripts/check-records.mjs",
-    "test:e2e": "playwright test"
+    "cv:pdf": "node scripts/cv/build-public-pdfs.mjs",
+    "test:e2e": "playwright test",
+    "verify": "pnpm typecheck && pnpm lint && pnpm knip && pnpm check:records && pnpm build && pnpm test:e2e"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
