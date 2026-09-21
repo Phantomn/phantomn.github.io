@@ -319,27 +319,27 @@
     ]
   },
   "apex-2026": {
-    "title": "APEX 2026 DFIR Green Team — Tazuko Voyager FOR400 Challenge Authoring",
+    "title": "APEX 2026 DFIR Green Team — FOR400 Challenge Authoring",
     "client": "APEX CTF 2026",
     "role": "DFIR Green Team / FOR400 Challenge Author",
-    "background": "Participated as the APEX 2026 DFIR Green Team and single-handedly authored the FOR400 (top forensics difficulty) category challenge. Designed 'Tazuko Voyager', a multi-flag maritime security incident scenario combining satellite communication (VSAT), AIS, and firmware reversing.",
+    "background": "Participated as the APEX 2026 DFIR Green Team and single-handedly authored the FOR400 (top forensics difficulty) category challenge. Designed a multi-flag maritime security incident scenario combining satellite communication (VSAT), AIS, and firmware reversing.",
     "actions": [
       "Designed a multi-flag forensic scenario combining ship satellite terminal command traffic (capture.pcap) with ECDIS navigation display manipulation",
       "Built an intrusion timeline running from CCSDS command interface probing -> AIS spoofing -> firmware tampering",
-      "Wrote the authoring deliverables including the Ground Truth report, scoring rubric, and incident report (SatCom Mojopok)"
+      "Wrote the authoring deliverables including the Ground Truth report, scoring rubric, and incident report"
     ],
     "results": [
-      "Single-handedly authored the top-difficulty FOR400 challenge 'Tazuko Voyager' as the APEX 2026 DFIR Green Team (contribution 100%)"
+      "Single-handedly authored the top-difficulty FOR400 challenge as the APEX 2026 DFIR Green Team (contribution 100%)"
     ]
   },
   "hacksium": {
     "title": "Busan Information Industry Promotion Agency Cyber Attack-Defense Competition (HACKSIUM) Operation Service",
     "client": "Busan Information Industry Promotion Agency",
     "role": "Qualifier and Final Challenge Authoring and Competition Operations",
-    "background": "Authored the HACKSIUM qualifier and final challenges and operated the competition. For the final, designed 'Anchor Watch', a real-time defense scenario against a maritime logistics group; for the qualifier, authored all 16 challenges in Forensics, Crypto, Pwn, Rev, Web, and Misc, codenamed after Busan place names.",
+    "background": "Authored the HACKSIUM qualifier and final challenges and operated the competition. For the final, designed a real-time defense scenario against a maritime logistics group; for the qualifier, authored all 16 challenges in Forensics, Crypto, Pwn, Rev, Web, and Misc, codenamed after Busan place names.",
     "actions": [
-      "Designed the final LiveFire blue team defense scenario 'Anchor Watch' - built a real-time incident response scoring system over 4 zones (satellite, ship, port, HQ IT) and 6 hours (3 phases)",
-      "Authored all 16 qualifier challenges (deadreckon, dilift, dualdoc, gratuitous, hollowshell, lacuna, lighttrap, musefault, neurovault, offbeat, scheming, shardvault, slashcore, urlrift, vaultburn, whisper) - codenamed after Busan place names, covering all categories: Forensics/Crypto/Pwn/Rev/Web/Misc",
+      "Designed the final LiveFire blue team defense scenario - built a real-time incident response scoring system over 4 zones (satellite, ship, port, HQ IT) and 6 hours (3 phases)",
+      "Authored all 16 qualifier challenges - codenamed after Busan place names, covering all categories: Forensics/Crypto/Pwn/Rev/Web/Misc",
       "Supported qualifier and final competition operations"
     ],
     "results": [
