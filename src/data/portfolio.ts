@@ -91,8 +91,3 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
 
 /** 전체 프로젝트 수 */
 export const PORTFOLIO_PROJECT_COUNT = PORTFOLIO_PROJECTS.length;
-
-/** 카테고리별 프로젝트 수 */
-export const PORTFOLIO_CATEGORY_COUNTS = Object.fromEntries(
-  PORTFOLIO_CATEGORY_KEYS.map((k) => [k, PORTFOLIO_PROJECTS.filter((p) => p.category === k).length]),
-) as Record<PortfolioCategoryKey, number>;
