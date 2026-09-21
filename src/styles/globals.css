@@ -322,8 +322,10 @@
 /* ── Links ───────────────────────────────────────────────────────── */
 /*  기본색은 중립(본문과 구분은 밑줄로만) - hover에서만 악센트로 전환.       */
 /*  Linear의 실제 링크 컴포넌트(variant-underline)와 동일한 패턴.          */
+/*  .prose-link: MDX 밖의 글 페이지(소개 등)도 같은 규칙을 쓰기 위한 별칭.   */
 
-.prose a {
+.prose a,
+.prose-link {
   color: var(--foreground);
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -333,7 +335,8 @@
   transition: color 150ms ease, text-decoration-color 150ms ease, text-decoration-thickness 150ms ease;
 }
 
-.prose a:hover {
+.prose a:hover,
+.prose-link:hover {
   color: var(--prose-link-hover);
   text-decoration-color: var(--prose-link-hover);
   text-decoration-thickness: 2px;

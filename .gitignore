@@ -56,3 +56,5 @@ package-lock.json
 # superpowers brainstorming companion mockups
 .superpowers/
 
+# impeccable 스킬 산출물(디자인 critique 리포트)
+.impeccable/

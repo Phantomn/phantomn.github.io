@@ -27,7 +27,7 @@ const NAME = "홍승표 (ph4nt0m)";
 const COMPANY = "CoreSecurity";
 
 const ABOUT_TEXT =
-  "안녕하세요, 서울에서 보안 리서처로 일하고 있는 홍승표입니다. 금융권 Web/App 모의해킹과 OT/ICS 점검을 거쳐, 지금은 다양한 Vulnerability Research 연구와 AI 기반 점검 자동화에 집중하고 있습니다.";
+  "안녕하세요, Vulnerability Researcher 홍승표입니다. 금융권 Web/App 모의해킹과 OT/ICS 점검을 거쳐, 지금은 다양한 연구와 AI 기반 점검 자동화에 집중하고 있습니다.";
 
 /** 그룹별 발견 경위. 데이터에 필드가 없어 여기서 붙인다. */
 const GROUP_NOTE: Record<string, string> = {
@@ -42,8 +42,8 @@ const RESUME_LINKS = [
 /** 한 연도의 CVE가 이 수를 넘으면 접어 둔다. */
 const FOLD_OVER = 5;
 
-const LINK =
-  "underline decoration-primary/60 decoration-[1.5px] underline-offset-4 hover:decoration-primary";
+/** 사이트 본문 링크 규칙(globals.css .prose a)을 그대로 쓴다. */
+const LINK = "prose-link";
 const H2 = "mb-3.5 font-heading text-2xl font-semibold tracking-tight";
 const H3 = "mb-1.5 text-base font-bold tabular-nums";
 const LIST = "list-disc space-y-1.5 pl-5";
