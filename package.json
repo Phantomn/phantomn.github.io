@@ -14,9 +14,10 @@
     "knip": "knip",
     "check:records": "node scripts/check-records.mjs",
     "check:i18n": "node scripts/check-i18n.mjs",
+    "check:type-scale": "node scripts/check-type-scale.mjs",
     "cv:pdf": "node scripts/cv/build-public-pdfs.mjs",
     "test:e2e": "playwright test",
-    "verify": "pnpm typecheck && pnpm lint && pnpm knip && pnpm check:records && pnpm check:i18n && pnpm build && pnpm test:e2e"
+    "verify": "pnpm typecheck && pnpm lint && pnpm knip && pnpm check:records && pnpm check:i18n && pnpm check:type-scale && pnpm build && pnpm test:e2e"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.2.0",

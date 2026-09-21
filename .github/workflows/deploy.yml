@@ -56,6 +56,9 @@ jobs:
       - name: i18n key parity (ko / en / es / pt-br)
         run: pnpm check:i18n
 
+      - name: type scale tokens (globals.css / utils.ts)
+        run: pnpm check:type-scale
+
   build:
     runs-on: ubuntu-latest
     steps:

@@ -156,13 +156,13 @@ export default async function PortfolioPage({ params }: Props) {
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
-                <h1 className="font-heading text-2xl font-bold" data-notranslate>
+                <h1 className="font-heading text-title font-bold" data-notranslate>
                   {profile.name}
                 </h1>
                 <ShieldCheck className="h-5 w-5 text-muted-foreground" />
               </div>
-              <p className="mt-1 text-sm text-muted-foreground">{profile.headline}</p>
-              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
+              <p className="mt-1 text-body-sm text-muted-foreground">{profile.headline}</p>
+              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-body-sm text-muted-foreground">
                 <span className="inline-flex items-center gap-1" data-notranslate>
                   <MapPin className="h-3.5 w-3.5" />
                   {profile.location}
@@ -186,13 +186,13 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── Summary ───────────────────────────────────────────── */}
         <Card className="mt-4">
           <CardHeader>
-            <h2 className="flex items-center gap-2 text-xl leading-none font-semibold">
+            <h2 className="flex items-center gap-2 text-heading font-semibold">
               <FileText className="h-5 w-5 text-primary" />
               {t("sectionSummary")}
             </h2>
           </CardHeader>
           <CardContent>
-            <p className="text-base leading-relaxed text-muted-foreground">
+            <p className="text-body text-muted-foreground">
               {profile.summary}
             </p>
           </CardContent>
@@ -201,7 +201,7 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── Core Competencies ─────────────────────────────────── */}
         <Card className="mt-4">
           <CardHeader>
-            <h2 className="flex items-center gap-2 text-xl leading-none font-semibold">
+            <h2 className="flex items-center gap-2 text-heading font-semibold">
               <Target className="h-5 w-5 text-primary" />
               {t("sectionCompetencies")}
             </h2>
@@ -209,7 +209,7 @@ export default async function PortfolioPage({ params }: Props) {
           <CardContent>
             <ul className="space-y-2">
               {competencies.map((c, i) => (
-                <li key={i} className="flex gap-2 text-base leading-relaxed text-muted-foreground">
+                <li key={i} className="flex gap-2 text-body text-muted-foreground">
                   <span className="mt-0.5 shrink-0 text-muted-foreground" data-notranslate>
                     ▹
                   </span>
@@ -223,7 +223,7 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── Featured Projects ─────────────────────────────────── */}
         <Card className="mt-4">
           <CardHeader>
-            <h2 className="flex items-center gap-2 text-xl leading-none font-semibold">
+            <h2 className="flex items-center gap-2 text-heading font-semibold">
               <Star className="h-5 w-5 text-primary" />
               {t("sectionFeatured")}
             </h2>
@@ -234,14 +234,14 @@ export default async function PortfolioPage({ params }: Props) {
                 <div key={p.title} className="break-inside-avoid">
                   {idx > 0 && <Separator className="mb-6" />}
                   <div className="flex items-start justify-between gap-3">
-                    <h3 className="text-base font-semibold">{p.title}</h3>
+                    <h3 className="text-subheading font-semibold">{p.title}</h3>
                     {p.contribution > 0 && (
                       <Badge variant="outline" className="shrink-0 tabular-nums" data-notranslate>
                         {p.contributionLabel}
                       </Badge>
                     )}
                   </div>
-                  <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-muted-foreground">
+                  <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-meta text-muted-foreground">
                     <span className="font-medium text-foreground/70" data-notranslate>
                       {p.client}
                     </span>
@@ -251,16 +251,16 @@ export default async function PortfolioPage({ params }: Props) {
                     <span>{p.role}</span>
                   </div>
                   {p.background && (
-                    <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+                    <p className="mt-3 text-body text-muted-foreground">
                       {p.background}
                     </p>
                   )}
                   {p.actions.length > 0 && (
                     <div className="mt-3">
-                      <div className="text-xs font-semibold text-foreground/80">
+                      <div className="text-meta font-semibold text-foreground/80">
                         {t("labelActions")}
                       </div>
-                      <ul className="mt-1 list-disc space-y-1.5 pl-5 text-base leading-relaxed text-muted-foreground">
+                      <ul className="mt-1 list-disc space-y-1.5 pl-5 text-body text-muted-foreground">
                         {p.actions.map((a, i) => (
                           <li key={i}>{a}</li>
                         ))}
@@ -269,10 +269,10 @@ export default async function PortfolioPage({ params }: Props) {
                   )}
                   {p.results.length > 0 && (
                     <div className="mt-3">
-                      <div className="text-xs font-semibold text-foreground/80">
+                      <div className="text-meta font-semibold text-foreground/80">
                         {t("labelResults")}
                       </div>
-                      <ul className="mt-1 list-disc space-y-1.5 pl-5 text-base leading-relaxed text-muted-foreground">
+                      <ul className="mt-1 list-disc space-y-1.5 pl-5 text-body text-muted-foreground">
                         {p.results.map((r, i) => (
                           <li key={i}>{r}</li>
                         ))}
@@ -282,7 +282,7 @@ export default async function PortfolioPage({ params }: Props) {
                   {p.stack && p.stack.length > 0 && (
                     <div className="mt-3 flex flex-wrap gap-1.5" data-notranslate>
                       {p.stack.map((s) => (
-                        <Badge key={s} variant="secondary" className="text-[11px]">
+                        <Badge key={s} variant="secondary" className="text-label">
                           {s}
                         </Badge>
                       ))}
@@ -297,7 +297,7 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── Experience ────────────────────────────────────────── */}
         <Card className="mt-4">
           <CardHeader>
-            <h2 className="flex items-center gap-2 text-xl leading-none font-semibold">
+            <h2 className="flex items-center gap-2 text-heading font-semibold">
               <Briefcase className="h-5 w-5 text-primary" />
               {t("sectionExperience")}
             </h2>
@@ -318,14 +318,14 @@ export default async function PortfolioPage({ params }: Props) {
                       ) : null}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-base font-semibold">{exp.role}</h3>
-                      <div className="text-sm text-foreground/80" data-notranslate>
+                      <h3 className="text-subheading font-semibold">{exp.role}</h3>
+                      <div className="text-body-sm text-foreground/80" data-notranslate>
                         {exp.company}
                       </div>
-                      <div className="text-sm text-muted-foreground" data-notranslate>
+                      <div className="text-meta text-muted-foreground" data-notranslate>
                         {exp.dates} · {exp.location}
                       </div>
-                      <ul className="mt-3 list-disc space-y-1.5 pl-5 text-base leading-relaxed text-muted-foreground">
+                      <ul className="mt-3 list-disc space-y-1.5 pl-5 text-body text-muted-foreground">
                         {exp.bullets.map((b, bIdx) => (
                           <li key={bIdx}>{b}</li>
                         ))}
@@ -341,10 +341,10 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── All Projects (filterable) ─────────────────────────── */}
         <Card className="mt-4">
           <CardHeader>
-            <h2 className="flex items-center gap-2 text-xl leading-none font-semibold">
+            <h2 className="flex items-center gap-2 text-heading font-semibold">
               <FolderKanban className="h-5 w-5 text-primary" />
               {t("sectionProjects")}{" "}
-              <span className="text-sm font-normal text-muted-foreground tabular-nums">
+              <span className="text-body-sm font-normal text-muted-foreground tabular-nums">
                 ({PORTFOLIO_PROJECT_COUNT})
               </span>
             </h2>
@@ -363,7 +363,7 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── Skills ────────────────────────────────────────────── */}
         <Card className="mt-4">
           <CardHeader>
-            <h2 className="flex items-center gap-2 text-xl leading-none font-semibold">
+            <h2 className="flex items-center gap-2 text-heading font-semibold">
               <Wrench className="h-5 w-5 text-primary" />
               {t("sectionSkills")}
             </h2>
@@ -373,7 +373,7 @@ export default async function PortfolioPage({ params }: Props) {
               {SKILL_GROUPS.map((g, idx) => (
                 <div key={g.title}>
                   {idx > 0 && <Separator className="mb-4" />}
-                  <h3 className="mb-2 text-sm font-semibold" data-notranslate>
+                  <h3 className="mb-2 text-body-sm font-semibold" data-notranslate>
                     {g.title}
                   </h3>
                   <div className="flex flex-wrap gap-1.5" data-notranslate>
@@ -392,10 +392,10 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── CVE / Vulnerability Research ──────────────────────── */}
         <Card className="mt-4">
           <CardHeader>
-            <h2 className="flex items-center gap-2 text-xl leading-none font-semibold">
+            <h2 className="flex items-center gap-2 text-heading font-semibold">
               <Bug className="h-5 w-5 text-primary" />
               {t("sectionCves")}{" "}
-              <span className="text-sm font-normal text-muted-foreground tabular-nums">
+              <span className="text-body-sm font-normal text-muted-foreground tabular-nums">
                 (CVE {CVE_ONLY_COUNT} · FVE {FVE_COUNT}
                 {CVE_PENDING_COUNT > 0 ? ` · ${tAbout("pendingLabel")} ${CVE_PENDING_COUNT}` : ""})
               </span>
@@ -414,11 +414,11 @@ export default async function PortfolioPage({ params }: Props) {
                       <span className="font-semibold" data-notranslate>
                         {item.id}
                       </span>
-                      <span className="text-xs text-muted-foreground tabular-nums">
+                      <span className="text-meta text-muted-foreground tabular-nums">
                         {item.year}
                       </span>
                     </div>
-                    <div className="mt-2 text-base leading-relaxed text-muted-foreground">
+                    <div className="mt-2 text-body text-muted-foreground">
                       {item.summary}
                     </div>
                   </a>
@@ -436,23 +436,23 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── Certifications & Education ────────────────────────── */}
         <Card className="mt-4">
           <CardHeader>
-            <h2 className="flex items-center gap-2 text-xl leading-none font-semibold">
+            <h2 className="flex items-center gap-2 text-heading font-semibold">
               <Award className="h-5 w-5 text-primary" />
               {t("sectionCredentials")}
             </h2>
           </CardHeader>
           <CardContent className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div>
-              <h3 className="mb-2 text-sm font-semibold">{t("labelCertifications")}</h3>
-              <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+              <h3 className="mb-2 text-body-sm font-semibold">{t("labelCertifications")}</h3>
+              <ul className="list-disc space-y-1 pl-5 text-body-sm text-muted-foreground">
                 {certifications.map((c) => (
                   <li key={c}>{c}</li>
                 ))}
               </ul>
             </div>
             <div>
-              <h3 className="mb-2 text-sm font-semibold">{t("labelEducation")}</h3>
-              <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+              <h3 className="mb-2 text-body-sm font-semibold">{t("labelEducation")}</h3>
+              <ul className="list-disc space-y-1 pl-5 text-body-sm text-muted-foreground">
                 {education.map((e) => (
                   <li key={e}>{e}</li>
                 ))}
