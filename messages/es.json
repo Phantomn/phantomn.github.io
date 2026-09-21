@@ -108,7 +108,13 @@
     "maxCvss": "CVSS máx. {score}",
     "career": "La trayectoria y los proyectos están en el <link>portafolio</link>.",
     "labelEmail": "Correo",
-    "labelResume": "Currículum"
+    "labelResume": "Currículum",
+    "name": "Seungpyo Hong (ph4nt0m)",
+    "groupNote": {
+      "Kernel": "Encontradas con un fuzzer de kernel propio creado en la 8.ª edición de Best of the Best (BoB)"
+    },
+    "resumeKo": "coreano",
+    "resumeEn": "inglés"
   },
   "portfolio": {
     "title": "Portafolio",
@@ -169,5 +175,24 @@
     "open": "Buscar",
     "title": "Buscar",
     "placeholder": "Buscar posts, CVEs y writeups..."
+  },
+  "records": {
+    "hosts": {
+      "kepco": "KEPCO"
+    },
+    "teams": {
+      "korCan": "equipo conjunto Corea-Canadá",
+      "korHun": "equipo conjunto Corea-Hungría"
+    },
+    "roles": {
+      "dfirBlue": "Equipo Azul DFIR",
+      "specialSystemBlue": "Equipo Azul Special System",
+      "greenTeam": "Green Team",
+      "dfirChallenges": "desarrollo de retos DFIR",
+      "operations": "operación",
+      "challenges": "desarrollo de retos"
+    },
+    "overall": "{rank}.º de {of} equipos en la clasificación general",
+    "track": "{rank}.º en la categoría {name}"
   }
 }

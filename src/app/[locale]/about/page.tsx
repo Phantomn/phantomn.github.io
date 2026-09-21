@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { routing } from "@/i18n/routing";
-import { DynamicTranslator } from "@/components/dynamic-translator";
 import {
   CVE_ITEMS,
   CVE_ONLY_COUNT,
@@ -23,18 +21,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: t("title") };
 }
 
-const NAME = "홍승표 (ph4nt0m)";
 const COMPANY = "CoreSecurity";
 
-/** 그룹별 발견 경위. 데이터에 필드가 없어 여기서 붙인다. */
-const GROUP_NOTE: Record<string, string> = {
-  Kernel: "BoB 8기에서 직접 만든 커널 퍼저로 발견",
-};
-
 const RESUME_LINKS = [
-  { label: "한국어", href: "/docs/resume-ko.pdf" },
-  { label: "English", href: "/docs/resume-en.pdf" },
-];
+  { labelKey: "resumeKo", href: "/docs/resume-ko.pdf" },
+  { labelKey: "resumeEn", href: "/docs/resume-en.pdf" },
+] as const;
 
 /** 한 연도의 CVE가 이 수를 넘으면 접어 둔다. */
 const FOLD_OVER = 5;
@@ -87,19 +79,16 @@ export default async function AboutPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "about" });
-  const shouldTranslate = locale !== routing.defaultLocale;
+  const tr = await getTranslations({ locale, namespace: "records" });
   const years = groupByYear();
 
+  // 이 페이지의 모든 문장은 messages 에서 온다(데이터는 고유명사·숫자뿐). 런타임 기계 번역기를 쓰지 않는다.
   return (
-    <DynamicTranslator
-      enabled={shouldTranslate}
-      targetLocale={locale}
-      contentKey="about"
-    >
+    <>
       <article className="mx-auto w-[90vw] max-w-[52rem] break-keep py-10 text-[1.0625rem] leading-[1.85]">
         <header>
           <h1 className="font-heading text-[2.5rem] leading-[1.15] font-bold tracking-tight">
-            {NAME}
+            {t("name")}
           </h1>
           <p className="mt-2 text-[0.95rem] text-muted-foreground">{COMPANY}</p>
         </header>
@@ -111,7 +100,7 @@ export default async function AboutPage({ params }: Props) {
         <section className="mt-9 border-t pt-8">
           <h2 className={H2}>{t("sectionCompetitions")}</h2>
           <ul className={LIST}>
-            {describeEvents().map((e) => (
+            {describeEvents(tr).map((e) => (
               <li key={e.name}>
                 <b className="font-semibold">{e.name}</b> {e.editions.join(" / ")}
               </li>
@@ -158,8 +147,8 @@ export default async function AboutPage({ params }: Props) {
                           {t("maxCvss", {
                             score: Math.max(...cves.map((c) => c.score)).toFixed(1),
                           })}
-                          {GROUP_NOTE[cves[0].groupKey]
-                            ? `. ${GROUP_NOTE[cves[0].groupKey]}`
+                          {t.has(`groupNote.${cves[0].groupKey}`)
+                            ? `. ${t(`groupNote.${cves[0].groupKey}`)}`
                             : ""}
                         </span>
                       </summary>
@@ -235,7 +224,7 @@ export default async function AboutPage({ params }: Props) {
                   <span key={r.href}>
                     {i > 0 && ", "}
                     <a href={r.href} download className={LINK}>
-                      {r.label}
+                      {t(r.labelKey)}
                     </a>
                   </span>
                 ))}
@@ -244,6 +233,6 @@ export default async function AboutPage({ params }: Props) {
           </dl>
         </section>
       </article>
-    </DynamicTranslator>
+    </>
   );
 }

@@ -35,13 +35,13 @@ import {
   CVE_PENDING_COUNT,
   FVE_COUNT,
 } from "@/data/cves";
-import { formatResult, getCompetition } from "@/data/competitions";
+import { formatResult, getCompetition, tKo } from "@/data/competitions";
 import { SITE_AUTHOR } from "@/lib/profile";
 import type { ExperienceItem } from "@/types/profile";
 
 /** 순위 문구는 competitions.json 에서만 만든다. */
 const LS2025 = getCompetition("ls2025");
-const LS2025_TEXT = `Locked Shields ${LS2025.year} ${formatResult(LS2025)}`;
+const LS2025_TEXT = `Locked Shields ${LS2025.year} ${formatResult(LS2025, tKo)}`;
 
 interface Props {
   params: Promise<{ locale: string }>;
