@@ -203,7 +203,7 @@ export default async function CvePage({ params }: Props) {
             </div>
 
             <div className="mt-5 space-y-3">
-              <h1 className="text-3xl font-bold font-heading leading-tight sm:text-4xl">
+              <h1 className="text-title font-bold font-heading">
                 {title}
               </h1>
 

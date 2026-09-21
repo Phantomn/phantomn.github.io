@@ -87,7 +87,7 @@ export default async function AboutPage({ params }: Props) {
     <>
       <article className="mx-auto w-[90vw] max-w-[52rem] break-keep py-10 text-[1.0625rem] leading-[1.85]">
         <header>
-          <h1 className="font-heading text-[2.5rem] leading-[1.15] font-bold tracking-tight">
+          <h1 className="font-heading text-title font-bold tracking-tight">
             {t("name")}
           </h1>
           <p className="mt-2 text-[0.95rem] text-muted-foreground">{COMPANY}</p>

@@ -125,3 +125,34 @@ test("portfolio layout invariants: one h3 size, section anchors resolve, section
   );
   expect(boxedSections).toBe(0);
 });
+
+/*
+ * 히어로의 숫자 줄. 성과가 요약 문장 안에 묶여 있어 훑어서 읽히지 않았다(표본에서 숫자 배지로 내세우는 곳 21%).
+ * 값은 단일 원본에서 와야 한다 - 화면의 숫자와 데이터가 어긋나면 실패한다.
+ */
+test("portfolio hero shows the record numbers from the single source", async ({ page }) => {
+  const projects: Record<string, unknown> = JSON.parse(readFileSync("src/data/portfolio-text/ko.json", "utf8"));
+  const competitions: { id: string; tracks?: { name: string; rank: number }[] }[] = JSON.parse(
+    readFileSync("src/data/competitions.json", "utf8"),
+  );
+  const ls2025 = competitions.find((c) => c.id === "ls2025")!;
+
+  await page.goto("/ko/portfolio/");
+  const stats = page.locator("main header dl");
+  await expect(stats).toHaveCount(1);
+  const pairs = await stats.locator("dd").allInnerTexts();
+  expect(pairs, "프로젝트 수는 데이터에서 센 값과 같아야 한다").toContain(String(Object.keys(projects).length));
+  expect(pairs, "Locked Shields 2025 DFIR 순위").toContain(`${ls2025.tracks![0].rank}위`);
+  // 숫자가 본문보다 크게 보여야 훑어서 읽힌다
+  const ddSize = await stats.locator("dd").first().evaluate((e) => parseFloat(getComputedStyle(e).fontSize));
+  const bodySize = await page.locator("main header p").first().evaluate((e) => parseFloat(getComputedStyle(e).fontSize));
+  expect(ddSize).toBeGreaterThan(bodySize);
+});
+
+/* 섹션 수. 표본 97곳의 중앙값 3, 사분위 [2,6]. 이력서 골격 때문에 섹션이 늘어나기 쉬워 상한을 걸어 둔다. */
+test("portfolio keeps the section count within the sample range", async ({ page }) => {
+  await page.goto("/ko/portfolio/");
+  const sections = await page.locator("main section[id]").count();
+  expect(sections, `섹션 ${sections}개`).toBeLessThanOrEqual(6);
+  expect(sections).toBeGreaterThanOrEqual(4);
+});

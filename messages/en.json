@@ -133,7 +133,7 @@
     "downloadPdf": "Download Career Statement",
     "openRegistry": "View All",
     "headline": "Offensive Security Researcher · Web/App · OT/ICS Pentesting · Security Consulting",
-    "summary": "Delivered {projects}+ projects, from financial-sector Web/App pentesting to OT/ICS (IEC 62443), IoT, and medical device (FDA) security and cyber exercise development. Earned the Achilles Communication Certificate Level 2 for LS ELECTRIC automation devices. Results include NATO CCDCOE {ls2025}, {cve} CVEs ({breakdown}) and {fve} FVEs.",
+    "summary": "Delivered {projects}+ projects, from financial-sector Web/App pentesting to OT/ICS (IEC 62443), IoT, and medical device (FDA) security and cyber exercise development. Earned the Achilles Communication Certificate Level 2 for LS ELECTRIC automation devices.",
     "filterAll": "All",
     "contribution": "Contribution {value}%",
     "present": "Present",
@@ -184,7 +184,12 @@
       "kongju": "Kongju National University, Dept. of Computer Science and Engineering (2012.02 — 2020.02)",
       "cheonan": "Cheonan Commercial High School, Information Processing (2009.03 — 2012.02)"
     },
-    "sectionsNav": "Jump to section"
+    "sectionsNav": "Jump to section",
+    "stats": {
+      "projects": "Projects",
+      "cves": "CVEs",
+      "fves": "FVEs"
+    }
   },
   "sidebar": {
     "relatedPosts": "Related Posts",
@@ -246,6 +251,7 @@
       "challenges": "Challenge development"
     },
     "overall": "overall {rank, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} of {of} teams",
-    "track": "{rank, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} in the {name} track"
+    "track": "{rank, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} in the {name} track",
+    "rankValue": "{rank, selectordinal, one {#st} two {#nd} few {#rd} other {#th}}"
   }
 }

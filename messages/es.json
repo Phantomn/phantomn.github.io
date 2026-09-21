@@ -133,7 +133,7 @@
     "downloadPdf": "Descargar Currículum",
     "openRegistry": "Ver Todo",
     "headline": "Offensive Security Researcher · Web/App · OT/ICS Pentesting · Consultoría de seguridad",
-    "summary": "Más de {projects} proyectos, desde el pentesting Web/App en el sector financiero hasta la seguridad OT/ICS (IEC 62443), IoT y dispositivos médicos (FDA) y el desarrollo de ejercicios de ciberdefensa. Certificación Achilles Communication Certificate Level 2 obtenida para los equipos de automatización de LS ELECTRIC. Logros: NATO CCDCOE {ls2025}, {cve} CVE ({breakdown}) y {fve} FVE.",
+    "summary": "Más de {projects} proyectos, desde el pentesting Web/App en el sector financiero hasta la seguridad OT/ICS (IEC 62443), IoT y dispositivos médicos (FDA) y el desarrollo de ejercicios de ciberdefensa. Certificación Achilles Communication Certificate Level 2 obtenida para los equipos de automatización de LS ELECTRIC.",
     "filterAll": "Todos",
     "contribution": "Contribución {value}%",
     "present": "Actualidad",
@@ -184,7 +184,12 @@
       "kongju": "Universidad Nacional de Kongju, Departamento de Ingeniería Informática (2012.02 — 2020.02)",
       "cheonan": "Escuela Secundaria Comercial de Cheonan, Procesamiento de la Información (2009.03 — 2012.02)"
     },
-    "sectionsNav": "Ir a la sección"
+    "sectionsNav": "Ir a la sección",
+    "stats": {
+      "projects": "Proyectos",
+      "cves": "CVE",
+      "fves": "FVE"
+    }
   },
   "sidebar": {
     "relatedPosts": "Posts Relacionados",
@@ -246,6 +251,7 @@
       "challenges": "desarrollo de retos"
     },
     "overall": "{rank}.º de {of} equipos en la clasificación general",
-    "track": "{rank}.º en la categoría {name}"
+    "track": "{rank}.º en la categoría {name}",
+    "rankValue": "{rank}.º"
   }
 }

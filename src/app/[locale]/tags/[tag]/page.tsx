@@ -44,7 +44,7 @@ export default async function TagPage({ params }: Props) {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
       <p className="text-sm text-muted-foreground">{t("heading")}</p>
-      <h1 className="mb-8 text-3xl font-bold font-heading">#{normalized}</h1>
+      <h1 className="mb-8 text-title font-bold font-heading">#{normalized}</h1>
       <ul className="flex flex-col gap-4">
         {sorted.map((item) => (
           <li key={`${item.type}-${item.slug}`} className="border-b border-border pb-4">

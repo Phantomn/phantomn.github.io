@@ -6,11 +6,9 @@ import {
   Mail,
   ShieldCheck,
   Star,
-  FileText,
   Target,
   Briefcase,
   FolderKanban,
-  Wrench,
   Bug,
   Award,
 } from "lucide-react";
@@ -50,12 +48,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 /** 섹션 앵커 줄. id 는 각 Section 의 id 와 같아야 한다(tests/portfolio.spec.ts 가 대조). */
 const SECTION_NAV = [
-  { id: "summary", labelKey: "sectionSummary" },
   { id: "competencies", labelKey: "sectionCompetencies" },
   { id: "featured", labelKey: "sectionFeatured" },
   { id: "experience", labelKey: "sectionExperience" },
   { id: "projects", labelKey: "sectionProjects" },
-  { id: "skills", labelKey: "sectionSkills" },
   { id: "cves", labelKey: "sectionCves" },
   { id: "credentials", labelKey: "sectionCredentials" },
 ] as const;
@@ -145,17 +141,27 @@ export default async function PortfolioPage({ params }: Props) {
   const profile = {
     name: tAbout("name"),
     headline: t("headline"),
-    summary: t("summary", {
-      projects: PORTFOLIO_PROJECT_COUNT,
-      ls2025: ls2025Text,
-      cve: CVE_ONLY_COUNT,
-      breakdown: CVE_BREAKDOWN,
-      fve: FVE_COUNT,
-    }),
+    // 순위·건수는 위 숫자 줄이 보여 준다. 문장에서 되풀이하지 않는다.
+    summary: t("summary", { projects: PORTFOLIO_PROJECT_COUNT }),
     location: "Seoul, South Korea",
     email: SITE_AUTHOR.email,
     avatar: "/images/avatar.jpg",
   };
+  /* 히어로의 숫자 줄. 값은 모두 단일 원본(portfolio.ts, cves.ts, competitions.json)에서 온다 - 여기서 숫자를 적지 않는다. */
+  const ls2025Track = ls2025.tracks?.[0];
+  const stats = [
+    { label: t("stats.projects"), value: String(PORTFOLIO_PROJECT_COUNT) },
+    { label: t("stats.cves"), value: String(CVE_ONLY_COUNT) },
+    { label: t("stats.fves"), value: String(FVE_COUNT) },
+    ...(ls2025Track
+      ? [
+          {
+            label: `${ls2025.name} ${ls2025.year} ${ls2025Track.name}`,
+            value: tr("rankValue", { rank: ls2025Track.rank }),
+          },
+        ]
+      : []),
+  ];
   const competencies = ["fintech", "ot", "iot", "llm", "medical", "cyberRange"].map((k) =>
     t(`competencies.${k}`, { ls2025: ls2025Text }),
   );
@@ -226,6 +232,21 @@ export default async function PortfolioPage({ params }: Props) {
             </div>
           </div>
 
+          <p className="mt-6 max-w-[60ch] text-body text-muted-foreground">{profile.summary}</p>
+
+          {/* 성과를 숫자로 먼저 보여 준다. 조사 표본에서 성과를 숫자 배지로 내세우는 곳이 21%(별도 표본에서는 20곳 중 6곳)였고,
+              우리는 이 숫자들이 요약 문장 안에 묶여 있어 훑어서 읽히지 않았다. 값은 모두 단일 원본에서 온다. */}
+          <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
+            {stats.map((s) => (
+              <div key={s.label} className="flex flex-col-reverse gap-0.5">
+                <dt className="text-meta text-muted-foreground">{s.label}</dt>
+                <dd className="font-heading text-heading font-bold tabular-nums" data-notranslate>
+                  {s.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
           {/* 섹션 앵커. 11화면짜리 페이지에 이동 장치가 없었다. 표본 97곳 중 35%(위계 좋은 그룹 39%)가 페이지 내 앵커를 둔다.
               고정 사이드바는 위계가 나쁜 그룹의 신호(25% 대 11%)라 쓰지 않는다. */}
           <nav className="mt-6 flex flex-wrap gap-x-4 gap-y-1.5 text-meta print:hidden" aria-label={t("sectionsNav")}>
@@ -242,12 +263,6 @@ export default async function PortfolioPage({ params }: Props) {
         </header>
 
         {/* ── Summary ───────────────────────────────────────────── */}
-        <Section id="summary" icon={FileText} title={t("sectionSummary")}>
-            <p className="text-body text-muted-foreground">
-              {profile.summary}
-            </p>
-        </Section>
-
         {/* ── Core Competencies ─────────────────────────────────── */}
         <Section id="competencies" icon={Target} title={t("sectionCompetencies")}>
             <ul className="space-y-2">
@@ -260,6 +275,24 @@ export default async function PortfolioPage({ params }: Props) {
                 </li>
               ))}
             </ul>
+
+            {/* 기술 스택. 역량 서술과 같은 주제라 별도 섹션에서 합쳤다(표본 섹션 수 중앙값 3, 사분위 [2,6]). */}
+            <div className="mt-6 space-y-4">
+              {SKILL_GROUPS.map((g) => (
+                <div key={g.title}>
+                  <h3 className="mb-2 text-subheading font-semibold" data-notranslate>
+                    {g.title}
+                  </h3>
+                  <div className="flex flex-wrap gap-1.5" data-notranslate>
+                    {g.items.map((item) => (
+                      <Badge key={item} variant="secondary">
+                        {item}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
         </Section>
 
         {/* ── Featured Projects ─────────────────────────────────── */}
@@ -385,25 +418,6 @@ export default async function PortfolioPage({ params }: Props) {
         </Section>
 
         {/* ── Skills ────────────────────────────────────────────── */}
-        <Section id="skills" icon={Wrench} title={t("sectionSkills")}>
-            <div className="space-y-4">
-              {SKILL_GROUPS.map((g, idx) => (
-                <div key={g.title}>
-                  {idx > 0 && <Separator className="mb-4" />}
-                  <h3 className="mb-2 text-subheading font-semibold" data-notranslate>
-                    {g.title}
-                  </h3>
-                  <div className="flex flex-wrap gap-1.5" data-notranslate>
-                    {g.items.map((item) => (
-                      <Badge key={item} variant="secondary">
-                        {item}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-        </Section>
 
         {/* ── CVE / Vulnerability Research ──────────────────────── */}
         <Section
@@ -412,7 +426,7 @@ export default async function PortfolioPage({ params }: Props) {
           title={t("sectionCves")}
           aside={
             <span className="text-body-sm font-normal text-muted-foreground tabular-nums">
-              (CVE {CVE_ONLY_COUNT} · FVE {FVE_COUNT}
+              (CVE {CVE_ONLY_COUNT}({CVE_BREAKDOWN}) · FVE {FVE_COUNT}
               {CVE_PENDING_COUNT > 0 ? ` · ${tAbout("pendingLabel")} ${CVE_PENDING_COUNT}` : ""})
             </span>
           }

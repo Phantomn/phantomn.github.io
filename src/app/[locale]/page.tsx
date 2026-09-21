@@ -53,7 +53,7 @@ export default async function HomePage({ params }: Props) {
             className="mb-6 h-56 w-56 sm:h-72 sm:w-72 aspect-square rounded-full object-contain bg-black border-4 border-primary shadow-[0_0_40px_var(--avatar-glow)]"
           />
 
-          <h1 className="mb-4 text-4xl font-bold font-heading sm:text-5xl">
+          <h1 className="mb-4 text-title font-bold font-heading">
             {t("title")}
           </h1>
           <p className="mx-auto text-lg text-muted-foreground">
