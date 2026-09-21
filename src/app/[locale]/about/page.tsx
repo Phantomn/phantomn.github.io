@@ -27,7 +27,7 @@ const NAME = "홍승표 (ph4nt0m)";
 const COMPANY = "CoreSecurity";
 
 const ABOUT_TEXT =
-  "안녕하세요, Vulnerability Researcher 홍승표입니다. 금융권 Web/App 모의해킹과 OT/ICS 점검을 거쳐, 지금은 다양한 연구와 AI 기반 점검 자동화에 집중하고 있습니다.";
+  "안녕하세요, Offensive Security Researcher 홍승표입니다. 저는 Pentesting, Red Teaming 및 Compliance Consulting,AI Automation 등 다양한 포지션을 수행할 수 있습니다.";
 
 /** 그룹별 발견 경위. 데이터에 필드가 없어 여기서 붙인다. */
 const GROUP_NOTE: Record<string, string> = {

@@ -12,7 +12,7 @@
   },
   "home": {
     "title": "Ph4nt0m",
-    "description": "보안 연구 & 레드팀 오펜시브. CVE, CTF 라이트업, AI 기반 자동화 도구.",
+    "description": "Offensive Security Researcher",
     "goToBlog": "블로그 보기",
     "sections": {
       "blog": {
