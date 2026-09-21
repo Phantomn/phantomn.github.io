@@ -31,7 +31,7 @@ export default async function TagsIndexPage({ params }: Props) {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="mb-2 text-3xl font-bold font-heading">{t("indexHeading")}</h1>
+      <h1 className="mb-2 text-title font-bold font-heading">{t("indexHeading")}</h1>
       <p className="mb-8 text-sm text-muted-foreground">{t("indexHint")}</p>
       <ul className="flex flex-wrap gap-2">
         {frequent.map(({ tag, count }) => (

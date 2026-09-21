@@ -133,7 +133,7 @@
     "downloadPdf": "경력기술서 다운로드",
     "openRegistry": "전체 보기",
     "headline": "Offensive Security Researcher · Web/App · OT/ICS Pentesting · 보안 컨설팅",
-    "summary": "금융권 Web/App 모의해킹부터 OT/ICS(IEC 62443)·IoT·의료기기(FDA) 보안, 사이버 공방 훈련 개발까지 {projects}건 이상의 프로젝트를 수행했습니다. LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득, NATO CCDCOE {ls2025}, CVE {cve}건({breakdown})·FVE {fve}건 보유.",
+    "summary": "금융권 Web/App 모의해킹부터 OT/ICS(IEC 62443)·IoT·의료기기(FDA) 보안, 사이버 공방 훈련 개발까지 {projects}건 이상의 프로젝트를 수행했습니다. LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증을 취득했습니다.",
     "filterAll": "전체",
     "contribution": "기여도 {value}%",
     "present": "현재",
@@ -184,7 +184,12 @@
       "kongju": "공주대학교 컴퓨터공학부 (2012.02 — 2020.02)",
       "cheonan": "천안상업고등학교 정보처리과 (2009.03 — 2012.02)"
     },
-    "sectionsNav": "섹션 바로가기"
+    "sectionsNav": "섹션 바로가기",
+    "stats": {
+      "projects": "프로젝트",
+      "cves": "CVE",
+      "fves": "FVE"
+    }
   },
   "sidebar": {
     "relatedPosts": "관련 게시물",
@@ -246,6 +251,7 @@
       "challenges": "문제 개발"
     },
     "overall": "종합 {rank}위({of}팀 중)",
-    "track": "{name} {rank}위"
+    "track": "{name} {rank}위",
+    "rankValue": "{rank}위"
   }
 }

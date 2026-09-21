@@ -56,7 +56,7 @@ export default async function BlogPage({ params }: Props) {
   return (
     <div className="mx-auto w-[90vw] max-w-[1200px] px-4 py-8">
       <div className="mb-8 border-l-4 border-primary pl-4">
-        <h1 className="text-3xl font-bold font-heading">
+        <h1 className="text-title font-bold font-heading">
           {section?.meta.title ?? t("title")}
         </h1>
       </div>

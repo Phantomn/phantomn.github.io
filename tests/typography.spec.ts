@@ -62,3 +62,27 @@ for (const path of PAGES) {
     });
   }
 }
+
+/*
+ * h1 은 페이지마다 따로 지정돼 있었다(text-3xl / text-4xl sm:text-5xl 등 9곳). 그래서 같은 사이트에서 30~48px 로 갈렸다.
+ * 이제 globals.css 의 --text-title 한 곳에서 정하고 화면 폭에 따라 36~48px 로 변한다
+ * (표본 h1 중앙값: 데스크톱 54px, 모바일 36px). 페이지 종류가 달라도 같은 폭에서는 같은 크기여야 한다.
+ */
+const H1_PAGES = ["/ko/", "/ko/about/", "/ko/portfolio/", "/ko/blog/", "/ko/cves/"];
+
+for (const vp of VIEWPORTS) {
+  test(`h1 comes from one token on every page type (${vp.name})`, async ({ page }) => {
+    await page.setViewportSize({ width: vp.width, height: vp.height });
+    const sizes: Record<string, number> = {};
+    for (const path of H1_PAGES) {
+      await page.goto(path);
+      sizes[path] = await page
+        .locator("h1")
+        .first()
+        .evaluate((e) => parseFloat(getComputedStyle(e).fontSize));
+    }
+    const distinct = [...new Set(Object.values(sizes))];
+    expect(distinct, `페이지별 h1: ${JSON.stringify(sizes)}`).toHaveLength(1);
+    expect(distinct[0]).toBeGreaterThanOrEqual(vp.name === "mobile" ? 34 : 44);
+  });
+}

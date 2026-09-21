@@ -27,7 +27,8 @@ test("CVE count is consistent across about, portfolio and the listed IDs", async
 
   await page.goto("/ko/portfolio/");
   const portfolio = await page.locator("body").innerText();
-  const m = portfolio.match(/CVE (\d+)건\(([^)]*)\)/);
+  // 포트폴리오는 CVE 섹션 제목에 "CVE 24(Kernel 16 + IoT 5 + LLM 3)" 로 적는다(요약 문장에서 옮겼다)
+  const m = portfolio.match(/CVE (\d+)\(([^)]*)\)/);
   expect(Number(m?.[1])).toBe(stated);
   // 내역 합계(Kernel 16 + IoT 5 + LLM 3)도 총건수와 같다
   const sum = [...(m?.[2] ?? "").matchAll(/(\d+)/g)].reduce((s, x) => s + Number(x[1]), 0);
