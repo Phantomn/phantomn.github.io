@@ -13,7 +13,7 @@ cv:
 
   sections:
     summary:
-      - "NATO CCDCOE Locked Shields 2025 DFIR CTF #1 · 24 CVEs (OS Kernel 16 + IoT 5 + LLM 3). Offensive Security Researcher with 6 years across financial Web/App pentesting and OT/ICS security. Built an AI Orchestration Framework (IDA · Burp Suite · Frida · CodeQL via MCP + A2A) that auto-identifies Low–Medium vulnerabilities on live targets."
+      - "NATO CCDCOE Locked Shields 2025 overall 6th of 17 (DFIR #1) · 24 CVEs (OS Kernel 16 + IoT 5 + LLM 3). Offensive Security Researcher with 6 years across financial Web/App pentesting and OT/ICS security. Built an AI Orchestration Framework (IDA · Burp Suite · Frida · CodeQL via MCP + A2A) that auto-identifies Low–Medium vulnerabilities on live targets."
 
     experience:
       - company: CoreSecurity
@@ -26,9 +26,9 @@ cv:
           - "FDA eSTAR security consulting & medical device penetration testing"
           - "Smart building IoT vulnerability detection tool development & field deployment"
           - "ELECCON (KEPCO cyber warfare exercise) 2021–2024: 4-year operations & challenge development"
-          - "**NATO CCDCOE Locked Shields 2025** (Korea-Canada DFIR blue team) — overall 6th, **DFIR CTF 1st place**"
-          - "APEX CTF 2025 DFIR challenge development (May–Sep 2025)"
-          - "**NATO CCDCOE Locked Shields 2026** (Korea-Hungary Special System blue team) — overall 9th"
+          - "**NATO CCDCOE Locked Shields 2025** (Korea-Canada DFIR blue team) — overall 6th of 17, **DFIR 1st place**"
+          - "APEX 2025, 2026 Green Team, DFIR challenge development (May–Sep 2025; 2026)"
+          - "**NATO CCDCOE Locked Shields 2026** (Korea-Hungary Special System blue team) — overall 9th of 16"
 
       - company: A3 Security
         position: Web/App Pentester

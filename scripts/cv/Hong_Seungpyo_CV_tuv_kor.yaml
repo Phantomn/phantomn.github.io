@@ -16,7 +16,7 @@ cv:
 
   sections:
     요약:
-      - "산업제어시스템(OT/ICS)·임베디드 보안 6년 경력. LS ELECTRIC 자동화기기를 IEC 62443-4-2 위협분석 및 위험평가(TARA)부터 Achilles Level 2 인증까지 지원했으며, CVE 24건(Linux Kernel 16 + IoT 5 + LLM 3) 보유. 모의해킹·익스플로잇 개발과 결함을 인증 심사를 통과하는 감사 증적으로 옮기는 데 강점 — RED(EN 18031)·Cyber Resilience Act·NIS2 컴플라이언스 평가로 직접 전이 가능한 기반. NATO CCDCOE Locked Shields 2025 DFIR CTF 1위."
+      - "산업제어시스템(OT/ICS)·임베디드 보안 6년 경력. LS ELECTRIC 자동화기기를 IEC 62443-4-2 위협분석 및 위험평가(TARA)부터 Achilles Level 2 인증까지 지원했으며, CVE 24건(Linux Kernel 16 + IoT 5 + LLM 3) 보유. 모의해킹·익스플로잇 개발과 결함을 인증 심사를 통과하는 감사 증적으로 옮기는 데 강점 — RED(EN 18031)·Cyber Resilience Act·NIS2 컴플라이언스 평가로 직접 전이 가능한 기반. NATO CCDCOE Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위."
 
     경력:
       - company: 코어시큐리티 (CoreSecurity)
@@ -30,8 +30,8 @@ cv:
           - "FDA eSTAR / 510(k) 보안 컨설팅 및 의료기기 모의해킹"
           - "스마트빌딩 IoT 취약점 탐지 기술 개발 및 실증, IoT/CCTV 침해사고 조사 도구 개발"
           - "한국전력 실전형 사이버 공방 훈련(ELECCON) 2021~2024 4회 운영 및 문제 개발"
-          - "**NATO CCDCOE Locked Shields 2025** 한국-캐나다 연합 DFIR 블루팀 — 훈련 종합 6위, **DFIR CTF 1위**"
-          - "**NATO CCDCOE Locked Shields 2026** 한국-헝가리 연합 Special System 블루팀 — 훈련 종합 9위"
+          - "**NATO CCDCOE Locked Shields 2025** 한국-캐나다 연합 DFIR 블루팀 — 종합 6위(17팀 중), **DFIR 1위**"
+          - "**NATO CCDCOE Locked Shields 2026** 한국-헝가리 연합 Special System 블루팀 — 종합 9위(16팀 중)"
 
       - company: A3 Security
         position: 보안기술팀 사원

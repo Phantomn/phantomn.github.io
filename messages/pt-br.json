@@ -102,19 +102,18 @@
   },
   "about": {
     "title": "Sobre",
-    "sectionAbout": "Sobre",
-    "sectionSkills": "Habilidades",
-    "sectionAchievements": "Conquistas",
-    "sectionLanguages": "Idiomas",
-    "sectionResume": "Currículo",
-    "contactInfo": "Contato",
-    "connections": "{count} CVEs",
-    "downloadPdf": "Baixar PDF",
-    "portfolioCta": {
-      "heading": "Experiência, projetos, certificações e CVEs completos",
-      "body": "Veja o histórico completo de experiência, projetos, certificações e a lista de CVEs na página de Portfólio.",
-      "cta": "Ver portfólio"
-    }
+    "sectionCompetitions": "Competições",
+    "sectionVulns": "Vulnerabilidades",
+    "pendingLabel": "ID pendente",
+    "sectionCareer": "Carreira",
+    "sectionContact": "Contato",
+    "vulnCounts": "{cve} CVEs, {fve} FVEs",
+    "fveLine": "{n} FVEs (Findthegap)",
+    "groupCount": "{group}: {n}",
+    "maxCvss": "CVSS máx. {score}",
+    "career": "Carreira e projetos estão no <link>portfólio</link>.",
+    "labelEmail": "E-mail",
+    "labelResume": "Currículo"
   },
   "portfolio": {
     "title": "Portfólio",

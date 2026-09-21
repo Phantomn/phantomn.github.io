@@ -16,7 +16,7 @@ cv:
 
   sections:
     요약:
-      - "산업 제어(OT/ICS)·의료기기·선박 등 제조 제품의 사이버보안 인증과 규제 대응을 수행한 보안 엔지니어. LS ELECTRIC 자동화기기를 위협 모델링부터 IEC 62443-4-2 컴포넌트 인증(Achilles Level 2)까지 지원해 취득에 기여했고, 신약개발 연합학습 플랫폼(K-MELLODDY)에서 NIST SSDF 기반 보안 개발 생명주기(SDL) 정의와 공급망 보안 체계(SBOM/VEX/EoS)를 수립하며 EU CRA·IEC 62443·FDA를 검토했습니다. 금융/공공 Web/App 모의해킹 12개 사이트, Linux Kernel CVE 16건, IoT CVE 5건, LLM 추론 엔진 CVE 3건, NATO Locked Shields 2025 DFIR CTF 1위 보유."
+      - "산업 제어(OT/ICS)·의료기기·선박 등 제조 제품의 사이버보안 인증과 규제 대응을 수행한 보안 엔지니어. LS ELECTRIC 자동화기기를 위협 모델링부터 IEC 62443-4-2 컴포넌트 인증(Achilles Level 2)까지 지원해 취득에 기여했고, 신약개발 연합학습 플랫폼(K-MELLODDY)에서 NIST SSDF 기반 보안 개발 생명주기(SDL) 정의와 공급망 보안 체계(SBOM/VEX/EoS)를 수립하며 EU CRA·IEC 62443·FDA를 검토했습니다. 금융/공공 Web/App 모의해킹 12개 사이트, Linux Kernel CVE 16건, IoT CVE 5건, LLM 추론 엔진 CVE 3건, NATO Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위 보유."
 
     핵심_역량:
       - bullet: "OT/ICS 제품 인증 — IEC 62443-4-2 위협 모델링·컴포넌트 요구사항(CR) 점검·모의해킹, LS ELECTRIC Achilles Level 2 통신 견고성 인증 취득 및 자동 점검 도구 개발"
@@ -35,7 +35,7 @@ cv:
           - "OT/ICS 보안 — IEC 62443-4-2 Threat Modeling·모의해킹, LS ELECTRIC Achilles Level 2 인증 취득, 자동화 점검 도구 개발"
           - "IoT 보안 — 스마트빌딩 IoT 취약점 탐지 기술 개발·실증, IoT/CCTV 침해사고 조사 도구 개발"
           - "의료기기 보안 — FDA eSTAR 컨설팅 및 Web/App·의료기기 모의해킹"
-          - "사이버 공방 훈련 — 한국전력 ELECCON 운영·문제 개발, Locked Shields 2025 DFIR CTF 1위, APEX CTF 2025 문제 개발"
+          - "사이버 공방 훈련 — 한국전력 ELECCON 운영·문제 개발, Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위, APEX 2025·2026 Green Team, DFIR 문제 개발"
       - company: A3 Security
         position: 보안기술팀 사원
         location: 서울
@@ -148,13 +148,15 @@ cv:
         highlights:
           - "실시간 공격 시나리오 하 침해사고 포렌식 분석 및 타임라인 재구성"
           - "DFIR CTF 과제 수행 — 아티팩트 분석·악성코드 트리아지"
-          - "[성과] Locked Shields 2025 훈련 종합 6위 / DFIR CTF 부문 1위"
-          - "[성과] Locked Shields 2026 한국-헝가리 연합 Special System 블루팀, 종합 9위"
+          - "[성과] Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위"
+          - "[성과] Locked Shields 2026 종합 9위(16팀 중)"
+          - "[참여] Locked Shields 2026 한국-헝가리 연합 Special System 블루팀"
           - "기술: DFIR · Volatility · Wireshark · Sysmon · YARA"
       - name: "APEX CTF 2025 — DFIR Network Forensics 문제 개발"
         date: "2025.06 – 2025.09 · 기여도 45%"
         highlights:
           - "DFIR Network Forensics 카테고리 문제 개발 — 실제 침해사고 기반 포렌식 시나리오"
+          - "[참여] APEX 2025, 2026 Green Team, DFIR 문제 개발"
           - "기술: DFIR · Network Forensics · Wireshark"
       - name: "한국전력 실전형 사이버 보안 훈련 시스템 보강 (ELECCON)"
         date: "2023.06 – 2023.12 · 기여도 30%"

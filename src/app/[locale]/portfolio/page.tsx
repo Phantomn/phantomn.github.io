@@ -30,12 +30,18 @@ import {
 } from "@/data/portfolio";
 import {
   CVE_BREAKDOWN,
-  CVE_COUNT,
   CVE_ITEMS,
   CVE_ONLY_COUNT,
+  CVE_PENDING_COUNT,
   FVE_COUNT,
 } from "@/data/cves";
+import { formatResult, getCompetition } from "@/data/competitions";
+import { SITE_AUTHOR } from "@/lib/profile";
 import type { ExperienceItem } from "@/types/profile";
+
+/** 순위 문구는 competitions.json 에서만 만든다. */
+const LS2025 = getCompetition("ls2025");
+const LS2025_TEXT = `Locked Shields ${LS2025.year} ${formatResult(LS2025)}`;
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -55,9 +61,9 @@ const PROFILE = {
   name: "홍승표 (ph4nt0m)",
   headline:
     "Offensive Security Researcher · Web/App · OT/ICS Pentesting · 보안 컨설팅",
-  summary: `금융권 Web/App 모의해킹부터 OT/ICS(IEC 62443)·IoT·의료기기(FDA) 보안, 사이버 공방 훈련 개발까지 ${PORTFOLIO_PROJECT_COUNT}건 이상의 프로젝트를 수행했습니다. LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득, NATO CCDCOE Locked Shields 2025 DFIR CTF 1위, CVE ${CVE_ONLY_COUNT}건(${CVE_BREAKDOWN})·FVE ${FVE_COUNT}건 보유.`,
+  summary: `금융권 Web/App 모의해킹부터 OT/ICS(IEC 62443)·IoT·의료기기(FDA) 보안, 사이버 공방 훈련 개발까지 ${PORTFOLIO_PROJECT_COUNT}건 이상의 프로젝트를 수행했습니다. LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득, NATO CCDCOE ${LS2025_TEXT}, CVE ${CVE_ONLY_COUNT}건(${CVE_BREAKDOWN})·FVE ${FVE_COUNT}건 보유.`,
   location: "Seoul, South Korea",
-  email: "newbiepwner@kakao.com",
+  email: SITE_AUTHOR.email,
   avatar: "/images/avatar.jpg",
 } as const;
 
@@ -67,7 +73,7 @@ const CORE_COMPETENCIES: string[] = [
   "IoT 취약점 분석·보안 도구 개발 — 스마트빌딩 IoT 탐지 기술, IoT/CCTV 침해사고 조사 도구, Linux Kernel File System Fuzzer로 CVE 16건 도출",
   "LLM·AI 인프라 보안 — llama.cpp 추론 엔진 취약점 분석으로 CVE 3건 도출(DoS·도달 가능 어서션·정수 오버플로), MCP 기반 점검 자동화 연구",
   "의료기기 보안 — FDA eSTAR 컨설팅 및 Web/App·의료기기 모의해킹, 보안인증 취득 지원",
-  "사이버 공방 훈련 개발·운영 — 한국전력 ELECCON, NATO CCDCOE Locked Shields 2025 DFIR CTF 1위, APEX CTF 2025 문제 개발",
+  `사이버 공방 훈련 개발·운영 — 한국전력 ELECCON, NATO CCDCOE ${LS2025_TEXT}, APEX CTF 2025 문제 개발`,
 ];
 
 const EXPERIENCE: ExperienceItem[] = [
@@ -83,7 +89,7 @@ const EXPERIENCE: ExperienceItem[] = [
       "IoT 보안 — 스마트빌딩 IoT 취약점 탐지 기술을 개발·실증하고, IoT/CCTV 침해사고 조사 도구를 만들었습니다.",
       "의료기기 보안 — FDA eSTAR 컨설팅과 Web/App·의료기기 모의해킹을 수행했습니다.",
       "사이버 공방 훈련 — 한국전력 ELECCON을 운영하고 문제를 개발했습니다.",
-      "Locked Shields 2025 DFIR CTF 1위, APEX CTF 2025 문제 개발에 참여했습니다.",
+      `${LS2025_TEXT}, APEX CTF 2025 문제 개발에 참여했습니다.`,
     ],
   },
   {
@@ -403,7 +409,8 @@ export default async function PortfolioPage({ params }: Props) {
               <Bug className="h-5 w-5 text-primary" />
               {t("sectionCves")}{" "}
               <span className="text-sm font-normal text-muted-foreground tabular-nums">
-                ({CVE_COUNT})
+                (CVE {CVE_ONLY_COUNT} · FVE {FVE_COUNT}
+                {CVE_PENDING_COUNT > 0 ? ` · 번호 대기 ${CVE_PENDING_COUNT}` : ""})
               </span>
             </h2>
           </CardHeader>

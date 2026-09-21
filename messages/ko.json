@@ -96,19 +96,18 @@
   },
   "about": {
     "title": "소개",
-    "sectionAbout": "소개",
-    "sectionSkills": "기술",
-    "sectionAchievements": "성과",
-    "sectionLanguages": "언어",
-    "sectionResume": "이력서",
-    "contactInfo": "연락처",
-    "connections": "CVE {count}건",
-    "downloadPdf": "PDF 다운로드",
-    "portfolioCta": {
-      "heading": "경력, 프로젝트, 자격증, CVE 전체 목록",
-      "body": "포트폴리오 페이지에서 전체 경력과 프로젝트, 자격증, CVE 목록을 확인할 수 있습니다.",
-      "cta": "포트폴리오 보기"
-    }
+    "sectionCompetitions": "대회",
+    "sectionVulns": "취약점",
+    "pendingLabel": "번호 대기",
+    "sectionCareer": "경력",
+    "sectionContact": "연락",
+    "vulnCounts": "CVE {cve}건, FVE {fve}건",
+    "fveLine": "FVE {n}건 (Findthegap)",
+    "groupCount": "{group} {n}건",
+    "maxCvss": "최대 CVSS {score}",
+    "career": "경력과 프로젝트는 <link>포트폴리오</link>에 정리해 두었습니다.",
+    "labelEmail": "이메일",
+    "labelResume": "이력서"
   },
   "portfolio": {
     "title": "포트폴리오",

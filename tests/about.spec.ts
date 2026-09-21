@@ -1,0 +1,35 @@
+import { readFileSync } from "node:fs";
+import { test, expect } from "@playwright/test";
+
+const competitions: {
+  name: string;
+  year: number | string;
+  overall?: { rank: number; of: number };
+}[] = JSON.parse(readFileSync("src/data/competitions.json", "utf8"));
+
+test("about shows competition results from the single source", async ({ page }) => {
+  await page.goto("/ko/about/");
+  const article = page.locator("article");
+  for (const c of competitions) {
+    if (!c.overall) continue;
+    await expect(article).toContainText(c.name);
+    await expect(article).toContainText(`종합 ${c.overall.rank}위(${c.overall.of}팀 중)`);
+  }
+});
+
+test("CVE count is consistent across about, portfolio and the listed IDs", async ({ page }) => {
+  await page.goto("/ko/about/");
+  const about = await page.locator("article").innerText();
+  const stated = Number(about.match(/CVE (\d+)건/)?.[1]);
+  expect(stated).toBeGreaterThan(0);
+  // 나열된 정식 CVE 번호 수 == 총건수 (번호 대기 항목은 슬러그가 cve-20 으로 시작하지 않는다)
+  await expect(page.locator('article a[href*="/cves/cve-20"]')).toHaveCount(stated);
+
+  await page.goto("/ko/portfolio/");
+  const portfolio = await page.locator("body").innerText();
+  const m = portfolio.match(/CVE (\d+)건\(([^)]*)\)/);
+  expect(Number(m?.[1])).toBe(stated);
+  // 내역 합계(Kernel 16 + IoT 5 + LLM 3)도 총건수와 같다
+  const sum = [...(m?.[2] ?? "").matchAll(/(\d+)/g)].reduce((s, x) => s + Number(x[1]), 0);
+  expect(sum).toBe(stated);
+});

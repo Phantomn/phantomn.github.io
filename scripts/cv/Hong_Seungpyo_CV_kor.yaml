@@ -13,7 +13,7 @@ cv:
 
   sections:
     요약:
-      - "NATO CCDCOE Locked Shields 2025 DFIR CTF 1위 · CVE 24건 (OS Kernel 16 + IoT 5 + LLM 3). 금융권 Web/App 모의해킹 1년, OT/ICS 보안 약 5년 경력의 Offensive Security Researcher. IDA · Burp Suite · Frida · CodeQL을 MCP + A2A로 연결한 AI Orchestration Framework를 구현해 실제 점검 대상에서 Low~Medium 취약점을 자동 식별."
+      - "NATO CCDCOE Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위 · CVE 24건 (OS Kernel 16 + IoT 5 + LLM 3). 금융권 Web/App 모의해킹 1년, OT/ICS 보안 약 5년 경력의 Offensive Security Researcher. IDA · Burp Suite · Frida · CodeQL을 MCP + A2A로 연결한 AI Orchestration Framework를 구현해 실제 점검 대상에서 Low~Medium 취약점을 자동 식별."
 
     경력:
       - company: 코어시큐리티 (CoreSecurity)
@@ -26,9 +26,9 @@ cv:
           - "FDA eSTAR 보안 컨설팅 및 의료기기 모의해킹"
           - "스마트빌딩 IoT 취약점 탐지 기술 개발 및 실증, IoT/CCTV 침해사고 조사 도구 개발"
           - "한국전력 실전형 사이버 공방 훈련(ELECCON) 2021~2024 4회 운영 및 문제 개발"
-          - "**NATO CCDCOE Locked Shields 2025** 한국-캐나다 연합 DFIR 블루팀 — 훈련 종합 6위, **DFIR CTF 1위**"
-          - "APEX CTF 2025 DFIR 문제 개발 참여 (2025.05 ~ 2025.09)"
-          - "**NATO CCDCOE Locked Shields 2026** 한국-헝가리 연합 Special System 블루팀 — 훈련 종합 9위"
+          - "**NATO CCDCOE Locked Shields 2025** 한국-캐나다 연합 DFIR 블루팀 — 종합 6위(17팀 중), **DFIR 1위**"
+          - "APEX 2025, 2026 Green Team, DFIR 문제 개발 (2025.05 ~ 2025.09, 2026)"
+          - "**NATO CCDCOE Locked Shields 2026** 한국-헝가리 연합 Special System 블루팀 — 종합 9위(16팀 중)"
 
       - company: A3 Security
         position: 보안기술팀 사원
