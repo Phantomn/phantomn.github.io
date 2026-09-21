@@ -44,3 +44,24 @@ for (const locale of ["ko", "en", "es", "pt-br"]) {
     await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", m.home.description);
   });
 }
+
+// 소개는 런타임 기계 번역이 아니라 서버가 messages 로 완성해서 내려준다.
+// (번역기는 "Locked Shields"를 "Escudos bloqueados"로, "Green Team"을 "Equipe Verde"로 바꿨다.)
+for (const locale of ["en", "es", "pt-br"]) {
+  test(`about is fully rendered on the server in ${locale} (no Korean, names intact)`, async ({ page, request }) => {
+    const res = await request.get(`/${locale}/about/`);
+    const html = await res.text();
+    const article = html.match(/<article[\s\S]*?<\/article>/)?.[0] ?? "";
+    expect(article.length).toBeGreaterThan(0);
+    expect(article).not.toMatch(/[가-힣]/);
+    expect(article).toContain("Locked Shields");
+    for (const c of competitions) {
+      if (!c.overall) continue;
+      expect(article).toContain(`${c.overall.rank}`);
+      expect(article).toContain(`${c.overall.of}`);
+    }
+    // 런타임 번역기 배너가 뜨면 안 된다
+    await page.goto(`/${locale}/about/`);
+    await expect(page.locator('[role="status"]')).toHaveCount(0);
+  });
+}

@@ -108,7 +108,13 @@
     "maxCvss": "최대 CVSS {score}",
     "career": "경력과 프로젝트는 <link>포트폴리오</link>에 정리해 두었습니다.",
     "labelEmail": "이메일",
-    "labelResume": "이력서"
+    "labelResume": "이력서",
+    "name": "홍승표 (ph4nt0m)",
+    "groupNote": {
+      "Kernel": "BoB 8기에서 직접 만든 커널 퍼저로 발견"
+    },
+    "resumeKo": "한국어",
+    "resumeEn": "영어"
   },
   "portfolio": {
     "title": "포트폴리오",
@@ -169,5 +175,24 @@
     "open": "검색",
     "title": "검색",
     "placeholder": "블로그, CVE, 라이트업 검색..."
+  },
+  "records": {
+    "hosts": {
+      "kepco": "한국전력"
+    },
+    "teams": {
+      "korCan": "한국-캐나다 연합",
+      "korHun": "한국-헝가리 연합"
+    },
+    "roles": {
+      "dfirBlue": "DFIR 블루팀",
+      "specialSystemBlue": "Special System 블루팀",
+      "greenTeam": "Green Team",
+      "dfirChallenges": "DFIR 문제 개발",
+      "operations": "운영",
+      "challenges": "문제 개발"
+    },
+    "overall": "종합 {rank}위({of}팀 중)",
+    "track": "{name} {rank}위"
   }
 }

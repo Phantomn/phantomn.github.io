@@ -3,9 +3,9 @@
     "id": "ls2026",
     "name": "Locked Shields",
     "year": 2026,
-    "team": "한국-헝가리 연합",
+    "team": "korHun",
     "roles": [
-      "Special System 블루팀"
+      "specialSystemBlue"
     ],
     "overall": {
       "rank": 9,
@@ -16,9 +16,9 @@
     "id": "ls2025",
     "name": "Locked Shields",
     "year": 2025,
-    "team": "한국-캐나다 연합",
+    "team": "korCan",
     "roles": [
-      "DFIR 블루팀"
+      "dfirBlue"
     ],
     "overall": {
       "rank": 6,
@@ -36,8 +36,8 @@
     "name": "APEX",
     "year": 2026,
     "roles": [
-      "Green Team",
-      "DFIR 문제 개발"
+      "greenTeam",
+      "dfirChallenges"
     ]
   },
   {
@@ -45,17 +45,18 @@
     "name": "APEX",
     "year": 2025,
     "roles": [
-      "Green Team",
-      "DFIR 문제 개발"
+      "greenTeam",
+      "dfirChallenges"
     ]
   },
   {
     "id": "eleccon",
-    "name": "한국전력 ELECCON",
+    "name": "ELECCON",
+    "host": "kepco",
     "year": "2021-2024",
     "roles": [
-      "운영",
-      "문제 개발"
+      "operations",
+      "challenges"
     ]
   }
 ]

@@ -10,10 +10,10 @@
  * 고객사명은 실명 공개 결정. 본문 번역은 DynamicTranslator가 런타임 처리.
  */
 
-import { describeCompetition, getCompetition } from "./competitions";
+import { describeCompetition, getCompetition, tKo } from "./competitions";
 
-const LS2025 = describeCompetition(getCompetition("ls2025"));
-const LS2026 = describeCompetition(getCompetition("ls2026"));
+const LS2025 = describeCompetition(getCompetition("ls2025"), tKo);
+const LS2026 = describeCompetition(getCompetition("ls2026"), tKo);
 
 export type PortfolioCategoryKey =
   | "fintech"
