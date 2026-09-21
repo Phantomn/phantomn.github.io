@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // 성과 기록 정합성 검사. 단일 원본(src/data/competitions.json, cves.ts)과 이력서 yaml·소스·메시지의 표기를 대조한다.
 //  1) 대회 라벨(예: "Locked Shields 2025")이 든 줄에서 순위를 말하면 종합 순위가 함께 있어야 한다.
-//  2) 종합 순위와 "N팀 중" 이 있으면 원본과 같아야 한다.
+//  2) 종합 순위는 참가 팀 수("N팀 중" / "of N")와 함께 쓰고, 둘 다 원본과 같아야 한다.
 //  3) "CVE N건 (Kernel ..." 처럼 내역이 붙은 총건수는 정식 번호가 부여된 CVE 개수와 같아야 한다.
 // 위반이 있으면 종료 코드 1. 실행: pnpm check:records
 import { readFileSync, readdirSync, statSync } from "node:fs";
@@ -35,6 +35,7 @@ const RANK = /\d+위|#\d+|\b\d+(?:st|nd|rd|th)\b/;
 const OVERALL_KO = /종합\s*(\d+)위/g;
 const OVERALL_EN = /overall\s*(\d+)(?:st|nd|rd|th)/gi;
 const OF = /(\d+)팀\s*중/g;
+const OF_EN = /overall\s*\d+(?:st|nd|rd|th)\s+of\s+(\d+)/gi;
 const CVE_TOTAL = [/(\d+)\**\s*CVEs?\**\s*\((?:OS )?Kernel/gi, /CVE\s*(\d+)건\s*\((?:OS )?Kernel/g];
 
 for (const file of files) {
@@ -52,8 +53,12 @@ for (const file of files) {
         for (const r of ranks) {
           if (r !== c.overall.rank) errors.push(`${at}: ${c.name} ${c.year} 종합 ${r}위 (원본 ${c.overall.rank}위)`);
         }
-        for (const m of line.matchAll(OF)) {
-          if (Number(m[1]) !== c.overall.of) errors.push(`${at}: ${c.name} ${c.year} ${m[1]}팀 중 (원본 ${c.overall.of}팀)`);
+        const denoms = [...line.matchAll(OF), ...line.matchAll(OF_EN)].map((m) => Number(m[1]));
+        if (ranks.length > 0 && denoms.length === 0) {
+          errors.push(`${at}: ${c.name} ${c.year} 종합 순위에 참가 팀 수(${c.overall.of}팀)가 없다`);
+        }
+        for (const d of denoms) {
+          if (d !== c.overall.of) errors.push(`${at}: ${c.name} ${c.year} 참가 팀 ${d} (원본 ${c.overall.of}팀)`);
         }
       }
       for (const re of CVE_TOTAL) {

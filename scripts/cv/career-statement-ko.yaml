@@ -15,14 +15,14 @@ cv:
 
   sections:
     요약:
-      - "금융권 Web/App 모의해킹부터 OT/ICS(IEC 62443)·IoT·의료기기(FDA) 보안, 사이버 공방 훈련 개발까지 24건 이상의 프로젝트를 수행한 Offensive Security Researcher. LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득, NATO CCDCOE Locked Shields 2025 종합 6위(DFIR CTF 부문 1위), Linux Kernel CVE 16건 + IoT CVE 5건 + LLM 추론 엔진 CVE 3건 + FVE 4건 보유."
+      - "금융권 Web/App 모의해킹부터 OT/ICS(IEC 62443)·IoT·의료기기(FDA) 보안, 사이버 공방 훈련 개발까지 24건 이상의 프로젝트를 수행한 Offensive Security Researcher. LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득, NATO CCDCOE Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위, Linux Kernel CVE 16건 + IoT CVE 5건 + LLM 추론 엔진 CVE 3건 + FVE 4건 보유."
 
     핵심_역량:
       - bullet: "금융·공공 전자금융기반시설 Web/App 모의해킹 — 저축은행·캐피탈·증권·보험·제조 등 12개 사이트 수행 (A3 Security)"
       - bullet: "OT/ICS 보안 — IEC 62443-4-2 Threat Modeling·모의해킹, LS ELECTRIC Achilles Communication Certificate Level 2 인증 취득"
       - bullet: "IoT 취약점 분석·보안 도구 개발 — 스마트빌딩 IoT 탐지, IoT/CCTV 침해사고 조사 도구, Linux Kernel File System Fuzzer로 CVE 16건 도출"
       - bullet: "의료기기 보안 — FDA eSTAR 컨설팅 및 Web/App·의료기기 모의해킹, 보안인증(Cybersecurity Controls) 취득 지원"
-      - bullet: "사이버 공방 훈련 개발·운영 — 한국전력 ELECCON, NATO CCDCOE Locked Shields 2025 종합 6위(DFIR CTF 부문 1위), APEX CTF 2025 문제 개발"
+      - bullet: "사이버 공방 훈련 개발·운영 — 한국전력 ELECCON, NATO CCDCOE Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위, APEX 2025·2026 Green Team, DFIR 문제 개발"
 
     경력:
       - company: 코어시큐리티 (CoreSecurity)
@@ -34,7 +34,7 @@ cv:
           - "OT/ICS 보안 — IEC 62443-4-2 Threat Modeling·모의해킹, LS ELECTRIC Achilles Level 2 인증 취득, 자동화 점검 도구 개발"
           - "IoT 보안 — 스마트빌딩 IoT 취약점 탐지 기술 개발·실증, IoT/CCTV 침해사고 조사 도구 개발"
           - "의료기기 보안 — FDA eSTAR 컨설팅 및 Web/App·의료기기 모의해킹"
-          - "사이버 공방 훈련 — 한국전력 ELECCON 운영·문제 개발, Locked Shields 2025 종합 6위(DFIR CTF 부문 1위), APEX CTF 2025 문제 개발"
+          - "사이버 공방 훈련 — 한국전력 ELECCON 운영·문제 개발, Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위, APEX 2025·2026 Green Team, DFIR 문제 개발"
       - company: A3 Security
         position: 보안기술팀 사원
         location: 서울
@@ -147,13 +147,15 @@ cv:
         highlights:
           - "실시간 공격 시나리오 하 침해사고 포렌식 분석 및 타임라인 재구성"
           - "DFIR CTF 과제 수행 — 아티팩트 분석·악성코드 트리아지"
-          - "[성과] Locked Shields 2025 훈련 종합 6위 / DFIR CTF 부문 1위"
-          - "[성과] Locked Shields 2026 한국-헝가리 연합 Special System 블루팀, 종합 9위"
+          - "[성과] Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위"
+          - "[성과] Locked Shields 2026 종합 9위(16팀 중)"
+          - "[참여] Locked Shields 2026 한국-헝가리 연합 Special System 블루팀"
           - "기술: DFIR · Volatility · Wireshark · Sysmon · YARA"
       - name: "APEX CTF 2025 — DFIR Network Forensics 문제 개발"
         date: "2025.06 – 2025.09 · 기여도 45%"
         highlights:
           - "DFIR Network Forensics 카테고리 문제 개발 — 실제 침해사고 기반 포렌식 시나리오"
+          - "[참여] APEX 2025, 2026 Green Team, DFIR 문제 개발"
           - "기술: DFIR · Network Forensics · Wireshark"
       - name: "한국전력 실전형 사이버 보안 훈련 시스템 보강 (ELECCON)"
         date: "2023.06 – 2023.12 · 기여도 30%"
