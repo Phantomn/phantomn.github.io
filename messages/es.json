@@ -59,21 +59,15 @@
       "link": "Enlace",
       "cvss": "CVSS",
       "score": "Puntuación",
-      "vector": "Vector",
       "cwe": "CWE",
       "primaryCwe": "CWE principal",
       "additionalCwe": "CWE adicional",
       "evaluation": "Evaluación",
       "notes": "Notas",
-      "standardCvss": "CVSS estándar",
-      "assessment": "Detalles de evaluación",
-      "nvdStatus": "Estado en NVD",
       "published": "Publicado",
       "submittedAt": "Enviado",
       "issuedAt": "Emitido",
-      "modified": "Modificado",
-      "nvdRecord": "Registro NVD",
-      "upstreamDisclosure": "Divulgación original"
+      "modified": "Modificado"
     },
     "status": {
       "published": "Publicado",
