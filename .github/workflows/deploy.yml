@@ -3,6 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main, master]
+  pull_request:
+    branches: [main, master]
 
 permissions:
   contents: read
@@ -10,8 +12,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: pages-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   qa:
@@ -126,6 +128,7 @@ jobs:
         run: pnpm test:e2e
 
   deploy:
+    if: github.event_name == 'push'
     needs: [qa, e2e]
     runs-on: ubuntu-latest
     environment:
