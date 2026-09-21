@@ -3,6 +3,7 @@
   "entry": ["scripts/sync-cve-status.mjs", "scripts/normalize-tags.mjs"],
   "ignore": ["content/**"],
   "ignoreDependencies": ["staticrypt", "eslint-config-next", "serve"],
+  "ignoreBinaries": ["rendercv", "pdfinfo"],
   "rules": {
     "exports": "warn",
     "types": "warn",
