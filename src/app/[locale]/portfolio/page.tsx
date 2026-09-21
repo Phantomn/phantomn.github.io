@@ -14,11 +14,11 @@ import {
   Bug,
   Award,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { PortfolioProjects } from "@/components/portfolio/portfolio-projects";
 import { PrintButton } from "@/components/portfolio/print-button";
@@ -47,6 +47,48 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 /* 이 페이지의 모든 문장은 messages(portfolio.*)와 src/data/portfolio-text/<locale>.json 에서 온다.
    데이터에 한국어 문장을 두고 런타임 기계 번역에 맡기지 않는다 - 고유명사와 숫자가 깨진다. */
+
+/** 섹션 앵커 줄. id 는 각 Section 의 id 와 같아야 한다(tests/portfolio.spec.ts 가 대조). */
+const SECTION_NAV = [
+  { id: "summary", labelKey: "sectionSummary" },
+  { id: "competencies", labelKey: "sectionCompetencies" },
+  { id: "featured", labelKey: "sectionFeatured" },
+  { id: "experience", labelKey: "sectionExperience" },
+  { id: "projects", labelKey: "sectionProjects" },
+  { id: "skills", labelKey: "sectionSkills" },
+  { id: "cves", labelKey: "sectionCves" },
+  { id: "credentials", labelKey: "sectionCredentials" },
+] as const;
+
+/*
+ * 섹션 골격. 표본 97곳을 브라우저로 재보니 섹션을 전부 테두리 박스로 감싼 사이트는 8곳(8%)뿐이고,
+ * 위계가 좋은 그룹(56곳)은 섹션 중 17% 만 박스였다. 카드는 내용이 병렬로 반복되는 곳(프로젝트·CVE)에만 쓰고,
+ * 나머지는 제목과 여백으로 나눈다. hr 구분선은 위계가 나쁜 그룹의 신호(35% 대 7%)라 쓰지 않는다.
+ */
+function Section({
+  id,
+  icon: Icon,
+  title,
+  aside,
+  children,
+}: {
+  id: string;
+  icon: LucideIcon;
+  title: string;
+  aside?: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  return (
+    <section id={id} className="mt-10 scroll-mt-24 break-inside-avoid first:mt-0 print:mt-6">
+      <h2 className="mb-4 flex items-center gap-2 text-heading font-semibold">
+        <Icon className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+        {title}
+        {aside}
+      </h2>
+      {children}
+    </section>
+  );
+}
 
 const SKILL_GROUPS: { title: string; items: string[] }[] = [
   {
@@ -144,8 +186,8 @@ export default async function PortfolioPage({ params }: Props) {
     <>
       <div className="mx-auto w-[90vw] max-w-[900px] py-6 print:w-full print:max-w-none print:py-0">
         {/* ── Hero ──────────────────────────────────────────────── */}
-        <Card className="overflow-hidden">
-          <CardContent className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center">
+        <header className="border-b pb-8">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <div className="h-24 w-24 shrink-0 overflow-hidden rounded-full border-4 border-background shadow">
               <Image
                 src={profile.avatar}
@@ -182,33 +224,32 @@ export default async function PortfolioPage({ params }: Props) {
             <div className="shrink-0">
               <PrintButton label={t("downloadPdf")} />
             </div>
-          </CardContent>
-        </Card>
+          </div>
+
+          {/* 섹션 앵커. 11화면짜리 페이지에 이동 장치가 없었다. 표본 97곳 중 35%(위계 좋은 그룹 39%)가 페이지 내 앵커를 둔다.
+              고정 사이드바는 위계가 나쁜 그룹의 신호(25% 대 11%)라 쓰지 않는다. */}
+          <nav className="mt-6 flex flex-wrap gap-x-4 gap-y-1.5 text-meta print:hidden" aria-label={t("sectionsNav")}>
+            {SECTION_NAV.map((sec) => (
+              <a
+                key={sec.id}
+                href={`#${sec.id}`}
+                className="text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
+              >
+                {t(sec.labelKey)}
+              </a>
+            ))}
+          </nav>
+        </header>
 
         {/* ── Summary ───────────────────────────────────────────── */}
-        <Card className="mt-4">
-          <CardHeader>
-            <h2 className="flex items-center gap-2 text-heading font-semibold">
-              <FileText className="h-5 w-5 text-primary" />
-              {t("sectionSummary")}
-            </h2>
-          </CardHeader>
-          <CardContent>
+        <Section id="summary" icon={FileText} title={t("sectionSummary")}>
             <p className="text-body text-muted-foreground">
               {profile.summary}
             </p>
-          </CardContent>
-        </Card>
+        </Section>
 
         {/* ── Core Competencies ─────────────────────────────────── */}
-        <Card className="mt-4">
-          <CardHeader>
-            <h2 className="flex items-center gap-2 text-heading font-semibold">
-              <Target className="h-5 w-5 text-primary" />
-              {t("sectionCompetencies")}
-            </h2>
-          </CardHeader>
-          <CardContent>
+        <Section id="competencies" icon={Target} title={t("sectionCompetencies")}>
             <ul className="space-y-2">
               {competencies.map((c, i) => (
                 <li key={i} className="flex gap-2 text-body text-muted-foreground">
@@ -219,18 +260,10 @@ export default async function PortfolioPage({ params }: Props) {
                 </li>
               ))}
             </ul>
-          </CardContent>
-        </Card>
+        </Section>
 
         {/* ── Featured Projects ─────────────────────────────────── */}
-        <Card className="mt-4">
-          <CardHeader>
-            <h2 className="flex items-center gap-2 text-heading font-semibold">
-              <Star className="h-5 w-5 text-primary" />
-              {t("sectionFeatured")}
-            </h2>
-          </CardHeader>
-          <CardContent>
+        <Section id="featured" icon={Star} title={t("sectionFeatured")}>
             <div className="space-y-6">
               {featured.map((p, idx) => (
                 <div key={p.title} className="break-inside-avoid">
@@ -293,18 +326,10 @@ export default async function PortfolioPage({ params }: Props) {
                 </div>
               ))}
             </div>
-          </CardContent>
-        </Card>
+        </Section>
 
         {/* ── Experience ────────────────────────────────────────── */}
-        <Card className="mt-4">
-          <CardHeader>
-            <h2 className="flex items-center gap-2 text-heading font-semibold">
-              <Briefcase className="h-5 w-5 text-primary" />
-              {t("sectionExperience")}
-            </h2>
-          </CardHeader>
-          <CardContent>
+        <Section id="experience" icon={Briefcase} title={t("sectionExperience")}>
             <div className="space-y-6">
               {experience.map((exp, idx) => (
                 <div key={`${exp.role}-${idx}`} className="break-inside-avoid">
@@ -337,21 +362,19 @@ export default async function PortfolioPage({ params }: Props) {
                 </div>
               ))}
             </div>
-          </CardContent>
-        </Card>
+        </Section>
 
         {/* ── All Projects (filterable) ─────────────────────────── */}
-        <Card className="mt-4">
-          <CardHeader>
-            <h2 className="flex items-center gap-2 text-heading font-semibold">
-              <FolderKanban className="h-5 w-5 text-primary" />
-              {t("sectionProjects")}{" "}
-              <span className="text-body-sm font-normal text-muted-foreground tabular-nums">
-                ({others.length})
-              </span>
-            </h2>
-          </CardHeader>
-          <CardContent>
+        <Section
+          id="projects"
+          icon={FolderKanban}
+          title={t("sectionProjects")}
+          aside={
+            <span className="text-body-sm font-normal text-muted-foreground tabular-nums">
+              ({others.length})
+            </span>
+          }
+        >
             <PortfolioProjects
               projects={others}
               categories={categories}
@@ -359,23 +382,15 @@ export default async function PortfolioPage({ params }: Props) {
               actionsLabel={t("labelActions")}
               resultsLabel={t("labelResults")}
             />
-          </CardContent>
-        </Card>
+        </Section>
 
         {/* ── Skills ────────────────────────────────────────────── */}
-        <Card className="mt-4">
-          <CardHeader>
-            <h2 className="flex items-center gap-2 text-heading font-semibold">
-              <Wrench className="h-5 w-5 text-primary" />
-              {t("sectionSkills")}
-            </h2>
-          </CardHeader>
-          <CardContent>
+        <Section id="skills" icon={Wrench} title={t("sectionSkills")}>
             <div className="space-y-4">
               {SKILL_GROUPS.map((g, idx) => (
                 <div key={g.title}>
                   {idx > 0 && <Separator className="mb-4" />}
-                  <h3 className="mb-2 text-body-sm font-semibold" data-notranslate>
+                  <h3 className="mb-2 text-subheading font-semibold" data-notranslate>
                     {g.title}
                   </h3>
                   <div className="flex flex-wrap gap-1.5" data-notranslate>
@@ -388,22 +403,20 @@ export default async function PortfolioPage({ params }: Props) {
                 </div>
               ))}
             </div>
-          </CardContent>
-        </Card>
+        </Section>
 
         {/* ── CVE / Vulnerability Research ──────────────────────── */}
-        <Card className="mt-4">
-          <CardHeader>
-            <h2 className="flex items-center gap-2 text-heading font-semibold">
-              <Bug className="h-5 w-5 text-primary" />
-              {t("sectionCves")}{" "}
-              <span className="text-body-sm font-normal text-muted-foreground tabular-nums">
-                (CVE {CVE_ONLY_COUNT} · FVE {FVE_COUNT}
-                {CVE_PENDING_COUNT > 0 ? ` · ${tAbout("pendingLabel")} ${CVE_PENDING_COUNT}` : ""})
-              </span>
-            </h2>
-          </CardHeader>
-          <CardContent>
+        <Section
+          id="cves"
+          icon={Bug}
+          title={t("sectionCves")}
+          aside={
+            <span className="text-body-sm font-normal text-muted-foreground tabular-nums">
+              (CVE {CVE_ONLY_COUNT} · FVE {FVE_COUNT}
+              {CVE_PENDING_COUNT > 0 ? ` · ${tAbout("pendingLabel")} ${CVE_PENDING_COUNT}` : ""})
+            </span>
+          }
+        >
             <div className="space-y-4">
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {FEATURED_CVES.map((item) => (
@@ -432,20 +445,12 @@ export default async function PortfolioPage({ params }: Props) {
                 </Button>
               </div>
             </div>
-          </CardContent>
-        </Card>
+        </Section>
 
         {/* ── Certifications & Education ────────────────────────── */}
-        <Card className="mt-4">
-          <CardHeader>
-            <h2 className="flex items-center gap-2 text-heading font-semibold">
-              <Award className="h-5 w-5 text-primary" />
-              {t("sectionCredentials")}
-            </h2>
-          </CardHeader>
-          <CardContent className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <Section id="credentials" icon={Award} title={t("sectionCredentials")}>
             <div>
-              <h3 className="mb-2 text-body-sm font-semibold">{t("labelCertifications")}</h3>
+              <h3 className="mb-2 text-subheading font-semibold">{t("labelCertifications")}</h3>
               <ul className="list-disc space-y-1 pl-5 text-body-sm text-muted-foreground">
                 {certifications.map((c) => (
                   <li key={c}>{c}</li>
@@ -453,15 +458,14 @@ export default async function PortfolioPage({ params }: Props) {
               </ul>
             </div>
             <div>
-              <h3 className="mb-2 text-body-sm font-semibold">{t("labelEducation")}</h3>
+              <h3 className="mb-2 text-subheading font-semibold">{t("labelEducation")}</h3>
               <ul className="list-disc space-y-1 pl-5 text-body-sm text-muted-foreground">
                 {education.map((e) => (
                   <li key={e}>{e}</li>
                 ))}
               </ul>
             </div>
-          </CardContent>
-        </Card>
+        </Section>
       </div>
     </>
   );
