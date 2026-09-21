@@ -1,5 +1,16 @@
 import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { extendTailwindMerge } from "tailwind-merge";
+
+/**
+ * globals.css 의 --text-* 토큰 이름. tailwind-merge 는 모르는 text-* 를 글자 색으로 취급해서
+ * cn("text-xs text-secondary-foreground", "text-label") 이 색(text-secondary-foreground)을 지우고 text-xs 를 남긴다.
+ * 여기에 등록해야 글자 크기로 인식된다. 이 목록과 CSS 는 pnpm check:type-scale 이 대조한다.
+ */
+export const TEXT_SIZE_TOKENS = ["title", "heading", "subheading", "body", "body-sm", "meta", "label"];
+
+const twMerge = extendTailwindMerge({
+  extend: { classGroups: { "font-size": [{ text: TEXT_SIZE_TOKENS }] } },
+});
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
