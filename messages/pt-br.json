@@ -12,7 +12,7 @@
   },
   "home": {
     "title": "Ph4nt0m",
-    "description": "Pesquisa em segurança e hacking defensivo. Notas, writeups e ferramentas para red team, blue team, e para construir sistemas mais seguros.",
+    "description": "Offensive Security Researcher",
     "goToBlog": "Ir para o Blog",
     "sections": {
       "blog": {
@@ -102,6 +102,7 @@
   },
   "about": {
     "title": "Sobre",
+    "intro": "Olá, sou Seungpyo Hong, Offensive Security Researcher. Posso atuar em diversas funções, como Pentesting, Red Teaming, Compliance Consulting e AI Automation.",
     "sectionCompetitions": "Competições",
     "sectionVulns": "Vulnerabilidades",
     "pendingLabel": "ID pendente",

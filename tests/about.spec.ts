@@ -33,3 +33,14 @@ test("CVE count is consistent across about, portfolio and the listed IDs", async
   const sum = [...(m?.[2] ?? "").matchAll(/(\d+)/g)].reduce((s, x) => s + Number(x[1]), 0);
   expect(sum).toBe(stated);
 });
+
+// 문구는 messages/*.json 한 곳에서 수정하고, 4개 로케일에 그대로 반영되어야 한다.
+for (const locale of ["ko", "en", "es", "pt-br"]) {
+  test(`intro and home description come from messages in ${locale}`, async ({ page }) => {
+    const m = JSON.parse(readFileSync(`messages/${locale}.json`, "utf8"));
+    await page.goto(`/${locale}/about/`);
+    await expect(page.locator("article > p[data-notranslate]")).toHaveText(m.about.intro);
+    await page.goto(`/${locale}/`);
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", m.home.description);
+  });
+}

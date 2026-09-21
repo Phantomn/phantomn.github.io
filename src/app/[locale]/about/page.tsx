@@ -26,9 +26,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const NAME = "홍승표 (ph4nt0m)";
 const COMPANY = "CoreSecurity";
 
-const ABOUT_TEXT =
-  "안녕하세요, Offensive Security Researcher 홍승표입니다. 저는 Pentesting, Red Teaming 및 Compliance Consulting,AI Automation 등 다양한 포지션을 수행할 수 있습니다.";
-
 /** 그룹별 발견 경위. 데이터에 필드가 없어 여기서 붙인다. */
 const GROUP_NOTE: Record<string, string> = {
   Kernel: "BoB 8기에서 직접 만든 커널 퍼저로 발견",
@@ -106,7 +103,10 @@ export default async function AboutPage({ params }: Props) {
           </h1>
           <p className="mt-2 text-[0.95rem] text-muted-foreground">{COMPANY}</p>
         </header>
-        <p className="mt-6 max-w-[40rem]">{ABOUT_TEXT}</p>
+        {/* 메시지로 이미 번역된 문장이라 런타임 번역기가 다시 건드리지 않게 한다 */}
+        <p className="mt-6 max-w-[40rem]" data-notranslate>
+          {t("intro")}
+        </p>
 
         <section className="mt-9 border-t pt-8">
           <h2 className={H2}>{t("sectionCompetitions")}</h2>

@@ -12,7 +12,7 @@
   },
   "home": {
     "title": "Ph4nt0m",
-    "description": "Offensive Security Researcher. OT/ICS Pentesting, AI Security Automation, CTF writeups.",
+    "description": "Offensive Security Researcher",
     "goToBlog": "Go to Blog",
     "sections": {
       "blog": {
@@ -102,6 +102,7 @@
   },
   "about": {
     "title": "About",
+    "intro": "Hello, I'm Seungpyo Hong, an Offensive Security Researcher. I can take on a range of roles, including Pentesting, Red Teaming, Compliance Consulting, and AI Automation.",
     "sectionCompetitions": "Competitions",
     "sectionVulns": "Vulnerabilities",
     "pendingLabel": "Pending ID",

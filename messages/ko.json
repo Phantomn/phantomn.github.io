@@ -96,6 +96,7 @@
   },
   "about": {
     "title": "소개",
+    "intro": "안녕하세요, Offensive Security Researcher 홍승표입니다. 저는 Pentesting, Red Teaming 및 Compliance Consulting, AI Automation 등 다양한 포지션을 수행할 수 있습니다.",
     "sectionCompetitions": "대회",
     "sectionVulns": "취약점",
     "pendingLabel": "번호 대기",
