@@ -21,7 +21,6 @@ Thumbs.db
 
 # AI / Agentic workflow (nunca commitar memória, tasks, estado de agente, regras locais)
 .claude/
-CLAUDE.md
 CLAUDE.local.md
 .cursor/
 .cursorrules
