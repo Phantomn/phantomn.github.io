@@ -1,6 +1,4 @@
-import { createTranslator, type AbstractIntlMessages } from "next-intl";
 import data from "./competitions.json";
-import ko from "../../messages/ko.json";
 
 /**
  * 대회·훈련 기록의 단일 원본 (competitions.json).
@@ -24,16 +22,8 @@ export interface Competition {
   tracks?: { name: string; rank: number }[];
 }
 
-/** messages 의 "records" 네임스페이스 번역 함수 (next-intl getTranslations / createTranslator). */
+/** messages 의 "records" 네임스페이스 번역 함수 (next-intl getTranslations). */
 export type Translate = (key: string, values?: Record<string, string | number>) => string;
-
-/** 로케일이 없는 한국어 원문 데이터(portfolio.ts 등)용. 이 원문은 런타임 번역기가 처리한다. */
-// next-intl 의 키 타입은 리터럴만 받아 동적 키(`roles.${r}`)와 안 맞으므로 Translate 로 좁힌다.
-export const tKo = createTranslator({
-  locale: "ko",
-  messages: ko as AbstractIntlMessages,
-  namespace: "records",
-}) as unknown as Translate;
 
 export const COMPETITIONS: Competition[] = data;
 
