@@ -39,10 +39,7 @@ test("portfolio (ko) keeps the record wording from the single source", async ({ 
  */
 test("portfolio keeps the non-featured cards scannable on screen and full in print", async ({ page }) => {
   await page.goto("/ko/portfolio/");
-  // 섹션은 Card(div[data-slot=card])이고 프로젝트 카드도 같은 속성이라, 제목을 가진 바깥 Card 안의 Card 를 고른다
-  const grid = page.locator("[data-slot='card']", {
-    has: page.getByRole("heading", { name: /그 밖의 프로젝트/ }),
-  });
+  const grid = page.locator("section#projects");
   const cards = grid.locator("[data-slot='card']");
   const count = await cards.count();
   expect(count).toBeGreaterThan(15);
@@ -91,3 +88,40 @@ for (const locale of ["ko", "en"]) {
     expect(dup, `중복 제목: ${dup.join(" | ")}`).toEqual([]);
   });
 }
+
+/*
+ * 레이아웃 불변식. 표본 97곳을 브라우저로 재서 얻은 기준이다.
+ * - 섹션을 전부 테두리 박스로 감싼 사이트는 8%뿐이고 위계가 좋은 그룹은 섹션 중 17%만 박스였다 -> 섹션은 카드로 감싸지 않는다.
+ * - h3 가 18/16/15px 세 종류였고 그중 16px 는 본문과 같아서 제목으로 읽히지 않았다 -> 한 종류만 쓴다.
+ * - 11화면 페이지에 페이지 내 이동 장치가 없었다(표본 35%, 위계 좋은 그룹 39%가 앵커를 둔다) -> 앵커 줄을 둔다.
+ */
+test("portfolio layout invariants: one h3 size, section anchors resolve, sections are not cards", async ({ page }) => {
+  await page.goto("/ko/portfolio/");
+
+  const h3Sizes = await page.locator("main h3:visible").evaluateAll((els) => [
+    ...new Set(els.map((e) => getComputedStyle(e).fontSize)),
+  ]);
+  expect(h3Sizes, `h3 크기: ${h3Sizes.join(", ")}`).toHaveLength(1);
+
+  const bodySize = await page
+    .locator("main p:visible")
+    .first()
+    .evaluate((e) => parseFloat(getComputedStyle(e).fontSize));
+  expect(parseFloat(h3Sizes[0]), "h3 가 본문과 같은 크기면 제목으로 읽히지 않는다").toBeGreaterThan(bodySize);
+
+  // 앵커가 실제 섹션을 가리켜야 한다(id 오타로 조용히 깨지는 것을 막는다)
+  const hrefs = await page.locator('main nav a[href^="#"]').evaluateAll((els) =>
+    els.map((e) => (e as HTMLAnchorElement).getAttribute("href")!.slice(1)),
+  );
+  expect(hrefs.length).toBeGreaterThanOrEqual(3);
+  for (const id of hrefs) await expect(page.locator(`section#${id}`)).toHaveCount(1);
+
+  // 섹션 자체는 카드가 아니다(프로젝트·CVE 카드는 섹션 안에 있다)
+  const boxedSections = await page.locator("main section[id]").evaluateAll((els) =>
+    els.filter((e) => {
+      const s = getComputedStyle(e);
+      return s.boxShadow !== "none" || parseFloat(s.borderTopWidth) >= 1;
+    }).length,
+  );
+  expect(boxedSections).toBe(0);
+});

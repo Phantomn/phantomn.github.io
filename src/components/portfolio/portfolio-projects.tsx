@@ -40,7 +40,7 @@ function ProjectCard({
     <Card className={cn("break-inside-avoid", className)}>
       <CardContent className="space-y-2 p-4">
         <div className="flex items-start justify-between gap-3">
-          <h3 className="text-body font-semibold leading-snug">{project.title}</h3>
+          <h3 className="text-subheading font-semibold leading-snug">{project.title}</h3>
           {project.contributionLabel && (
             <Badge variant="outline" className="shrink-0 tabular-nums">
               {project.contributionLabel}
@@ -147,7 +147,7 @@ export function PortfolioProjects({
       </div>
 
       {/* 카드는 한 번만 그린다. 화면에서는 필터에 맞지 않는 카드를 가리고, 인쇄에서는 전부 보인다(1열). */}
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 print:grid-cols-1">
+      <div className="grid grid-cols-1 items-start gap-3 sm:grid-cols-2 print:grid-cols-1">
         {projects.map((p) => (
           <ProjectCard
             key={p.id}

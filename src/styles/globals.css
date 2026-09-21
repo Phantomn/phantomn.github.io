@@ -44,7 +44,7 @@
   --text-title--line-height: 1.15;
   --text-heading: 1.5rem; /* 섹션 h2 */
   --text-heading--line-height: 1.3;
-  --text-subheading: 1.125rem; /* 항목 제목 h3 */
+  --text-subheading: 1.25rem; /* 항목 제목 h3. 표본 97곳에서 h3/본문 비율 중앙값 1.25 */
   --text-subheading--line-height: 1.4;
   --text-body: 1rem; /* 본문 */
   --text-body--line-height: 1.7;
