@@ -22,13 +22,20 @@ interface Props {
 
 type CardLabels = Pick<Props, "actionsLabel" | "resultsLabel">;
 
+/*
+ * 이 그리드에는 대표가 아닌 프로젝트만 들어온다(대표 프로젝트는 위 "주요 프로젝트" 섹션이 상세히 보여 준다).
+ * 화면에서는 제목·고객사·기간·역할·성과 한 줄까지만 읽게 하고, 배경·수행·나머지 성과·기술스택은 인쇄에서만 펼친다.
+ * 예전에는 상세 여부를 actions.length > 0 으로 정해서, 데이터에 수행 내용이 붙은 22개 중 18개가 화면에서 전부 펼쳐졌다
+ * (src/data/portfolio.ts 는 "나머지는 간략" 이라고 선언해 두었는데 코드가 데이터 모양을 보고 있었다).
+ * 그 결과 이 섹션 하나가 페이지 글자의 48%(7,004자)를 차지했다. 완전한 기록은 맨 위에서 내려받는 경력기술서 PDF 에 있다.
+ */
 function ProjectCard({
   project,
   actionsLabel,
   resultsLabel,
   className,
 }: { project: ProjectView; className?: string } & CardLabels) {
-  const detailed = project.actions.length > 0;
+  const [firstResult, ...restResults] = project.results;
   return (
     <Card className={cn("break-inside-avoid", className)}>
       <CardContent className="space-y-2 p-4">
@@ -50,45 +57,46 @@ function ProjectCard({
           <span>{project.role}</span>
         </div>
 
-        {project.background && (
-          <p className="text-body-sm text-muted-foreground">
-            {project.background}
-          </p>
-        )}
+        {firstResult && <p className="text-body-sm text-muted-foreground">{firstResult}</p>}
 
-        {detailed && (
-          <div>
-            <div className="text-meta font-semibold text-foreground/80">{actionsLabel}</div>
-            <ul className="mt-1 list-disc space-y-1 pl-4 text-body-sm text-muted-foreground">
-              {project.actions.map((a, i) => (
-                <li key={i}>{a}</li>
-              ))}
-            </ul>
-          </div>
-        )}
+        {/* 인쇄용 상세. 화면에서는 위의 성과 한 줄까지만 읽게 한다. */}
+        <div className="hidden space-y-2 print:block">
+          {project.background && (
+            <p className="text-body-sm text-muted-foreground">{project.background}</p>
+          )}
 
-        {project.results.length > 0 && (
-          <div>
-            {detailed && (
+          {project.actions.length > 0 && (
+            <div>
+              <div className="text-meta font-semibold text-foreground/80">{actionsLabel}</div>
+              <ul className="mt-1 list-disc space-y-1 pl-4 text-body-sm text-muted-foreground">
+                {project.actions.map((a, i) => (
+                  <li key={i}>{a}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {restResults.length > 0 && (
+            <div>
               <div className="text-meta font-semibold text-foreground/80">{resultsLabel}</div>
-            )}
-            <ul className="mt-1 list-disc space-y-1 pl-4 text-body-sm text-muted-foreground">
-              {project.results.map((r, i) => (
-                <li key={i}>{r}</li>
-              ))}
-            </ul>
-          </div>
-        )}
+              <ul className="mt-1 list-disc space-y-1 pl-4 text-body-sm text-muted-foreground">
+                {restResults.map((r, i) => (
+                  <li key={i}>{r}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
-        {project.stack && project.stack.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 pt-1" data-notranslate>
-            {project.stack.map((s) => (
-              <Badge key={s} variant="secondary" className="text-label">
-                {s}
-              </Badge>
-            ))}
-          </div>
-        )}
+          {project.stack && project.stack.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 pt-1" data-notranslate>
+              {project.stack.map((s) => (
+                <Badge key={s} variant="secondary" className="text-label">
+                  {s}
+                </Badge>
+              ))}
+            </div>
+          )}
+        </div>
       </CardContent>
     </Card>
   );

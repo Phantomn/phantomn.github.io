@@ -32,6 +32,39 @@ test("portfolio (ko) keeps the record wording from the single source", async ({ 
   await expect(page.locator("h3:visible", { hasText: "KT 기가지니" })).toHaveCount(0);
 });
 
+/*
+ * 이 페이지는 훑어보는 포트폴리오이고, 완전한 기록은 맨 위에서 내려받는 경력기술서 PDF 다.
+ * "그 밖의 프로젝트" 카드가 화면에서 배경·수행까지 다 펼쳐져 프로젝트 서술이 페이지 글자의 76% 를 차지한 적이 있다
+ * (원인: 상세 여부를 featured 플래그가 아니라 데이터에 actions 가 있는지로 판단). 화면에서는 한 줄까지만 보여야 한다.
+ */
+test("portfolio keeps the non-featured cards scannable on screen and full in print", async ({ page }) => {
+  await page.goto("/ko/portfolio/");
+  // 섹션은 Card(div[data-slot=card])이고 프로젝트 카드도 같은 속성이라, 제목을 가진 바깥 Card 안의 Card 를 고른다
+  const grid = page.locator("[data-slot='card']", {
+    has: page.getByRole("heading", { name: /그 밖의 프로젝트/ }),
+  });
+  const cards = grid.locator("[data-slot='card']");
+  const count = await cards.count();
+  expect(count).toBeGreaterThan(15);
+
+  // 화면: 수행/성과 라벨이 보이지 않고, 카드마다 보이는 글자가 짧다
+  // getByText 는 숨은 요소도 세므로 보이는 것만 고른다
+  const visibleActionLabels = grid.locator(":text-is('주요 수행'):visible");
+  await expect(visibleActionLabels).toHaveCount(0);
+  const visibleLengths = await cards.evaluateAll((els) =>
+    els.map((e) => (e as HTMLElement).innerText.replace(/\s+/g, " ").trim().length),
+  );
+  expect(Math.max(...visibleLengths), `가장 긴 카드: ${Math.max(...visibleLengths)}자`).toBeLessThan(300);
+
+  // 인쇄: 상세가 펼쳐진다
+  await page.emulateMedia({ media: "print" });
+  expect(await visibleActionLabels.count()).toBeGreaterThan(10);
+  const printLengths = await cards.evaluateAll((els) =>
+    els.map((e) => (e as HTMLElement).innerText.replace(/\s+/g, " ").trim().length),
+  );
+  expect(Math.max(...printLengths)).toBeGreaterThan(Math.max(...visibleLengths));
+});
+
 // 카드는 한 번만 그리고, 화면에서 필터가 가린 카드는 인쇄에서 다시 보인다(1열). print: 변형이 sm: 을 이기는지도 함께 본다.
 test("portfolio prints every project in one column even while a filter is active", async ({ page }) => {
   await page.goto("/ko/portfolio/");

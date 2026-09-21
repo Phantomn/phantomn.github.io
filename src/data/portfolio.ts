@@ -5,8 +5,10 @@
  * 새 프로젝트를 넣으면 4개 로케일 JSON 에 같은 id 를 모두 추가해야 한다(pnpm check:i18n 이 검사).
  *
  * 한국 경력기술서 표준(기간 / 역할 / 기여도 / 배경 / 수행 / 성과 / 기술스택)을 따른다.
- * - Featured 프로젝트: full STAR (background + actions + results + stack)
- * - 나머지: 간략 (한 줄 성과만 results[0])
+ * - Featured 프로젝트: 화면에서 full STAR (background + actions + results + stack)
+ * - 나머지: 화면에서 성과 한 줄(results[0])까지만. 배경·수행·나머지 성과·스택은 인쇄에서만 펼친다.
+ *   이 규칙은 portfolio-projects.tsx 가 featured 플래그로 판단하고 tests/portfolio.spec.ts 가 검사한다.
+ *   데이터에는 비대표 프로젝트의 상세도 그대로 둔다(인쇄용, 그리고 4개 로케일 번역이 이미 있다).
  */
 
 export type PortfolioCategoryKey =
@@ -37,7 +39,7 @@ export interface PortfolioProject {
   contribution: number;
   /** true 면 STAR 상세 카드로 렌더 */
   featured: boolean;
-  /** 기술스택 (featured 전용) */
+  /** 기술스택. 화면에는 대표 프로젝트만 노출(나머지는 인쇄에서 나온다) */
   stack?: string[];
 }
 
