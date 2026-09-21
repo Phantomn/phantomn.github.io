@@ -102,19 +102,18 @@
   },
   "about": {
     "title": "Acerca",
-    "sectionAbout": "Acerca",
-    "sectionSkills": "Habilidades",
-    "sectionAchievements": "Logros",
-    "sectionLanguages": "Idiomas",
-    "sectionResume": "Currículum",
-    "contactInfo": "Contacto",
-    "connections": "{count} CVE",
-    "downloadPdf": "Descargar PDF",
-    "portfolioCta": {
-      "heading": "Experiencia, proyectos, certificaciones y CVEs completos",
-      "body": "Consulta el historial laboral completo, proyectos, certificaciones y la lista de CVEs en la página de Portafolio.",
-      "cta": "Ver portafolio"
-    }
+    "sectionCompetitions": "Competiciones",
+    "sectionVulns": "Vulnerabilidades",
+    "pendingLabel": "ID pendiente",
+    "sectionCareer": "Trayectoria",
+    "sectionContact": "Contacto",
+    "vulnCounts": "{cve} CVE, {fve} FVE",
+    "fveLine": "{n} FVE (Findthegap)",
+    "groupCount": "{group}: {n}",
+    "maxCvss": "CVSS máx. {score}",
+    "career": "La trayectoria y los proyectos están en el <link>portafolio</link>.",
+    "labelEmail": "Correo",
+    "labelResume": "Currículum"
   },
   "portfolio": {
     "title": "Portafolio",

@@ -774,10 +774,21 @@ function normalizeCveEntry(entry: LegacyCveEntry): CveEntry {
 
 export const CVE_ITEMS: CveEntry[] = CVE_SOURCE_ITEMS.map(normalizeCveEntry);
 
-export const CVE_COUNT = CVE_ITEMS.length;
+/**
+ * 정식 CVE 번호(CVE-YYYY-N)가 부여된 항목.
+ * 번호 대기(CVE-UNASSIGNED-*)는 CVE가 아니다 — CNA Rules 4.2.4: 부여된 ID는 공개되어야 하고 아니면 반려된다.
+ */
+export function isAssignedCve(item: CveEntry): boolean {
+  return item.kind === "cve" && /^CVE-\d{4}-\d{4,}$/.test(item.id);
+}
 
-/** CVE(공식 채번)만. FVE는 제외 — 이력서·소개 문구에서 둘을 섞어 세면 안 된다. */
-export const CVE_ONLY_COUNT = CVE_ITEMS.filter((item) => item.kind === "cve").length;
+/** CVE(공식 채번)만. FVE와 번호 대기는 제외 — 이력서·소개 문구에서 섞어 세면 안 된다. */
+export const CVE_ONLY_COUNT = CVE_ITEMS.filter(isAssignedCve).length;
+
+/** 번호 대기(CVE 요청 중이지만 아직 ID가 없는 항목). */
+export const CVE_PENDING_COUNT = CVE_ITEMS.filter(
+  (item) => item.kind === "cve" && !isAssignedCve(item),
+).length;
 
 /** FVE(Findthegap 플랫폼 채번)만. */
 export const FVE_COUNT = CVE_ITEMS.filter((item) => item.kind === "fve").length;
@@ -789,7 +800,7 @@ export const FVE_COUNT = CVE_ITEMS.filter((item) => item.kind === "fve").length;
  */
 export const CVE_BREAKDOWN = CVE_GROUP_DEFINITIONS.map((group) => ({
   label: group.shortLabel,
-  count: CVE_ITEMS.filter((item) => item.groupKey === group.key && item.kind === "cve").length,
+  count: CVE_ITEMS.filter((item) => item.groupKey === group.key && isAssignedCve(item)).length,
 }))
   .filter((group) => group.count > 0)
   .map((group) => `${group.label} ${group.count}`)

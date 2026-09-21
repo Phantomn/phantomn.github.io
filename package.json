@@ -12,6 +12,7 @@
     "lint": "eslint . --cache",
     "typecheck": "tsc --noEmit",
     "knip": "knip",
+    "check:records": "node scripts/check-records.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {

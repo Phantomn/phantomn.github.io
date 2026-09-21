@@ -10,6 +10,11 @@
  * 고객사명은 실명 공개 결정. 본문 번역은 DynamicTranslator가 런타임 처리.
  */
 
+import { describeCompetition, getCompetition } from "./competitions";
+
+const LS2025 = describeCompetition(getCompetition("ls2025"));
+const LS2026 = describeCompetition(getCompetition("ls2026"));
+
 export type PortfolioCategoryKey =
   | "fintech"
   | "ics-ot"
@@ -98,8 +103,8 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
       "연합팀 협업 기반 침해대응 보고 체계 운영",
     ],
     results: [
-      "Locked Shields 2025 — 훈련 종합 6위 / DFIR CTF 부문 1위 달성",
-      "Locked Shields 2026 — 한국-헝가리 연합 Special System 블루팀, 종합 9위",
+      `${LS2025.label}${LS2025.detail}`,
+      `${LS2026.label}${LS2026.detail}`,
     ],
     stack: ["DFIR", "Volatility", "Wireshark", "Sysmon", "YARA"],
   },

@@ -48,6 +48,9 @@ jobs:
       - name: Dead code / unused dependency check
         run: pnpm knip
 
+      - name: Records consistency (competitions / CVE counts)
+        run: pnpm check:records
+
   build:
     runs-on: ubuntu-latest
     steps:

@@ -6,26 +6,3 @@ export type ExperienceItem = {
   dates: string;
   bullets: string[];
 };
-
-export type SkillCategory = {
-  title: string;
-  items: string[];
-};
-
-export type AchievementItem = {
-  name: string;
-  href: string;
-  badgeSrc?: string;
-};
-
-export type LanguageItem = {
-  flag: string;
-  name: string;
-  level: string;
-};
-
-export type ResumeLink = {
-  label: string;
-  href: string;
-  flag: string;
-};

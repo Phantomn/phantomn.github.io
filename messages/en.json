@@ -12,7 +12,7 @@
   },
   "home": {
     "title": "Ph4nt0m",
-    "description": "Offensive Security Researcher. CVE 21, OT/ICS Pentesting, AI Security Automation, CTF writeups.",
+    "description": "Offensive Security Researcher. OT/ICS Pentesting, AI Security Automation, CTF writeups.",
     "goToBlog": "Go to Blog",
     "sections": {
       "blog": {
@@ -102,19 +102,18 @@
   },
   "about": {
     "title": "About",
-    "sectionAbout": "About",
-    "sectionSkills": "Skills",
-    "sectionAchievements": "Achievements",
-    "sectionLanguages": "Languages",
-    "sectionResume": "Resume",
-    "contactInfo": "Contact info",
-    "connections": "CVE {count}",
-    "downloadPdf": "Download PDF",
-    "portfolioCta": {
-      "heading": "Full experience, projects, certifications & CVEs",
-      "body": "See the full work history, projects, certifications, and CVE list on the Portfolio page.",
-      "cta": "View portfolio"
-    }
+    "sectionCompetitions": "Competitions",
+    "sectionVulns": "Vulnerabilities",
+    "pendingLabel": "Pending ID",
+    "sectionCareer": "Career",
+    "sectionContact": "Contact",
+    "vulnCounts": "{cve} CVEs, {fve} FVEs",
+    "fveLine": "{n} FVEs (Findthegap)",
+    "groupCount": "{group}: {n}",
+    "maxCvss": "max CVSS {score}",
+    "career": "Career and projects are in the <link>portfolio</link>.",
+    "labelEmail": "Email",
+    "labelResume": "Resume"
   },
   "portfolio": {
     "title": "Portfolio",
