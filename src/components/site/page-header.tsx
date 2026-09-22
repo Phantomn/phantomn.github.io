@@ -25,7 +25,7 @@ export function PageHeader({
         <span aria-hidden className="mt-[0.15em] h-[1.05em] w-1 shrink-0 rounded-sm bg-primary" />
         <h1 className="text-balance font-heading text-title font-bold tracking-tight">{title}</h1>
       </div>
-      {lead && <p className="mt-5 max-w-[44rem] text-body text-muted-foreground">{lead}</p>}
+      {lead && <p className="mt-5 max-w-[var(--measure)] text-body text-muted-foreground">{lead}</p>}
       {children}
     </header>
   );

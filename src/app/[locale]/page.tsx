@@ -76,7 +76,7 @@ export default async function HomePage({ params }: Props) {
         lead={tAbout("intro")}
       >
         <StatRow items={stats} />
-        <p className="mt-6 max-w-[44rem] text-body-sm text-muted-foreground" data-notranslate>
+        <p className="mt-6 max-w-[var(--measure)] text-body-sm text-muted-foreground" data-notranslate>
           {ls2025.name} {ls2025.year} — {formatResult(ls2025, tr)}
         </p>
       </PageHeader>
