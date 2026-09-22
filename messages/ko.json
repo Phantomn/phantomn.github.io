@@ -189,7 +189,8 @@
       "projects": "프로젝트",
       "cves": "CVE",
       "fves": "FVE"
-    }
+    },
+    "labelBackground": "배경"
   },
   "sidebar": {
     "relatedPosts": "관련 게시물",
