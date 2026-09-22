@@ -43,8 +43,8 @@
   /* 페이지 h1. 표본의 h1 중앙값은 데스크톱 54px(사분위 [36,72]), 모바일 36px(사분위 [29,40]) - 화면 폭에 따라 36~48px */
   --text-title: clamp(2.25rem, 1.5rem + 3vw, 3rem);
   --text-title--line-height: 1.15;
-  --text-heading: 1.5rem; /* 섹션 h2 */
-  --text-heading--line-height: 1.3;
+  --text-heading: 1.875rem; /* 섹션 h2. .prose h2 와 같은 값으로 두어 페이지마다 달라지지 않게 한다 */
+  --text-heading--line-height: 1.25;
   --text-subheading: 1.25rem; /* 항목 제목 h3. 표본 97곳에서 h3/본문 비율 중앙값 1.25 */
   --text-subheading--line-height: 1.4;
   --text-body: 1rem; /* 본문 */
@@ -176,6 +176,18 @@
 
   /* Avatar glow (home hero) - replaces hardcoded rgba(159,239,0,...) */
   --avatar-glow: rgba(159, 239, 0, 0.35);
+}
+
+/*
+ * 머리말 라벨(eyebrow). 본문과 색이 같아도 모노 서체와 넓은 자간만으로 "라벨"로 읽힌다.
+ * 한글은 대문자가 없어 uppercase 는 로마자에만 걸리고, 자간은 한글에도 적용된다.
+ * 정보가 있는 자리에만 쓴다 - 프로젝트 분야, STAR 라벨(배경/수행/성과). 섹션 번호 같은 장식에는 쓰지 않는다.
+ */
+.eyebrow {
+  @apply font-mono text-label uppercase text-muted-foreground;
+  /* 자간은 낱말 사이도 함께 벌린다. 로마자에는 0.14em 이 어울리지만 한글 라벨("주요 수행")은 낱말이 떠 보여서
+     0.07em 으로 두고, 모노 서체와 크기로 라벨임을 알린다. */
+  letter-spacing: 0.07em;
 }
 
 @layer base {
