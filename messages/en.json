@@ -13,21 +13,9 @@
   "home": {
     "title": "Ph4nt0m",
     "description": "Offensive Security Researcher",
-    "goToBlog": "Go to Blog",
-    "sections": {
-      "blog": {
-        "label": "Blog",
-        "description": "Technical notes on vulnerability research, OT/ICS security, and AI automation."
-      },
-      "cves": {
-        "label": "CVE",
-        "description": "A single archive for public disclosures, status tracking, and external references."
-      },
-      "writeups": {
-        "label": "Writeups",
-        "description": "CTF competition and red team exercise writeup archive."
-      }
-    }
+    "recentPosts": "Recent Writing",
+    "recentCves": "Recent CVEs",
+    "viewAll": "View all"
   },
   "blog": {
     "title": "Blog",

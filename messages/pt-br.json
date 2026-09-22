@@ -13,21 +13,9 @@
   "home": {
     "title": "Ph4nt0m",
     "description": "Offensive Security Researcher",
-    "goToBlog": "Ir para o Blog",
-    "sections": {
-      "blog": {
-        "label": "Blog",
-        "description": "Artigos e notas sobre pentesting, DFIR e engenharia de segurança."
-      },
-      "cves": {
-        "label": "CVE",
-        "description": "Arquivo único para divulgações públicas, status e referências externas."
-      },
-      "writeups": {
-        "label": "Writeups",
-        "description": "Walkthroughs do HackTheBox, CyberDefenders e PortSwigger."
-      }
-    }
+    "recentPosts": "Publicações recentes",
+    "recentCves": "CVEs recentes",
+    "viewAll": "Ver tudo"
   },
   "blog": {
     "title": "Blog",

@@ -13,21 +13,9 @@
   "home": {
     "title": "Ph4nt0m",
     "description": "Offensive Security Researcher",
-    "goToBlog": "블로그 보기",
-    "sections": {
-      "blog": {
-        "label": "블로그",
-        "description": "취약점 연구, OT/ICS 보안, AI 자동화에 관한 기술 노트."
-      },
-      "cves": {
-        "label": "CVE",
-        "description": "공개 취약점 상태, 외부 레퍼런스를 한곳에 모아둔 아카이브."
-      },
-      "writeups": {
-        "label": "라이트업",
-        "description": "CTF 대회 및 모의해킹 라이트업 아카이브."
-      }
-    }
+    "recentPosts": "최근 글",
+    "recentCves": "최근 CVE",
+    "viewAll": "전체 보기"
   },
   "blog": {
     "title": "블로그",
