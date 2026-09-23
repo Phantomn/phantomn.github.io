@@ -32,13 +32,13 @@ export default async function TagsIndexPage({ params }: Props) {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
       <h1 className="mb-2 text-title font-bold font-heading">{t("indexHeading")}</h1>
-      <p className="mb-8 text-sm text-muted-foreground">{t("indexHint")}</p>
+      <p className="mb-8 text-body text-muted-foreground">{t("indexHint")}</p>
       <ul className="flex flex-wrap gap-2">
         {frequent.map(({ tag, count }) => (
           <li key={tag}>
             <Link
               href={`/${locale}/tags/${tag}/`}
-              className="inline-flex items-center gap-1 rounded-md border border-border px-3 py-1.5 text-sm hover:border-primary hover:text-primary"
+              className="chip focus-ring gap-1 px-3 py-1.5 hover:border-primary hover:text-primary"
             >
               #{tag}
               <span className="text-xs text-muted-foreground">{count}</span>

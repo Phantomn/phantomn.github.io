@@ -86,3 +86,69 @@ for (const vp of VIEWPORTS) {
     expect(distinct[0]).toBeGreaterThanOrEqual(vp.name === "mobile" ? 34 : 44);
   });
 }
+
+/*
+ * 사이트 전체 제목 위계. 페이지를 하나씩 고치다가 편차가 커진 적이 있다(h2 30/24/16px, h3 24/20/16px,
+ * 본문 17/16/15px, 줄간격 5종, 글 폭 6종). 값은 globals.css 토큰 한 곳에서 정하고, 페이지 종류가 달라도
+ * 같은 단계는 같은 크기여야 한다. 12px 미만 글자는 어느 목록에도 없어야 한다(예전엔 블로그 목록 글자의 16.6%).
+ */
+const ALL_PAGES = [
+  "/ko/",
+  "/ko/about/",
+  "/ko/portfolio/",
+  "/ko/blog/",
+  "/ko/blog/aarch64-easy-linux-pwn/",
+  "/ko/cves/",
+  "/ko/cves/cve-2019-18885/",
+  "/ko/writeups/",
+  "/ko/tags/",
+];
+
+test("heading levels have one size each across every page type", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  const seen: Record<string, Map<number, string[]>> = { h1: new Map(), h2: new Map(), h3: new Map() };
+  const tinyText: string[] = [];
+
+  for (const path of ALL_PAGES) {
+    await page.goto(path);
+    const r = await page.evaluate(() => {
+      const vis = (e: Element) => {
+        for (let n: Element | null = e; n; n = n.parentElement) {
+          const s = getComputedStyle(n);
+          if (s.display === "none" || s.visibility === "hidden" || Number(s.opacity) === 0) return false;
+        }
+        return e.getBoundingClientRect().height > 0;
+      };
+      const main = document.querySelector("main") ?? document.body;
+      const sizes = (sel: string) => [
+        ...new Set(
+          [...main.querySelectorAll(sel)]
+            .filter(vis)
+            .map((e) => Math.round(parseFloat(getComputedStyle(e).fontSize))),
+        ),
+      ];
+      const tiny: string[] = [];
+      const walker = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+      for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+        const el = n.parentElement;
+        if (!el || !(n.textContent ?? "").trim() || el.closest("script, style, noscript") || !vis(el)) continue;
+        const size = parseFloat(getComputedStyle(el).fontSize);
+        if (size < 12) tiny.push(`${size}px <${el.tagName.toLowerCase()}> "${(n.textContent ?? "").trim().slice(0, 20)}"`);
+      }
+      return { h1: sizes("h1"), h2: sizes("h2"), h3: sizes("h3"), tiny: [...new Set(tiny)] };
+    });
+    for (const tag of ["h1", "h2", "h3"] as const) {
+      for (const size of r[tag]) {
+        if (!seen[tag].has(size)) seen[tag].set(size, []);
+        seen[tag].get(size)!.push(path);
+      }
+    }
+    for (const t of r.tiny) tinyText.push(`${path}: ${t}`);
+  }
+
+  for (const tag of ["h1", "h2", "h3"] as const) {
+    const found = [...seen[tag].entries()].map(([size, paths]) => `${size}px (${paths.join(", ")})`);
+    expect(seen[tag].size, `${tag} 크기가 여러 개: ${found.join(" | ")}`).toBeLessThanOrEqual(1);
+  }
+  expect(tinyText, `12px 미만 글자:\n${tinyText.join("\n")}`).toEqual([]);
+});

@@ -202,7 +202,7 @@ export default async function WriteupPage({ params }: Props) {
                           <Badge
                             key={tag}
                             variant="secondary"
-                            className="text-[11px]"
+                            className="text-label"
                           >
                             {tag}
                           </Badge>

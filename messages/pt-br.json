@@ -25,7 +25,8 @@
     "noPosts": "Nenhum post ainda.",
     "noResults": "Nenhum post encontrado.",
     "recentPosts": "Posts Recentes",
-    "featured": "Destaque"
+    "featured": "Destaque",
+    "eyebrow": "Notas"
   },
   "cves": {
     "title": "Registro de CVE",

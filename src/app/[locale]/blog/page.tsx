@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getContentList, getSectionIndex } from "@/lib/content";
 import { routing } from "@/i18n/routing";
-import { BlogPageLayout } from "@/components/blog/blog-page-layout";
+import { BlogSearchLayout } from "@/components/blog/blog-search-layout";
+import { PageHeader } from "@/components/site/page-header";
 import { DynamicTranslator } from "@/components/dynamic-translator";
 import type { SerializedPost } from "@/components/blog/types";
 
@@ -42,36 +43,22 @@ export default async function BlogPage({ params }: Props) {
   const featuredPost = posts.length > 0 ? serialize(posts[0]) : null;
   const remainingPosts = posts.slice(1).map(serialize);
 
-  const recentPosts = posts.slice(0, 5).map((p) => ({
-    title: p.meta.title,
-    date: p.meta.date,
-    href: p.href,
-    locked: p.meta.locked,
-  }));
-
-  const allTags = Array.from(
-    new Set(posts.flatMap((p) => p.meta.tags ?? []))
-  ).sort();
-
   return (
-    <div className="mx-auto w-[90vw] max-w-[1200px] px-4 py-8">
-      <div className="mb-8 border-l-4 border-primary pl-4">
-        <h1 className="text-title font-bold font-heading">
-          {section?.meta.title ?? t("title")}
-        </h1>
-      </div>
+    <div className="mx-auto w-[90vw] max-w-[900px] break-keep py-10">
+      <PageHeader
+        eyebrow={t("eyebrow")}
+        title={section?.meta.title ?? t("title")}
+        lead={section?.meta.description}
+      />
 
       <DynamicTranslator
         enabled={locale !== routing.defaultLocale}
         targetLocale={locale}
         contentKey="blog/index"
       >
-        <BlogPageLayout
-          featuredPost={featuredPost}
-          posts={remainingPosts}
-          recentPosts={recentPosts}
-          allTags={allTags}
-        />
+        <div className="mt-10">
+          <BlogSearchLayout featuredPost={featuredPost} posts={remainingPosts} />
+        </div>
       </DynamicTranslator>
     </div>
   );

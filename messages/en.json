@@ -25,7 +25,8 @@
     "noPosts": "No posts yet.",
     "noResults": "No posts found.",
     "recentPosts": "Recent Posts",
-    "featured": "Featured"
+    "featured": "Featured",
+    "eyebrow": "Writing"
   },
   "cves": {
     "title": "CVE Registry",
