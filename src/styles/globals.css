@@ -23,6 +23,7 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --radius-sm: calc(var(--radius) - 4px);
@@ -66,17 +67,19 @@
   --color-sidebar: var(--sidebar);
 }
 
-/*  Light mode — from data/theme.json  */
+/*
+ * 중립 색 체계(배경/표면/글자/보조/옅은글자/경계선)는 bshastry.github.io 값으로 교체했다(저자 허락, CREDITS.md).
+ * 이전에는 중립색에 강조색을 3~9% 섞었는데, 순수 중립으로 두면 강조색(#9fef00)이 더 또렷해진다.
+ * 강조색은 우리 값을 유지한다 - 저쪽 파란색을 쓰면 정체성이 사라진다.
+ */
+/*  Light mode  */
 :root {
-  --faint-foreground: color-mix(in oklab, #75757a 95%, var(--primary) 5%);
+  --faint-foreground: #6e6e6e;
   /* 문서 글 폭. 한글 16px 에서 45rem(720px)은 한 줄 약 45자. 페이지마다 714/750/812/900px 로 갈렸던 것을 한 값으로 모았다. */
   --measure: 45rem;
   --radius: 0.625rem;
-  /* 중립 스케일에 앰버(--primary) 색조를 2-10% 섞음 - 순수 zinc는 브랜드와
-     무관해 앰버가 겉돌아 보인다(Radix Colors/Refactoring UI/Coloridex 등
-     레퍼런스 실측 근거는 docs/specs/blog-visual-redesign.md 참조). */
-  --background: color-mix(in oklab, #fafaf9 99%, var(--primary) 1%);
-  --foreground: color-mix(in oklab, #18181b 96%, var(--primary) 4%);
+  --background: #fafafa;
+  --foreground: #111111;
   --card: #ffffff;
   --card-foreground: #18181b;
   --popover: #ffffff;
@@ -86,13 +89,12 @@
   --secondary: #f4f4f5;
   --secondary-foreground: #18181b;
   --muted: color-mix(in oklab, #f4f4f5 92%, var(--primary) 8%);
-  /* 틴트 없음(0%) - 대비비 여유가 4.5:1 AA 최저선에 너무 가까워(실측
-     4.5x:1) 안전 마진 확보를 위해 원래 zinc 값을 그대로 유지 */
-  --muted-foreground: #71717a;
+  --muted-foreground: #5c5c5c;
   --accent: #f4f4f5;
   --accent-foreground: #18181b;
   --destructive: #dc2626;
-  --border: color-mix(in oklab, #e4e4e7 90%, var(--primary) 10%);
+  --border: #e6e6e6;
+  --border-strong: #d4d4d4;
   --input: #e4e4e7;
   --ring: #121212;
   --sidebar: hsl(0 0% 98%);
@@ -106,18 +108,18 @@
 
   --prose-link-hover: var(--primary);
 
-  /* CVE registry tokens */
-  --cve-surface: #f4f4f5;
-  --cve-surface-strong: #ffffff;
-  --cve-surface-soft: #fafafa;
-  --cve-border: #e4e4e7;
-  --cve-border-strong: #d4d4d8;
+  /* CVE 레지스트리 토큰. 중립색은 사이트 값을 참조한다(값을 두 곳에 두지 않는다). */
+  --cve-surface: var(--card);
+  --cve-surface-strong: var(--card);
+  --cve-surface-soft: var(--background);
+  --cve-border: var(--border);
+  --cve-border-strong: var(--border-strong);
   --cve-accent: var(--primary);
   --cve-accent-soft: rgba(18, 18, 18, 0.08);
   --cve-danger: #dc2626;
   --cve-warning: #d97706;
   --cve-info: #0f766e;
-  --cve-muted: #71717a;
+  --cve-muted: var(--muted-foreground);
   --cve-focus: var(--primary);
   --cve-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
   --cve-radius: 18px;
@@ -127,15 +129,12 @@
   --avatar-glow: rgba(18, 18, 18, 0.12);
 }
 
-/*  Dark mode — the signature Ph4nt0m palette  */
+/*  Dark mode - 배경 #0a0a0a, 경계선 #1f1f1f. 강조색만 Ph4nt0m 초록.  */
 .dark {
-  --faint-foreground: color-mix(in oklab, #7e7e83 93%, var(--primary) 7%);
-  /* 중립 스케일에 앰버(--primary) 색조를 3-9% 섞음 - 순수 zinc는 브랜드와
-     무관해 앰버가 겉돌아 보인다(Radix Colors/Refactoring UI/Coloridex 등
-     레퍼런스 실측 근거는 docs/specs/blog-visual-redesign.md 참조). */
-  --background: color-mix(in oklab, #0d0d0f 97%, var(--primary) 3%);
-  --foreground: color-mix(in oklab, #e8e6e3 96%, var(--primary) 4%);
-  --card: #151517;
+  --faint-foreground: #808080;
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card: #141414;
   --card-foreground: #f5f4f2;
   --popover: #151517;
   --popover-foreground: #e8e6e3;
@@ -144,11 +143,12 @@
   --secondary: #1c1c1f;
   --secondary-foreground: #e8e6e3;
   --muted: color-mix(in oklab, #1c1c1f 92%, var(--primary) 8%);
-  --muted-foreground: color-mix(in oklab, #9a9a9e 93%, var(--primary) 7%);
+  --muted-foreground: #8a8a8a;
   --accent: #1c1c1f;
   --accent-foreground: #f5f4f2;
   --destructive: #ef4444;
-  --border: color-mix(in oklab, #232326 91%, var(--primary) 9%);
+  --border: #1f1f1f;
+  --border-strong: #2e2e2e;
   --input: #232326;
   --ring: #9fef00;
   --sidebar: hsl(240 5.9% 10%);
@@ -162,18 +162,18 @@
 
   --prose-link-hover: var(--primary);
 
-  /* CVE registry tokens */
-  --cve-surface: #151517;
-  --cve-surface-strong: #0d0d0f;
-  --cve-surface-soft: #1c1c1f;
-  --cve-border: #232326;
+  /* CVE 레지스트리 토큰. 중립색은 사이트 값을 참조한다(값을 두 곳에 두지 않는다). */
+  --cve-surface: var(--card);
+  --cve-surface-strong: var(--background);
+  --cve-surface-soft: var(--background);
+  --cve-border: var(--border);
   --cve-border-strong: var(--primary);
   --cve-accent: var(--primary);
   --cve-accent-soft: rgba(159, 239, 0, 0.08);
   --cve-danger: #ff5f57;
   --cve-warning: #f59e0b;
   --cve-info: #58a6ff;
-  --cve-muted: #8b949e;
+  --cve-muted: var(--muted-foreground);
   --cve-focus: var(--primary);
   --cve-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
   --cve-radius: 18px;
@@ -260,6 +260,16 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-sans);
+    min-width: 320px;
+  }
+
+  /* 앵커 이동 시 고정 헤더에 가리지 않게 (요소마다 scroll-mt 를 주는 대신 한 곳에서) */
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--primary) 30%, transparent);
   }
 
   h1,
