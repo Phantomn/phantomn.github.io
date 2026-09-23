@@ -1,0 +1,257 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.8/schema.json
+# Career Statement (English) — mirrors career-statement-ko.yaml, same 24 projects.
+# Render: rendercv render scripts/cv/career-statement-en.yaml
+cv:
+  name: Seungpyo Hong
+  headline: Offensive Security Researcher · Career Statement
+  email: newbiepwner@kakao.com
+  location: Seoul, South Korea
+  website: https://phantomn.github.io
+  social_networks:
+    - network: GitHub
+      username: phantomn
+    - network: LinkedIn
+      username: ph4nt0m
+
+  sections:
+    Summary:
+      - "Offensive Security Researcher with 24+ delivered projects spanning financial-sector Web/App penetration testing, OT/ICS (IEC 62443), IoT and medical-device (FDA) security, and cyber-defence exercise development. Achilles Communication Certificate Level 2 for an LS ELECTRIC automation device; NATO CCDCOE Locked Shields 2025 overall 6th of 17 and DFIR track 1st; 16 Linux kernel CVEs, 5 IoT CVEs, 3 LLM inference-engine CVEs, and 4 FVEs."
+
+    Core Competencies:
+      - bullet: "Financial and public electronic-finance Web/App penetration testing — 12 sites across savings banks, capital, securities, insurance, and manufacturing (A3 Security)"
+      - bullet: "OT/ICS security — IEC 62443-4-2 threat modeling and penetration testing; Achilles Communication Certificate Level 2 for an LS ELECTRIC device"
+      - bullet: "IoT vulnerability analysis and security tooling — smart-building IoT detection, IoT/CCTV incident-response tooling, and 16 CVEs from a Linux kernel filesystem fuzzer"
+      - bullet: "Medical-device security — FDA eSTAR consulting, Web/App and device penetration testing, and Cybersecurity Controls certification support"
+      - bullet: "Cyber-defence exercise development and operation — KEPCO ELECCON, NATO CCDCOE Locked Shields 2025 (overall 6th of 17, DFIR 1st), APEX 2025/2026 Green Team, DFIR challenge development"
+
+    Experience:
+      - company: CoreSecurity
+        position: Associate Researcher, ICS Security Research Team
+        location: Seoul
+        start_date: 2021-06
+        end_date: present
+        highlights:
+          - "OT/ICS security — IEC 62443-4-2 threat modeling and penetration testing, Achilles Level 2 certification, and automated assessment tooling"
+          - "IoT security — smart-building IoT vulnerability-detection technology and its field validation; IoT/CCTV incident-response tooling"
+          - "Medical-device security — FDA eSTAR consulting and Web/App and device penetration testing"
+          - "Cyber-defence exercises — KEPCO ELECCON operation and challenge development; Locked Shields 2025 (overall 6th of 17, DFIR 1st); APEX 2025/2026 Green Team, DFIR challenge development"
+      - company: A3 Security
+        position: Staff, Security Technology Team
+        location: Seoul
+        start_date: 2020-06
+        end_date: 2021-06
+        highlights:
+          - "Penetration testing of 12 financial and public electronic-finance sites — 1–2 high-severity findings per site on average"
+          - "Security review of non-standard systems — KT GiGA Genie AI speaker, NongHyup RPA, DB Insurance claim-call"
+          - "ISMS / ISO 27001 certification support consulting (Coway)"
+
+    OT/ICS Security (IEC 62443):
+      - name: "Achilles Communication Certificate Level 2 for an LS ELECTRIC automation device"
+        date: "2024.07 – 2025.03 · Contribution 100%"
+        summary: "Pre-assessment, testing, and remediation to obtain the international communication-robustness certification (Achilles Level 2) for the LS ELECTRIC PLC line, which must keep control functions running under DoS, storm, and malformed-traffic conditions."
+        highlights:
+          - "Communication-robustness testing of the PLC line across all Achilles Communication Certificate Level 2 test items"
+          - "Storm/fuzzing/malformed-packet resilience testing and defect reproduction against communication stacks such as the XGT Protocol"
+          - "[Result] Achilles Level 2 certification obtained for the LS ELECTRIC PLC line; communication-robustness defects fixed in firmware"
+          - "Tools: Achilles Test Platform · XGT Protocol · PLC · Wireshark · Python"
+      - name: "IEC 62443-4-2 automated-assessment tooling for LS ELECTRIC"
+        date: "2025.03 – 2025.11 · Contribution 90%"
+        summary: "During IEC 62443-4-2 certification prep for the PLC line, component-security requirement (CR) checks were mostly manual. Built tooling to automate the communication-checkable requirements and cut repeated-assessment cost."
+        highlights:
+          - "Selected and tooled the IEC 62443-4-2 SL1 requirements that can be automated over the network"
+          - "Automated checks across FR2 (use control), FR3 (system integrity), FR4 (data confidentiality), and FR7 (resource availability)"
+          - "Built a web UI for target/result management and a result-storage pipeline"
+          - "[Result] Automated communication-based IEC 62443-4-2 assessment tool for the PLC line, cutting assessment time versus manual work"
+          - "Tools: Python · FastAPI · TypeScript · React · TailwindCSS · SQLite3"
+      - name: "LS ELECTRIC automation-device threat-modeling consulting"
+        date: "2023.03 – 2023.11 · Contribution 40%"
+        summary: "Systematic threat modeling and validating penetration testing for the IEC 62443-4-2 certification of an automation device (XGI-CPUZ)."
+        highlights:
+          - "System Definition → Function Point Definition → Data Flow Analysis, with DFDs produced"
+          - "STRIDE + DREAD threat and risk assessment"
+          - "Threat validation via penetration testing based on the national critical-infrastructure vulnerability-assessment methodology"
+          - "[Result] XGI-CPUZ threat-modeling and penetration-testing reports delivered"
+          - "Tools: STRIDE · DREAD · DFD · IEC 62443-4-2"
+      - name: "Smart-ship infrastructure vulnerability-analysis tooling and security technology"
+        date: "2024.07 – 2024.11 · Contribution 25%"
+        summary: "A smart ship's internal CBS mixes Windows/Linux PCs with embedded IoT/IIoT, so ordinary scans cannot reliably identify assets and vulnerabilities. Built an assessment tool based on the national critical-infrastructure guide."
+        highlights:
+          - "Windows/Linux assessment checklists based on the national critical-infrastructure vulnerability-analysis guide"
+          - "SSDP-discovery-based IoT/IIoT sensing to collect OS, host, and device information"
+          - "Mapped NVD/MITRE CVE/CWE to the CBS by CPE and validated command/code-execution flaws with PoC code"
+          - "[Result] Shell/PowerShell automation modules and a five-entity vulnerability DB, with CSV and other export formats"
+          - "Tools: Python · SSDP · CVE/CWE · CPE · SQLite · Shell/PowerShell"
+
+    IoT Vulnerability & Tooling:
+      - name: "IoT/CCTV incident-response tooling"
+        date: "2022.08 – 2022.12 · Contribution 45%"
+        summary: "IoT devices such as CCTV have no standardized evidence-collection procedure or tooling for incidents. Built an automated investigation tool that quickly secures firmware configuration files and logs."
+        highlights:
+          - "Designed and built an automated incident-evidence-collection tool for 40 domestic and foreign CCTV models"
+          - "UART access, flash dumping, and binwalk-based firmware extraction with full collection of configuration files and logs"
+          - "[Result] Field validation at a public agency — collected and analyzed compromise artifacts across 40 device models"
+          - "Tools: Python · C/C++ · UART · binwalk · Firmware Dump · Linux"
+      - name: "Smart-building IoT vulnerability-detection technology and field validation (Year 1)"
+        date: "2021.08 – 2021.12 · Contribution 40%"
+        summary: "Smart-building IoT devices run embedded Linux with a mix of protocols, so ordinary scanning struggles. Needed automated scanning-to-mapping detection technology and a validation testbed."
+        highlights:
+          - "Validated IoT scanning via wired (BACnet, KNXnet, Modbus) and wireless (Wi-Fi, BLE) protocol discovery"
+          - "Mapped collected data (OS, protocol, firmware, model) to NVD CVE/CWE and developed PoC validation scenarios"
+          - "[Result] Built a functional smart-building testbed and validated the detection tool"
+          - "Tools: BACnet · KNXnet · Modbus · BLE · CVE/CWE · SQLite"
+      - name: "Smart-building IoT vulnerability-detection technology and field validation (Year 2)"
+        date: "2022.01 – 2022.10 · Contribution 40%"
+        summary: "Applied Year 1 detection technology to an operating smart building to validate and improve detection accuracy."
+        highlights:
+          - "Field validation against a real smart building — collected device/sensor/protocol data and detected vulnerabilities"
+          - "Identified true/false/missed positives, derived detection rates, and updated the vulnerability DB"
+          - "[Result] Derived accuracy-improvement actions from the field validation"
+          - "Tools: IoT Scanning · CVE/CWE · PoC Validation · CSV/Excel Report"
+      - name: "KT GiGA Genie AI speaker device penetration testing"
+        date: "2020.10 · Contribution 100%"
+        highlights:
+          - "Analyzed the UART debug interface of the GiGA Genie AI speaker device"
+          - "Assessed the attack surface via Bluetooth communication and Android APK analysis"
+          - "Tools: UART · Bluetooth · APK · Android"
+
+    Medical Device Security (FDA/eSTAR):
+      - name: "Medical-device FDA security consulting"
+        date: "2024.03 – 2024.12 · Contribution 30%"
+        summary: "Infrastructure threat modeling through device and integrated-system penetration testing, plus eSTAR submission documentation, to meet the cybersecurity requirements of a medical-device maker preparing FDA premarket clearance."
+        highlights:
+          - "Threat modeling of the FDA-certification infrastructure and derivation of threats and mitigations"
+          - "Vulnerability validation via penetration testing of the device and its integrated Web/App"
+          - "eSTAR submission documentation consulting based on FDA Premarket Cybersecurity requirements"
+          - "Tools: FDA Premarket Cybersecurity · eSTAR · Threat Modeling"
+      - name: "Medical-device security certification consulting (Cybersecurity Controls)"
+        date: "2024.06 – 2025.03 · Contribution 45%"
+        summary: "Design and documentation of cybersecurity controls across device, base station, mobile app, and server for a digital therapeutic (a transcutaneous electrical nerve stimulator for ADHD) pursuing security certification."
+        highlights:
+          - "Analyzed communication paths and data flows across device-app (BLE), app-server (LTE/5G), web (HTTPS), and base station (Wi-Fi)"
+          - "Designed and validated controls: JWT (HS256)/RTR, OTP signup authentication, password policy, and dashboard RBAC"
+          - "[Result] Authored Cybersecurity Controls submission documents covering concurrent-connection limits, session management, and role separation"
+          - "Tools: BLE · JWT/HS256 · OTP · RBAC · HTTPS"
+      - name: "Federated-learning drug-discovery acceleration project (K-MELLODDY)"
+        date: "2024.07 – 2024.12 · Contribution 30%"
+        summary: "A federated drug-discovery (FDD) platform handles multi-institution data and models, so it needs security built into the whole development lifecycle plus real threat controls."
+        highlights:
+          - "Analyzed and defined an NIST SSDF-based secure development process for the FDD platform (reviewing IEC 62443, FDA, ISO 27001, EU CRA)"
+          - "Identified real threats via FDD threat modeling and applied source-level security controls (API security)"
+          - "Established a supply-chain security scheme (SBOM + VEX + EoS) and ran two production-environment penetration tests"
+          - "Tools: NIST SSDF · Threat Modeling · SBOM/VEX · IEC 62443 · FDA Cybersecurity"
+
+    Cyber Range & CTF Development:
+      - name: "NATO CCDCOE Locked Shields 2025 — Korea-Canada joint DFIR blue team"
+        date: "2025.01 – 2025.04 · Contribution 45%"
+        summary: "Competed in Locked Shields, the world's largest international cyber-defence exercise, on the Korea-Canada joint DFIR blue team. Analyzed compromise artifacts and reported response under live attack."
+        highlights:
+          - "Incident forensic analysis and timeline reconstruction under live attack scenarios"
+          - "DFIR CTF tasks — artifact analysis and malware triage"
+          - "[Result] Locked Shields 2025 overall 6th of 17 · DFIR track 1st"
+          - "[Result] Locked Shields 2026 overall 9th of 16"
+          - "[Participated] Locked Shields 2026 Korea-Hungary joint Special System blue team"
+          - "Tools: DFIR · Volatility · Wireshark · Sysmon · YARA"
+      - name: "APEX CTF 2025 — DFIR network-forensics challenge development"
+        date: "2025.06 – 2025.09 · Contribution 45%"
+        highlights:
+          - "Developed DFIR network-forensics challenges — forensic scenarios based on real incidents"
+          - "[Participated] APEX 2025, 2026 Green Team, DFIR challenge development"
+          - "Tools: DFIR · Network Forensics · Wireshark"
+      - name: "KEPCO practical cyber-security training system enhancement (ELECCON)"
+        date: "2023.06 – 2023.12 · Contribution 30%"
+        highlights:
+          - "Developed ELECCON qualifier CTF challenges"
+          - "Designed and built the finals attack/defence scenario on a power-grid (OT/ICS) environment"
+          - "Tools: OT/ICS · SCADA · CTF"
+      - name: "Practical cyber-security training system advancement"
+        date: "2022.07 – 2022.09 · Contribution 40%"
+        highlights:
+          - "Developed practical attack/defence qualifier challenges"
+          - "Built the finals attack/defence scenario on a power-grid (OT/ICS) environment"
+          - "Tools: OT/ICS · SCADA · CTF"
+      - name: "Practical cyber-security training system enhancement (2024)"
+        date: "2024.09 – 2025.02 · Contribution 30%"
+        highlights:
+          - "Built the finals attack/defence scenario on a power-grid (OT/ICS) environment"
+          - "Tools: OT/ICS · SCADA"
+      - name: "2024 practical cyber-range course operation (smart-ship port)"
+        date: "2024.07 – 2024.12 · Contribution 20%"
+        highlights:
+          - "Developed cyber-training content for a smart-ship environment"
+      - name: "Hacking-scenario-based hacking-experience operation"
+        date: "2024.11 · Contribution 45%"
+        highlights:
+          - "Ran a hacking-experience booth targeting IoT devices"
+      - name: "C2021 event (ELECCON competition operation)"
+        date: "2021.05 – 2021.12 · Contribution 30%"
+        highlights:
+          - "Assisted operation of the ELECCON attack/defence competition"
+
+    Financial/Public Web/App Pentesting:
+      - name: "Financial and public electronic-finance penetration testing (12 sites, A3 Security)"
+        date: "2020.06 – 2021.06"
+        summary: "Multiple Web/App penetration tests and vulnerability assessments of financial and public electronic-finance infrastructure while at A3 Security. Checked for information leakage and follow-on attack paths and proposed remediations."
+        highlights:
+          - "Electronic-finance vulnerability assessment — Web/App penetration testing across financial sites (Cham Savings Bank, Acuon Capital, KOFIA, and others)"
+          - "Security review of financial/insurance/manufacturing systems — SBI Savings Bank (open banking, digital branch), Hyundai Motor HKMC, DB Insurance claim-call"
+          - "NongHyup RPA source-code review; penetration testing of Daekyo integrated-education platform, Autohands, UNTAC, and others"
+          - "[Result] 12 sites tested, 1–2 high-severity findings per site on average, with remediations proposed"
+          - "Tools: Burp Suite · OWASP Top 10 · Web/App Pentest · Source Code Review"
+
+    Security Consulting & Certification:
+      - name: "INFINITT DPS medical-imaging platform penetration testing"
+        date: "2024.07 – 2024.09 · Contribution 70%"
+        summary: "Checklist-based vulnerability assessment and penetration testing of the Web and mobile (Android/iOS) services of a medical-imaging platform (DPS), checking for information leakage and follow-on attack paths."
+        highlights:
+          - "Manual Web/Mobile assessment based on the national critical-infrastructure guide and OWASP Top 10 2021"
+          - "Checked authentication, access-control, and input-validation flaws with Burp Suite, Wireshark, and APKTool"
+          - "[Result] 14 findings identified (3 medium, 11 low), all remediated on re-test; lead author of the English report"
+          - "Tools: Burp Suite · Wireshark · APKTool · OWASP Top 10 · Android/iOS"
+      - name: "Coway certification support consulting (ISMS, ISO 27001)"
+        date: "2020.11 · Contribution 40%"
+        highlights:
+          - "Delivered ISMS and ISO 27001 certification-support consulting"
+      - name: "Information-security consulting engagement"
+        date: "2024.10 – 2025.01 · Contribution 25%"
+        highlights:
+          - "Delivered an information-security consulting engagement"
+
+    Vulnerability Research:
+      - label: "16 OS kernel CVEs — Best of the Best 8th"
+        details: "Designed and built a custom filesystem fuzzer that surfaced 16 Linux kernel CVEs (including 0-days). Presented at CodeBlue 2019 (Tokyo) and Hack In The Box 2019 (Amsterdam)."
+      - label: "5 IoT CVEs — independent research"
+        details: "Embedded/IoT device vulnerability analysis. CVE-2024-33788/33789/33791/33792/33793 (up to CVSS 9.8 CRITICAL)."
+      - label: "3 LLM CVEs — independent research"
+        details: "llama.cpp inference-engine vulnerability analysis. CVE-2026-52130/52131/52132 (two remote unauthenticated DoS at CVSS 7.5; one abort on loading a malicious GGUF model)."
+      - label: "4 FVEs — Findthegap bug bounty"
+        details: "Four web-vulnerability reports against a bug-bounty platform (details undisclosed)."
+
+    Certifications & Education:
+      - bullet: "Linux Master Level 2 (KAIT, 2021.07)"
+      - bullet: "Network Administrator Level 2 (KAIT, 2024.07)"
+      - bullet: "B.S. in Computer Science, Kongju National University (2012.02 – 2020.02)"
+      - bullet: "Cheonan Commercial High School, Information Processing (2009.03 – 2012.02)"
+
+design:
+  theme: classic
+  colors:
+    name: rgb(44, 62, 80)
+    headline: rgb(44, 62, 80)
+    connections: rgb(44, 62, 80)
+    section_titles: rgb(44, 62, 80)
+    links: rgb(44, 62, 80)
+  typography:
+    font_size:
+      body: 10pt
+  page:
+    size: a4
+
+locale:
+  language: english
+
+settings:
+  render_command:
+    output_folder: rendercv_output
+    dont_generate_png: true
+    dont_generate_html: true
+    dont_generate_markdown: true
