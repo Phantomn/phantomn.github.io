@@ -1,16 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-
-import { PageHeader, StatRow } from "@/components/site/page-header";
-import { getContentList } from "@/lib/content";
-import { formatDate } from "@/lib/utils";
-import { PORTFOLIO_PROJECT_COUNT } from "@/data/portfolio";
-import { CVE_ITEMS, CVE_ONLY_COUNT, FVE_COUNT, isAssignedCve } from "@/data/cves";
-import { formatResult, getCompetition } from "@/data/competitions";
-import { toBcp47 } from "@/i18n/routing";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -19,148 +16,73 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "home" });
-  return { title: t("title"), description: t("description") };
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
 }
 
-const RECENT_POSTS = 5;
-const RECENT_CVES = 4;
+const HERO_VIDEO =
+  "https://res.cloudinary.com/a88188f90768a608fc75048188ef19e7/video/upload/q_auto/f_auto/v1776380472/Website/Homepage/912938669731443170483_b9tluh.mp4";
+const HERO_AVATAR = "/images/avatar-glitch.gif";
 
-/*
- * 홈. 이전에는 전체 화면 히어로(외부 Cloudinary 영상 + 큰 아바타)와 네비게이션 카드 3개뿐이어서
- * 첫 화면에 보이는 글자가 153자였고 작업물이 하나도 보이지 않았다(표본 97곳 중 46%는 첫 화면에 작업물을 보여 준다).
- * 이제 이름·역할·소개 문장·숫자·최근 기록을 차례로 보여 준다. 숫자와 목록은 모두 단일 원본에서 온다.
- */
+const SECTION_KEYS = ["blog", "cves", "writeups"] as const;
+
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "home" });
-  const tAbout = await getTranslations({ locale, namespace: "about" });
-  const tPortfolio = await getTranslations({ locale, namespace: "portfolio" });
-  const tr = await getTranslations({ locale, namespace: "records" });
-
-  const ls2025 = getCompetition("ls2025");
-  const track = ls2025.tracks?.[0];
-  const stats = [
-    { label: tPortfolio("stats.projects"), value: String(PORTFOLIO_PROJECT_COUNT) },
-    { label: tPortfolio("stats.cves"), value: String(CVE_ONLY_COUNT) },
-    { label: tPortfolio("stats.fves"), value: String(FVE_COUNT) },
-    ...(track
-      ? [{ label: `${ls2025.name} ${ls2025.year} ${track.name}`, value: tr("rankValue", { rank: track.rank }) }]
-      : []),
-  ];
-
-  const posts = getContentList("blog", locale).slice(0, RECENT_POSTS);
-  const cves = CVE_ITEMS.filter(isAssignedCve)
-    .slice()
-    .sort((a, b) => b.year - a.year || b.id.localeCompare(a.id))
-    .slice(0, RECENT_CVES);
 
   return (
-    <div className="break-keep">
-      {/* 격자 모티프를 화면 폭 전체에 깔고 그 위에 머리를 올린다(포팅: CREDITS.md). */}
-      <div className="hero-grid border-b">
-        <div className="mx-auto w-[90vw] max-w-[900px] py-10">
-          <PageHeader
-        eyebrow={t("description")}
-        title={
-          <span className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <Image
-              src="/images/avatar-glitch.gif"
-              alt=""
-              width={64}
-              height={64}
-              unoptimized
-              className="h-16 w-16 shrink-0 rounded-full border-2 border-primary/60 bg-black object-contain"
-            />
-            <span data-notranslate>{tAbout("name")}</span>
-          </span>
-        }
-        lead={tAbout("intro")}
-      >
-        <StatRow items={stats} />
-        <p className="mt-6 max-w-[var(--measure)] text-body-sm text-muted-foreground" data-notranslate>
-          {ls2025.name} {ls2025.year} — {formatResult(ls2025, tr)}
-        </p>
-          </PageHeader>
-        </div>
-      </div>
+    <div>
+      <section className="relative min-h-[calc(100dvh-3.5rem)] flex flex-col items-center justify-center overflow-hidden px-4">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover"
+          src={HERO_VIDEO}
+        />
+        <div className="absolute inset-0 bg-background/60 dark:bg-background/70" aria-hidden />
+        <div className="relative z-10 mx-auto max-w-2xl text-center flex flex-col items-center">
+          <img
+            src={HERO_AVATAR}
+            alt="Ph4nt0m"
+            className="mb-6 h-56 w-56 sm:h-72 sm:w-72 aspect-square rounded-full object-contain bg-black border-4 border-primary shadow-[0_0_40px_var(--avatar-glow)]"
+          />
 
-      <div className="mx-auto w-[90vw] max-w-[900px] pb-10">
-      <section id="recent-posts" className="mt-16 scroll-mt-24">
-        <div className="mb-6 flex items-end justify-between gap-4">
-          <h2 className="text-heading font-semibold tracking-tight">{t("recentPosts")}</h2>
-          <Link
-            href={`/${locale}/blog/`}
-            className="eyebrow focus-ring inline-flex items-center gap-1 rounded-sm hover:text-primary"
-          >
-            {t("viewAll")}
-            <ArrowRight className="h-3 w-3" aria-hidden />
-          </Link>
+          <h1 className="mb-4 text-title font-bold font-heading">
+            {t("title")}
+          </h1>
+          <p className="mx-auto text-lg text-muted-foreground">
+            {t("description")}
+          </p>
+          <div className="mt-8">
+            <Button asChild size="lg">
+              <Link href={`/${locale}/blog/`}>{t("goToBlog")}</Link>
+            </Button>
+          </div>
         </div>
-        <ul className="divide-y border-y">
-          {posts.map((p) => (
-            <li key={p.slug}>
-              <Link href={p.href} className="group flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:gap-6">
-                <span className="eyebrow shrink-0 tabular-nums sm:w-32" data-notranslate>
-                  {p.meta.date
-                    ? formatDate(
-                        p.meta.date,
-                        { year: "numeric", month: "short", day: "numeric" },
-                        toBcp47(locale),
-                      )
-                    : ""}
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-subheading font-semibold group-hover:text-primary">
-                    {p.meta.title}
-                  </span>
-                  {p.meta.description && (
-                    <span className="mt-1 block text-body-sm text-muted-foreground">
-                      {p.meta.description}
-                    </span>
-                  )}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
       </section>
 
-      <section id="recent-cves" className="mt-16 scroll-mt-24">
-        <div className="mb-6 flex items-end justify-between gap-4">
-          <h2 className="text-heading font-semibold tracking-tight">{t("recentCves")}</h2>
-          <Link
-            href={`/${locale}/cves/`}
-            className="eyebrow focus-ring inline-flex items-center gap-1 rounded-sm hover:text-primary"
-          >
-            {t("viewAll")}
-            <ArrowRight className="h-3 w-3" aria-hidden />
+      <section className="mx-auto max-w-6xl px-4 py-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {SECTION_KEYS.map((key) => (
+          <Link key={key} href={`/${locale}/${key}/`} className="group block">
+            <Card className="h-full transition-colors hover:border-primary/40 hover:bg-accent">
+              <CardHeader>
+                <CardTitle className="font-heading text-xl text-card-foreground group-hover:text-primary">
+                  {t(`sections.${key}.label`)}
+                </CardTitle>
+                <CardDescription>
+                  {t(`sections.${key}.description`)}
+                </CardDescription>
+              </CardHeader>
+            </Card>
           </Link>
-        </div>
-        <ul className="divide-y border-y">
-          {cves.map((c) => (
-            <li key={c.id}>
-              <Link
-                href={`/${locale}/cves/${c.slug}/`}
-                className="group flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:gap-6"
-              >
-                <span className="eyebrow shrink-0 sm:w-44" data-notranslate>
-                  {c.id}
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-subheading font-semibold group-hover:text-primary">
-                    {c.title}
-                  </span>
-                  <span className="mt-1 block text-meta text-muted-foreground">
-                    {c.groupLabel} · CVSS {c.score.toFixed(1)}
-                  </span>
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        ))}
       </section>
-      </div>
     </div>
   );
 }

@@ -20,7 +20,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { PortfolioProjects } from "@/components/portfolio/portfolio-projects";
 import { PrintButton } from "@/components/portfolio/print-button";
-import { PORTFOLIO_CATEGORY_KEYS, PORTFOLIO_PROJECT_COUNT, type PortfolioCategoryKey } from "@/data/portfolio";
+import { PORTFOLIO_CATEGORY_KEYS, PORTFOLIO_PROJECT_COUNT } from "@/data/portfolio";
 import { getLocalizedProjects } from "@/data/portfolio-i18n";
 import {
   CVE_BREAKDOWN,
@@ -75,9 +75,9 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className="mt-20 scroll-mt-24 break-inside-avoid first:mt-0 print:mt-6">
-      <h2 className="mb-6 flex items-center gap-2.5 text-balance text-heading font-semibold tracking-tight">
-        <Icon className="h-6 w-6 shrink-0 text-primary" aria-hidden />
+    <section id={id} className="mt-10 scroll-mt-24 break-inside-avoid first:mt-0 print:mt-6">
+      <h2 className="mb-4 flex items-center gap-2 text-heading font-semibold">
+        <Icon className="h-5 w-5 shrink-0 text-primary" aria-hidden />
         {title}
         {aside}
       </h2>
@@ -132,9 +132,6 @@ export default async function PortfolioPage({ params }: Props) {
   const featured = projects.filter((p) => p.featured);
   // 대표 프로젝트는 위 "주요 프로젝트" 에서 이미 상세히 보여 준다. 아래 목록에 또 넣으면 같은 프로젝트가 화면과 인쇄물에 두 번 나온다.
   const others = projects.filter((p) => !p.featured);
-  const categoryLabel = Object.fromEntries(
-    PORTFOLIO_CATEGORY_KEYS.map((key) => [key, t(`categories.${key}`)]),
-  ) as Record<PortfolioCategoryKey, string>;
   const categories = PORTFOLIO_CATEGORY_KEYS.map((key) => ({
     key,
     label: t(`categories.${key}`),
@@ -193,7 +190,7 @@ export default async function PortfolioPage({ params }: Props) {
 
   return (
     <>
-      <div className="mx-auto w-[90vw] max-w-[900px] break-keep py-6 print:w-full print:max-w-none print:py-0">
+      <div className="mx-auto w-[90vw] max-w-[900px] py-6 print:w-full print:max-w-none print:py-0">
         {/* ── Hero ──────────────────────────────────────────────── */}
         <header className="border-b pb-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -235,7 +232,7 @@ export default async function PortfolioPage({ params }: Props) {
             </div>
           </div>
 
-          <p className="mt-6 max-w-[var(--measure)] text-body text-muted-foreground">{profile.summary}</p>
+          <p className="mt-6 max-w-[60ch] text-body text-muted-foreground">{profile.summary}</p>
 
           {/* 성과를 숫자로 먼저 보여 준다. 조사 표본에서 성과를 숫자 배지로 내세우는 곳이 21%(별도 표본에서는 20곳 중 6곳)였고,
               우리는 이 숫자들이 요약 문장 안에 묶여 있어 훑어서 읽히지 않았다. 값은 모두 단일 원본에서 온다. */}
@@ -257,7 +254,7 @@ export default async function PortfolioPage({ params }: Props) {
               <a
                 key={sec.id}
                 href={`#${sec.id}`}
-                className="focus-ring rounded-sm text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
+                className="text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
               >
                 {t(sec.labelKey)}
               </a>
@@ -268,7 +265,7 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── Summary ───────────────────────────────────────────── */}
         {/* ── Core Competencies ─────────────────────────────────── */}
         <Section id="competencies" icon={Target} title={t("sectionCompetencies")}>
-            <ul className="max-w-[var(--measure)] space-y-2.5">
+            <ul className="space-y-2">
               {competencies.map((c, i) => (
                 <li key={i} className="flex gap-2 text-body text-muted-foreground">
                   <span className="mt-0.5 shrink-0 text-muted-foreground" data-notranslate>
@@ -299,30 +296,20 @@ export default async function PortfolioPage({ params }: Props) {
         </Section>
 
         {/* ── Featured Projects ─────────────────────────────────── */}
-        {/*
-          대표 프로젝트는 배경/수행/성과를 위에서 아래로 쌓아서 한 건에 400px 넘게 들어갔고,
-          이 섹션 하나가 페이지 글자의 38%였다. 셋을 나란히 3열로 놓으면 높이가 줄고 서로 대조된다.
-          분야 라벨(eyebrow)은 이 프로젝트가 어느 영역인지 알려 주는 정보라 제목 위에 둔다.
-        */}
         <Section id="featured" icon={Star} title={t("sectionFeatured")}>
-            <div className="space-y-4">
-              {featured.map((p) => (
-                <article
-                  key={p.id}
-                  className="signal-panel break-inside-avoid overflow-hidden rounded-xl border bg-card/40 p-5 sm:p-6"
-                >
+            <div className="space-y-6">
+              {featured.map((p, idx) => (
+                <div key={p.title} className="break-inside-avoid">
+                  {idx > 0 && <Separator className="mb-6" />}
                   <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <div className="eyebrow text-primary">{categoryLabel[p.category]}</div>
-                      <h3 className="mt-1.5 text-balance text-subheading font-semibold">{p.title}</h3>
-                    </div>
+                    <h3 className="text-subheading font-semibold">{p.title}</h3>
                     {p.contribution > 0 && (
                       <Badge variant="outline" className="shrink-0 tabular-nums" data-notranslate>
                         {p.contributionLabel}
                       </Badge>
                     )}
                   </div>
-                  <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-meta text-muted-foreground">
+                  <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-meta text-muted-foreground">
                     <span className="font-medium text-foreground/70" data-notranslate>
                       {p.client}
                     </span>
@@ -331,55 +318,45 @@ export default async function PortfolioPage({ params }: Props) {
                     </span>
                     <span>{p.role}</span>
                   </div>
-
-                  {/*
-                    배경/수행/성과를 3열로 놓아 봤더니 한 열이 246px 이 되어 한글이 한 줄에 16자만 들어갔고(영문은 44자)
-                    줄바꿈이 늘어 오히려 높이가 커졌다. 라벨만 왼쪽 열로 빼면 본문 폭 약 600px(한 줄 40자 안팎)을 유지하면서
-                    라벨이 한 줄에서 세로로 정렬돼 훑어볼 수 있다.
-                  */}
-                  <dl className="mt-5 space-y-4 border-t pt-5">
-                    {p.background && (
-                      <div className="grid gap-x-6 gap-y-1 sm:grid-cols-[6rem_1fr]">
-                        <dt className="eyebrow sm:pt-1">{t("labelBackground")}</dt>
-                        <dd className="text-body-sm text-muted-foreground">{p.background}</dd>
+                  {p.background && (
+                    <p className="mt-3 text-body text-muted-foreground">
+                      {p.background}
+                    </p>
+                  )}
+                  {p.actions.length > 0 && (
+                    <div className="mt-3">
+                      <div className="text-meta font-semibold text-foreground/80">
+                        {t("labelActions")}
                       </div>
-                    )}
-                    {p.actions.length > 0 && (
-                      <div className="grid gap-x-6 gap-y-1 sm:grid-cols-[6rem_1fr]">
-                        <dt className="eyebrow sm:pt-1">{t("labelActions")}</dt>
-                        <dd>
-                          <ul className="list-disc space-y-1.5 pl-4 text-body-sm text-muted-foreground">
-                            {p.actions.map((a, i) => (
-                              <li key={i}>{a}</li>
-                            ))}
-                          </ul>
-                        </dd>
+                      <ul className="mt-1 list-disc space-y-1.5 pl-5 text-body text-muted-foreground">
+                        {p.actions.map((a, i) => (
+                          <li key={i}>{a}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {p.results.length > 0 && (
+                    <div className="mt-3">
+                      <div className="text-meta font-semibold text-foreground/80">
+                        {t("labelResults")}
                       </div>
-                    )}
-                    {p.results.length > 0 && (
-                      <div className="grid gap-x-6 gap-y-1 sm:grid-cols-[6rem_1fr]">
-                        <dt className="eyebrow sm:pt-1">{t("labelResults")}</dt>
-                        <dd>
-                          <ul className="list-disc space-y-1.5 pl-4 text-body-sm text-muted-foreground">
-                            {p.results.map((r, i) => (
-                              <li key={i}>{r}</li>
-                            ))}
-                          </ul>
-                        </dd>
-                      </div>
-                    )}
-                  </dl>
-
+                      <ul className="mt-1 list-disc space-y-1.5 pl-5 text-body text-muted-foreground">
+                        {p.results.map((r, i) => (
+                          <li key={i}>{r}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   {p.stack && p.stack.length > 0 && (
-                    <div className="mt-5 flex flex-wrap gap-1.5 border-t pt-4" data-notranslate>
+                    <div className="mt-3 flex flex-wrap gap-1.5" data-notranslate>
                       {p.stack.map((s) => (
-                        <span key={s} className="chip">
+                        <Badge key={s} variant="secondary" className="text-label">
                           {s}
-                        </span>
+                        </Badge>
                       ))}
                     </div>
                   )}
-                </article>
+                </div>
               ))}
             </div>
         </Section>
@@ -408,7 +385,7 @@ export default async function PortfolioPage({ params }: Props) {
                       <div className="text-meta text-muted-foreground" data-notranslate>
                         {exp.dates} · {exp.location}
                       </div>
-                      <ul className="mt-3 max-w-[var(--measure)] list-disc space-y-1.5 pl-5 text-body text-muted-foreground">
+                      <ul className="mt-3 list-disc space-y-1.5 pl-5 text-body text-muted-foreground">
                         {exp.bullets.map((b, bIdx) => (
                           <li key={bIdx}>{b}</li>
                         ))}
