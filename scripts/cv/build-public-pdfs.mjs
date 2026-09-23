@@ -20,6 +20,7 @@ const TARGETS = [
   ["Hong_Seungpyo_CV.yaml", ["resume-en", "resume-enus", "resume-ptbr"]],
   ["Hong_Seungpyo_CV_xbow.yaml", ["resume-xbow"]],
   ["career-statement-ko.yaml", ["career-statement-ko"]],
+  ["career-statement-en.yaml", ["career-statement-en"]],
 ];
 
 const pages = (pdf) => {
