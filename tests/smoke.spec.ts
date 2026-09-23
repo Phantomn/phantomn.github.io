@@ -51,11 +51,12 @@ test("writeup list rows are real anchors", async ({ page }) => {
 
 test("blog pagination reflects in the URL and survives reload", async ({ page }) => {
   await page.goto("/en/blog/");
-  const firstPageTitle = await page.locator("a.group.block").first().textContent();
+  // 목록 항목은 카드에서 한 줄(PostRow)로 바뀌었다 - 제목 태그로 찾는다
+  const firstPageTitle = await page.locator("main a h3").first().textContent();
   await page.goto("/en/blog/?page=2");
   const response = await page.reload();
   expect(response?.status()).toBeLessThan(400);
-  const secondPageTitle = await page.locator("a.group.block").first().textContent();
+  const secondPageTitle = await page.locator("main a h3").first().textContent();
   expect(secondPageTitle).not.toBe(firstPageTitle);
 });
 

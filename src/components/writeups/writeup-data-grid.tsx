@@ -92,7 +92,7 @@ function SortIndicator({
     <span className="ml-1 inline-flex flex-col leading-[0.55]">
       <span
         className={cn(
-          "text-[10px]",
+          "text-label",
           active && dir === "asc"
             ? "text-primary"
             : "text-muted-foreground/30"
@@ -102,7 +102,7 @@ function SortIndicator({
       </span>
       <span
         className={cn(
-          "text-[10px]",
+          "text-label",
           active && dir === "desc"
             ? "text-primary"
             : "text-muted-foreground/30"
@@ -297,7 +297,7 @@ export function WriteupDataGrid({
                       <Badge
                         variant="outline"
                         className={cn(
-                          "text-[12px] font-medium whitespace-nowrap",
+                          "text-label font-medium whitespace-nowrap",
                           SOURCE_STYLES[w.sourceKey]
                         )}
                       >
@@ -316,7 +316,7 @@ export function WriteupDataGrid({
                       <Badge
                         variant="outline"
                         className={cn(
-                          "text-[12px] font-medium whitespace-nowrap",
+                          "text-label font-medium whitespace-nowrap",
                           CATEGORY_STYLES[w.categoryKey]
                         )}
                       >
@@ -329,7 +329,7 @@ export function WriteupDataGrid({
                       <Badge
                         variant="outline"
                         className={cn(
-                          "text-[12px] font-medium whitespace-nowrap",
+                          "text-label font-medium whitespace-nowrap",
                           DIFFICULTY_STYLES[w.difficulty]
                         )}
                       >
@@ -344,13 +344,13 @@ export function WriteupDataGrid({
                           <Badge
                             key={tag}
                             variant="outline"
-                            className="text-[12px] border-border/60 text-muted-foreground font-normal"
+                            className="text-label border-border/60 text-muted-foreground font-normal"
                           >
                             {tag}
                           </Badge>
                         ))}
                         {w.tags.length > 3 && (
-                          <span className="self-center text-[12px] text-muted-foreground">
+                          <span className="self-center text-label text-muted-foreground">
                             +{w.tags.length - 3}
                           </span>
                         )}

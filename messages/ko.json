@@ -25,7 +25,8 @@
     "noPosts": "아직 게시물이 없습니다.",
     "noResults": "게시물을 찾을 수 없습니다.",
     "recentPosts": "최근 게시물",
-    "featured": "추천"
+    "featured": "추천",
+    "eyebrow": "기술 노트"
   },
   "cves": {
     "title": "CVEs",
