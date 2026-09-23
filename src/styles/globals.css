@@ -18,6 +18,7 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  --color-faint-foreground: var(--faint-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
@@ -67,6 +68,7 @@
 
 /*  Light mode — from data/theme.json  */
 :root {
+  --faint-foreground: color-mix(in oklab, #75757a 95%, var(--primary) 5%);
   /* 문서 글 폭. 한글 16px 에서 45rem(720px)은 한 줄 약 45자. 페이지마다 714/750/812/900px 로 갈렸던 것을 한 값으로 모았다. */
   --measure: 45rem;
   --radius: 0.625rem;
@@ -127,6 +129,7 @@
 
 /*  Dark mode — the signature Ph4nt0m palette  */
 .dark {
+  --faint-foreground: color-mix(in oklab, #7e7e83 93%, var(--primary) 7%);
   /* 중립 스케일에 앰버(--primary) 색조를 3-9% 섞음 - 순수 zinc는 브랜드와
      무관해 앰버가 겉돌아 보인다(Radix Colors/Refactoring UI/Coloridex 등
      레퍼런스 실측 근거는 docs/specs/blog-visual-redesign.md 참조). */
@@ -181,12 +184,69 @@
 }
 
 /*
- * 머리말 라벨(eyebrow). 본문과 색이 같아도 모노 서체와 넓은 자간만으로 "라벨"로 읽힌다.
+ * 아래 .hero-grid / .signal-panel / .chip / .focus-ring 와 prefers-contrast 보정은
+ * bshastry/bshastry.github.io 의 app/globals.css 에서 가져와 우리 토큰(--primary, --border)에 맞춘 것이다.
+ * 저자에게 사용 허락을 받았다. 출처와 허락 기록은 CREDITS.md 에 있다.
+ * 원본은 색을 RGB 채널(rgb(var(--accent) / 0.13))로 다루지만 우리 토큰은 hex/color-mix 라 color-mix 로 바꿨다.
+ */
+
+/* 히어로의 배경 모티프. 이미지 파일 없이 격자와 강조색 번짐으로 시각 정체성을 만든다. */
+.hero-grid {
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--border) 42%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--border) 42%, transparent) 1px, transparent 1px);
+  background-size:
+    48px 48px,
+    48px 48px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgb(0 0 0 / 0.72) 68%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, rgb(0 0 0 / 0.72) 68%, transparent 100%);
+}
+
+/* 강조색 번짐은 다크 전용. 라이트의 --primary 는 거의 검정이라 번지면 회색 얼룩으로 보인다(실측). */
+.dark .hero-grid {
+  background-image:
+    radial-gradient(circle at 78% 30%, color-mix(in oklab, var(--primary) 9%, transparent), transparent 26rem),
+    linear-gradient(color-mix(in oklab, var(--border) 42%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--border) 42%, transparent) 1px, transparent 1px);
+  background-size:
+    auto,
+    48px 48px,
+    48px 48px;
+}
+
+/* 왼쪽 세로 강조선. 단색 막대보다 위아래가 사라지는 그라디언트가 덜 튄다. */
+.signal-panel {
+  position: relative;
+}
+.signal-panel::before {
+  position: absolute;
+  inset: 1.25rem auto 1.25rem 0;
+  width: 2px;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, transparent, var(--primary), transparent);
+  content: "";
+}
+
+/* 모노 태두리 칩. 기술 스택처럼 로마자 짧은 낱말을 나열하는 자리에 쓴다. */
+.chip {
+  @apply inline-flex items-center rounded-md border px-2.5 py-1 font-mono text-label text-muted-foreground transition-colors;
+}
+.chip:hover {
+  border-color: var(--muted-foreground);
+}
+
+/* 키보드 포커스 표시를 한 곳에서 정한다. shadcn 부품 밖의 링크에도 같은 표시가 나오게. */
+.focus-ring {
+  @apply focus-visible:ring-primary focus-visible:ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+}
+
+/*
+ * 머리말 라벨(eyebrow). 모노 서체 + 넓은 자간 + 본문보다 한 단계 옅은 색(faint)으로 "라벨"로 읽힌다.
  * 한글은 대문자가 없어 uppercase 는 로마자에만 걸리고, 자간은 한글에도 적용된다.
  * 정보가 있는 자리에만 쓴다 - 프로젝트 분야, STAR 라벨(배경/수행/성과). 섹션 번호 같은 장식에는 쓰지 않는다.
  */
 .eyebrow {
-  @apply font-mono text-label uppercase text-muted-foreground;
+  @apply font-mono text-label uppercase text-faint-foreground;
   /* 자간은 낱말 사이도 함께 벌린다. 로마자에는 0.14em 이 어울리지만 한글 라벨("주요 수행")은 낱말이 떠 보여서
      0.07em 으로 두고, 모노 서체와 크기로 라벨임을 알린다. */
   letter-spacing: 0.07em;
@@ -887,5 +947,27 @@
   /* 리스트 마커 간결화 */
   ul {
     margin: 2pt 0 !important;
+  }
+}
+
+/* 움직임을 줄이도록 설정한 사용자에게는 전환·애니메이션을 끈다. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 고대비 설정에서는 경계선을 진하게. */
+@media (prefers-contrast: more) {
+  :root {
+    --border: #b4b4b4;
+  }
+  .dark {
+    --border: #565656;
   }
 }

@@ -257,7 +257,7 @@ export default async function PortfolioPage({ params }: Props) {
               <a
                 key={sec.id}
                 href={`#${sec.id}`}
-                className="text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
+                className="focus-ring rounded-sm text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
               >
                 {t(sec.labelKey)}
               </a>
@@ -309,9 +309,8 @@ export default async function PortfolioPage({ params }: Props) {
               {featured.map((p) => (
                 <article
                   key={p.id}
-                  className="relative break-inside-avoid overflow-hidden rounded-xl border bg-card/40 p-5 sm:p-6"
+                  className="signal-panel break-inside-avoid overflow-hidden rounded-xl border bg-card/40 p-5 sm:p-6"
                 >
-                  <span aria-hidden className="absolute inset-y-6 left-0 w-px bg-primary" />
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <div className="eyebrow text-primary">{categoryLabel[p.category]}</div>
@@ -374,10 +373,7 @@ export default async function PortfolioPage({ params }: Props) {
                   {p.stack && p.stack.length > 0 && (
                     <div className="mt-5 flex flex-wrap gap-1.5 border-t pt-4" data-notranslate>
                       {p.stack.map((s) => (
-                        <span
-                          key={s}
-                          className="inline-flex items-center rounded-md border px-2 py-0.5 font-mono text-label text-muted-foreground"
-                        >
+                        <span key={s} className="chip">
                           {s}
                         </span>
                       ))}

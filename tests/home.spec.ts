@@ -55,3 +55,25 @@ test("home lists recent posts and CVEs with working links", async ({ page }) => 
   expect(res.status(), `${href} 응답`).toBe(200);
   expect(title.length).toBeGreaterThan(5);
 });
+
+/*
+ * 히어로 배경 모티프. 강조색 번짐을 두 테마에 똑같이 넣었더니 라이트 모드에서 --primary 가 거의 검정(#121212)이라
+ * 회색 얼룩으로 보였다. 번짐은 다크 전용이고 라이트는 격자만 깔린다. 한 테마에서만 드러나는 결함이라 둘 다 본다.
+ */
+test("hero grid keeps the accent glow out of light mode", async ({ page }) => {
+  await page.goto("/ko/");
+  const layers = async () =>
+    page.locator(".hero-grid").evaluate((e) => {
+      const bg = getComputedStyle(e).backgroundImage;
+      return { radial: bg.includes("radial-gradient"), lines: (bg.match(/linear-gradient/g) ?? []).length };
+    });
+
+  const dark = await layers();
+  expect(dark.radial, "다크에서는 강조색 번짐이 있다").toBe(true);
+  expect(dark.lines).toBe(2);
+
+  await page.evaluate(() => document.documentElement.classList.remove("dark"));
+  const light = await layers();
+  expect(light.radial, "라이트에서는 번짐이 없어야 한다(회색 얼룩이 된다)").toBe(false);
+  expect(light.lines).toBe(2);
+});
