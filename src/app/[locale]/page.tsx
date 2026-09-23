@@ -22,7 +22,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: t("title"), description: t("description") };
 }
 
-const COMPANY = "CoreSecurity";
 const RECENT_POSTS = 5;
 const RECENT_CVES = 4;
 
@@ -62,7 +61,7 @@ export default async function HomePage({ params }: Props) {
       <div className="hero-grid border-b">
         <div className="mx-auto w-[90vw] max-w-[900px] py-10">
           <PageHeader
-        eyebrow={`${t("description")} · ${COMPANY}`}
+        eyebrow={t("description")}
         title={
           <span className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <Image

@@ -21,7 +21,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: t("title") };
 }
 
-const COMPANY = "CoreSecurity";
 
 const RESUME_LINKS = [
   { labelKey: "resumeKo", href: "/docs/resume-ko.pdf" },
@@ -90,7 +89,6 @@ export default async function AboutPage({ params }: Props) {
           <h1 className="font-heading text-title font-bold tracking-tight">
             {t("name")}
           </h1>
-          <p className="mt-2 text-body-sm text-muted-foreground">{COMPANY}</p>
         </header>
         {/* 메시지로 이미 번역된 문장이라 런타임 번역기가 다시 건드리지 않게 한다 */}
         <p className="mt-6" data-notranslate>
