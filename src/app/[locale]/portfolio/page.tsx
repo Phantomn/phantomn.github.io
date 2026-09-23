@@ -235,7 +235,7 @@ export default async function PortfolioPage({ params }: Props) {
             </div>
           </div>
 
-          <p className="mt-6 max-w-[44rem] text-body text-muted-foreground">{profile.summary}</p>
+          <p className="mt-6 max-w-[var(--measure)] text-body text-muted-foreground">{profile.summary}</p>
 
           {/* 성과를 숫자로 먼저 보여 준다. 조사 표본에서 성과를 숫자 배지로 내세우는 곳이 21%(별도 표본에서는 20곳 중 6곳)였고,
               우리는 이 숫자들이 요약 문장 안에 묶여 있어 훑어서 읽히지 않았다. 값은 모두 단일 원본에서 온다. */}
@@ -257,7 +257,7 @@ export default async function PortfolioPage({ params }: Props) {
               <a
                 key={sec.id}
                 href={`#${sec.id}`}
-                className="text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
+                className="focus-ring rounded-sm text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
               >
                 {t(sec.labelKey)}
               </a>
@@ -268,7 +268,7 @@ export default async function PortfolioPage({ params }: Props) {
         {/* ── Summary ───────────────────────────────────────────── */}
         {/* ── Core Competencies ─────────────────────────────────── */}
         <Section id="competencies" icon={Target} title={t("sectionCompetencies")}>
-            <ul className="max-w-[44rem] space-y-2.5">
+            <ul className="max-w-[var(--measure)] space-y-2.5">
               {competencies.map((c, i) => (
                 <li key={i} className="flex gap-2 text-body text-muted-foreground">
                   <span className="mt-0.5 shrink-0 text-muted-foreground" data-notranslate>
@@ -309,9 +309,8 @@ export default async function PortfolioPage({ params }: Props) {
               {featured.map((p) => (
                 <article
                   key={p.id}
-                  className="relative break-inside-avoid overflow-hidden rounded-xl border bg-card/40 p-5 sm:p-6"
+                  className="signal-panel break-inside-avoid overflow-hidden rounded-xl border bg-card/40 p-5 sm:p-6"
                 >
-                  <span aria-hidden className="absolute inset-y-6 left-0 w-px bg-primary" />
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <div className="eyebrow text-primary">{categoryLabel[p.category]}</div>
@@ -374,10 +373,7 @@ export default async function PortfolioPage({ params }: Props) {
                   {p.stack && p.stack.length > 0 && (
                     <div className="mt-5 flex flex-wrap gap-1.5 border-t pt-4" data-notranslate>
                       {p.stack.map((s) => (
-                        <span
-                          key={s}
-                          className="inline-flex items-center rounded-md border px-2 py-0.5 font-mono text-label text-muted-foreground"
-                        >
+                        <span key={s} className="chip">
                           {s}
                         </span>
                       ))}
@@ -412,7 +408,7 @@ export default async function PortfolioPage({ params }: Props) {
                       <div className="text-meta text-muted-foreground" data-notranslate>
                         {exp.dates} · {exp.location}
                       </div>
-                      <ul className="mt-3 max-w-[44rem] list-disc space-y-1.5 pl-5 text-body text-muted-foreground">
+                      <ul className="mt-3 max-w-[var(--measure)] list-disc space-y-1.5 pl-5 text-body text-muted-foreground">
                         {exp.bullets.map((b, bIdx) => (
                           <li key={bIdx}>{b}</li>
                         ))}

@@ -57,8 +57,11 @@ export default async function HomePage({ params }: Props) {
     .slice(0, RECENT_CVES);
 
   return (
-    <div className="mx-auto w-[90vw] max-w-[900px] break-keep py-10">
-      <PageHeader
+    <div className="break-keep">
+      {/* 격자 모티프를 화면 폭 전체에 깔고 그 위에 머리를 올린다(포팅: CREDITS.md). */}
+      <div className="hero-grid border-b">
+        <div className="mx-auto w-[90vw] max-w-[900px] py-10">
+          <PageHeader
         eyebrow={`${t("description")} · ${COMPANY}`}
         title={
           <span className="flex flex-wrap items-center gap-x-4 gap-y-2">
@@ -76,17 +79,20 @@ export default async function HomePage({ params }: Props) {
         lead={tAbout("intro")}
       >
         <StatRow items={stats} />
-        <p className="mt-6 max-w-[44rem] text-body-sm text-muted-foreground" data-notranslate>
+        <p className="mt-6 max-w-[var(--measure)] text-body-sm text-muted-foreground" data-notranslate>
           {ls2025.name} {ls2025.year} — {formatResult(ls2025, tr)}
         </p>
-      </PageHeader>
+          </PageHeader>
+        </div>
+      </div>
 
+      <div className="mx-auto w-[90vw] max-w-[900px] pb-10">
       <section id="recent-posts" className="mt-16 scroll-mt-24">
         <div className="mb-6 flex items-end justify-between gap-4">
           <h2 className="text-heading font-semibold tracking-tight">{t("recentPosts")}</h2>
           <Link
             href={`/${locale}/blog/`}
-            className="eyebrow inline-flex items-center gap-1 hover:text-primary"
+            className="eyebrow focus-ring inline-flex items-center gap-1 rounded-sm hover:text-primary"
           >
             {t("viewAll")}
             <ArrowRight className="h-3 w-3" aria-hidden />
@@ -96,7 +102,7 @@ export default async function HomePage({ params }: Props) {
           {posts.map((p) => (
             <li key={p.slug}>
               <Link href={p.href} className="group flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:gap-6">
-                <span className="eyebrow shrink-0 tabular-nums sm:w-24" data-notranslate>
+                <span className="eyebrow shrink-0 tabular-nums sm:w-32" data-notranslate>
                   {p.meta.date
                     ? formatDate(
                         p.meta.date,
@@ -126,7 +132,7 @@ export default async function HomePage({ params }: Props) {
           <h2 className="text-heading font-semibold tracking-tight">{t("recentCves")}</h2>
           <Link
             href={`/${locale}/cves/`}
-            className="eyebrow inline-flex items-center gap-1 hover:text-primary"
+            className="eyebrow focus-ring inline-flex items-center gap-1 rounded-sm hover:text-primary"
           >
             {t("viewAll")}
             <ArrowRight className="h-3 w-3" aria-hidden />
@@ -155,6 +161,7 @@ export default async function HomePage({ params }: Props) {
           ))}
         </ul>
       </section>
+      </div>
     </div>
   );
 }

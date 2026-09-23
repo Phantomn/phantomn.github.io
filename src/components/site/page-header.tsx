@@ -11,21 +11,24 @@ export function PageHeader({
   eyebrow,
   title,
   lead,
+  bordered = true,
   children,
 }: {
   eyebrow?: ReactNode;
   title: ReactNode;
   lead?: ReactNode;
+  /** 바깥에서 경계선을 그리는 경우(홈의 격자 배경) false */
+  bordered?: boolean;
   children?: ReactNode;
 }) {
   return (
-    <header className="border-b pb-8">
+    <header className={bordered ? "border-b pb-8" : "pb-2"}>
       {eyebrow && <div className="eyebrow mb-3">{eyebrow}</div>}
       <div className="flex items-start gap-4">
         <span aria-hidden className="mt-[0.15em] h-[1.05em] w-1 shrink-0 rounded-sm bg-primary" />
         <h1 className="text-balance font-heading text-title font-bold tracking-tight">{title}</h1>
       </div>
-      {lead && <p className="mt-5 max-w-[44rem] text-body text-muted-foreground">{lead}</p>}
+      {lead && <p className="mt-5 max-w-[var(--measure)] text-body text-muted-foreground">{lead}</p>}
       {children}
     </header>
   );
