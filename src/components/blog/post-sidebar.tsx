@@ -54,7 +54,7 @@ export function PostSidebar({ relatedPosts, relatedTags }: PostSidebarProps) {
                     {post.title}
                   </p>
                   {post.date && (
-                    <time className="text-label text-muted-foreground">
+                    <time className="text-[11px] text-muted-foreground">
                       {formatDate(post.date, {
                         month: "short",
                         day: "numeric",
@@ -83,7 +83,7 @@ export function PostSidebar({ relatedPosts, relatedTags }: PostSidebarProps) {
                 <Link key={tag} href={`/${locale}/tags/${normalizeTag(tag)}/`}>
                   <Badge
                     variant="secondary"
-                    className="cursor-pointer text-label transition-all hover:bg-primary/20 hover:text-primary"
+                    className="cursor-pointer text-[11px] transition-all hover:bg-primary/20 hover:text-primary"
                   >
                     {tag}
                   </Badge>

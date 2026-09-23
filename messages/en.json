@@ -13,9 +13,21 @@
   "home": {
     "title": "Ph4nt0m",
     "description": "Offensive Security Researcher",
-    "recentPosts": "Recent Writing",
-    "recentCves": "Recent CVEs",
-    "viewAll": "View all"
+    "goToBlog": "Go to Blog",
+    "sections": {
+      "blog": {
+        "label": "Blog",
+        "description": "Technical notes on vulnerability research, OT/ICS security, and AI automation."
+      },
+      "cves": {
+        "label": "CVE",
+        "description": "A single archive for public disclosures, status tracking, and external references."
+      },
+      "writeups": {
+        "label": "Writeups",
+        "description": "CTF competition and red team exercise writeup archive."
+      }
+    }
   },
   "blog": {
     "title": "Blog",
@@ -25,8 +37,7 @@
     "noPosts": "No posts yet.",
     "noResults": "No posts found.",
     "recentPosts": "Recent Posts",
-    "featured": "Featured",
-    "eyebrow": "Writing"
+    "featured": "Featured"
   },
   "cves": {
     "title": "CVE Registry",
@@ -178,8 +189,7 @@
       "projects": "Projects",
       "cves": "CVEs",
       "fves": "FVEs"
-    },
-    "labelBackground": "Background"
+    }
   },
   "sidebar": {
     "relatedPosts": "Related Posts",

@@ -156,26 +156,3 @@ test("portfolio keeps the section count within the sample range", async ({ page 
   expect(sections, `섹션 ${sections}개`).toBeLessThanOrEqual(6);
   expect(sections).toBeGreaterThanOrEqual(4);
 });
-
-/*
- * 대표 프로젝트 카드(케이스 스터디). 배경/수행/성과를 3열로 놓아 봤더니 한 열이 246px 이 되어
- * 한글이 한 줄에 16자만 들어갔다(같은 폭에서 영문은 44자). 라벨을 왼쪽으로 빼서 본문 폭을 되찾았다.
- * 다시 좁아지지 않도록 본문 폭 하한을 걸어 둔다.
- */
-test("portfolio featured cards keep a readable measure with labels beside the text", async ({ page }) => {
-  await page.setViewportSize({ width: 1280, height: 900 });
-  await page.goto("/ko/portfolio/");
-  const cards = page.locator("section#featured article");
-  expect(await cards.count()).toBeGreaterThan(4);
-
-  const first = cards.first();
-  // 분야 라벨(eyebrow)과 배경/수행/성과 라벨이 있다
-  await expect(first.locator(".eyebrow").first()).toBeVisible();
-  expect(await first.locator("dt").count()).toBeGreaterThanOrEqual(2);
-
-  // 서술 본문이 한글을 읽을 만한 폭을 가진다(한글 15px 기준 500px 이면 한 줄 약 33자)
-  const widths = await cards
-    .locator("dd")
-    .evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().width)));
-  expect(Math.min(...widths), `가장 좁은 서술 폭: ${Math.min(...widths)}px`).toBeGreaterThanOrEqual(500);
-});

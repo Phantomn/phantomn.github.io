@@ -32,8 +32,8 @@ const FOLD_OVER = 5;
 
 /** 사이트 본문 링크 규칙(globals.css .prose a)을 그대로 쓴다. */
 const LINK = "prose-link";
-const H2 = "mb-4 font-heading text-heading font-semibold tracking-tight";
-const H3 = "mb-1.5 text-subheading font-bold tabular-nums";
+const H2 = "mb-3.5 font-heading text-2xl font-semibold tracking-tight";
+const H3 = "mb-1.5 text-base font-bold tabular-nums";
 const LIST = "list-disc space-y-1.5 pl-5";
 
 /** 정식 번호가 부여된 CVE를 연도별로 묶고, 번호 대기는 같은 연도에 표시하고, FVE는 연도별 건수만 센다. 최신 연도 먼저. */
@@ -84,14 +84,14 @@ export default async function AboutPage({ params }: Props) {
   // 이 페이지의 모든 문장은 messages 에서 온다(데이터는 고유명사·숫자뿐). 런타임 기계 번역기를 쓰지 않는다.
   return (
     <>
-      <article className="mx-auto w-[90vw] max-w-[var(--measure)] break-keep py-10 text-body">
+      <article className="mx-auto w-[90vw] max-w-[52rem] break-keep py-10 text-[1.0625rem] leading-[1.85]">
         <header>
           <h1 className="font-heading text-title font-bold tracking-tight">
             {t("name")}
           </h1>
         </header>
         {/* 메시지로 이미 번역된 문장이라 런타임 번역기가 다시 건드리지 않게 한다 */}
-        <p className="mt-6" data-notranslate>
+        <p className="mt-6 max-w-[40rem]" data-notranslate>
           {t("intro")}
         </p>
 

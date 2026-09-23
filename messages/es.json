@@ -13,9 +13,21 @@
   "home": {
     "title": "Ph4nt0m",
     "description": "Offensive Security Researcher",
-    "recentPosts": "Publicaciones recientes",
-    "recentCves": "CVE recientes",
-    "viewAll": "Ver todo"
+    "goToBlog": "Ir al Blog",
+    "sections": {
+      "blog": {
+        "label": "Blog",
+        "description": "Artículos y notas sobre pentesting, DFIR e ingeniería de seguridad."
+      },
+      "cves": {
+        "label": "CVE",
+        "description": "Archivo único para divulgaciones públicas, estado y referencias externas."
+      },
+      "writeups": {
+        "label": "Writeups",
+        "description": "Walkthroughs de HackTheBox, CyberDefenders y PortSwigger."
+      }
+    }
   },
   "blog": {
     "title": "Blog",
@@ -25,8 +37,7 @@
     "noPosts": "No hay posts todavía.",
     "noResults": "No se encontraron posts.",
     "recentPosts": "Posts Recientes",
-    "featured": "Destacado",
-    "eyebrow": "Notas"
+    "featured": "Destacado"
   },
   "cves": {
     "title": "Registro de CVE",
@@ -178,8 +189,7 @@
       "projects": "Proyectos",
       "cves": "CVE",
       "fves": "FVE"
-    },
-    "labelBackground": "Contexto"
+    }
   },
   "sidebar": {
     "relatedPosts": "Posts Relacionados",

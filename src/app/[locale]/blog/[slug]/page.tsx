@@ -240,7 +240,7 @@ export default async function BlogPostPage({ params }: Props) {
               <ProseImageLightbox>
                 <div
                   data-prose-content
-                  className="prose prose-neutral dark:prose-invert mx-auto"
+                  className="prose prose-neutral max-w-[75ch] dark:prose-invert mx-auto"
                 >
                   <Content />
                 </div>

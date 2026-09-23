@@ -4,7 +4,8 @@ import { Suspense, useState, useEffect, useCallback, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { useUrlState } from "@/hooks/use-url-state";
 import { Input } from "@/components/ui/input";
-import { PostRow } from "./post-row";
+import { FeaturedPostCard } from "./featured-post-card";
+import { PostCard } from "./post-card";
 import {
   Pagination,
   PaginationContent,
@@ -199,11 +200,11 @@ function BlogSearchLayoutInner({
             placeholder={t("searchPlaceholder")}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="h-11 pl-4 text-body-sm"
+            className="h-11 pl-4 text-sm"
           />
         </div>
 
-        <p className="text-meta text-muted-foreground">
+        <p className="text-sm text-muted-foreground">
           {filtered.length} result{filtered.length !== 1 ? "s" : ""} for
           &ldquo;{query}&rdquo;
         </p>
@@ -213,9 +214,9 @@ function BlogSearchLayoutInner({
           </p>
         ) : (
           <>
-            <div className="border-t">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {paginatedResults.map((post) => (
-                <PostRow key={post.slug} post={post} />
+                <PostCard key={post.slug} post={post} />
               ))}
             </div>
             <PaginationControls
@@ -229,9 +230,9 @@ function BlogSearchLayoutInner({
     );
   }
 
-  // 기본 목록. 대표 글도 그냥 최신 글이므로 한 목록에 함께 넣는다(예전에는 위에 카드로 따로 뽑았다).
-  const totalDefaultPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
-  const paginatedPosts = allPosts.slice(
+  // Default view: Featured post on page 1 + paginated grid
+  const totalDefaultPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+  const paginatedPosts = posts.slice(
     (currentPage - 1) * POSTS_PER_PAGE,
     currentPage * POSTS_PER_PAGE
   );
@@ -245,19 +246,24 @@ function BlogSearchLayoutInner({
           placeholder={t("searchPlaceholder")}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="h-11 pl-4 text-body-sm"
+          className="h-11 pl-4 text-sm"
         />
       </div>
 
+      {/* Featured post only on page 1 */}
+      {currentPage === 1 && featuredPost && (
+        <FeaturedPostCard post={featuredPost} />
+      )}
+
       {paginatedPosts.length > 0 && (
-        <div className="border-t">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {paginatedPosts.map((post) => (
-            <PostRow key={post.slug} post={post} />
+            <PostCard key={post.slug} post={post} />
           ))}
         </div>
       )}
 
-      {allPosts.length === 0 && (
+      {!featuredPost && posts.length === 0 && (
         <p className="py-8 text-center text-muted-foreground">
           {t("noPosts")}
         </p>
