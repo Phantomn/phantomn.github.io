@@ -1,0 +1,51 @@
+# 포크 원본과 같은 문자열이지만 저자 것이 아니라 관용구여서 그대로 두는 것들.
+# scripts/check-residue.mjs 가 읽는다. 한 줄에 문자열 하나, `#` 뒤는 주석.
+#
+# 등재 기준: 그 문장이 저자의 사실·논지·연구 대상을 담지 않고,
+# 어느 사이트에 있어도 같은 뜻인 UI 라벨·접근성 문자열·오류 메시지인 것.
+# 사실이 들어 있으면 등재하지 말고 교체한다.
+
+# --- 내비게이션·구조 라벨 (components/Header.tsx)
+Case Studies
+GitHub profile
+Twitter profile
+LinkedIn profile
+Primary navigation
+Close navigation menu
+Open navigation menu
+
+# --- 테마 전환 (components/ThemeToggle.tsx)
+Switch to light theme
+Switch to dark theme
+
+# --- 글 읽기 UI (app/blog/[slug]/BlogPostClient.tsx, components/SeriesNav.tsx)
+Share on LinkedIn
+Submit to Hacker News
+Table of contents
+On this page
+Related Posts
+Article series
+You are here
+Series navigation
+
+# --- 블로그 목록 UI (app/blog/BlogIndexClient.tsx)
+Search posts...
+No posts found matching your criteria.
+
+# --- 개발자용 오류·형식 문자열 (lib/blog.ts)
+[blog] "${slug}" has incomplete series frontmatter —
+seriesId, series, and seriesPart are all required. Ignoring series.
+${minutes} min read
+Part ${m[1]}
+
+# --- 취약점 갈래 이름 (lib/disclosures.ts)
+# 저자 원장의 갈래 이름 3개를 의도적으로 재사용한다. CWE 계층에서 도출한 일반
+# 분류명이고 저자 고유 사실이 아니다. 우리는 여기에 3갈래를 더해 6갈래로 쓴다.
+Memory corruption
+Out-of-bounds read
+Logic / denial of service
+
+# --- JSON-LD name·<link> title (검색엔진·기계 판독용 영어 고정, 우리 것이기도)
+Security Findings & Disclosures
+Verifiable professional claims
+LLM site index

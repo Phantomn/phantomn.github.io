@@ -1,0 +1,353 @@
+[
+  {
+    "id": "achilles-l2",
+    "period": "2024.07 — 2025.03",
+    "category": "ics-ot",
+    "contribution": 100,
+    "featured": true,
+    "stack": [
+      "Achilles Test Platform",
+      "XGT Protocol",
+      "PLC",
+      "Wireshark",
+      "Python"
+    ]
+  },
+  {
+    "id": "locked-shields",
+    "period": "2025.01 — 2025.04",
+    "category": "cyber-range",
+    "contribution": 45,
+    "featured": true,
+    "stack": [
+      "DFIR",
+      "Volatility",
+      "Wireshark",
+      "Sysmon",
+      "YARA"
+    ]
+  },
+  {
+    "id": "llama-cpp-cve",
+    "period": "2026.07 — 2026.08",
+    "category": "vuln-research",
+    "contribution": 100,
+    "featured": true,
+    "stack": [
+      "C/C++",
+      "llama.cpp",
+      "GGUF",
+      "Fuzzing",
+      "CVSS 3.1",
+      "PoC"
+    ]
+  },
+  {
+    "id": "data-platform-idor",
+    "period": "2026.08",
+    "category": "vuln-research",
+    "contribution": 100,
+    "featured": false,
+    "stack": [
+      "Web",
+      "API Security",
+      "IDOR",
+      "Burp Suite"
+    ]
+  },
+  {
+    "id": "iot-cctv-forensics",
+    "period": "2022.08 — 2022.12",
+    "category": "iot",
+    "contribution": 45,
+    "featured": true,
+    "stack": [
+      "Python",
+      "C/C++",
+      "UART",
+      "binwalk",
+      "Firmware Dump",
+      "Linux"
+    ]
+  },
+  {
+    "id": "a3-financial-pentest",
+    "period": "2020.06 — 2021.06",
+    "category": "fintech",
+    "contribution": 0,
+    "featured": false,
+    "stack": [
+      "Burp Suite",
+      "OWASP Top 10",
+      "Web/App Pentest",
+      "Source Code Review"
+    ]
+  },
+  {
+    "id": "kt-gigagenie",
+    "period": "2020.10",
+    "category": "iot",
+    "contribution": 100,
+    "featured": false,
+    "stack": [
+      "UART",
+      "Bluetooth",
+      "APK",
+      "Android"
+    ]
+  },
+  {
+    "id": "smartbuilding-y1",
+    "period": "2021.08 — 2021.12",
+    "category": "iot",
+    "contribution": 40,
+    "featured": false,
+    "stack": [
+      "BACNet",
+      "KNXNet",
+      "Modbus",
+      "BLE",
+      "CVE/CWE",
+      "SQLite"
+    ]
+  },
+  {
+    "id": "smartbuilding-y2",
+    "period": "2022.01 — 2022.10",
+    "category": "iot",
+    "contribution": 40,
+    "featured": false,
+    "stack": [
+      "IoT Scanning",
+      "CVE/CWE",
+      "PoC Validation",
+      "CSV/Excel Report"
+    ]
+  },
+  {
+    "id": "qud-081871",
+    "period": "2021.08 — 2021.12",
+    "category": "iot",
+    "contribution": 40,
+    "featured": false
+  },
+  {
+    "id": "ls-threat-modeling",
+    "period": "2023.03 — 2023.11",
+    "category": "ics-ot",
+    "contribution": 40,
+    "featured": false,
+    "stack": [
+      "STRIDE",
+      "DREAD",
+      "DFD",
+      "IEC 62443-4-2"
+    ]
+  },
+  {
+    "id": "ls-62443-tool",
+    "period": "2025.03 — 2025.11",
+    "category": "ics-ot",
+    "contribution": 90,
+    "featured": true,
+    "stack": [
+      "Python",
+      "FastAPI",
+      "TypeScript",
+      "React",
+      "TailwindCSS",
+      "SQLite3",
+      "IEC 62443-4-2"
+    ]
+  },
+  {
+    "id": "smartship",
+    "period": "2024.07 — 2024.11",
+    "category": "ics-ot",
+    "contribution": 25,
+    "featured": false,
+    "stack": [
+      "Python",
+      "SSDP",
+      "CVE/CWE",
+      "CPE",
+      "SQLite",
+      "Shell/Powershell"
+    ]
+  },
+  {
+    "id": "fda-consulting",
+    "period": "2024.03 — 2024.12",
+    "category": "medical",
+    "contribution": 30,
+    "featured": false,
+    "stack": [
+      "FDA Premarket Cybersecurity",
+      "eSTAR",
+      "Threat Modeling"
+    ]
+  },
+  {
+    "id": "medical-controls",
+    "period": "2024.06 — 2025.03",
+    "category": "medical",
+    "contribution": 45,
+    "featured": false,
+    "stack": [
+      "BLE",
+      "JWT/HS256",
+      "OTP",
+      "RBAC",
+      "HTTPS",
+      "Cybersecurity Controls"
+    ]
+  },
+  {
+    "id": "k-melloddy",
+    "period": "2024.07 — 2024.12",
+    "category": "medical",
+    "contribution": 30,
+    "featured": false,
+    "stack": [
+      "NIST SSDF",
+      "Threat Modeling",
+      "SBOM/VEX",
+      "IEC 62443",
+      "FDA Cybersecurity"
+    ]
+  },
+  {
+    "id": "cosmo-mfds",
+    "period": "2025.10 — 2026.12",
+    "category": "medical",
+    "contribution": 40,
+    "featured": false
+  },
+  {
+    "id": "c2021-eleccon",
+    "period": "2021.05 — 2021.12",
+    "category": "cyber-range",
+    "contribution": 30,
+    "featured": false
+  },
+  {
+    "id": "cyber-training-upgrade",
+    "period": "2022.07 — 2022.09",
+    "category": "cyber-range",
+    "contribution": 40,
+    "featured": false,
+    "stack": [
+      "OT/ICS",
+      "SCADA",
+      "CTF"
+    ]
+  },
+  {
+    "id": "kepco-eleccon-2023",
+    "period": "2023.06 — 2023.12",
+    "category": "cyber-range",
+    "contribution": 30,
+    "featured": false,
+    "stack": [
+      "OT/ICS",
+      "SCADA",
+      "CTF"
+    ]
+  },
+  {
+    "id": "smartship-port-training",
+    "period": "2024.07 — 2024.12",
+    "category": "cyber-range",
+    "contribution": 20,
+    "featured": false
+  },
+  {
+    "id": "training-upgrade-2024",
+    "period": "2024.09 — 2025.02",
+    "category": "cyber-range",
+    "contribution": 30,
+    "featured": false,
+    "stack": [
+      "OT/ICS",
+      "SCADA"
+    ]
+  },
+  {
+    "id": "hacking-booth",
+    "period": "2024.11",
+    "category": "cyber-range",
+    "contribution": 45,
+    "featured": false,
+    "stack": [
+      "IoT"
+    ]
+  },
+  {
+    "id": "apex-2025",
+    "period": "2025.06 — 2025.09",
+    "category": "cyber-range",
+    "contribution": 45,
+    "featured": false,
+    "stack": [
+      "DFIR",
+      "Network Forensics",
+      "Wireshark"
+    ]
+  },
+  {
+    "id": "apex-2026",
+    "period": "2026.06 — 2026.09",
+    "category": "cyber-range",
+    "contribution": 100,
+    "featured": true,
+    "stack": [
+      "DFIR",
+      "CCSDS",
+      "AIS",
+      "Firmware Reversing",
+      "PCAP Analysis"
+    ]
+  },
+  {
+    "id": "hacksium",
+    "period": "2026.06 — 2026.09",
+    "category": "cyber-range",
+    "contribution": 70,
+    "featured": true,
+    "stack": [
+      "LiveFire",
+      "Blue Team Defense",
+      "ICS/OT",
+      "Scenario Design",
+      "CTF Ops"
+    ]
+  },
+  {
+    "id": "coway-isms",
+    "period": "2020.11",
+    "category": "consulting",
+    "contribution": 40,
+    "featured": false
+  },
+  {
+    "id": "infinitt-dps",
+    "period": "2024.07 — 2024.09",
+    "category": "consulting",
+    "contribution": 70,
+    "featured": false,
+    "stack": [
+      "Burp Suite",
+      "Wireshark",
+      "APKTool",
+      "OWASP Top 10",
+      "Android/iOS"
+    ]
+  },
+  {
+    "id": "infosec-consulting",
+    "period": "2024.10 — 2025.01",
+    "category": "consulting",
+    "contribution": 25,
+    "featured": false
+  }
+]

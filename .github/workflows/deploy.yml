@@ -1,10 +1,8 @@
-name: Deploy to GitHub Pages
+name: Deploy
 
 on:
   push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
+    branches: [main]
 
 permissions:
   contents: read
@@ -12,143 +10,51 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  qa:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: pnpm
-
-      - run: pnpm install --frozen-lockfile
-
-      - name: Cache lint/typecheck artifacts
-        uses: actions/cache@v4
-        with:
-          path: |
-            *.tsbuildinfo
-            .eslintcache
-          key: ${{ runner.os }}-qa-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('src/**/*.ts', 'src/**/*.tsx', 'tsconfig.json', 'eslint.config.mjs') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ hashFiles('pnpm-lock.yaml') }}-
-            ${{ runner.os }}-qa-
-
-      - name: Typecheck
-        run: pnpm typecheck
-
-      - name: Lint
-        run: pnpm lint
-
-      - name: Dead code / unused dependency check
-        run: pnpm knip
-
-      - name: Records consistency (competitions / CVE counts)
-        run: pnpm check:records
-
-      - name: i18n key parity (ko / en / es / pt-br)
-        run: pnpm check:i18n
-
-      - name: type scale tokens (globals.css / utils.ts)
-        run: pnpm check:type-scale
-
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: pnpm/action-setup@v4
-
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
-          cache: pnpm
-
+          node-version: '22'
+          cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
-
-      - name: Cache Next.js build artifacts
-        uses: actions/cache@v4
-        with:
-          path: .next/cache
-          key: ${{ runner.os }}-next-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('next.config.*', 'tsconfig.json', 'src/**/*.ts', 'src/**/*.tsx', 'content/**/*.md', 'content/**/*.mdx', 'messages/**/*.json') }}
-          restore-keys: |
-            ${{ runner.os }}-next-${{ hashFiles('pnpm-lock.yaml') }}-
-            ${{ runner.os }}-next-
-
+      - run: node scripts/generate-from-source.mjs
+      - run: pnpm check:claims
+      - run: pnpm check:pgp
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@ba7bc0a3fef59531c69a25acd34668d6d3fe6f22 # v4.1.0
+      - name: Sign machine-readable claims
+        run: |
+          cosign sign-blob \
+            --yes \
+            --bundle public/.well-known/claims.sigstore.json \
+            public/.well-known/claims.json
+      - name: Verify machine-readable claims
+        run: |
+          cosign verify-blob \
+            --bundle public/.well-known/claims.sigstore.json \
+            --certificate-identity https://github.com/Phantomn/phantomn.github.io/.github/workflows/deploy.yml@refs/heads/main \
+            --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+            public/.well-known/claims.json
       - run: pnpm build
-        env:
-          LOCK_PASSWORD: ${{ secrets.LOCK_PASSWORD }}
-
-      - uses: actions/upload-artifact@v4
+      - run: pnpm check:links
+      - uses: actions/configure-pages@v4
+      - uses: actions/upload-pages-artifact@v3
         with:
-          name: site-out
-          path: out
-          retention-days: 1
-
-  e2e:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: pnpm
-
-      - run: pnpm install --frozen-lockfile
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: site-out
-          path: out
-
-      - name: Get Playwright version
-        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./node_modules/@playwright/test/package.json').version)")" >> "$GITHUB_ENV"
-
-      - name: Cache Playwright browsers
-        id: playwright-cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ env.PLAYWRIGHT_VERSION }}
-
-      - name: Install Playwright browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: pnpm exec playwright install --with-deps chromium
-
-      - name: Install Playwright OS dependencies only
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
-        run: pnpm exec playwright install-deps chromium
-
-      - name: E2E smoke tests
-        run: pnpm test:e2e
+          path: ./out
 
   deploy:
-    if: github.event_name == 'push'
-    needs: [qa, e2e]
+    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: site-out
-          path: out
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: out
-
       - id: deployment
         uses: actions/deploy-pages@v4

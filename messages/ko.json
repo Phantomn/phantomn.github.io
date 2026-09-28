@@ -1,257 +1,334 @@
 {
+  "common": {
+    "name": "Seungpyo Hong",
+    "skipToContent": "Skip to content",
+    "switchToLight": "Switch to light theme",
+    "switchToDark": "Switch to dark theme",
+    "switchToKorean": "Switch to Korean",
+    "switchToEnglish": "Switch to English"
+  },
   "nav": {
-    "home": "홈",
-    "about": "소개",
-    "portfolio": "포트폴리오",
-    "blog": "블로그",
-    "cves": "CVE",
-    "writeups": "라이트업",
-    "toggleMenu": "메뉴 토글",
-    "menu": "메뉴",
-    "language": "언어"
+    "caseStudies": "Case Studies",
+    "about": "About",
+    "research": "Research",
+    "findings": "Findings",
+    "exercises": "Exercises",
+    "blog": "Blog",
+    "recruiters": "For Recruiters",
+    "home": "Home",
+    "primary": "Primary navigation",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "github": "GitHub profile",
+    "twitter": "X profile",
+    "linkedin": "LinkedIn profile"
   },
-  "home": {
-    "title": "Ph4nt0m",
-    "description": "Offensive Security Researcher",
-    "goToBlog": "블로그 보기",
-    "sections": {
+  "findings": {
+    "eyebrow": "Findings",
+    "title": "Selected Findings",
+    "intro": "The evidence index behind the case studies and the restored disclosure archive. Every entry links to a public artifact (a CVE record, advisory, or merged fix) or, for masked platform disclosures, to my own write-up.",
+    "archiveEyebrow": "Disclosure archive",
+    "archiveHeading": "{cves} CVEs + {fves} masked platform disclosures (FVE)",
+    "archiveDetail": "{memory} memory-corruption, {oob} out-of-bounds read, {injection} injection/command-execution, {auth} authentication/access-control, and {logic} logic/denial-of-service findings.",
+    "exploreLedger": "Explore the full ledger",
+    "type": {
+      "CVE": "CVE",
+      "FVE": "FVE",
+      "Pending": "Pending"
+    },
+    "privateNote": "Bug-bounty submissions and client-security reports are disclosed privately by default; this is the subset with public artifacts. More on <github>GitHub</github>."
+  },
+  "caseStudies": {
+    "eyebrow": "Case Studies",
+    "title": "Case Studies",
+    "intro": "{count} selected cases - what was at stake, how it was approached, and what remained.",
+    "stakes": "Background",
+    "approach": "Approach",
+    "result": "Result",
+    "demonstrates": "Role & period",
+    "whereThisFits": "Where this fits",
+    "whereThisFitsBody": "Looking for someone who can run assessments like these?",
+    "recruiterBrief": "Recruiter brief"
+  },
+  "research": {
+    "eyebrow": "Research",
+    "title": "Security Research",
+    "intro": "Current focus areas - OT/ICS security (IEC 62443), IoT and firmware, and Linux kernel and LLM inference-engine vulnerability research.",
+    "allAreas": "All research areas",
+    "viewArchive": "View the full archive",
+    "moreFromTo": "{count} more, from {first} to {last}",
+    "archiveMetaTitle": "Research Archive",
+    "archiveMetaDescription": "The complete archive of security research areas: OT/ICS (IEC 62443) security, IoT and medical device security, LLM inference engine vulnerability research, and cyber range development.",
+    "archiveBackToPortfolio": "Back to Portfolio",
+    "archiveEyebrow": "Research",
+    "archiveTitle": "Research Archive",
+    "archiveBody": "From OT/ICS threat modeling and Achilles certification tooling to LLM inference engine (llama.cpp) vulnerability research, IoT and medical device security, and cyber range/DFIR training system development — every research area to date."
+  },
+  "exercises": {
+    "eyebrow": "Exercises",
+    "title": "Cyber defence exercises",
+    "intro": "International and national cyber defence exercises, as a blue-team operator and a green-team challenge developer."
+  },
+  "writing": {
+    "eyebrow": "Writing",
+    "title": "Recent Writing",
+    "intro": "Notes on vulnerability research, exploitation, fuzzing, OT/ICS, and IoT firmware.",
+    "allPosts": "All posts",
+    "feedNote": "New writeups land in the feed first -",
+    "subscribeRss": "subscribe via RSS"
+  },
+  "terms": {
+    "metaTitle": "Disclaimer",
+    "metaDescription": "Disclaimer for blog.ph4nt0m.xyz: personal views, no warranties, and responsible use of published security research.",
+    "backToHome": "Back to Home",
+    "title": "Disclaimer",
+    "lastUpdated": "Last updated",
+    "personalViewsTitle": "Personal views",
+    "personalViewsBody": "This is my personal website. Everything published here — posts, findings, and opinions — is my own and does not represent the position of my employer or any client I work with, unless explicitly stated.",
+    "securityResearchTitle": "Security research",
+    "securityResearchBody": "Vulnerability write-ups and security research on this site are published for defensive and educational purposes, after coordinated disclosure where applicable. Don't use anything here to attack systems you are not authorized to test.",
+    "noWarrantyTitle": "No warranty",
+    "noWarrantyBody": "Content, including code samples, is provided \"as is\" without warranty of any kind. Technical material can become outdated or contain errors, and I accept no liability for damages arising from its use. Links to external sites are provided for convenience and do not imply endorsement.",
+    "questionsTitle": "Questions",
+    "questionsBody": "If anything here seems wrong or you have questions about this site, email me at:"
+  },
+  "notFound": {
+    "backToPortfolio": "Back to the portfolio",
+    "eyebrow": "404 · Page not found",
+    "title": "Page not found",
+    "body": "This URL doesn't resolve — likely an old link from the previous version of this site. The content is still here; it just moved.",
+    "destinations": {
+      "findings": {
+        "title": "Security findings & disclosures",
+        "description": "The complete CVE ledger, vulnerability disclosure records, and recent merged fixes."
+      },
+      "research": {
+        "title": "Research archive",
+        "description": "Current and historical research themes across OT/ICS, IoT, and LLM inference engines."
+      },
       "blog": {
-        "label": "블로그",
-        "description": "취약점 연구, OT/ICS 보안, AI 자동화에 관한 기술 노트."
-      },
-      "cves": {
-        "label": "CVE",
-        "description": "공개 취약점 상태, 외부 레퍼런스를 한곳에 모아둔 아카이브."
-      },
-      "writeups": {
-        "label": "라이트업",
-        "description": "CTF 대회 및 모의해킹 라이트업 아카이브."
+        "title": "Blog",
+        "description": "Technical writing on OT/ICS security, IoT, cyber ranges, and vulnerability research."
       }
-    }
-  },
-  "blog": {
-    "title": "블로그",
-    "backToBlog": "블로그로 돌아가기",
-    "searchPlaceholder": "제목, 태그, 카테고리로 검색...",
-    "minRead": "{minutes}분 읽기",
-    "noPosts": "아직 게시물이 없습니다.",
-    "noResults": "게시물을 찾을 수 없습니다.",
-    "recentPosts": "최근 게시물",
-    "featured": "추천"
-  },
-  "cves": {
-    "title": "CVEs",
-    "backToCves": "CVEs 돌아가기",
-    "searchPlaceholder": "CVE, 그룹, 심각도, 상태로 검색...",
-    "summary": {
-      "total": "전체 CVE"
     },
-    "facts": "메타 정보",
-    "table": {
-      "cve": "CVE",
-      "id": "ID",
-      "summary": "요약",
-      "group": "그룹",
-      "kind": "유형",
-      "severity": "심각도",
-      "status": "상태",
-      "visibility": "공개 범위",
-      "link": "링크",
-      "cvss": "CVSS",
-      "score": "CVSS",
-      "cwe": "CWE",
-      "primaryCwe": "CWE",
-      "additionalCwe": "추가 CWE",
-      "evaluation": "Severity",
-      "notes": "비고",
-      "published": "발행일",
-      "submittedAt": "제출일",
-      "issuedAt": "발급일",
-      "modified": "수정일"
-    },
-    "status": {
-      "published": "공개",
-      "pending": "대기"
-    },
-    "open": "열기",
-    "openRegistry": "열기",
-    "openNvd": "NVD 열기",
-    "openDisclosure": "원문 열기",
-    "redacted": "마스킹 공개",
-    "redactedDetails": "이 항목은 제품, 벤더, 경로, 파라미터, 재현 절차가 마스킹되었습니다.",
-    "detail": "상세",
-    "external": "외부 링크",
-    "all": "전체",
-    "noResults": "조건에 맞는 CVE가 없습니다."
+    "lookingFor": "Looking for something specific that used to live here?",
+    "emailMe": "Email me",
+    "pointYou": "and I'll point you to it."
   },
-  "writeups": {
-    "title": "라이트업",
-    "subtitle": "CTF 대회 및 모의해킹 라이트업 — 정렬 & 검색 가능한 아카이브.",
-    "backToWriteups": "라이트업으로 돌아가기",
-    "searchPlaceholder": "이름, 출처, 카테고리, 난이도, 태그로 검색...",
-    "unknownDifficulty": "미정",
-    "tags": "태그",
-    "foundCount": "{count, plural, other {# 개 라이트업}}",
-    "notFound": "라이트업을 찾을 수 없습니다"
-  },
-  "about": {
-    "title": "소개",
-    "intro": "안녕하세요, Offensive Security Researcher 홍승표입니다. 저는 Pentesting, Red Teaming 및 Compliance Consulting, AI Automation 등 다양한 포지션을 수행할 수 있습니다.",
-    "sectionCompetitions": "대회",
-    "sectionVulns": "취약점",
-    "pendingLabel": "번호 대기",
-    "sectionCareer": "경력",
-    "sectionContact": "연락",
-    "vulnCounts": "CVE {cve}건, FVE {fve}건",
-    "fveLine": "FVE {n}건 (Findthegap)",
-    "groupCount": "{group} {n}건",
-    "maxCvss": "최대 CVSS {score}",
-    "career": "경력과 프로젝트는 <link>포트폴리오</link>에 정리해 두었습니다.",
-    "labelEmail": "이메일",
-    "labelResume": "이력서",
-    "name": "홍승표 (ph4nt0m)",
-    "groupNote": {
-      "Kernel": "BoB 8기에서 직접 만든 커널 퍼저로 발견"
-    },
-    "resumeKo": "한국어",
-    "resumeEn": "영어"
-  },
-  "portfolio": {
-    "title": "포트폴리오",
-    "sectionSummary": "요약",
-    "sectionCompetencies": "핵심 역량",
-    "sectionFeatured": "주요 프로젝트",
-    "sectionExperience": "경력",
-    "sectionProjects": "그 밖의 프로젝트",
-    "sectionSkills": "기술",
-    "sectionCves": "취약점 연구 (CVE)",
-    "sectionCredentials": "자격증 · 학력",
-    "labelActions": "주요 수행",
-    "labelResults": "성과",
-    "labelCertifications": "자격증",
-    "labelEducation": "학력",
-    "downloadPdf": "경력기술서 다운로드",
-    "openRegistry": "전체 보기",
-    "headline": "Offensive Security Researcher · Web/App · OT/ICS Pentesting · 보안 컨설팅",
-    "summary": "금융권 Web/App 모의해킹부터 OT/ICS(IEC 62443)·IoT·의료기기(FDA) 보안, 사이버 공방 훈련 개발까지 {projects}건 이상의 프로젝트를 수행했습니다. LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증을 취득했습니다.",
-    "filterAll": "전체",
-    "contribution": "기여도 {value}%",
-    "present": "현재",
+  "ledger": {
+    "summaryHeading": "Disclosure summary",
+    "publishedCves": "published CVEs",
+    "maskedFves": "masked disclosures (FVE)",
+    "pending": "awaiting ID",
+    "groups": "research groups",
+    "noteHeading": "CVE record, advisory, and public finding are different labels",
+    "noteBody": "A CVE is the public vulnerability record. A vendor may separately publish an advisory, and some findings are documented only in a patch or issue without a CVE. This ledger counts {cves} assigned records as CVE disclosures and keeps {fves} platform-masked disclosures (FVE) separate. Severity is never inferred from an identifier.",
+    "teamProject": "BoB team project",
+    "cveCount": "{count} CVEs",
+    "impact": "Impact",
+    "additionalEyebrow": "Public, without a CVE",
+    "additionalTitle": "Additional findings",
     "categories": {
-      "fintech": "금융·공공 Web/App 모의해킹",
-      "ics-ot": "OT/ICS 보안 (IEC 62443)",
-      "iot": "IoT 취약점·도구 개발",
-      "medical": "의료기기 보안 (FDA/eSTAR)",
-      "cyber-range": "사이버훈련장·CTF 개발",
-      "consulting": "보안 컨설팅·인증",
-      "vuln-research": "취약점 연구 (CVE/FVE)"
-    },
-    "competencies": {
-      "fintech": "금융·공공 전자금융기반시설 Web/App 모의해킹 — 저축은행·캐피탈·증권·보험·제조 등 12개 사이트 수행 (A3 Security)",
-      "ot": "OT/ICS 보안 — IEC 62443-4-2 기반 Threat Modeling·모의해킹, LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득",
-      "iot": "IoT 취약점 분석·보안 도구 개발 — 스마트빌딩 IoT 탐지 기술, IoT/CCTV 침해사고 조사 도구, Linux Kernel File System Fuzzer로 CVE 16건 도출",
-      "llm": "LLM·AI 인프라 보안 — llama.cpp 추론 엔진 취약점 분석으로 CVE 3건 도출(DoS·도달 가능 어서션·정수 오버플로), MCP 기반 점검 자동화 연구",
-      "medical": "의료기기 보안 — FDA eSTAR 컨설팅 및 Web/App·의료기기 모의해킹, 보안인증 취득 지원",
-      "cyberRange": "사이버 공방 훈련 개발·운영 — 한국전력 ELECCON, NATO CCDCOE {ls2025}, APEX CTF 2025 문제 개발"
-    },
-    "experience": {
-      "coresec": {
-        "role": "ICS Security Researcher (주임 연구원)",
-        "company": "코어시큐리티 (CoreSecurity)",
-        "bullets": {
-          "ot": "OT/ICS 보안 — IEC 62443-4-2 기반 Threat Modeling과 모의해킹을 수행했습니다.",
-          "achilles": "LS ELECTRIC 자동화기기의 Achilles Level 2 인증 취득에 기여하고, 자동화 점검 도구를 개발했습니다.",
-          "iot": "IoT 보안 — 스마트빌딩 IoT 취약점 탐지 기술을 개발·실증하고, IoT/CCTV 침해사고 조사 도구를 만들었습니다.",
-          "medical": "의료기기 보안 — FDA eSTAR 컨설팅과 Web/App·의료기기 모의해킹을 수행했습니다.",
-          "eleccon": "사이버 공방 훈련 — 한국전력 ELECCON을 운영하고 문제를 개발했습니다.",
-          "lockedShields": "NATO CCDCOE {ls2025}, APEX CTF 2025 문제 개발에 참여했습니다."
-        }
+      "memoryCorruption": {
+        "label": "Memory corruption",
+        "detail": "Kernel and parser heap/buffer overflow paths"
       },
-      "a3": {
-        "role": "Web/App Pentester (사원)",
-        "bullets": {
-          "financial": "금융권·공공기관 전자금융기반시설 모의해킹을 수행했습니다. 참저축은행, 애큐온캐피탈, 금융투자협회, SBI저축은행, 현대자동차 HKMC, 농협중앙회 RPA 등이 대상이었습니다.",
-          "review": "비정형 시스템 보안성 검토를 수행했습니다. KT 기가지니 AI 스피커, IoT 열감지 장비, DB손해보험 클레임콜이 대상이었습니다.",
-          "isms": "ISMS/ISO27001 인증 취득 지원 컨설팅에 참여했습니다 (코웨이)."
-        }
+      "outOfBoundsReads": {
+        "label": "Out-of-bounds read",
+        "detail": "Packet and protocol-parser bounds failures"
+      },
+      "injectionOrRce": {
+        "label": "Injection / command execution",
+        "detail": "Command and argument injection paths"
+      },
+      "authOrAccessControl": {
+        "label": "Authentication / access control",
+        "detail": "Authentication bypass and access-control flaws"
+      },
+      "logicOrDos": {
+        "label": "Logic / denial of service",
+        "detail": "Validation or abort paths with availability impact"
+      },
+      "unclassified": {
+        "label": "Unclassified",
+        "detail": "Items whose upstream CWE is unknown"
       }
-    },
-    "certifications": {
-      "linux": "리눅스 마스터 2급 (KAIT, 2021.07)",
-      "network": "네트워크 관리사 2급 (KAIT, 2024.07)"
-    },
-    "education": {
-      "kongju": "공주대학교 컴퓨터공학부 (2012.02 — 2020.02)",
-      "cheonan": "천안상업고등학교 정보처리과 (2009.03 — 2012.02)"
-    },
-    "sectionsNav": "섹션 바로가기",
-    "stats": {
-      "projects": "프로젝트",
-      "cves": "CVE",
-      "fves": "FVE"
     }
   },
-  "sidebar": {
-    "relatedPosts": "관련 게시물",
-    "relatedTopics": "관련 주제",
-    "tableOfContents": "목차",
-    "topics": "주제",
-    "readMore": "더 읽기",
-    "viewAllTags": "태그 전체 보기"
-  },
-  "lightbox": {
-    "zoomIn": "확대",
-    "zoomOut": "축소",
-    "resetZoom": "원래 크기",
-    "fullscreen": "전체 화면",
-    "exitFullscreen": "전체 화면 종료",
-    "download": "이미지 다운로드",
-    "close": "닫기"
-  },
-  "spoiler": {
-    "reveal": "정답 보기",
-    "hide": "정답 숨기기",
-    "copy": "클립보드에 복사",
-    "copied": "복사됨!",
-    "clickToReveal": "클릭하여 보기"
+  "findingsPage": {
+    "metaTitle": "Security Findings & Disclosures",
+    "metaDescription": "Public security work by Seungpyo Hong: {cves} CVE-backed disclosures plus recent upstream fixes, advisories, and research.",
+    "back": "Back to selected findings",
+    "eyebrow": "Evidence archive",
+    "title": "Security Findings & Disclosures",
+    "intro": "The complete public record behind the portfolio: assigned CVEs, platform-masked disclosures (FVE), and per-project ledgers in a form that is searchable and linkable.",
+    "provenance": "Restored from the pre-migration snapshot and cross-checked against the official CVE record corpus. The Linux kernel filesystem CVEs are from a Best of the Best (BoB) team project; the proof-of-concept code lives in the team repository.",
+    "cveCorpus": "Official CVE record corpus"
   },
   "footer": {
-    "copyright": "© {year} Ph4nt0m"
+    "tagline": "I take apart systems that ship - kernels, industrial devices, firmware - and turn the flaws into reproducible evidence.",
+    "quickLinks": "Quick Links",
+    "resources": "Resources",
+    "openSource": "Open Source",
+    "rssFeed": "RSS Feed",
+    "llmIndex": "LLM index",
+    "email": "Email",
+    "rights": "All rights reserved.",
+    "privacy": "Privacy",
+    "disclaimer": "Disclaimer",
+    "builtWith": "Built with Next.js & Tailwind CSS"
+  },
+  "contact": {
+    "eyebrow": "Work with me",
+    "title": "Choose the shortest path",
+    "intro": "I'm an Associate Researcher on the ICS Security Research Team at CoreSecurity. I'm glad to hear from hiring teams working on hard security problems.",
+    "hiring": {
+      "eyebrow": "For hiring teams",
+      "title": "Evaluate role fit quickly",
+      "description": "A concise recruiter brief with current focus areas, selected evidence, experience, working model, and links to the CV and professional profiles.",
+      "cta": "Open recruiter brief"
+    },
+    "firstNote": "No formality needed for a first, non-confidential note."
+  },
+  "recruiterBrief": {
+    "metaTitle": "Recruiter Brief",
+    "metaDescription": "Recruiter brief for Seungpyo Hong: OT/ICS, IoT and medical device security, Linux kernel and LLM inference-engine vulnerability research, and web/app penetration testing.",
+    "ogDescription": "A concise hiring-team view of role fit, current focus, public evidence, experience, and contact.",
+    "eyebrow": "For hiring teams",
+    "title": "I find vulnerabilities in systems that ship, and prove them with exploits",
+    "lead": "I'm an Associate Researcher on the ICS Security Research Team at CoreSecurity, glad to hear from teams working on hard security problems. This page is the shortest route through the evidence; timing and fit are discussed directly.",
+    "downloadCv": "Download resume (PDF)",
+    "startConversation": "Start a conversation",
+    "statFindings": "public findings",
+    "statCves": "assigned CVEs",
+    "statAreas": "research areas",
+    "statExercises": "cyber exercises",
+    "mandates": "Relevant mandates",
+    "focus": {
+      "otIcs": "OT/ICS security (IEC 62443) and industrial device assessment and certification testing",
+      "iotFirmware": "IoT and firmware vulnerability research, reverse engineering, and exploit development",
+      "kernelBinary": "Linux kernel and binary vulnerability research and fuzzing",
+      "webLlm": "Web/app penetration testing and LLM inference-engine security"
+    },
+    "experience": "Selected experience",
+    "atAGlance": "At a glance",
+    "currentRole": "Current role",
+    "workingModel": "Working model",
+    "education": "Education",
+    "availability": "Availability",
+    "availabilityBody": "Selective conversations; timing and fit discussed directly.",
+    "startEvidence": "Start with the evidence",
+    "evidenceCases": "Case studies",
+    "evidenceFindings": "Security findings",
+    "evidenceResearch": "Research archive",
+    "mailSubject": "Role conversation"
+  },
+  "privacy": {
+    "metaTitle": "Privacy",
+    "metaDescription": "Privacy notice for blog.ph4nt0m.xyz: a static site that uses Google Analytics to count visits. No contact forms, no accounts.",
+    "backToHome": "Back to Home",
+    "title": "Privacy",
+    "lastUpdated": "Last updated",
+    "shortTitle": "The short version",
+    "shortBody": "This is a static personal website with no contact forms and no accounts. It uses Google Analytics to count visits, which sets cookies in your browser. Apart from that measurement, I collect nothing from your visit and I never see your identity.",
+    "storesTitle": "What the site stores",
+    "storesTheme": "Your light/dark theme choice is saved in your browser's localStorage. It never leaves your device and you can clear it at any time through your browser settings.",
+    "storesGa": "Google Analytics 4 (measurement ID G-KV41V41G5J) sets _ga cookies to tell repeat visits apart. It reports which pages were viewed, an approximate location derived from your IP address, and your device and browser type. I see only aggregate counts, never individual visitors. The data is processed by Google under the <policy>Google Privacy Policy</policy>.",
+    "storesOptOut": "To opt out, block cookies for this site in your browser, use the <optout>Google Analytics opt-out add-on</optout>, or any content blocker. Nothing on this site requires the measurement to work.",
+    "hostingTitle": "Hosting",
+    "hostingBody": "The site is served by GitHub Pages. GitHub may log visitor IP addresses for security purposes, as described in the <github>GitHub Privacy Statement</github>. I do not have access to per-visitor data from this logging.",
+    "emailTitle": "If you email me",
+    "emailBody": "The only way to contact me through this site is email (<mail></mail>). I use your address and message solely to reply, and I don't share them with anyone.",
+    "linksTitle": "External links",
+    "linksBody": "Links to GitHub, LinkedIn, vulnerability registries, and other external sites are governed by those services' own privacy policies.",
+    "changesTitle": "Changes",
+    "changesBody": "If the data collected here changes, this page will be updated first, with a new date above."
+  },
+  "blog": {
+    "eyebrow": "Blog",
+    "heading": "Security Research Blog",
+    "backToPortfolio": "Back to Portfolio",
+    "intro": "Field notes on vulnerability research, penetration testing, and the security of OT/ICS and IoT systems.",
+    "searchLabel": "Search posts",
+    "searchPlaceholder": "Search posts...",
+    "noResults": "No posts found matching your criteria.",
+    "filterByCollection": "Filter by collection",
+    "allPosts": "All posts",
+    "startHere": "Start here",
+    "readFullArticle": "Read full article",
+    "subscribeRss": "Subscribe via RSS",
+    "backToBlog": "Back to Blog",
+    "onThisPage": "On this page",
+    "tableOfContents": "Table of contents",
+    "relatedPosts": "Related Posts",
+    "copyLink": "Copy link",
+    "copied": "Copied",
+    "share": "Share",
+    "shareLinkedin": "Share on LinkedIn",
+    "shareX": "Post to X",
+    "submitHN": "Submit to Hacker News",
+    "shareOriginal": "Share the original article",
+    "shareOriginalDesc": "Use the canonical source and original title; no tracking parameters are added.",
+    "nextStep": "Next step",
+    "nextStepDesc": "Hiring teams can use the recruiter brief for a concise view of role fit and evidence.",
+    "seeCaseStudies": "See case studies",
+    "recruiterBrief": "Recruiter brief",
+    "articleSeries": "Article series",
+    "series": "Series",
+    "seriesNav": "Series navigation",
+    "youAreHere": "You are here",
+    "partLabel": "Part {part}:",
+    "partOf": "Part {part} of {total}",
+    "previousPart": "Previous · Part {part}",
+    "nextPart": "Next · Part {part}"
+  },
+  "hero": {
+    "eyebrow": "Offensive Security Researcher",
+    "thesis": "I research vulnerabilities across Linux kernels, OT/ICS, IoT, and more.",
+    "summary": "",
+    "recent": "Recently:",
+    "statCves": "assigned CVEs · {range}",
+    "statFindings": "public findings",
+    "statAreas": "research areas",
+    "statExercises": "cyber exercises",
+    "latest": "Latest",
+    "seeCaseStudies": "See case studies",
+    "forHiring": "For hiring teams",
+    "exploreEvidence": "Explore the evidence"
+  },
+  "about": {
+    "eyebrow": "About",
+    "title": "About Me",
+    "bio1": "I'm Seungpyo Hong, a vulnerability researcher. I have found vulnerabilities across IoT, ICS, financial services and AI software.",
+    "bio2": "These days I design and run my own LLM-driven pipeline to automate the search. I decide which targets and which parts of them to look at, and I report only the candidates I have reproduced myself and proven to have real impact. I want to go deeper into research on automating vulnerability analysis with LLMs.",
+    "coreExpertise": "Core Expertise",
+    "expertise": {
+      "otIcs": "OT/ICS security (IEC 62443)",
+      "iotFirmware": "IoT & firmware analysis",
+      "kernel": "Linux kernel vulnerability research",
+      "webApp": "Web/app penetration testing",
+      "llm": "LLM inference-engine security",
+      "medical": "Medical device security (FDA)"
+    },
+    "experience": "Experience",
+    "education": "Education",
+    "downloadCv": "Download career statement (PDF)",
+    "technologies": "Technologies & Tools"
   },
   "translator": {
-    "detected": "{locale} 언어 감지됨!",
-    "translating": "콘텐츠 번역 중...",
-    "translationFailed": "번역 불가 — 원문 표시",
-    "poweredBy": "Lingva 번역"
+    "detected": "{locale} language detected!",
+    "translating": "Translating content...",
+    "translationFailed": "Translation unavailable — showing original",
+    "poweredBy": "Translation by Lingva"
   },
   "tags": {
-    "heading": "태그",
-    "indexHeading": "모든 태그",
-    "indexHint": "블로그, CVE, 라이트업에서 3회 이상 나타난 태그입니다."
-  },
-  "search": {
-    "open": "검색",
-    "title": "검색",
-    "placeholder": "블로그, CVE, 라이트업 검색..."
-  },
-  "records": {
-    "hosts": {
-      "kepco": "한국전력"
-    },
-    "teams": {
-      "korCan": "한국-캐나다 연합",
-      "korHun": "한국-헝가리 연합"
-    },
-    "roles": {
-      "dfirBlue": "DFIR 블루팀",
-      "specialSystemBlue": "Special System 블루팀",
-      "greenTeam": "Green Team",
-      "dfirChallenges": "DFIR 문제 개발",
-      "operations": "운영",
-      "challenges": "문제 개발"
-    },
-    "overall": "종합 {rank}위({of}팀 중)",
-    "track": "{name} {rank}위",
-    "rankValue": "{rank}위"
+    "eyebrow": "Tags",
+    "title": "Browse by Tag",
+    "metaTitle": "Tags",
+    "metaDescription": "Browse blog posts by topic tag.",
+    "backToBlog": "Back to Blog",
+    "backToTags": "Back to Tags",
+    "readFullArticle": "Read full article",
+    "tagMetaTitle": "Posts tagged \"{tag}\""
   }
 }

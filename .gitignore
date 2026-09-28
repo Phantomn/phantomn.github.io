@@ -1,59 +1,114 @@
-# Next.js
-.next/
-out/
-*.tsbuildinfo
-.eslintcache
-
-# Node
+# Dependencies
 node_modules/
 npm-debug.log*
-.yarn-error.log
+yarn-debug.log*
+yarn-error.log*
 
-# OS
-.DS_Store
-Thumbs.db
+# Next.js build output
+.next/
+out/
 
-# Editor
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# AI / Agentic workflow (nunca commitar memória, tasks, estado de agente, regras locais)
-.claude/
-CLAUDE.local.md
-.cursor/
-.cursorrules
-.windsurfrules
-.aider*
-.continue/
-.github/copilot-instructions.md
-AGENTS.md
-.agent/
-.ai/
-tasks/
-
-# Env
+# Environment variables
 .env
 .env.local
-.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# Playwright
-tests/.output/
-tests/playwright-report/
-playwright-report/
-test-results/
-.playwright/
-/tasks/
-Obsidian/
-Notion_export/
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# RenderCV build output
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Next.js build info
+next-env.d.ts
+
+# Temporary files
+tmp
+tmp/
+temp/
+*.tmp
+
+# Claude Code memory
+memory-bank/
+legacy-archive/
+# Ignore scratch scripts but keep the CI link-audit gate tracked
+# (a bare `scripts/` would make the file impossible to re-include).
+scripts/*
+!scripts/check-links.mjs
+!scripts/check-claims.mjs
+!scripts/check-pgp.mjs
+# 산출물 5개를 만드는 유일한 경로 - 빠지면 data/source 를 산출물로 바꿀 수 없다
+!scripts/generate-from-source.mjs
+# 포크 잔재 검사기와 그 예외 등재 목록
+!scripts/check-residue.mjs
+!scripts/residue-keep.txt
+!scripts/build-search-index.mjs
+!scripts/check-records.mjs
+!scripts/check-i18n.mjs
+!scripts/cv
+!scripts/cv/**
 scripts/cv/rendercv_output/
-package-lock.json
 
-# superpowers brainstorming companion mockups
+# Local research / drafts not intended for publication
+private/
+
+# Claude Code local state
+.claude/
+
+# Coverage profile artefacts
+*.profraw
+
+# AI-assisted process artifacts (keep out of the public repo)
+docs/superpowers/
+
+# dev/workspace artifacts (SDD/brainstorm workspace, Serena config, test output, lint cache)
 .superpowers/
-
-# impeccable 스킬 산출물(디자인 critique 리포트)
-.impeccable/
+.serena/
+test-results/
+.eslintcache

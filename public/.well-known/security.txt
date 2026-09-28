@@ -1,0 +1,9 @@
+# Scope: this website and my personal open-source projects
+# (github.com/phantomn). Vulnerabilities in client systems I was
+# engaged on belong to that client's own disclosure process.
+Contact: mailto:newbiepwner@kakao.com
+# OpenPGP fingerprint: 28DD DA57 77C6 E1E1 63AF 1C8D B955 9117 75AD 63BB
+Encryption: https://blog.ph4nt0m.xyz/pgp-key.asc
+Preferred-Languages: ko, en
+Canonical: https://blog.ph4nt0m.xyz/.well-known/security.txt
+Expires: 2027-09-28T00:00:00.000Z

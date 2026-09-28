@@ -1,0 +1,102 @@
+{
+  "records": {
+    "hosts": {
+      "kepco": "KEPCO"
+    },
+    "teams": {
+      "korCan": "Korea-Canada joint team",
+      "korHun": "Korea-Hungary joint team"
+    },
+    "roles": {
+      "dfirBlue": "DFIR Blue Team",
+      "specialSystemBlue": "Special System Blue Team",
+      "greenTeam": "Green Team",
+      "dfirChallenges": "DFIR challenge development",
+      "operations": "Operations",
+      "challenges": "Challenge development"
+    },
+    "overall": "#{rank} overall (of {of} teams)",
+    "track": "{name} #{rank}",
+    "rankValue": "#{rank}"
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "sectionSummary": "Summary",
+    "sectionCompetencies": "Core Competencies",
+    "sectionFeatured": "Featured Projects",
+    "sectionExperience": "Experience",
+    "sectionProjects": "Other Projects",
+    "sectionSkills": "Skills",
+    "sectionCves": "Vulnerability Research (CVE)",
+    "sectionCredentials": "Certifications & Education",
+    "labelActions": "Key Activities",
+    "labelResults": "Results",
+    "labelCertifications": "Certifications",
+    "labelEducation": "Education",
+    "downloadPdf": "Download career statement",
+    "openRegistry": "View all",
+    "headline": "Offensive Security Researcher · Web/App · OT/ICS Pentesting · Security Consulting",
+    "summary": "From Web/App penetration testing in the financial sector to OT/ICS (IEC 62443), IoT, and medical device (FDA) security and cyber range development, I have delivered more than {projects} projects. I earned the Achilles Communication Certificate Level 2 for LS ELECTRIC automation devices.",
+    "filterAll": "All",
+    "contribution": "{value}% contribution",
+    "present": "Present",
+    "categories": {
+      "fintech": "Financial & Public Web/App Pentesting",
+      "ics-ot": "OT/ICS Security (IEC 62443)",
+      "iot": "IoT Vulnerability Research & Tooling",
+      "medical": "Medical Device Security (FDA/eSTAR)",
+      "cyber-range": "Cyber Range & CTF Development",
+      "consulting": "Security Consulting & Certification",
+      "vuln-research": "Vulnerability Research (CVE/FVE)"
+    },
+    "competencies": {
+      "fintech": "Web/App penetration testing of financial and public electronic-finance infrastructure — 12 sites across savings banks, capital, securities, insurance, and manufacturing (A3 Security)",
+      "ot": "OT/ICS security — IEC 62443-4-2 based threat modeling and penetration testing; earned the Achilles Communication Certificate Level 2 for LS ELECTRIC automation devices",
+      "iot": "IoT vulnerability analysis and security tooling — smart-building IoT detection technology, IoT/CCTV incident-investigation tools, and 16 CVEs from a Linux kernel file system fuzzer",
+      "llm": "LLM & AI infrastructure security — 3 CVEs from analyzing the llama.cpp inference engine (DoS, reachable assertion, integer overflow), plus MCP-based assessment-automation research",
+      "medical": "Medical device security — FDA eSTAR consulting and Web/App & medical-device penetration testing, plus security certification support",
+      "cyberRange": "Cyber exercises — KEPCO ELECCON challenge development and operation, NATO CCDCOE Locked Shields 2025 and 2026 blue team, and APEX CTF 2025 DFIR challenge development"
+    },
+    "experience": {
+      "coresec": {
+        "role": "ICS Security Researcher (Associate Researcher)",
+        "company": "CoreSecurity",
+        "bullets": {
+          "ot": "OT/ICS security — performed IEC 62443-4-2 based threat modeling and penetration testing.",
+          "achilles": "Earned the Achilles Communication Certificate Level 2 for LS ELECTRIC automation devices and developed an automated assessment tool.",
+          "iot": "IoT security — developed and validated smart-building IoT vulnerability-detection technology and built IoT/CCTV incident-investigation tools.",
+          "medical": "Medical device security — performed FDA eSTAR consulting and Web/App & medical-device penetration testing.",
+          "eleccon": "Cyber range — operated KEPCO ELECCON and developed its challenges.",
+          "lockedShields": "Took part in NATO CCDCOE Locked Shields 2025 and 2026 as a blue-team member, and developed DFIR challenges for APEX CTF 2025."
+        }
+      },
+      "a3": {
+        "role": "Web/App Pentester (Staff)",
+        "bullets": {
+          "financial": "Performed penetration testing of financial and public electronic-finance infrastructure. Targets included Cham Savings Bank, Acuon Capital, KOFIA, SBI Savings Bank, Hyundai Motor (HKMC), and Nonghyup RPA.",
+          "review": "Performed security reviews of non-standard systems. Targets included the KT GiGA Genie AI speaker, IoT thermal-detection equipment, and DB Insurance's claim-call system.",
+          "isms": "Participated in ISMS/ISO27001 certification-support consulting (Coway)."
+        }
+      }
+    },
+    "certifications": {
+      "linux": "Linux Master Level 2 (KAIT, 2021.07)",
+      "network": "Network Administrator Level 2 (KAIT, 2024.07)"
+    },
+    "education": {
+      "kongju": "Kongju National University, Dept. of Computer Engineering (2012.02 — 2020.02)",
+      "cheonan": "Cheonan Commercial High School, Information Processing (2009.03 — 2012.02)"
+    },
+    "sectionsNav": "Jump to section",
+    "stats": {
+      "projects": "Projects",
+      "cves": "CVE",
+      "fves": "FVE"
+    },
+    "labelBackground": "Background"
+  },
+  "about": {
+    "name": "Seungpyo Hong (ph4nt0m)",
+    "intro": "Hi, I'm Seungpyo Hong, an Offensive Security Researcher. I can take on a range of roles including penetration testing, red teaming, compliance consulting, and AI automation."
+  }
+}
