@@ -1,0 +1,239 @@
+{
+  "$schema": "https://blog.ph4nt0m.xyz/.well-known/claims.schema.json",
+  "id": "https://blog.ph4nt0m.xyz/.well-known/claims.json",
+  "version": "1.0.0",
+  "issuedAt": "2026-09-28T00:00:00Z",
+  "validUntil": "2027-09-28T00:00:00Z",
+  "purpose": [
+    "candidate-screening",
+    "agent-discovery",
+    "evidence-verification"
+  ],
+  "issuer": {
+    "id": "https://blog.ph4nt0m.xyz/#ph4nt0m",
+    "type": "Person",
+    "name": "Seungpyo Hong"
+  },
+  "subject": {
+    "id": "https://blog.ph4nt0m.xyz/#ph4nt0m",
+    "type": "Person",
+    "name": "Seungpyo Hong"
+  },
+  "profiles": [
+    {
+      "service": "GitHub",
+      "url": "https://github.com/phantomn"
+    },
+    {
+      "service": "LinkedIn",
+      "url": "https://www.linkedin.com/in/ph4nt0m/"
+    }
+  ],
+  "claims": [
+    {
+      "id": "https://blog.ph4nt0m.xyz/.well-known/claims.json#identity-name",
+      "type": "IdentityClaim",
+      "statement": "The subject publishes professionally as Seungpyo Hong, online as Ph4nt0m.",
+      "predicate": "https://schema.org/name",
+      "object": {
+        "type": "Text",
+        "value": "Seungpyo Hong"
+      },
+      "status": "active",
+      "evidence": [
+        {
+          "url": "https://blog.ph4nt0m.xyz/",
+          "title": "Site front page",
+          "sourceType": "issuer"
+        },
+        {
+          "url": "https://github.com/phantomn",
+          "title": "GitHub profile",
+          "sourceType": "primary"
+        }
+      ],
+      "assurance": {
+        "level": "evidence-linked",
+        "basis": [
+          "first-party-assertion",
+          "primary-source"
+        ],
+        "reviewedAt": "2026-09-28"
+      }
+    },
+    {
+      "id": "https://blog.ph4nt0m.xyz/.well-known/claims.json#professional-role",
+      "type": "ProfessionalClaim",
+      "statement": "Seungpyo Hong is an Associate Researcher on the ICS Security Research Team at CoreSecurity, working on Web/App and OT/ICS penetration testing, vulnerability research, and security consulting. The research published here is his own.",
+      "predicate": "https://schema.org/jobTitle",
+      "object": {
+        "type": "Text",
+        "value": "Offensive Security Researcher"
+      },
+      "status": "active",
+      "evidence": [
+        {
+          "url": "https://blog.ph4nt0m.xyz/recruiter-brief",
+          "title": "Recruiter brief",
+          "sourceType": "issuer"
+        }
+      ],
+      "assurance": {
+        "level": "self-asserted",
+        "basis": [
+          "first-party-assertion"
+        ],
+        "reviewedAt": "2026-09-28"
+      }
+    },
+    {
+      "id": "https://blog.ph4nt0m.xyz/.well-known/claims.json#expertise-areas",
+      "type": "ExpertiseClaim",
+      "statement": "The subject's published work covers Financial & Public Web/App Pentesting, OT/ICS Security (IEC 62443), IoT Vulnerability Research & Tooling, Medical Device Security (FDA/eSTAR), Cyber Range & CTF Development, Security Consulting & Certification, Vulnerability Research (CVE/FVE).",
+      "predicate": "https://schema.org/knowsAbout",
+      "object": {
+        "type": "TextList",
+        "value": [
+          "Financial & Public Web/App Pentesting",
+          "OT/ICS Security (IEC 62443)",
+          "IoT Vulnerability Research & Tooling",
+          "Medical Device Security (FDA/eSTAR)",
+          "Cyber Range & CTF Development",
+          "Security Consulting & Certification",
+          "Vulnerability Research (CVE/FVE)"
+        ]
+      },
+      "status": "active",
+      "evidence": [
+        {
+          "url": "https://blog.ph4nt0m.xyz/research",
+          "title": "Research areas",
+          "sourceType": "issuer"
+        }
+      ],
+      "assurance": {
+        "level": "self-asserted",
+        "basis": [
+          "first-party-assertion"
+        ],
+        "reviewedAt": "2026-09-28"
+      }
+    },
+    {
+      "id": "https://blog.ph4nt0m.xyz/.well-known/claims.json#published-cves",
+      "type": "TrackRecordClaim",
+      "statement": "The findings ledger lists 24 CVE records with assigned identifiers, grouped as Database, LLM, Web, IoT, Kernel. Of these, 16 Linux kernel filesystem CVEs were found as part of a Best of the Best (BoB) team project, not as sole author.",
+      "predicate": "https://schema.org/numberOfItems",
+      "object": {
+        "type": "Number",
+        "value": 24,
+        "unit": "CVE records with assigned identifiers",
+        "qualifier": "Counted from this site's own ledger. 16 of these are Linux kernel filesystem CVEs from a five-person BoB team project (a ported JANUS fuzzer), where the subject was one contributor. 4 further findings are masked platform disclosures (FVE) and 1 awaits an identifier. Verify each identifier through the linked registry."
+      },
+      "status": "active",
+      "evidence": [
+        {
+          "url": "https://blog.ph4nt0m.xyz/findings",
+          "title": "Findings ledger",
+          "sourceType": "issuer"
+        },
+        {
+          "url": "https://github.com/bobfuzzer/CVE",
+          "title": "Team proof-of-concept repository (BoB, kernel CVEs)",
+          "sourceType": "primary"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/search",
+          "title": "National Vulnerability Database search",
+          "sourceType": "registry"
+        }
+      ],
+      "assurance": {
+        "level": "evidence-linked",
+        "basis": [
+          "derived-from-public-ledger",
+          "primary-source",
+          "independent-source"
+        ],
+        "reviewedAt": "2026-09-28"
+      }
+    },
+    {
+      "id": "https://blog.ph4nt0m.xyz/.well-known/claims.json#locked-shields",
+      "type": "TrackRecordClaim",
+      "statement": "At NATO CCDCOE Locked Shields 2025 the subject's team placed #6 overall (of 17 teams) · DFIR #1.",
+      "predicate": "https://schema.org/award",
+      "object": {
+        "type": "Text",
+        "value": "Locked Shields 2025 - #6 overall (of 17 teams) · DFIR #1",
+        "qualifier": "Exercise scoreboards are not published by the organiser, so this is a first-party assertion."
+      },
+      "status": "active",
+      "evidence": [
+        {
+          "url": "https://blog.ph4nt0m.xyz/",
+          "title": "Site front page",
+          "sourceType": "issuer"
+        }
+      ],
+      "assurance": {
+        "level": "self-asserted",
+        "basis": [
+          "first-party-assertion"
+        ],
+        "reviewedAt": "2026-09-28"
+      }
+    },
+    {
+      "id": "https://blog.ph4nt0m.xyz/.well-known/claims.json#security-contact",
+      "type": "ContactClaim",
+      "statement": "Sensitive vulnerability reports should be encrypted to the published OpenPGP key rather than sent as ordinary email.",
+      "predicate": "https://schema.org/email",
+      "object": {
+        "type": "StructuredValue",
+        "value": {
+          "email": "newbiepwner@kakao.com",
+          "encryptionKey": "https://blog.ph4nt0m.xyz/pgp-key.asc",
+          "openPgpFingerprint": "28DDDA5777C6E1E163AF1C8DB955911775AD63BB",
+          "openPgpKeyId": "B955911775AD63BB",
+          "keyAlgorithm": "RSA-4096",
+          "keyCreatedAt": "2026-09-23"
+        }
+      },
+      "status": "active",
+      "evidence": [
+        {
+          "url": "https://blog.ph4nt0m.xyz/pgp-key.asc",
+          "title": "OpenPGP public key",
+          "sourceType": "issuer"
+        },
+        {
+          "url": "https://blog.ph4nt0m.xyz/.well-known/security.txt",
+          "title": "security.txt (RFC 9116)",
+          "sourceType": "issuer"
+        }
+      ],
+      "assurance": {
+        "level": "evidence-linked",
+        "basis": [
+          "first-party-assertion",
+          "primary-source"
+        ],
+        "reviewedAt": "2026-09-28"
+      }
+    }
+  ],
+  "signature": {
+    "format": "sigstore-bundle",
+    "artifact": "https://blog.ph4nt0m.xyz/.well-known/claims.json",
+    "bundle": "https://blog.ph4nt0m.xyz/.well-known/claims.sigstore.json",
+    "certificateIdentity": "https://github.com/Phantomn/phantomn.github.io/.github/workflows/deploy.yml@refs/heads/main",
+    "certificateOidcIssuer": "https://token.actions.githubusercontent.com",
+    "verificationCommand": "cosign verify-blob --bundle claims.sigstore.json --certificate-identity https://github.com/Phantomn/phantomn.github.io/.github/workflows/deploy.yml@refs/heads/main --certificate-oidc-issuer https://token.actions.githubusercontent.com claims.json"
+  },
+  "disclaimer": [
+    "The Sigstore signature authenticates the deployed file and its GitHub Actions publishing identity; it does not independently prove every claim.",
+    "Each claim carries its own assurance level. Self-asserted claims have no third-party source - exercise scoreboards and client engagements are not public.",
+    "Counts are derived from this site’s own data files at build time, not from a third-party registry."
+  ]
+}

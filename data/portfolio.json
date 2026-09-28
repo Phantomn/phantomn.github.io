@@ -1,0 +1,595 @@
+{
+  "personal": {
+    "name": "Seungpyo Hong",
+    "title": "Offensive Security Researcher · Web/App · OT/ICS Pentesting · Security Consulting",
+    "description": "From Web/App penetration testing in the financial sector to OT/ICS (IEC 62443), IoT, and medical device (FDA) security and cyber range development, I have delivered more than 29 projects. I earned the Achilles Communication Certificate Level 2 for LS ELECTRIC automation devices.",
+    "location": "Seoul, South Korea",
+    "email": "newbiepwner@kakao.com",
+    "cv": {
+      "resume": {
+        "ko": "/docs/resume-ko.pdf",
+        "en": "/docs/resume-en.pdf"
+      },
+      "careerStatement": {
+        "ko": "/docs/career-statement-ko.pdf",
+        "en": "/docs/career-statement-en.pdf"
+      }
+    },
+    "social": {
+      "github": "phantomn",
+      "linkedin": "ph4nt0m",
+      "twitter": "Ph4nt0mm"
+    },
+    "pgp": {
+      "publicKeyPath": "/pgp-key.asc",
+      "fingerprint": "28DDDA5777C6E1E163AF1C8DB955911775AD63BB",
+      "keyId": "B955911775AD63BB",
+      "uid": "Seungpyo Hong (Ph4nt0m) <newbiepwner@kakao.com>",
+      "algorithm": "RSA",
+      "length": 4096,
+      "created": "2026-09-23",
+      "sha256": "a748692ebf8a8af0e7095db5835e0b57b0bb1dcc71bfead3cc81539087613c07"
+    }
+  },
+  "experience": [
+    {
+      "title": "ICS Security Researcher (Associate Researcher)",
+      "company": "CoreSecurity",
+      "period": "2021.06 - Present",
+      "description": "OT/ICS security — performed IEC 62443-4-2 based threat modeling and penetration testing. Earned the Achilles Communication Certificate Level 2 for LS ELECTRIC automation devices and developed an automated assessment tool. IoT security — developed and validated smart-building IoT vulnerability-detection technology and built IoT/CCTV incident-investigation tools."
+    },
+    {
+      "title": "Web/App Pentester (Staff)",
+      "company": "A3 Security",
+      "period": "2020.06 - 2021.06",
+      "description": "Performed penetration testing of financial and public electronic-finance infrastructure. Targets included Cham Savings Bank, Acuon Capital, KOFIA, SBI Savings Bank, Hyundai Motor (HKMC), and Nonghyup RPA. Performed security reviews of non-standard systems. Targets included the KT GiGA Genie AI speaker, IoT thermal-detection equipment, and DB Insurance's claim-call system."
+    }
+  ],
+  "education": [
+    {
+      "degree": "Kongju National University, Dept. of Computer Engineering (2012.02 — 2020.02)",
+      "institution": "Kongju National University",
+      "year": "2012.02 - 2020.02",
+      "focus": "Computer Engineering"
+    },
+    {
+      "degree": "Cheonan Commercial High School, Information Processing (2009.03 — 2012.02)",
+      "institution": "Cheonan Commercial High School",
+      "year": "2009.03 - 2012.02",
+      "focus": "Information Processing"
+    }
+  ],
+  "skills": {
+    "languages": [
+      "C/C++",
+      "Python",
+      "TypeScript",
+      "Shell"
+    ],
+    "security": [
+      "Web/App Pentesting",
+      "OT/ICS Pentesting",
+      "Vulnerability Research",
+      "Exploit Development",
+      "Fuzzing",
+      "Reverse Engineering",
+      "Threat Modeling"
+    ],
+    "blockchain": [],
+    "tools": [
+      "IDA Pro",
+      "Ghidra",
+      "Burp Suite",
+      "Frida",
+      "Wireshark",
+      "Achilles Test Platform"
+    ]
+  },
+  "themes": [
+    {
+      "id": "ics-ot",
+      "title": "OT/ICS Security (IEC 62443)",
+      "description": "4 projects",
+      "tags": [
+        "Achilles Test Platform",
+        "XGT Protocol",
+        "PLC",
+        "Wireshark",
+        "Python",
+        "STRIDE",
+        "DREAD",
+        "DFD"
+      ],
+      "period": "2023.03 - 2025.11",
+      "highlights": [
+        "LS ELECTRIC Automation Devices - Achilles Communication Certificate Level 2 Certification",
+        "LS ELECTRIC Automation Devices - Threat Modeling Consulting",
+        "LS ELECTRIC IEC 62443-4-2 Automated Assessment Tool Development",
+        "Smart Ship Infrastructure Vulnerability Analysis/Validation Tool and Security Technology Development"
+      ],
+      "links": []
+    },
+    {
+      "id": "cyber-range",
+      "title": "Cyber Range & CTF Development",
+      "description": "10 projects",
+      "tags": [
+        "DFIR",
+        "Volatility",
+        "Wireshark",
+        "Sysmon",
+        "YARA",
+        "OT/ICS",
+        "SCADA",
+        "CTF"
+      ],
+      "period": "2021.05 - 2026.09",
+      "highlights": [
+        "NATO CCDCOE Locked Shields 2025 - Korea-Canada Joint DFIR Blue Team",
+        "C2021 Event (ELECCON Competition Operations)",
+        "Enhancement of a Hands-On Cybersecurity Training System",
+        "KEPCO Hands-On Cybersecurity Training System Reinforcement (ELECCON)"
+      ],
+      "links": []
+    },
+    {
+      "id": "vuln-research",
+      "title": "Vulnerability Research (CVE/FVE)",
+      "description": "2 projects",
+      "tags": [
+        "C/C++",
+        "llama.cpp",
+        "GGUF",
+        "Fuzzing",
+        "CVSS 3.1",
+        "PoC",
+        "Web",
+        "API Security"
+      ],
+      "period": "2026.07 - 2026.08",
+      "highlights": [
+        "llama.cpp LLM Inference Engine Vulnerability Research (3 CVEs)",
+        "Data Platform Unauthenticated IDOR Vulnerability Report (FVE)"
+      ],
+      "links": []
+    },
+    {
+      "id": "iot",
+      "title": "IoT Vulnerability Research & Tooling",
+      "description": "5 projects",
+      "tags": [
+        "Python",
+        "C/C++",
+        "UART",
+        "binwalk",
+        "Firmware Dump",
+        "Linux",
+        "Bluetooth",
+        "APK"
+      ],
+      "period": "2020.10 - 2022.12",
+      "highlights": [
+        "Development of an IoT/CCTV Incident Investigation Tool",
+        "KT GiGA Genie AI Speaker Device Penetration Testing",
+        "Development and Validation of IoT Device Vulnerability Detection Technology in Smart Buildings (Year 1)",
+        "Development and Validation of IoT Device Vulnerability Detection Technology in Smart Buildings (Year 2)"
+      ],
+      "links": []
+    },
+    {
+      "id": "fintech",
+      "title": "Financial & Public Web/App Pentesting",
+      "description": "1 project",
+      "tags": [
+        "Burp Suite",
+        "OWASP Top 10",
+        "Web/App Pentest",
+        "Source Code Review"
+      ],
+      "period": "2020.06 - 2021.06",
+      "highlights": [
+        "Penetration Testing of Financial and Public Electronic Financial Infrastructure (12 sites)"
+      ],
+      "links": []
+    },
+    {
+      "id": "medical",
+      "title": "Medical Device Security (FDA/eSTAR)",
+      "description": "4 projects",
+      "tags": [
+        "FDA Premarket Cybersecurity",
+        "eSTAR",
+        "Threat Modeling",
+        "BLE",
+        "JWT/HS256",
+        "OTP",
+        "RBAC",
+        "HTTPS"
+      ],
+      "period": "2024.03 - 2026.12",
+      "highlights": [
+        "Medical Device FDA Security Consulting",
+        "Consulting for Medical Device Security Certification (Cybersecurity Controls)",
+        "Federated Learning-Based Drug Discovery Acceleration Project (K-MELLODDY)",
+        "Cosmo Robotics MFDS Certification Consulting"
+      ],
+      "links": []
+    },
+    {
+      "id": "consulting",
+      "title": "Security Consulting & Certification",
+      "description": "3 projects",
+      "tags": [
+        "Burp Suite",
+        "Wireshark",
+        "APKTool",
+        "OWASP Top 10",
+        "Android/iOS"
+      ],
+      "period": "2020.11 - 2025.01",
+      "highlights": [
+        "Coway Certification Acquisition Support (ISMS, ISO27001) Consulting",
+        "INFINITT DPS Medical Imaging Platform Penetration Testing",
+        "Information Security Consulting Contract"
+      ],
+      "links": []
+    }
+  ],
+  "caseStudies": [
+    {
+      "id": "achilles-l2",
+      "eyebrow": "OT/ICS Security (IEC 62443)",
+      "title": "LS ELECTRIC Automation Devices - Achilles Communication Certificate Level 2 Certification",
+      "stakes": "Prior review, testing, and remediation were required for LS ELECTRIC's PLC product line to obtain the international communication robustness certification (Achilles Communication Certificate Level 2). The demanding pass criteria required control functions to remain operational even under DoS, storm, and abnormal traffic conditions.",
+      "approach": "Performed communication robustness review across all Achilles Communication Certificate Level 2 test items for the PLC product line. Verified storm/fuzzing/abnormal packet resilience against the communication stack including XGT Protocol, and reproduced defects. Designed certification test scenarios and handled retests to verify that pass criteria were met.",
+      "result": "Achieved Achilles Communication Certificate Level 2 certification for the LS ELECTRIC PLC product line. Identified communication robustness defects -> reflected in product firmware remediation.",
+      "demonstrates": "LS ELECTRIC · 2024.07 — 2025.03 · Lead (overall certification review and testing)",
+      "evidence": []
+    },
+    {
+      "id": "locked-shields",
+      "eyebrow": "Cyber Range & CTF Development",
+      "title": "NATO CCDCOE Locked Shields 2025 - Korea-Canada Joint DFIR Blue Team",
+      "stakes": "Participated as a member of the Korea-Canada joint DFIR (Digital Forensics and Incident Response) Blue Team in Locked Shields, the world's largest international cyber defense exercise. It is a high-intensity exercise involving the analysis of intrusion artifacts and incident response reporting under a live-attack environment. (In 2026, participated in the Korea-Hungary joint Special System Blue Team.)",
+      "approach": "Performed incident forensic analysis and timeline reconstruction under live attack scenarios. Carried out DFIR CTF tasks - artifact analysis and malware triage. Operated an incident response reporting framework based on joint-team collaboration.",
+      "result": "Locked Shields 2025: #6 overall (of 17 teams) · DFIR #1. Locked Shields 2026: #9 overall (of 16 teams).",
+      "demonstrates": "NATO CCDCOE · 2025.01 — 2025.04 · DFIR Blue Team member (forensics and incident response)",
+      "evidence": []
+    },
+    {
+      "id": "llama-cpp-cve",
+      "eyebrow": "Vulnerability Research (CVE/FVE)",
+      "title": "llama.cpp LLM Inference Engine Vulnerability Research (3 CVEs)",
+      "stakes": "While LLM inference engines are being rapidly incorporated into internal and product infrastructure, the attack surface exposed in server mode had been only shallowly reviewed. I verified the possibility of remote unauthenticated attacks against the llama.cpp server's external-input handling paths (grammar conversion, model parser, ranking API).",
+      "approach": "Analyzed the uncontrolled recursion in json-schema-to-grammar's SchemaConverter::visit and _generate_union_rule - reproduced a DoS from exhaustion of the default 8MB thread stack at recursion depths above 7000 (CVE-2026-52130, CWE-674, CVSS 7.5). Scoped the affected path precisely - confirmed that only POST /completions is affected and that /v1/chat/completions is not, as it goes through the jinja engine, yielding a false-positive-free impact assessment. Induced a process abort when loading a malicious GGUF model via an assertion reachable in gguf_reader::read (CVE-2026-52131, CWE-617). Identified a DoS based on an integer overflow from a negative top_n on the /rerank endpoint and wrote a PoC (CVE-2026-52132, CWE-190).",
+      "result": "3 CVEs assigned for llama.cpp - CVE-2026-52130 / 52131 / 52132. Provided upstream with reproduction procedures distinguishing vulnerable from non-vulnerable paths, including 2 remote unauthenticated DoS issues (CVSS 7.5).",
+      "demonstrates": "ggml-org/llama.cpp (open source) · 2026.07 — 2026.08 · Lead for vulnerability analysis and reporting",
+      "evidence": []
+    },
+    {
+      "id": "iot-cctv-forensics",
+      "eyebrow": "IoT Vulnerability Research & Tooling",
+      "title": "Development of an IoT/CCTV Incident Investigation Tool",
+      "stakes": "IoT devices such as CCTV lack standardized evidence-collection procedures and tools when an incident occurs. An automated investigation tool was needed to rapidly secure configuration files and logs inside the firmware.",
+      "approach": "Designed and implemented an automated incident-evidence collection tool for 40 domestic and overseas CCTV models. Developed modules for UART access, flash dumping, binwalk-based firmware extraction, and exhaustive collection of configuration files and logs. Performed collection of incident artifacts on 40 actual devices at a public institution's site.",
+      "result": "Developed an automated incident-evidence collection tool for 40 domestic and overseas CCTV models. Field validation at a public institution - collected and analyzed intrusion artifacts across 40 devices.",
+      "demonstrates": "CoreSecurity (R&D) · 2022.08 — 2022.12 · Tool design and development",
+      "evidence": []
+    },
+    {
+      "id": "ls-62443-tool",
+      "eyebrow": "OT/ICS Security (IEC 62443)",
+      "title": "LS ELECTRIC IEC 62443-4-2 Automated Assessment Tool Development",
+      "stakes": "During preparation for IEC 62443-4-2 certification of LS ELECTRIC's PLC product line, checking the component security requirements (CR) was mostly manual. Requirements that could be checked automatically over communication had to be tooled to reduce the cost of repeated assessments.",
+      "approach": "Selected IEC 62443-4-2 SL1 requirements amenable to communication-based automation and designed an assessment tool. Implemented assessment automation for the FR2 (Use Control), FR3 (System Integrity), FR4 (Data Confidentiality), and FR7 (Resource Availability) areas. Built a web-based UI for managing assessment targets and results and a result-storage pipeline.",
+      "result": "Developed an automated assessment tool for the communication-based IEC 62443-4-2 requirements of the LS ELECTRIC PLC product line (contribution 90%). Reduced assessment time compared to manual work.",
+      "demonstrates": "LS ELECTRIC · 2025.03 — 2025.11 · Lead for automation tool design and development",
+      "evidence": []
+    },
+    {
+      "id": "apex-2026",
+      "eyebrow": "Cyber Range & CTF Development",
+      "title": "APEX 2026 DFIR Green Team - FOR400 Problem Authoring",
+      "stakes": "Participated as part of the APEX 2026 DFIR Green Team and single-handedly authored a problem in the FOR400 (highest forensics difficulty) category. Designed a maritime-incident multi-flag scenario weaving together satellite communications (VSAT), AIS, and firmware reversing.",
+      "approach": "Designed a multi-flag forensic scenario weaving together a ship's satellite communication terminal command traffic (capture.pcap) and manipulation of the ECDIS navigation display. Constructed an intrusion timeline leading from CCSDS command interface probing -> AIS spoofing -> firmware tampering. Wrote the authoring deliverables including the ground truth report, scoring rubric, and incident report.",
+      "result": "Single-handedly authored the FOR400 highest-difficulty problem as part of the APEX 2026 DFIR Green Team (contribution 100%).",
+      "demonstrates": "APEX CTF 2026 · 2026.06 — 2026.09 · DFIR Green Team / FOR400 problem author",
+      "evidence": []
+    },
+    {
+      "id": "hacksium",
+      "eyebrow": "Cyber Range & CTF Development",
+      "title": "Busan IT Industry Promotion Agency Cyber Attack-Defense Competition (HACKSIUM) Operations Contract",
+      "stakes": "Authored HACKSIUM qualifier and final-round problems and ran the competition. For the finals, designed a real-time defense scenario for a maritime-logistics group; for the qualifiers, authored all 16 Forensics, Crypto, Pwn, Rev, Web, and Misc problems using Busan place names as codenames.",
+      "approach": "Designed the final-round LiveFire blue-team defense scenario - 4 zones (satellite, ship, port, corporate IT) with a 6-hour (3-phase) real-time incident-response scoring framework. Authored all 16 qualifier problems - Busan place-name codenames, across all Forensics/Crypto/Pwn/Rev/Web/Misc categories. Supported operations of the qualifier and final rounds.",
+      "result": "Designed the HACKSIUM final-round LiveFire scenario, authored all 16 qualifier problems, and ran the competition (contribution 70%).",
+      "demonstrates": "Busan IT Industry Promotion Agency · 2026.06 — 2026.09 · Qualifier and final-round problem authoring and competition operations",
+      "evidence": []
+    }
+  ],
+  "findings": [
+    {
+      "title": "CVE-UNASSIGNED-MDEV-40571",
+      "description": "MariaDB .frm parsing OOB read leads to vtable hijacking RCE",
+      "project": "Database",
+      "type": "Pending",
+      "date": "2026-09-07",
+      "url": "/blog/mariadb-frm-oob-read-vtable-hijack-rce/"
+    },
+    {
+      "title": "CVE-2026-52130",
+      "description": "llama.cpp json-schema-to-grammar uncontrolled recursion",
+      "project": "LLM",
+      "type": "CVE",
+      "date": "2026-08-12",
+      "url": "/blog/cve-2026-52130/"
+    },
+    {
+      "title": "CVE-2026-52131",
+      "description": "llama.cpp gguf_reader::read reachable assertion",
+      "project": "LLM",
+      "type": "CVE",
+      "date": "2026-08-12",
+      "url": "/blog/cve-2026-52131/"
+    },
+    {
+      "title": "CVE-2026-52132",
+      "description": "llama.cpp /rerank negative top_n denial of service",
+      "project": "LLM",
+      "type": "CVE",
+      "date": "2026-08-12",
+      "url": "/blog/cve-2026-52132/"
+    },
+    {
+      "title": "FVE-2026-8617-75112",
+      "description": "Masked web disclosure from Findthegap bug bounty platform",
+      "project": "Web",
+      "type": "FVE",
+      "date": "2026-08-10",
+      "url": "/blog/fve-2026-8617-75112/"
+    },
+    {
+      "title": "FVE-2026-8617-74526",
+      "description": "Masked web disclosure from Findthegap bug bounty platform",
+      "project": "Web",
+      "type": "FVE",
+      "date": "2026-06-11",
+      "url": "/blog/fve-2026-8617-74526/"
+    },
+    {
+      "title": "FVE-2026-8617-74507",
+      "description": "Masked web disclosure from Findthegap bug bounty platform",
+      "project": "Web",
+      "type": "FVE",
+      "date": "2026-06-07",
+      "url": "/blog/fve-2026-8617-74507/"
+    },
+    {
+      "title": "FVE-2026-8617-74513",
+      "description": "Masked web disclosure from Findthegap bug bounty platform",
+      "project": "Web",
+      "type": "FVE",
+      "date": "2026-06-07",
+      "url": "/blog/fve-2026-8617-74513/"
+    },
+    {
+      "title": "CVE-2024-33788",
+      "description": "Linksys E5600 command injection",
+      "project": "IoT",
+      "type": "CVE",
+      "date": "2024-05-06",
+      "url": "/blog/e5600-wps-command-injection/"
+    },
+    {
+      "title": "CVE-2024-33789",
+      "description": "Linksys E5600 command injection",
+      "project": "IoT",
+      "type": "CVE",
+      "date": "2024-05-03",
+      "url": "/blog/e5600-wps-command-injection/"
+    },
+    {
+      "title": "CVE-2024-33791",
+      "description": "netis-systems MEX605 cross-site scripting",
+      "project": "IoT",
+      "type": "CVE",
+      "date": "2024-05-03",
+      "url": "/blog/netis-mex605-vulnerability-research/"
+    },
+    {
+      "title": "CVE-2024-33792",
+      "description": "netis-systems MEX605 OS command execution",
+      "project": "IoT",
+      "type": "CVE",
+      "date": "2024-05-03",
+      "url": "/blog/netis-mex605-vulnerability-research/"
+    },
+    {
+      "title": "CVE-2024-33793",
+      "description": "netis-systems MEX605 OS command execution",
+      "project": "IoT",
+      "type": "CVE",
+      "date": "2024-05-03",
+      "url": "/blog/netis-mex605-vulnerability-research/"
+    },
+    {
+      "title": "CVE-2019-19927",
+      "description": "Linux kernel ttm slab out-of-bounds read",
+      "project": "Kernel",
+      "type": "CVE",
+      "date": "2019-12-31",
+      "url": "/blog/cve-2019-19927/"
+    },
+    {
+      "title": "CVE-2019-19813",
+      "description": "Linux kernel btrfs use-after-free",
+      "project": "Kernel",
+      "type": "CVE",
+      "date": "2019-12-17",
+      "url": "/blog/cve-2019-19813/"
+    },
+    {
+      "title": "CVE-2019-19814",
+      "description": "Linux kernel f2fs slab out-of-bounds write",
+      "project": "Kernel",
+      "type": "CVE",
+      "date": "2019-12-17",
+      "url": "/blog/cve-2019-19814/"
+    },
+    {
+      "title": "CVE-2019-19815",
+      "description": "Linux kernel f2fs NULL pointer dereference",
+      "project": "Kernel",
+      "type": "CVE",
+      "date": "2019-12-17",
+      "url": "/blog/cve-2019-19815/"
+    },
+    {
+      "title": "CVE-2019-19816",
+      "description": "Linux kernel btrfs slab out-of-bounds write",
+      "project": "Kernel",
+      "type": "CVE",
+      "date": "2019-12-17",
+      "url": "/blog/cve-2019-19816/"
+    },
+    {
+      "title": "CVE-2019-19447",
+      "description": "Linux kernel ext4 use-after-free",
+      "project": "Kernel",
+      "type": "CVE",
+      "date": "2019-12-08",
+      "url": "/blog/cve-2019-19447/"
+    },
+    {
+      "title": "CVE-2019-19448",
+      "description": "Linux kernel btrfs use-after-free",
+      "project": "Kernel",
+      "type": "CVE",
+      "date": "2019-12-08",
+      "url": "/blog/cve-2019-19448/"
+    },
+    {
+      "title": "CVE-2019-19449",
+      "description": "Linux kernel f2fs slab out-of-bounds read",
+      "project": "Kernel",
+      "type": "CVE",
+      "date": "2019-12-08",
+      "url": "/blog/cve-2019-19449/"
+    },
+    {
+      "title": "CVE-2019-19377",
+      "description": "Linux kernel btrfs use-after-free",
+      "project": "Kernel",
+      "type": "CVE",
+      "date": "2019-11-29",
+      "url": "/blog/cve-2019-19377/"
+    },
+    {
+      "title": "CVE-2019-19378",
+      "description": "Linux kernel btrfs slab out-of-bounds write",
+      "project": "Kernel",
+      "type": "CVE",
+      "date": "2019-11-29",
+      "url": "/blog/cve-2019-19378/"
+    },
+    {
+      "title": "CVE-2019-19318",
+      "description": "Linux kernel btrfs use-after-free",
+      "project": "Kernel",
+      "type": "CVE",
+      "date": "2019-11-28",
+      "url": "/blog/cve-2019-19318/"
+    },
+    {
+      "title": "CVE-2019-19319",
+      "description": "Linux kernel ext4 slab out-of-bounds write",
+      "project": "Kernel",
+      "type": "CVE",
+      "date": "2019-11-27",
+      "url": "/blog/cve-2019-19319/"
+    },
+    {
+      "title": "CVE-2019-19036",
+      "description": "Linux kernel btrfs root node NULL pointer dereference",
+      "project": "Kernel",
+      "type": "CVE",
+      "date": "2019-11-21",
+      "url": "/blog/cve-2019-19036/"
+    },
+    {
+      "title": "CVE-2019-19037",
+      "description": "Linux kernel ext4 NULL pointer dereference",
+      "project": "Kernel",
+      "type": "CVE",
+      "date": "2019-11-21",
+      "url": "/blog/cve-2019-19037/"
+    },
+    {
+      "title": "CVE-2019-19039",
+      "description": "Linux kernel btrfs information disclosure",
+      "project": "Kernel",
+      "type": "CVE",
+      "date": "2019-11-21",
+      "url": "/blog/cve-2019-19039/"
+    },
+    {
+      "title": "CVE-2019-18885",
+      "description": "Linux kernel btrfs NULL pointer dereference",
+      "project": "Kernel",
+      "type": "CVE",
+      "date": "2019-11-14",
+      "url": "/blog/cve-2019-18885/"
+    }
+  ],
+  "exercises": [
+    {
+      "title": "Locked Shields 2026",
+      "year": 2026,
+      "team": "Korea-Hungary joint team",
+      "roles": [
+        "Special System Blue Team"
+      ],
+      "result": "#9 overall (of 16 teams)"
+    },
+    {
+      "title": "Locked Shields 2025",
+      "year": 2025,
+      "team": "Korea-Canada joint team",
+      "roles": [
+        "DFIR Blue Team"
+      ],
+      "result": "#6 overall (of 17 teams) · DFIR #1"
+    },
+    {
+      "title": "APEX 2026",
+      "year": 2026,
+      "team": "",
+      "roles": [
+        "Green Team",
+        "DFIR challenge development"
+      ],
+      "result": ""
+    },
+    {
+      "title": "APEX 2025",
+      "year": 2025,
+      "team": "",
+      "roles": [
+        "Green Team",
+        "DFIR challenge development"
+      ],
+      "result": ""
+    },
+    {
+      "title": "KEPCO ELECCON 2021-2024",
+      "year": "2021-2024",
+      "team": "",
+      "roles": [
+        "Operations",
+        "Challenge development"
+      ],
+      "result": ""
+    }
+  ],
+  "publications": []
+}

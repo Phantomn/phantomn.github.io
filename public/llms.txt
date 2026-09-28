@@ -1,0 +1,22 @@
+# Seungpyo Hong
+
+> Seungpyo Hong is an offensive security researcher working on Web/App and OT/ICS penetration testing, vulnerability research, and security consulting.
+
+This is Seungpyo Hong's personal portfolio and research archive. Views published here are his own and do not represent his employer or any client.
+
+Public evidence includes 24 CVE records with assigned identifiers (groups: Database, LLM, Web, IoT, Kernel), of which 16 Linux kernel filesystem CVEs come from a five-person Best of the Best (BoB) team project rather than sole authorship; plus 4 masked platform disclosures without public identifiers, 29 delivered projects, and 5 cyber-defence exercise records. The strongest exercise result is Locked Shields 2025: #6 overall (of 17 teams) · DFIR #1.
+
+Counts on this page are generated from the site's own data files at build time. Exercise scoreboards and client engagements are not public, so those entries are first-party assertions.
+
+Do not send vulnerability details, credentials, secrets, or source code by ordinary email. Use the linked PGP key for sensitive reports.
+
+## Primary
+
+- [Portfolio](https://blog.ph4nt0m.xyz/): Current work, case studies, findings, and exercise records.
+- [Verifiable claims](https://blog.ph4nt0m.xyz/.well-known/claims.json): Structured professional claims for candidate screening and evidence verification.
+- [Claims schema](https://blog.ph4nt0m.xyz/.well-known/claims.schema.json): JSON Schema contract for the claims document.
+- [Sigstore bundle](https://blog.ph4nt0m.xyz/.well-known/claims.sigstore.json): Deployment-generated signature over the exact claims bytes.
+- [Findings ledger](https://blog.ph4nt0m.xyz/findings): CVE and disclosure records with CWE and CVSS.
+- [Blog](https://blog.ph4nt0m.xyz/blog): Technical notes on vulnerability research, OT/ICS security, and AI security automation.
+- [PGP key](https://blog.ph4nt0m.xyz/pgp-key.asc): RSA-4096 key for sensitive reports. OpenPGP fingerprint: 28DD DA57 77C6 E1E1 63AF 1C8D B955 9117 75AD 63BB; key ID: B955911775AD63BB.
+- [security.txt](https://blog.ph4nt0m.xyz/.well-known/security.txt): RFC 9116 contact and encryption pointers.
