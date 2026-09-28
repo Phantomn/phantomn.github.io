@@ -16,7 +16,7 @@ Do not send vulnerability details, credentials, secrets, or source code by ordin
 - [Verifiable claims](https://blog.ph4nt0m.xyz/.well-known/claims.json): Structured professional claims for candidate screening and evidence verification.
 - [Claims schema](https://blog.ph4nt0m.xyz/.well-known/claims.schema.json): JSON Schema contract for the claims document.
 - [Sigstore bundle](https://blog.ph4nt0m.xyz/.well-known/claims.sigstore.json): Deployment-generated signature over the exact claims bytes.
-- [Findings ledger](https://blog.ph4nt0m.xyz/findings): CVE and disclosure records with CWE and CVSS.
-- [Blog](https://blog.ph4nt0m.xyz/blog): Technical notes on vulnerability research, OT/ICS security, and AI security automation.
+- [Findings ledger](https://blog.ph4nt0m.xyz/en/findings): CVE and disclosure records with CWE and CVSS.
+- [Blog](https://blog.ph4nt0m.xyz/en/blog): Technical notes on vulnerability research, OT/ICS security, and AI security automation.
 - [PGP key](https://blog.ph4nt0m.xyz/pgp-key.asc): RSA-4096 key for sensitive reports. OpenPGP fingerprint: 28DD DA57 77C6 E1E1 63AF 1C8D B955 9117 75AD 63BB; key ID: B955911775AD63BB.
 - [security.txt](https://blog.ph4nt0m.xyz/.well-known/security.txt): RFC 9116 contact and encryption pointers.

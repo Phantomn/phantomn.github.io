@@ -333,7 +333,7 @@ export const cveRecordUrl = (id: string) => \`https://www.cve.org/CVERecord?id=\
 writeFileSync(path.join(root, 'lib', 'disclosures.ts'), disclosures)
 
 /* ---------- 3. claims.json ---------- */
-const issuer = { id: `${SITE}/#ph4nt0m`, type: 'Person', name: 'Seungpyo Hong' }
+const issuer = { id: `${SITE}/en/#about`, type: 'Person', name: 'Seungpyo Hong' }
 const base = `${SITE}/.well-known/claims.json`
 const selfAsserted = { level: 'self-asserted', basis: ['first-party-assertion'], reviewedAt: today }
 const linked = (basis) => ({ level: 'evidence-linked', basis, reviewedAt: today })
@@ -372,7 +372,7 @@ const claimsDoc = {
       predicate: 'https://schema.org/jobTitle',
       object: { type: 'Text', value: 'Offensive Security Researcher' },
       status: 'active',
-      evidence: [{ url: `${SITE}/recruiter-brief`, title: 'Recruiter brief', sourceType: 'issuer' }],
+      evidence: [{ url: `${SITE}/en/recruiter-brief`, title: 'Recruiter brief', sourceType: 'issuer' }],
       assurance: selfAsserted,
     },
     {
@@ -382,7 +382,7 @@ const claimsDoc = {
       predicate: 'https://schema.org/knowsAbout',
       object: { type: 'TextList', value: Object.values(t.categories) },
       status: 'active',
-      evidence: [{ url: `${SITE}/research`, title: 'Research areas', sourceType: 'issuer' }],
+      evidence: [{ url: `${SITE}/en/research`, title: 'Research areas', sourceType: 'issuer' }],
       assurance: selfAsserted,
     },
     {
@@ -398,7 +398,7 @@ const claimsDoc = {
       },
       status: 'active',
       evidence: [
-        { url: `${SITE}/findings`, title: 'Findings ledger', sourceType: 'issuer' },
+        { url: `${SITE}/en/findings`, title: 'Findings ledger', sourceType: 'issuer' },
         { url: `https://github.com/bobfuzzer/CVE`, title: 'Team proof-of-concept repository (BoB, kernel CVEs)', sourceType: 'primary' },
         { url: 'https://nvd.nist.gov/vuln/search', title: 'National Vulnerability Database search', sourceType: 'registry' },
       ],
@@ -508,8 +508,8 @@ Do not send vulnerability details, credentials, secrets, or source code by ordin
 - [Verifiable claims](${SITE}/.well-known/claims.json): Structured professional claims for candidate screening and evidence verification.
 - [Claims schema](${SITE}/.well-known/claims.schema.json): JSON Schema contract for the claims document.
 - [Sigstore bundle](${SITE}/.well-known/claims.sigstore.json): Deployment-generated signature over the exact claims bytes.
-- [Findings ledger](${SITE}/findings): CVE and disclosure records with CWE and CVSS.
-- [Blog](${SITE}/blog): Technical notes on vulnerability research, OT/ICS security, and AI security automation.
+- [Findings ledger](${SITE}/en/findings): CVE and disclosure records with CWE and CVSS.
+- [Blog](${SITE}/en/blog): Technical notes on vulnerability research, OT/ICS security, and AI security automation.
 - [PGP key](${SITE}${pgp.publicKeyPath}): ${pgp.algorithm}-${pgp.length} key for sensitive reports. OpenPGP fingerprint: ${spaced}; key ID: ${pgp.keyId}.
 - [security.txt](${SITE}/.well-known/security.txt): RFC 9116 contact and encryption pointers.
 `,

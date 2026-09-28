@@ -10,12 +10,12 @@
     "evidence-verification"
   ],
   "issuer": {
-    "id": "https://blog.ph4nt0m.xyz/#ph4nt0m",
+    "id": "https://blog.ph4nt0m.xyz/en/#about",
     "type": "Person",
     "name": "Seungpyo Hong"
   },
   "subject": {
-    "id": "https://blog.ph4nt0m.xyz/#ph4nt0m",
+    "id": "https://blog.ph4nt0m.xyz/en/#about",
     "type": "Person",
     "name": "Seungpyo Hong"
   },
@@ -73,7 +73,7 @@
       "status": "active",
       "evidence": [
         {
-          "url": "https://blog.ph4nt0m.xyz/recruiter-brief",
+          "url": "https://blog.ph4nt0m.xyz/en/recruiter-brief",
           "title": "Recruiter brief",
           "sourceType": "issuer"
         }
@@ -106,7 +106,7 @@
       "status": "active",
       "evidence": [
         {
-          "url": "https://blog.ph4nt0m.xyz/research",
+          "url": "https://blog.ph4nt0m.xyz/en/research",
           "title": "Research areas",
           "sourceType": "issuer"
         }
@@ -133,7 +133,7 @@
       "status": "active",
       "evidence": [
         {
-          "url": "https://blog.ph4nt0m.xyz/findings",
+          "url": "https://blog.ph4nt0m.xyz/en/findings",
           "title": "Findings ledger",
           "sourceType": "issuer"
         },
