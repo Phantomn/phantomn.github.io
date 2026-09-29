@@ -31,6 +31,7 @@ cv:
         start_date: 2021-06
         end_date: present
         highlights:
+          - "[Company] Specialist security firm in OT/ICS and physical-AI security, cyber training, and digital financial-crime response"
           - "OT/ICS security — IEC 62443-4-2 threat modeling and penetration testing, Achilles Level 2 certification, and automated assessment tooling"
           - "IoT security — smart-building IoT vulnerability-detection technology and its field validation; IoT/CCTV incident-response tooling"
           - "Medical-device security — FDA eSTAR consulting and Web/App and device penetration testing"
@@ -41,6 +42,7 @@ cv:
         start_date: 2020-06
         end_date: 2021-06
         highlights:
+          - "[Company] Korea's first information-security consultancy (since 1999); 2,000+ security projects delivered; MSIT-designated information-protection specialized service company"
           - "Penetration testing of 12 financial and public electronic-finance sites — 1–2 high-severity findings per site on average"
           - "Security review of non-standard systems — KT GiGA Genie AI speaker, NongHyup RPA, DB Insurance claim-call"
           - "ISMS / ISO 27001 certification support consulting (Coway)"
@@ -52,7 +54,7 @@ cv:
         highlights:
           - "Communication-robustness testing of the PLC line across all Achilles Communication Certificate Level 2 test items"
           - "Storm/fuzzing/malformed-packet resilience testing and defect reproduction against communication stacks such as the XGT Protocol"
-          - "[Result] Achilles Level 2 certification obtained for the LS ELECTRIC PLC line; communication-robustness defects fixed in firmware"
+          - "[Result] Found and fully remediated 5 communication-robustness defects in firmware; passed re-testing to obtain Achilles Level 2 certification for the LS ELECTRIC PLC line"
           - "Tools: Achilles Test Platform · XGT Protocol · PLC · Wireshark · Python"
       - name: "IEC 62443-4-2 automated-assessment tooling for LS ELECTRIC"
         date: "2025.03 – 2025.11 · Contribution 90%"
@@ -61,7 +63,7 @@ cv:
           - "Selected and tooled the IEC 62443-4-2 SL1 requirements that can be automated over the network"
           - "Automated checks across FR2 (use control), FR3 (system integrity), FR4 (data confidentiality), and FR7 (resource availability)"
           - "Built a web UI for target/result management and a result-storage pipeline"
-          - "[Result] Automated communication-based IEC 62443-4-2 assessment tool for the PLC line, cutting assessment time versus manual work"
+          - "[Result] Automated communication-based IEC 62443-4-2 assessment tool for the PLC line — cut an assessment taking 30+ days of manual work to under 1 hour"
           - "Tools: Python · FastAPI · TypeScript · React · TailwindCSS · SQLite3"
       - name: "LS ELECTRIC automation-device threat-modeling consulting"
         date: "2023.03 – 2023.11 · Contribution 40%"
@@ -70,7 +72,7 @@ cv:
           - "System Definition → Function Point Definition → Data Flow Analysis, with DFDs produced"
           - "STRIDE + DREAD threat and risk assessment"
           - "Threat validation via penetration testing based on the national critical-infrastructure vulnerability-assessment methodology"
-          - "[Result] XGI-CPUZ threat-modeling and penetration-testing reports delivered"
+          - "[Result] Surfaced 4+ threats for XGI-CPUZ and validated them via penetration testing — threat-modeling and penetration-testing reports delivered"
           - "Tools: STRIDE · DREAD · DFD · IEC 62443-4-2"
       - name: "Smart-ship infrastructure vulnerability-analysis tooling and security technology"
         date: "2024.07 – 2024.11 · Contribution 25%"
@@ -103,7 +105,7 @@ cv:
         date: "2022.01 – 2022.10 · Contribution 40%"
         summary: "Applied Year 1 detection technology to an operating smart building to validate and improve detection accuracy."
         highlights:
-          - "Field validation against a real smart building — collected device/sensor/protocol data and detected vulnerabilities"
+          - "Field validation against a real smart building — collected data from 200+ IoT devices/sensors (ipTIME, D-Link, NAS, and others) and detected vulnerabilities"
           - "Identified true/false/missed positives, derived detection rates, and updated the vulnerability DB"
           - "[Result] Derived accuracy-improvement actions from the field validation"
           - "Tools: IoT Scanning · CVE/CWE · PoC Validation · CSV/Excel Report"
@@ -112,6 +114,7 @@ cv:
         highlights:
           - "Analyzed the UART debug interface of the GiGA Genie AI speaker device"
           - "Assessed the attack surface via Bluetooth communication and Android APK analysis"
+          - "[Result] Found and reported 2 device vulnerabilities"
           - "Tools: UART · Bluetooth · APK · Android"
 
     Medical Device Security (FDA/eSTAR):
@@ -129,7 +132,7 @@ cv:
         highlights:
           - "Analyzed communication paths and data flows across device-app (BLE), app-server (LTE/5G), web (HTTPS), and base station (Wi-Fi)"
           - "Designed and validated controls: JWT (HS256)/RTR, OTP signup authentication, password policy, and dashboard RBAC"
-          - "[Result] Authored Cybersecurity Controls submission documents covering concurrent-connection limits, session management, and role separation"
+          - "[Result] Completed design and documentation of Cybersecurity Controls (concurrent-connection limits, session management, role separation); security certification testing in progress"
           - "Tools: BLE · JWT/HS256 · OTP · RBAC · HTTPS"
       - name: "Federated-learning drug-discovery acceleration project (K-MELLODDY)"
         date: "2024.07 – 2024.12 · Contribution 30%"
@@ -137,8 +140,8 @@ cv:
         highlights:
           - "Analyzed and defined an NIST SSDF-based secure development process for the FDD platform (reviewing IEC 62443, FDA, ISO 27001, EU CRA)"
           - "Identified real threats via FDD threat modeling and applied source-level security controls (API security)"
-          - "Established a supply-chain security scheme (SBOM + VEX + EoS) and ran two production-environment penetration tests"
-          - "Tools: NIST SSDF · Threat Modeling · SBOM/VEX · IEC 62443 · FDA Cybersecurity"
+          - "[Result] Ran two production-environment penetration tests — detected and reported 10 vulnerabilities across 5 systems"
+          - "Tools: NIST SSDF · Threat Modeling · IEC 62443 · FDA Cybersecurity"
 
     Cyber Range & CTF Development:
       - name: "NATO CCDCOE Locked Shields 2025 — Korea-Canada joint DFIR blue team"
@@ -155,25 +158,16 @@ cv:
         date: "2025.06 – 2025.09 · Contribution 45%"
         highlights:
           - "Developed DFIR network-forensics challenges — forensic scenarios based on real incidents"
-          - "[Participated] APEX 2025, 2026 Green Team, DFIR challenge development"
+          - "[Result] Developed one scenario Act per year (25 challenges per Act); drew blue teams from 23 countries across the Americas, Europe, and Indo-Pacific"
+          - "[Participated] APEX 2025/2026 Green Team, DFIR challenge development"
           - "Tools: DFIR · Network Forensics · Wireshark"
-      - name: "KEPCO practical cyber-security training system enhancement (ELECCON)"
-        date: "2023.06 – 2023.12 · Contribution 30%"
+      - name: "KEPCO ELECCON cyber attack/defence training system development and enhancement (2021~2024)"
+        date: "2021.05 – 2025.02 · Contribution 30~40%"
+        summary: "Four consecutive years on KEPCO's practical cyber attack/defence exercise (ELECCON, formerly C2021). Designed, built, and enhanced power-grid (OT/ICS) qualifier CTF and finals attack/defence scenarios each year."
         highlights:
-          - "Developed ELECCON qualifier CTF challenges"
-          - "Designed and built the finals attack/defence scenario on a power-grid (OT/ICS) environment"
+          - "Designed and built power-grid (OT/ICS) qualifier CTF challenges and finals attack/defence scenarios (2021, 2022, 2023, 2024 consecutively)"
+          - "[Result] Operated power-grid attack/defence scenario training — 20 teams per competition"
           - "Tools: OT/ICS · SCADA · CTF"
-      - name: "Practical cyber-security training system advancement"
-        date: "2022.07 – 2022.09 · Contribution 40%"
-        highlights:
-          - "Developed practical attack/defence qualifier challenges"
-          - "Built the finals attack/defence scenario on a power-grid (OT/ICS) environment"
-          - "Tools: OT/ICS · SCADA · CTF"
-      - name: "Practical cyber-security training system enhancement (2024)"
-        date: "2024.09 – 2025.02 · Contribution 30%"
-        highlights:
-          - "Built the finals attack/defence scenario on a power-grid (OT/ICS) environment"
-          - "Tools: OT/ICS · SCADA"
       - name: "2024 practical cyber-range course operation (smart-ship port)"
         date: "2024.07 – 2024.12 · Contribution 20%"
         highlights:
@@ -182,10 +176,6 @@ cv:
         date: "2024.11 · Contribution 45%"
         highlights:
           - "Ran a hacking-experience booth targeting IoT devices"
-      - name: "C2021 event (ELECCON competition operation)"
-        date: "2021.05 – 2021.12 · Contribution 30%"
-        highlights:
-          - "Assisted operation of the ELECCON attack/defence competition"
 
     Financial/Public Web/App Pentesting:
       - name: "Financial and public electronic-finance penetration testing (12 sites, A3 Security)"
@@ -207,14 +197,11 @@ cv:
           - "Checked authentication, access-control, and input-validation flaws with Burp Suite, Wireshark, and APKTool"
           - "[Result] 14 findings identified (3 medium, 11 low), all remediated on re-test; lead author of the English report"
           - "Tools: Burp Suite · Wireshark · APKTool · OWASP Top 10 · Android/iOS"
-      - name: "Coway certification support consulting (ISMS, ISO 27001)"
+      - name: "Coway ISMS post-certification surveillance-audit support consulting"
         date: "2020.11 · Contribution 40%"
         highlights:
-          - "Delivered ISMS and ISO 27001 certification-support consulting"
-      - name: "Information-security consulting engagement"
-        date: "2024.10 – 2025.01 · Contribution 25%"
-        highlights:
-          - "Delivered an information-security consulting engagement"
+          - "Delivered consulting for annual ISMS post-certification surveillance audits"
+          - "[Result] Supported passing the surveillance audit"
 
     Vulnerability Research:
       - label: "16 OS kernel CVEs — Best of the Best 8th"
