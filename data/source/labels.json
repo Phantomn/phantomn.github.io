@@ -8,10 +8,10 @@
       "korHun": "Korea-Hungary joint team"
     },
     "roles": {
-      "dfirBlue": "DFIR Blue Team",
-      "specialSystemBlue": "Special System Blue Team",
+      "blueTeam": "Blue Team",
+      "dfir": "DFIR",
+      "specialSystem": "Special System",
       "greenTeam": "Green Team",
-      "dfirChallenges": "DFIR challenge development",
       "operations": "Operations",
       "challenges": "Challenge development"
     },

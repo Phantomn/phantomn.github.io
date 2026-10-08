@@ -5,7 +5,8 @@
     "year": 2026,
     "team": "korHun",
     "roles": [
-      "specialSystemBlue"
+      "blueTeam",
+      "specialSystem"
     ],
     "overall": {
       "rank": 9,
@@ -18,7 +19,8 @@
     "year": 2025,
     "team": "korCan",
     "roles": [
-      "dfirBlue"
+      "blueTeam",
+      "dfir"
     ],
     "overall": {
       "rank": 6,
@@ -37,7 +39,7 @@
     "year": 2026,
     "roles": [
       "greenTeam",
-      "dfirChallenges"
+      "challenges"
     ]
   },
   {
@@ -46,7 +48,7 @@
     "year": 2025,
     "roles": [
       "greenTeam",
-      "dfirChallenges"
+      "challenges"
     ]
   },
   {

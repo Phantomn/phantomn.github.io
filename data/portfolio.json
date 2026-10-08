@@ -547,7 +547,8 @@
       "year": 2026,
       "team": "Korea-Hungary joint team",
       "roles": [
-        "Special System Blue Team"
+        "Blue Team",
+        "Special System"
       ],
       "result": "#9 overall (of 16 teams)"
     },
@@ -556,7 +557,8 @@
       "year": 2025,
       "team": "Korea-Canada joint team",
       "roles": [
-        "DFIR Blue Team"
+        "Blue Team",
+        "DFIR"
       ],
       "result": "#6 overall (of 17 teams) · DFIR #1"
     },
@@ -566,7 +568,7 @@
       "team": "",
       "roles": [
         "Green Team",
-        "DFIR challenge development"
+        "Challenge development"
       ],
       "result": ""
     },
@@ -576,7 +578,7 @@
       "team": "",
       "roles": [
         "Green Team",
-        "DFIR challenge development"
+        "Challenge development"
       ],
       "result": ""
     },

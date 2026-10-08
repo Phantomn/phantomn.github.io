@@ -8,13 +8,13 @@
     "switchToEnglish": "Switch to English"
   },
   "nav": {
-    "caseStudies": "Case Studies",
+    "caseStudies": "Case Study",
     "about": "About",
     "research": "Research",
     "findings": "Findings",
     "exercises": "Exercises",
     "blog": "Blog",
-    "recruiters": "For Recruiters",
+    "recruiters": "for Recruiter",
     "home": "Home",
     "primary": "Primary navigation",
     "openMenu": "Open navigation menu",
@@ -25,12 +25,12 @@
   },
   "findings": {
     "eyebrow": "Findings",
-    "title": "Selected Findings",
-    "intro": "The evidence index behind the case studies and the restored disclosure archive. Every entry links to a public artifact (a CVE record, advisory, or merged fix) or, for masked platform disclosures, to my own write-up.",
+    "title": "Findings",
+    "intro": "The index the Case Study. Every entry links to a public artifact (a CVE record, advisory, or merged fix) or, for masked platform disclosures, to my own writeup.",
     "archiveEyebrow": "Disclosure archive",
     "archiveHeading": "{cves} CVEs + {fves} masked platform disclosures (FVE)",
     "archiveDetail": "{memory} memory-corruption, {oob} out-of-bounds read, {injection} injection/command-execution, {auth} authentication/access-control, and {logic} logic/denial-of-service findings.",
-    "exploreLedger": "Explore the full ledger",
+    "exploreLedger": "Explore",
     "type": {
       "CVE": "CVE",
       "FVE": "FVE",
@@ -39,21 +39,21 @@
     "privateNote": "Bug-bounty submissions and client-security reports are disclosed privately by default; this is the subset with public artifacts. More on <github>GitHub</github>."
   },
   "caseStudies": {
-    "eyebrow": "Case Studies",
-    "title": "Case Studies",
-    "intro": "{count} selected cases - what was at stake, how it was approached, and what remained.",
+    "eyebrow": "Case Study",
+    "title": "Case Study",
+    "intro": "{count} cases - what was at stake, how it was approached, and what remained.",
     "stakes": "Background",
     "approach": "Approach",
     "result": "Result",
     "demonstrates": "Role & period",
     "whereThisFits": "Where this fits",
     "whereThisFitsBody": "Looking for someone who can run assessments like these?",
-    "recruiterBrief": "Recruiter brief"
+    "recruiterBrief": "for Recruiter"
   },
   "research": {
     "eyebrow": "Research",
     "title": "Security Research",
-    "intro": "Current focus areas - OT/ICS security (IEC 62443), IoT and firmware, and Linux kernel and LLM inference-engine vulnerability research.",
+    "intro": "Current focus areas - Bug Hunting, OT/ICS security (related to IEC 62443), and vulnerability research with AI.",
     "allAreas": "All research areas",
     "viewArchive": "View the full archive",
     "moreFromTo": "{count} more, from {first} to {last}",
@@ -62,17 +62,17 @@
     "archiveBackToPortfolio": "Back to Portfolio",
     "archiveEyebrow": "Research",
     "archiveTitle": "Research Archive",
-    "archiveBody": "From OT/ICS threat modeling and Achilles certification tooling to LLM inference engine (llama.cpp) vulnerability research, IoT and medical device security, and cyber range/DFIR training system development — every research area to date."
+    "archiveBody": "From OT/ICS threat modeling and Achilles certification tooling to LLM inference engine (llama.cpp) vulnerability research, IoT and medical device security, and cyber range/DFIR training system development - every research area to date."
   },
   "exercises": {
     "eyebrow": "Exercises",
-    "title": "Cyber defence exercises",
-    "intro": "International and national cyber defence exercises, as a blue-team operator and a green-team challenge developer."
+    "title": "Cyber Attack/Defence exercises",
+    "intro": "International and national cyber Attack/Defence exercises, as a Blue team operator and a Green team challenge developer."
   },
   "writing": {
     "eyebrow": "Writing",
     "title": "Recent Writing",
-    "intro": "Notes on vulnerability research, exploitation, fuzzing, OT/ICS, and IoT firmware.",
+    "intro": "Notes on vulnerability research.",
     "allPosts": "All posts",
     "feedNote": "New writeups land in the feed first -",
     "subscribeRss": "subscribe via RSS"
@@ -84,7 +84,7 @@
     "title": "Disclaimer",
     "lastUpdated": "Last updated",
     "personalViewsTitle": "Personal views",
-    "personalViewsBody": "This is my personal website. Everything published here — posts, findings, and opinions — is my own and does not represent the position of my employer or any client I work with, unless explicitly stated.",
+    "personalViewsBody": "This is my personal website. Everything published here - posts, findings, and opinions - is my own and does not represent the position of my employer or any client I work with, unless explicitly stated.",
     "securityResearchTitle": "Security research",
     "securityResearchBody": "Vulnerability write-ups and security research on this site are published for defensive and educational purposes, after coordinated disclosure where applicable. Don't use anything here to attack systems you are not authorized to test.",
     "noWarrantyTitle": "No warranty",
@@ -94,9 +94,9 @@
   },
   "notFound": {
     "backToPortfolio": "Back to the portfolio",
-    "eyebrow": "404 · Page not found",
+    "eyebrow": "404 - Page not found",
     "title": "Page not found",
-    "body": "This URL doesn't resolve — likely an old link from the previous version of this site. The content is still here; it just moved.",
+    "body": "This URL doesn't resolve - likely an old link from the previous version of this site. The content is still here; it just moved.",
     "destinations": {
       "findings": {
         "title": "Security findings & disclosures",
@@ -181,9 +181,9 @@
   "contact": {
     "eyebrow": "Work with me",
     "title": "Choose the shortest path",
-    "intro": "I'm an Associate Researcher on the ICS Security Research Team at CoreSecurity. I'm glad to hear from hiring teams working on hard security problems.",
+    "intro": "Now I'm an Associate Researcher on the ICS Security Research Team at CoreSecurity. I'm glad to hear from hiring teams working on hard security problems.",
     "hiring": {
-      "eyebrow": "For hiring teams",
+      "eyebrow": "for Recruiter",
       "title": "Evaluate role fit quickly",
       "description": "A concise recruiter brief with current focus areas, selected evidence, experience, working model, and links to the CV and professional profiles.",
       "cta": "Open recruiter brief"
@@ -194,23 +194,23 @@
     "metaTitle": "Recruiter Brief",
     "metaDescription": "Recruiter brief for Seungpyo Hong: OT/ICS, IoT and medical device security, Linux kernel and LLM inference-engine vulnerability research, and web/app penetration testing.",
     "ogDescription": "A concise hiring-team view of role fit, current focus, public evidence, experience, and contact.",
-    "eyebrow": "For hiring teams",
+    "eyebrow": "for Recruiter",
     "title": "I find vulnerabilities in systems that ship, and prove them with exploits",
-    "lead": "I'm an Associate Researcher on the ICS Security Research Team at CoreSecurity, glad to hear from teams working on hard security problems. This page is the shortest route through the evidence; timing and fit are discussed directly.",
+    "lead": "Now I'm an Associate Researcher on the ICS Security Research Team at CoreSecurity, glad to hear from teams working on hard security problems. This page is the shortest route through the evidence; timing and fit are discussed directly.",
     "downloadCv": "Download resume (PDF)",
     "startConversation": "Start a conversation",
-    "statFindings": "public findings",
-    "statCves": "assigned CVEs",
+    "statFindings": "Findings",
+    "statCves": "CVE",
     "statAreas": "research areas",
     "statExercises": "cyber exercises",
     "mandates": "Relevant mandates",
     "focus": {
-      "otIcs": "OT/ICS security (IEC 62443) and industrial device assessment and certification testing",
+      "otIcs": "OT/ICS security (related to IEC 62443) and industrial device assessment and certification testing",
       "iotFirmware": "IoT and firmware vulnerability research, reverse engineering, and exploit development",
       "kernelBinary": "Linux kernel and binary vulnerability research and fuzzing",
       "webLlm": "Web/app penetration testing and LLM inference-engine security"
     },
-    "experience": "Selected experience",
+    "experience": "Experience",
     "atAGlance": "At a glance",
     "currentRole": "Current role",
     "workingModel": "Working model",
@@ -218,7 +218,7 @@
     "availability": "Availability",
     "availabilityBody": "Selective conversations; timing and fit discussed directly.",
     "startEvidence": "Start with the evidence",
-    "evidenceCases": "Case studies",
+    "evidenceCases": "Case Study",
     "evidenceFindings": "Security findings",
     "evidenceResearch": "Research archive",
     "mailSubject": "Role conversation"
@@ -271,7 +271,7 @@
     "shareOriginalDesc": "Use the canonical source and original title; no tracking parameters are added.",
     "nextStep": "Next step",
     "nextStepDesc": "Hiring teams can use the recruiter brief for a concise view of role fit and evidence.",
-    "seeCaseStudies": "See case studies",
+    "seeCaseStudies": "See Case Study",
     "recruiterBrief": "Recruiter brief",
     "articleSeries": "Article series",
     "series": "Series",
@@ -279,22 +279,22 @@
     "youAreHere": "You are here",
     "partLabel": "Part {part}:",
     "partOf": "Part {part} of {total}",
-    "previousPart": "Previous · Part {part}",
-    "nextPart": "Next · Part {part}"
+    "previousPart": "Previous - Part {part}",
+    "nextPart": "Next - Part {part}"
   },
   "hero": {
     "eyebrow": "Offensive Security Researcher",
     "thesis": "I research vulnerabilities across Linux kernels, OT/ICS, IoT, and more.",
     "summary": "",
     "recent": "Recently:",
-    "statCves": "assigned CVEs · {range}",
-    "statFindings": "public findings",
+    "statCves": "CVE - {range}",
+    "statFindings": "findings",
     "statAreas": "research areas",
     "statExercises": "cyber exercises",
     "latest": "Latest",
-    "seeCaseStudies": "See case studies",
-    "forHiring": "For hiring teams",
-    "exploreEvidence": "Explore the evidence"
+    "seeCaseStudies": "Case Study",
+    "forHiring": "for Recruiter",
+    "exploreEvidence": "Explore"
   },
   "about": {
     "eyebrow": "About",
@@ -303,10 +303,10 @@
     "bio2": "These days I design and run my own LLM-driven pipeline to automate the search. I decide which targets and which parts of them to look at, and I report only the candidates I have reproduced myself and proven to have real impact. I want to go deeper into research on automating vulnerability analysis with LLMs.",
     "coreExpertise": "Core Expertise",
     "expertise": {
-      "otIcs": "OT/ICS security (IEC 62443)",
-      "iotFirmware": "IoT & firmware analysis",
+      "otIcs": "OT/ICS security (related to IEC 62443)",
+      "iotFirmware": "Embedded/IoT analysis",
       "kernel": "Linux kernel vulnerability research",
-      "webApp": "Web/app penetration testing",
+      "webApp": "Web/App penetration testing",
       "llm": "LLM inference-engine security",
       "medical": "Medical device security (FDA)"
     },
@@ -318,7 +318,7 @@
   "translator": {
     "detected": "{locale} language detected!",
     "translating": "Translating content...",
-    "translationFailed": "Translation unavailable — showing original",
+    "translationFailed": "Translation unavailable - showing original",
     "poweredBy": "Translation by Lingva"
   },
   "tags": {
