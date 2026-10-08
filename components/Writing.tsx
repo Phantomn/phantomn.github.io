@@ -11,7 +11,7 @@ export default async function Writing({ posts }: { posts: BlogPostMeta[] }) {
       <div className="container-max section-padding">
         <div className="mb-16 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="eyebrow mb-4">06 — {t('eyebrow')}</p>
+            <p className="eyebrow mb-4">06 - {t('eyebrow')}</p>
             <h2 className="section-title">{t('title')}</h2>
             <p className="mt-4 max-w-2xl text-lg text-muted">{t('intro')}</p>
           </div>

@@ -36,7 +36,7 @@
       "title": "ICS Security Researcher (Associate Researcher)",
       "company": "CoreSecurity",
       "period": "2021.06 - Present",
-      "description": "OT/ICS security — performed IEC 62443-4-2 based threat modeling and penetration testing. Earned the Achilles Communication Certificate Level 2 for LS ELECTRIC automation devices and developed an automated assessment tool. IoT security — developed and validated smart-building IoT vulnerability-detection technology and built IoT/CCTV incident-investigation tools."
+      "description": "OT/ICS security - performed IEC 62443-4-2 based threat modeling and penetration testing. Earned the Achilles Communication Certificate Level 2 for LS ELECTRIC automation devices and developed an automated assessment tool. IoT security - developed and validated smart-building IoT vulnerability-detection technology and built IoT/CCTV incident-investigation tools."
     },
     {
       "title": "Web/App Pentester (Staff)",
@@ -47,13 +47,13 @@
   ],
   "education": [
     {
-      "degree": "Kongju National University, Dept. of Computer Engineering (2012.02 — 2020.02)",
+      "degree": "Kongju National University, Dept. of Computer Engineering (2012.02 - 2020.02)",
       "institution": "Kongju National University",
       "year": "2012.02 - 2020.02",
       "focus": "Computer Engineering"
     },
     {
-      "degree": "Cheonan Commercial High School, Information Processing (2009.03 — 2012.02)",
+      "degree": "Cheonan Commercial High School, Information Processing (2009.03 - 2012.02)",
       "institution": "Cheonan Commercial High School",
       "year": "2009.03 - 2012.02",
       "focus": "Information Processing"
@@ -243,7 +243,7 @@
       "stakes": "Prior review, testing, and remediation were required for LS ELECTRIC's PLC product line to obtain the international communication robustness certification (Achilles Communication Certificate Level 2). The demanding pass criteria required control functions to remain operational even under DoS, storm, and abnormal traffic conditions.",
       "approach": "Performed communication robustness review across all Achilles Communication Certificate Level 2 test items for the PLC product line. Verified storm/fuzzing/abnormal packet resilience against the communication stack including XGT Protocol, and reproduced defects. Designed certification test scenarios and handled retests to verify that pass criteria were met.",
       "result": "Achieved Achilles Communication Certificate Level 2 certification for the LS ELECTRIC PLC product line. Identified communication robustness defects -> reflected in product firmware remediation.",
-      "demonstrates": "LS ELECTRIC · 2024.07 — 2025.03 · Lead (overall certification review and testing)",
+      "demonstrates": "LS ELECTRIC · 2024.07 - 2025.03 · Lead (overall certification review and testing)",
       "evidence": []
     },
     {
@@ -253,7 +253,7 @@
       "stakes": "Participated as a member of the Korea-Canada joint DFIR (Digital Forensics and Incident Response) Blue Team in Locked Shields, the world's largest international cyber defense exercise. It is a high-intensity exercise involving the analysis of intrusion artifacts and incident response reporting under a live-attack environment. (In 2026, participated in the Korea-Hungary joint Special System Blue Team.)",
       "approach": "Performed incident forensic analysis and timeline reconstruction under live attack scenarios. Carried out DFIR CTF tasks - artifact analysis and malware triage. Operated an incident response reporting framework based on joint-team collaboration.",
       "result": "Locked Shields 2025: #6 overall (of 17 teams) · DFIR #1. Locked Shields 2026: #9 overall (of 16 teams).",
-      "demonstrates": "NATO CCDCOE · 2025.01 — 2025.04 · DFIR Blue Team member (forensics and incident response)",
+      "demonstrates": "NATO CCDCOE · 2025.01 - 2025.04 · DFIR Blue Team member (forensics and incident response)",
       "evidence": []
     },
     {
@@ -263,7 +263,7 @@
       "stakes": "While LLM inference engines are being rapidly incorporated into internal and product infrastructure, the attack surface exposed in server mode had been only shallowly reviewed. I verified the possibility of remote unauthenticated attacks against the llama.cpp server's external-input handling paths (grammar conversion, model parser, ranking API).",
       "approach": "Analyzed the uncontrolled recursion in json-schema-to-grammar's SchemaConverter::visit and _generate_union_rule - reproduced a DoS from exhaustion of the default 8MB thread stack at recursion depths above 7000 (CVE-2026-52130, CWE-674, CVSS 7.5). Scoped the affected path precisely - confirmed that only POST /completions is affected and that /v1/chat/completions is not, as it goes through the jinja engine, yielding a false-positive-free impact assessment. Induced a process abort when loading a malicious GGUF model via an assertion reachable in gguf_reader::read (CVE-2026-52131, CWE-617). Identified a DoS based on an integer overflow from a negative top_n on the /rerank endpoint and wrote a PoC (CVE-2026-52132, CWE-190).",
       "result": "3 CVEs assigned for llama.cpp - CVE-2026-52130 / 52131 / 52132. Provided upstream with reproduction procedures distinguishing vulnerable from non-vulnerable paths, including 2 remote unauthenticated DoS issues (CVSS 7.5).",
-      "demonstrates": "ggml-org/llama.cpp (open source) · 2026.07 — 2026.08 · Lead for vulnerability analysis and reporting",
+      "demonstrates": "ggml-org/llama.cpp (open source) · 2026.07 - 2026.08 · Lead for vulnerability analysis and reporting",
       "evidence": []
     },
     {
@@ -273,7 +273,7 @@
       "stakes": "IoT devices such as CCTV lack standardized evidence-collection procedures and tools when an incident occurs. An automated investigation tool was needed to rapidly secure configuration files and logs inside the firmware.",
       "approach": "Designed and implemented an automated incident-evidence collection tool for 40 domestic and overseas CCTV models. Developed modules for UART access, flash dumping, binwalk-based firmware extraction, and exhaustive collection of configuration files and logs. Performed collection of incident artifacts on 40 actual devices at a public institution's site.",
       "result": "Developed an automated incident-evidence collection tool for 40 domestic and overseas CCTV models. Field validation at a public institution - collected and analyzed intrusion artifacts across 40 devices.",
-      "demonstrates": "CoreSecurity (R&D) · 2022.08 — 2022.12 · Tool design and development",
+      "demonstrates": "CoreSecurity (R&D) · 2022.08 - 2022.12 · Tool design and development",
       "evidence": []
     },
     {
@@ -283,7 +283,7 @@
       "stakes": "During preparation for IEC 62443-4-2 certification of LS ELECTRIC's PLC product line, checking the component security requirements (CR) was mostly manual. Requirements that could be checked automatically over communication had to be tooled to reduce the cost of repeated assessments.",
       "approach": "Selected IEC 62443-4-2 SL1 requirements amenable to communication-based automation and designed an assessment tool. Implemented assessment automation for the FR2 (Use Control), FR3 (System Integrity), FR4 (Data Confidentiality), and FR7 (Resource Availability) areas. Built a web-based UI for managing assessment targets and results and a result-storage pipeline.",
       "result": "Developed an automated assessment tool for the communication-based IEC 62443-4-2 requirements of the LS ELECTRIC PLC product line (contribution 90%). Reduced assessment time compared to manual work.",
-      "demonstrates": "LS ELECTRIC · 2025.03 — 2025.11 · Lead for automation tool design and development",
+      "demonstrates": "LS ELECTRIC · 2025.03 - 2025.11 · Lead for automation tool design and development",
       "evidence": []
     },
     {
@@ -293,7 +293,7 @@
       "stakes": "Participated as part of the APEX 2026 DFIR Green Team and single-handedly authored a problem in the FOR400 (highest forensics difficulty) category. Designed a maritime-incident multi-flag scenario weaving together satellite communications (VSAT), AIS, and firmware reversing.",
       "approach": "Designed a multi-flag forensic scenario weaving together a ship's satellite communication terminal command traffic (capture.pcap) and manipulation of the ECDIS navigation display. Constructed an intrusion timeline leading from CCSDS command interface probing -> AIS spoofing -> firmware tampering. Wrote the authoring deliverables including the ground truth report, scoring rubric, and incident report.",
       "result": "Single-handedly authored the FOR400 highest-difficulty problem as part of the APEX 2026 DFIR Green Team (contribution 100%).",
-      "demonstrates": "APEX CTF 2026 · 2026.06 — 2026.09 · DFIR Green Team / FOR400 problem author",
+      "demonstrates": "APEX CTF 2026 · 2026.06 - 2026.09 · DFIR Green Team / FOR400 problem author",
       "evidence": []
     },
     {
@@ -303,7 +303,7 @@
       "stakes": "Authored HACKSIUM qualifier and final-round problems and ran the competition. For the finals, designed a real-time defense scenario for a maritime-logistics group; for the qualifiers, authored all 16 Forensics, Crypto, Pwn, Rev, Web, and Misc problems using Busan place names as codenames.",
       "approach": "Designed the final-round LiveFire blue-team defense scenario - 4 zones (satellite, ship, port, corporate IT) with a 6-hour (3-phase) real-time incident-response scoring framework. Authored all 16 qualifier problems - Busan place-name codenames, across all Forensics/Crypto/Pwn/Rev/Web/Misc categories. Supported operations of the qualifier and final rounds.",
       "result": "Designed the HACKSIUM final-round LiveFire scenario, authored all 16 qualifier problems, and ran the competition (contribution 70%).",
-      "demonstrates": "Busan IT Industry Promotion Agency · 2026.06 — 2026.09 · Qualifier and final-round problem authoring and competition operations",
+      "demonstrates": "Busan IT Industry Promotion Agency · 2026.06 - 2026.09 · Qualifier and final-round problem authoring and competition operations",
       "evidence": []
     }
   ],

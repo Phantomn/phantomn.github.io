@@ -42,7 +42,7 @@ function targetExists(fsPath) {
 }
 
 if (!existsSync(OUT_DIR)) {
-  console.error(`check-links: ${OUT_DIR}/ not found — run \`npm run build\` first.`)
+  console.error(`check-links: ${OUT_DIR}/ not found - run \`npm run build\` first.`)
   process.exit(1)
 }
 
@@ -59,7 +59,7 @@ for (const page of pages) {
   const content = readFileSync(page, 'utf8')
   for (const match of content.matchAll(/(?:href|src)="([^"]+)"/g)) {
     const url = decodeEntities(match[1])
-    // `//host/path` is protocol-relative, i.e. external — not a file in out/.
+    // `//host/path` is protocol-relative, i.e. external - not a file in out/.
     if (/^(https?:|mailto:|tel:|data:|#|\/\/)/.test(url)) continue
 
     let path
@@ -80,7 +80,7 @@ for (const page of pages) {
 
     checked += 1
     // A `..`-laden URL can resolve outside out/ and accidentally match a repo
-    // file that will never be deployed — treat any escape as broken.
+    // file that will never be deployed - treat any escape as broken.
     if (!resolve(fsPath).startsWith(outRoot + sep) && resolve(fsPath) !== outRoot) {
       broken.push({ page, url: `${url} (resolves outside ${OUT_DIR}/)` })
       continue

@@ -14,7 +14,7 @@ export default async function CaseStudies() {
     <section id="case-studies" className="bg-surface/30 py-24 md:py-28">
       <div className="container-max section-padding">
         <div className="mb-16">
-          <p className="eyebrow mb-4">01 — {t('eyebrow')}</p>
+          <p className="eyebrow mb-4">01 - {t('eyebrow')}</p>
           <h2 className="section-title">{t('title')}</h2>
           <p className="mt-4 max-w-2xl text-lg text-muted">
             {t('intro', { count: caseStudies.length })}

@@ -49,9 +49,9 @@ HTTP2-Settings: AAMAAABkAAQAAP__
 Connection: Upgrade, HTTP2-Settings
 ```
 
-- `Upgrade: h2c` — requests a protocol switch to HTTP/2 cleartext
-- `HTTP2-Settings` — base64url-encoded HTTP/2 SETTINGS frame parameters
-- `Connection: Upgrade, HTTP2-Settings` — marks both headers as hop-by-hop
+- `Upgrade: h2c` - requests a protocol switch to HTTP/2 cleartext
+- `HTTP2-Settings` - base64url-encoded HTTP/2 SETTINGS frame parameters
+- `Connection: Upgrade, HTTP2-Settings` - marks both headers as hop-by-hop
 
 Per RFC 7230, the `Connection` header field is hop-by-hop and must be consumed and removed by intermediaries. A compliant proxy should strip `Upgrade` and `HTTP2-Settings` before forwarding. However, many proxy configurations pass them through or handle them inconsistently.
 
@@ -83,10 +83,10 @@ The `h2csmuggler` tool automates this process, allowing arbitrary HTTP/2 request
 
 Once the tunnel is established, an attacker can:
 
-- **Reach internal-only endpoints** — paths blocked by the proxy's access control list (`/admin`, `/internal/api`, `/metrics`, etc.)
-- **Bypass authentication middleware** — proxy-level authentication (mTLS, API keys, IP allowlists) no longer applies
-- **Reach services on internal ports** — if the backend forwards h2c frames to downstream services, the attack surface expands
-- **Combine with SSRF** — the tunneled connection can be used to pivot to other internal network resources
+- **Reach internal-only endpoints** - paths blocked by the proxy's access control list (`/admin`, `/internal/api`, `/metrics`, etc.)
+- **Bypass authentication middleware** - proxy-level authentication (mTLS, API keys, IP allowlists) no longer applies
+- **Reach services on internal ports** - if the backend forwards h2c frames to downstream services, the attack surface expands
+- **Combine with SSRF** - the tunneled connection can be used to pivot to other internal network resources
 
 The impact is roughly equivalent to an SSRF with arbitrary HTTP method and body control, but does not rely on the application's own request-forwarding logic.
 
@@ -104,11 +104,11 @@ This vulnerability is configuration-dependent. A properly hardened proxy strips 
 
 ## Mitigations
 
-- **Strip hop-by-hop headers at the proxy layer** — ensure `Upgrade`, `HTTP2-Settings`, and any headers listed in `Connection` are consumed and not forwarded to the backend
-- **Explicitly reject `Upgrade: h2c` at the proxy** — return `400 Bad Request` or `426 Upgrade Required` and close the connection
-- **Disable h2c support on the backend server if not needed** — disable the feature if the backend does not need to serve h2c directly
-- **Use HTTP/2 over TLS (h2) for backend connections** — h2 over TLS does not use the `Upgrade` mechanism, so it is not vulnerable to this attack vector
-- **Regularly audit proxy forwarding rules** — verify that access control rules are enforced at the backend level, not only at the proxy
+- **Strip hop-by-hop headers at the proxy layer** - ensure `Upgrade`, `HTTP2-Settings`, and any headers listed in `Connection` are consumed and not forwarded to the backend
+- **Explicitly reject `Upgrade: h2c` at the proxy** - return `400 Bad Request` or `426 Upgrade Required` and close the connection
+- **Disable h2c support on the backend server if not needed** - disable the feature if the backend does not need to serve h2c directly
+- **Use HTTP/2 over TLS (h2) for backend connections** - h2 over TLS does not use the `Upgrade` mechanism, so it is not vulnerable to this attack vector
+- **Regularly audit proxy forwarding rules** - verify that access control rules are enforced at the backend level, not only at the proxy
 
 ## Relationship to Classic Request Smuggling
 
@@ -118,7 +118,7 @@ H2C Smuggling and classic HTTP Request Smuggling (CL.TE / TE.CL) share the same 
 |---|---|---|
 | Trigger | CL/TE header mismatch | HTTP Upgrade to h2c |
 | Effect | Poisons the backend request queue | Tunneled connection that bypasses the proxy |
-| Per-request | Yes — each smuggled prefix is per-request | No — the tunnel persists for the connection's lifetime |
-| Access control bypass | Partial (depends on the smuggled path) | Complete — proxy rules no longer apply |
+| Per-request | Yes - each smuggled prefix is per-request | No - the tunnel persists for the connection's lifetime |
+| Access control bypass | Partial (depends on the smuggled path) | Complete - proxy rules no longer apply |
 
 H2C Smuggling is, in several ways, more powerful than classic smuggling: once the tunnel is established, the attacker has an open channel to the backend for as long as the connection persists, with no need to race other users' requests.

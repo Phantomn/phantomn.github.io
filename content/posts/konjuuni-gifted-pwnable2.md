@@ -2,7 +2,7 @@
 title: 'Kongju National University Gifted Center pwnable2 Writeup'
 date: 2023-08-27T00:00:00.000Z
 excerpt: >-
-  Kongju National University Gifted Center pwnable2 challenge — patching a Sleep NOP to print the flag instantly.
+  Kongju National University Gifted Center pwnable2 challenge - patching a Sleep NOP to print the flag instantly.
 tags:
   - ctf
   - writeup

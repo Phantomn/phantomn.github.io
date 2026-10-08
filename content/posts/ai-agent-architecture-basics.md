@@ -1,5 +1,5 @@
 ---
-title: AI Agent Architecture Fundamentals — Sub-Agents, Multi-Agent Patterns, and the Harness
+title: AI Agent Architecture Fundamentals - Sub-Agents, Multi-Agent Patterns, and the Harness
 date: 2026-08-03T00:00:00.000Z
 excerpt: >-
   From what an agent is, to sub-agent interaction, to a catalog of multi-agent patterns, to the
@@ -66,7 +66,7 @@ Agent:
   7. Pass → report completion
 ```
 
-The essence of the difference is one thing. **An agent decides its next action on its own based on intermediate results.** Given the request "schedule an outdoor meeting in Seoul tomorrow," it checks the weather ("rain forecast"), judges on its own ("better to move it indoors"), checks the calendar, and books a room — this chain of self-judgment is the agent.
+The essence of the difference is one thing. **An agent decides its next action on its own based on intermediate results.** Given the request "schedule an outdoor meeting in Seoul tomorrow," it checks the weather ("rain forecast"), judges on its own ("better to move it indoors"), checks the calendar, and books a room - this chain of self-judgment is the agent.
 
 ### MIT's 4 Essential Characteristics and Levels of Autonomy
 
@@ -93,7 +93,7 @@ Another axis that separates an LLM from an agent is **memory**. An LLM's context
 | Medium-term | None | Episodic memory | Records of past failures (`[DEAD END]`) |
 | Long-term | None | Semantic memory | Learned rules (Lessons Learned) |
 
-### Why Use an Agent — and When Not To
+### Why Use an Agent - and When Not To
 
 There are six technical grounds for needing an agent: overcoming context limits, quality improvement through specialization, parallel speed, permission-control safety, failure isolation, and cost optimization. Several of these are covered in detail in the next section on sub-agents.
 
@@ -119,7 +119,7 @@ The evolution of agents has two stages. The LLM "could only talk," so it needed 
 
 ### The 3 Limits of a Single Agent
 
-**1. Context pollution.** When you do a complex task, the context fills up with irrelevant information. While doing a "bug fix," if 2K of system prompt, 13K of files A~D, and 13K of tests + error logs pile up — file C, which turned out to be irrelevant, still occupies context and starts to make it miss the point.
+**1. Context pollution.** When you do a complex task, the context fills up with irrelevant information. While doing a "bug fix," if 2K of system prompt, 13K of files A~D, and 13K of tests + error logs pile up - file C, which turned out to be irrelevant, still occupies context and starts to make it miss the point.
 
 Splitting into a sub solves it.
 
@@ -147,7 +147,7 @@ How a sub-agent works is summarized in three steps.
 
 Seen in numbers, the effect is clear. Even if a sub-agent consumes about 15K tokens with a Glob + Read of 7 files, only a ~200-token summary like "7 agents, roles..." is returned to the parent. Had the parent done it directly, half its context would have been filled with search results, degrading subsequent performance.
 
-Two more benefits are added here. **Cost optimization** — using opus for the parent, haiku for a document-search sub, and sonnet for a code-generation sub saves about 40% versus using opus for everything. **Parallel speed** — running independent tasks concurrently reduces total time to max(A, B, C).
+Two more benefits are added here. **Cost optimization** - using opus for the parent, haiku for a document-search sub, and sonnet for a code-generation sub saves about 40% versus using opus for everything. **Parallel speed** - running independent tasks concurrently reduces total time to max(A, B, C).
 
 ### Interaction: Lifecycle, Communication, Execution Modes
 
@@ -201,14 +201,14 @@ How you combine sub-agents is what makes a multi-agent pattern. Remember in adva
 
 ### Anthropic's 6 Production Patterns
 
-Anthropic distinguishes workflows (orchestrated by pre-defined code paths) from agents (the LLM decides autonomously) and presents six production patterns. There is one core question — **who decides the next step (the programmer vs the LLM)**.
+Anthropic distinguishes workflows (orchestrated by pre-defined code paths) from agents (the LLM decides autonomously) and presents six production patterns. There is one core question - **who decides the next step (the programmer vs the LLM)**.
 
-1. **Augmented LLM** — the most basic. Attach search, tools, and memory to an LLM. The other five are combinations of this.
-2. **Prompt Chaining** — sequential steps. Handling 10K characters at once misses mid-process mistakes, but splitting into 1K chunks catches them early.
-3. **Routing** — classify then specialize. A classifier judges the input and sends it to a specialized process.
-4. **Parallelization** — concurrent execution. Handle a task by dividing it (Sectioning) or by majority vote (Voting).
-5. **Orchestrator-Workers** — dynamic distribution. Similar to Parallelization, but you don't know the number and kind of tasks in advance.
-6. **Evaluator-Optimizer** — iterate generation and review. The Generator makes a draft and the Evaluator gives feedback, iterating until criteria are met.
+1. **Augmented LLM** - the most basic. Attach search, tools, and memory to an LLM. The other five are combinations of this.
+2. **Prompt Chaining** - sequential steps. Handling 10K characters at once misses mid-process mistakes, but splitting into 1K chunks catches them early.
+3. **Routing** - classify then specialize. A classifier judges the input and sends it to a specialized process.
+4. **Parallelization** - concurrent execution. Handle a task by dividing it (Sectioning) or by majority vote (Voting).
+5. **Orchestrator-Workers** - dynamic distribution. Similar to Parallelization, but you don't know the number and kind of tasks in advance.
+6. **Evaluator-Optimizer** - iterate generation and review. The Generator makes a draft and the Evaluator gives feedback, iterating until criteria are met.
 
 The distinction between Chaining, Routing, and Parallel is often confusing. The criteria are the number of executions and dependencies.
 
@@ -256,7 +256,7 @@ Production systems combine these patterns. For example, an autonomous pentest pl
 
 ---
 
-## 4. Harness Engineering — The Layer That Wraps Everything
+## 4. Harness Engineering - The Layer That Wraps Everything
 
 ### The Difference from Prompt Engineering
 
@@ -269,7 +269,7 @@ The higher-level concept that holds all the concepts so far is the **Harness**. 
 | Scope | Improving instructions | Tools, memory, state, safety |
 | Analogy | "Writing good instructions" | "Designing the horse's saddle, reins, fence, and roads" |
 
-Why is a harness needed. An LLM alone forgets when context overflows, calls tools incorrectly, may take dangerous actions, and cannot manage work across sessions. A harness compresses and manages context, validates and restricts tool calls, enforces safety with permissions and approvals, and gives session continuity with memory. Even in OpenAI's actual experience (3 people × 5 months = 1 million auto-generated lines), a significant amount of time went into building deterministic tools — long-term operation is impossible without a harness.
+Why is a harness needed. An LLM alone forgets when context overflows, calls tools incorrectly, may take dangerous actions, and cannot manage work across sessions. A harness compresses and manages context, validates and restricts tool calls, enforces safety with permissions and approvals, and gives session continuity with memory. Even in OpenAI's actual experience (3 people × 5 months = 1 million auto-generated lines), a significant amount of time went into building deterministic tools - long-term operation is impossible without a harness.
 
 ### Two Layers: Scaffolding and Runtime
 
@@ -319,7 +319,7 @@ Once you understand what an agent is, know why you split it, and have learned wh
 
 ## References
 
-- MIT AI Agent Index (2025) — 4 essential characteristics
-- Anthropic — "Building Effective Agents," 6 production patterns
-- Google ADK / Azure Architecture Center — multi-agent pattern catalog
+- MIT AI Agent Index (2025) - 4 essential characteristics
+- Anthropic - "Building Effective Agents," 6 production patterns
+- Google ADK / Azure Architecture Center - multi-agent pattern catalog
 - Related articles: [Dissecting Open-Source Security AI Agents](/en/blog/oss-security-ai-agents/), [Agent Interoperability Standards](/en/blog/agent-interop-standards/)

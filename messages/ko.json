@@ -62,7 +62,7 @@
     "archiveBackToPortfolio": "Back to Portfolio",
     "archiveEyebrow": "Research",
     "archiveTitle": "Research Archive",
-    "archiveBody": "From OT/ICS threat modeling and Achilles certification tooling to LLM inference engine (llama.cpp) vulnerability research, IoT and medical device security, and cyber range/DFIR training system development — every research area to date."
+    "archiveBody": "From OT/ICS threat modeling and Achilles certification tooling to LLM inference engine (llama.cpp) vulnerability research, IoT and medical device security, and cyber range/DFIR training system development - every research area to date."
   },
   "exercises": {
     "eyebrow": "Exercises",
@@ -84,7 +84,7 @@
     "title": "Disclaimer",
     "lastUpdated": "Last updated",
     "personalViewsTitle": "Personal views",
-    "personalViewsBody": "This is my personal website. Everything published here — posts, findings, and opinions — is my own and does not represent the position of my employer or any client I work with, unless explicitly stated.",
+    "personalViewsBody": "This is my personal website. Everything published here - posts, findings, and opinions - is my own and does not represent the position of my employer or any client I work with, unless explicitly stated.",
     "securityResearchTitle": "Security research",
     "securityResearchBody": "Vulnerability write-ups and security research on this site are published for defensive and educational purposes, after coordinated disclosure where applicable. Don't use anything here to attack systems you are not authorized to test.",
     "noWarrantyTitle": "No warranty",
@@ -96,7 +96,7 @@
     "backToPortfolio": "Back to the portfolio",
     "eyebrow": "404 · Page not found",
     "title": "Page not found",
-    "body": "This URL doesn't resolve — likely an old link from the previous version of this site. The content is still here; it just moved.",
+    "body": "This URL doesn't resolve - likely an old link from the previous version of this site. The content is still here; it just moved.",
     "destinations": {
       "findings": {
         "title": "Security findings & disclosures",
@@ -318,7 +318,7 @@
   "translator": {
     "detected": "{locale} language detected!",
     "translating": "Translating content...",
-    "translationFailed": "Translation unavailable — showing original",
+    "translationFailed": "Translation unavailable - showing original",
     "poweredBy": "Translation by Lingva"
   },
   "tags": {

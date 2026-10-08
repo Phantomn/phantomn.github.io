@@ -18,7 +18,7 @@ export default async function About() {
     <section id="about" className="bg-bg py-24 md:py-28">
       <div className="container-max section-padding">
         <div className="mb-16">
-          <p className="eyebrow mb-4">02 — {t('eyebrow')}</p>
+          <p className="eyebrow mb-4">02 - {t('eyebrow')}</p>
           <h2 className="section-title">{t('title')}</h2>
         </div>
 

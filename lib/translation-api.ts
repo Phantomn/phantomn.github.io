@@ -44,7 +44,7 @@ async function fetchWithTimeout(
 }
 
 /**
- * Google Translate public gtx endpoint — same backend the web widget uses.
+ * Google Translate public gtx endpoint - same backend the web widget uses.
  * No API key, CORS-friendly, high quality. Response shape:
  *   [ [[segment, original, ...], ...], null, sourceLang, ... ]
  */
@@ -74,7 +74,7 @@ async function googleTranslate(
 }
 
 /**
- * MyMemory fallback — no key, ~50k chars/day by IP, decent quality.
+ * MyMemory fallback - no key, ~50k chars/day by IP, decent quality.
  */
 async function myMemoryTranslate(
   text: string,

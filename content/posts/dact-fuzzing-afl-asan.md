@@ -118,7 +118,7 @@ The `file_extd_size` field controls how much of the extended header gets parsed.
 
 ## Step-by-step crash trace analysis
 
-### Step 1 — CRC entry
+### Step 1 - CRC entry
 
 ```
 file_extd_read = 0
@@ -128,7 +128,7 @@ x  = 0x4
 file_extd_read = 0 + (4 + 3) = 7
 ```
 
-### Step 2 — first URL entry
+### Step 2 - first URL entry
 
 ```
 file_extd_read = 7 < 0x2e747874
@@ -140,7 +140,7 @@ x  = 0xe602
 file_extd_read = 7 + (0xe602 + 3) = 0xe60c
 ```
 
-### Step 3 — repeated zero-length URL entries
+### Step 3 - repeated zero-length URL entries
 
 ```
 ch = 0x7  (DACT_HDR_URL)
@@ -149,7 +149,7 @@ x  = 0x0
 file_extd_read += 3   (x=0, so += 3 every iteration)
 ```
 
-The loop keeps going — each iteration writes to `file_extd_urls[file_extd_urlcnt++]` — and once `file_extd_urlcnt` exceeds 255, an out-of-bounds write occurs.
+The loop keeps going - each iteration writes to `file_extd_urls[file_extd_urlcnt++]` - and once `file_extd_urlcnt` exceeds 255, an out-of-bounds write occurs.
 
 ---
 
@@ -164,7 +164,7 @@ The loop keeps going — each iteration writes to `file_extd_urls[file_extd_urlc
           [ch=CRC0] [x=4] [crc_val] [ch=URL] [x=0xe602] ...
 ```
 
-`file_extd_size = 0x2e747874` — a large value derived from the ASCII bytes of the filename field (`o.txt`), interpreted as a little-endian integer due to parsing ambiguity. This value drives the loop far past the array boundary.
+`file_extd_size = 0x2e747874` - a large value derived from the ASCII bytes of the filename field (`o.txt`), interpreted as a little-endian integer due to parsing ambiguity. This value drives the loop far past the array boundary.
 
 ---
 

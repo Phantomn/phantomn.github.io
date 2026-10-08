@@ -23,9 +23,9 @@ authors:
 
 ## Overview
 
-This covers the architecture of a multi-agent system that autonomously performs a comprehensive security vulnerability assessment. A hierarchical supervisor orchestrates several specialist agents, and each specialist handles a different phase of the vulnerability-discovery workflow — reconnaissance, source analysis, hypothesis generation, exploit validation, bypass enhancement, and reporting.
+This covers the architecture of a multi-agent system that autonomously performs a comprehensive security vulnerability assessment. A hierarchical supervisor orchestrates several specialist agents, and each specialist handles a different phase of the vulnerability-discovery workflow - reconnaissance, source analysis, hypothesis generation, exploit validation, bypass enhancement, and reporting.
 
-This article has two axes. **(1) The hierarchical delegation structure** — it handles multi-step security assessments that a single monolithic agent cannot manage, through role separation. **(2) The externalization of judgment authority** — judgments like "is this vulnerability real," "has exploration stagnated," and "is this action within the rules of engagement" are made not by an LLM narrative but by a deterministic oracle and reference monitor. The second axis stands on the same principle as [Harness Design That Pulls LLM Completion Bias Out of the Model](/en/blog/deterministic-completion-gate-harness/).
+This article has two axes. **(1) The hierarchical delegation structure** - it handles multi-step security assessments that a single monolithic agent cannot manage, through role separation. **(2) The externalization of judgment authority** - judgments like "is this vulnerability real," "has exploration stagnated," and "is this action within the rules of engagement" are made not by an LLM narrative but by a deterministic oracle and reference monitor. The second axis stands on the same principle as [Harness Design That Pulls LLM Completion Bias Out of the Model](/en/blog/deterministic-completion-gate-harness/).
 
 The production-grade patterns it implements:
 
@@ -40,20 +40,20 @@ The system consists of 6 layers. Each layer has only minimal awareness of the do
 
 ```
 ┌──────────────────────────────────────────────────┐
-│ L0: Entry point — HTTP trigger (fire-and-forget)  │
+│ L0: Entry point - HTTP trigger (fire-and-forget)  │
 ├──────────────────────────────────────────────────┤
-│ L1: Orchestration — Supervisor + WorkflowChain    │
+│ L1: Orchestration - Supervisor + WorkflowChain    │
 │     FSM state machine, phase transitions          │
 ├──────────────────────────────────────────────────┤
-│ L2: Agents — Supervisor + 7 Specialists           │
+│ L2: Agents - Supervisor + 7 Specialists           │
 │     LLM reasoning, tool delegation                 │
 ├──────────────────────────────────────────────────┤
-│ L3: Tools — MCP servers + built-in tools          │
+│ L3: Tools - MCP servers + built-in tools          │
 │     context propagation, execution wrapping        │
 ├──────────────────────────────────────────────────┤
-│ L4: Confirmation/Safety — Guardrail · Oracle · RoE monitor │
+│ L4: Confirmation/Safety - Guardrail · Oracle · RoE monitor │
 ├──────────────────────────────────────────────────┤
-│ L5: State/Isolation — Schema SSOT · Memory · Sandbox │
+│ L5: State/Isolation - Schema SSOT · Memory · Sandbox │
 └──────────────────────────────────────────────────┘
 ```
 
@@ -68,21 +68,21 @@ The supervisor (a hierarchical hybrid system, HHS) acts as the FSM orchestrator 
 | Agent | Role |
 |----------|------|
 | **Supervisor (HHS)** | FSM orchestrator, single write path (commit_finding), delegation |
-| **ReconWeb** | HTTP reconnaissance — endpoint/auth/asset discovery |
-| **ReconBinary** | Binary reconnaissance — function/section/symbol mapping |
+| **ReconWeb** | HTTP reconnaissance - endpoint/auth/asset discovery |
+| **ReconBinary** | Binary reconnaissance - function/section/symbol mapping |
 | **VulnInjection** | Evidence-based attack hypothesis generation |
 | **InjectionExploit** | PoC execution and impact confirmation |
 | **BypassEnhancement** | WAF/filter bypass enhancement |
 | **SourceAnalyst** | Static analysis when source code is leaked |
 | **Report** | Findings synthesis and risk assessment |
 
-Each specialist has a **focused context**. The reconnaissance agents do not make vulnerability judgments and only record observations — classification is the orchestrator's job (preventing context pollution).
+Each specialist has a **focused context**. The reconnaissance agents do not make vulnerability judgments and only record observations - classification is the orchestrator's job (preventing context pollution).
 
 ### 2.2 Delegation Flow
 
 The supervisor does not call specialists directly but **delegates**. A specialist performs the task and returns structured output, only signaling the intent "record this finding" rather than writing directly. The supervisor takes that intent, validates it, and commits.
 
-This read-only specialist pattern prevents three things — concurrent write conflicts, duplicate records, and state inconsistency.
+This read-only specialist pattern prevents three things - concurrent write conflicts, duplicate records, and state inconsistency.
 
 ## 3. Workflow (5-Phase)
 
@@ -110,15 +110,15 @@ Start
         Report synthesizes findings, maps risk → done
 ```
 
-### 3.1 Reconnaissance — Stack-Agnostic Fingerprinting
+### 3.1 Reconnaissance - Stack-Agnostic Fingerprinting
 
-Reconnaissance detects the technology stack via runtime fingerprinting, with no hardcoded selectors. Auth discovery is a multi-stage pipeline — provided credentials → default login templates → auth-bypass detection → feature-surface collection → public-only fallback. At points that require human intervention (MFA/CAPTCHA/OAuth), it stops the auth probe and continues only public reconnaissance.
+Reconnaissance detects the technology stack via runtime fingerprinting, with no hardcoded selectors. Auth discovery is a multi-stage pipeline - provided credentials → default login templates → auth-bypass detection → feature-surface collection → public-only fallback. At points that require human intervention (MFA/CAPTCHA/OAuth), it stops the auth probe and continues only public reconnaissance.
 
-### 3.2 Hypothesis Generation — Evidence Density Threshold
+### 3.2 Hypothesis Generation - Evidence Density Threshold
 
 Vulnerability hypotheses are not made without grounds. Each hypothesis requires **at least 2 independent evidence sources per hypothesis** and rates confidence (low/medium/high) on an evidence basis. Only hypotheses that exceed the confidence threshold proceed to the validation phase.
 
-### 3.3 Exploit Validation — Strategy Adaptation
+### 3.3 Exploit Validation - Strategy Adaptation
 
 PoCs run in an isolated sandbox, and on failure the strategy is changed in stages.
 
@@ -127,19 +127,19 @@ PoCs run in an isolated sandbox, and on failure the strategy is changed in stage
 - **3rd failure**: class escalation (XSS: reflected → DOM → stored)
 - **4th or more**: mark as exhausted, move to the next finding
 
-### 3.4 Reporting — CVSS and KISA Mapping
+### 3.4 Reporting - CVSS and KISA Mapping
 
 Only confirmed findings pass to the reporting phase. The Report specialist quantifies each finding with CVSS and maps it to a risk level.
 
 - **CVSS → risk level**: 7.0 or above → high, 4.0~6.9 → medium, below 4.0 → low
 
-For domestic (Korean) web vulnerability assessment practice, it also maps to the **KISA web vulnerability classification** — e.g. SQL injection (WEB-05), XSS (WEB-08), CSRF (WEB-09). By attaching both an international standard (CVSS) and the domestic regulatory scheme, findings can be immediately digested in whichever framework is in use. It also adds environmental context (whether a WAF was detected, auth-probe results, exposed sensitive assets) to raise the report's practical usefulness.
+For domestic (Korean) web vulnerability assessment practice, it also maps to the **KISA web vulnerability classification** - e.g. SQL injection (WEB-05), XSS (WEB-08), CSRF (WEB-09). By attaching both an international standard (CVSS) and the domestic regulatory scheme, findings can be immediately digested in whichever framework is in use. It also adds environmental context (whether a WAF was detected, auth-probe results, exposed sensitive assets) to raise the report's practical usefulness.
 
-## 4. Confirmation Architecture — Judgment Outside the Model
+## 4. Confirmation Architecture - Judgment Outside the Model
 
 What sets this system apart is that **it does not give judgment authority to the LLM**. "Is it vulnerable," "has it stagnated" is answered by deterministic code, not by the model's narrative.
 
-### 4.1 Guardrails — Schema Enforced at Every Boundary
+### 4.1 Guardrails - Schema Enforced at Every Boundary
 
 Guardrails are registered in a registry and run at every agent input/output boundary.
 
@@ -147,13 +147,13 @@ Guardrails are registered in a registry and run at every agent input/output boun
 - **Output guardrails**: finding-schema enforcement, "confirmed" shown only after explicit validation
 - **PoC confirmation gate (Gate-B)**: only findings with `impact_confirmed=true` are promoted to a report
 
-The key is that **a guardrail is an independent oracle, not an SSOT consumer**. If you fetch the value to be validated from the validation target itself, you can't see the pollution — the guardrail judges from the outside.
+The key is that **a guardrail is an independent oracle, not an SSOT consumer**. If you fetch the value to be validated from the validation target itself, you can't see the pollution - the guardrail judges from the outside.
 
-### 4.2 Confirmation Oracle — Canary and Stagnation Detection
+### 4.2 Confirmation Oracle - Canary and Stagnation Detection
 
 There are two kinds of oracle.
 
-**Canary oracle.** To confirm that an exploit actually had an impact, merely seeing data in the response is not enough (a "200 OK" is just a data return). Instead, at execution time it **mints a canary value** and injects it, and confirms by whether that specific canary comes back. If a no-payload control fires the same pattern, it is downgraded — the negative-control principle.
+**Canary oracle.** To confirm that an exploit actually had an impact, merely seeing data in the response is not enough (a "200 OK" is just a data return). Instead, at execution time it **mints a canary value** and injects it, and confirms by whether that specific canary comes back. If a no-payload control fires the same pattern, it is downgraded - the negative-control principle.
 
 **Stagnation oracle.** If an agent circles the same spot, it just burns tokens. It accumulates the response history as a hash (FNV-1a), and if there is no new information within a given window (default 5), it judges stagnation and triggers a transition. It detects "repeating attempts with no new findings" through history-based determinism, not the model's self-judgment.
 
@@ -167,13 +167,13 @@ In an autonomous security agent, the most dangerous failure is "unintended actio
 
 ### 5.1 RoE Reference Monitor
 
-The Rules of Engagement are enforced by a **deterministic reference monitor**. Every function of this monitor is pure — it always renders the same judgment for the same input. Before an agent takes any action, the monitor inspects that action descriptor and judges whether it is within the RoE policy. Because the judgment does not depend on LLM reasoning, it cannot be bypassed by prompt injection.
+The Rules of Engagement are enforced by a **deterministic reference monitor**. Every function of this monitor is pure - it always renders the same judgment for the same input. Before an agent takes any action, the monitor inspects that action descriptor and judges whether it is within the RoE policy. Because the judgment does not depend on LLM reasoning, it cannot be bypassed by prompt injection.
 
-The decision line is clear — **"does it actually breach someone else's data or change system state?"** If yes, prove it procedurally; if out of scope, block it.
+The decision line is clear - **"does it actually breach someone else's data or change system state?"** If yes, prove it procedurally; if out of scope, block it.
 
-### 5.2 Execution Isolation — Multiple Sandbox Backends
+### 5.2 Execution Isolation - Multiple Sandbox Backends
 
-All tool execution happens in an isolated sandbox. To avoid being tied to a single method, multiple backends are supported — rootless OCI containers, kernel-isolation-hardened runtimes, and remote sandboxes. Each execution gets a dedicated network policy that blocks egress to out-of-scope assets (fail-closed).
+All tool execution happens in an isolated sandbox. To avoid being tied to a single method, multiple backends are supported - rootless OCI containers, kernel-isolation-hardened runtimes, and remote sandboxes. Each execution gets a dedicated network policy that blocks egress to out-of-scope assets (fail-closed).
 
 Isolation is a **safety boundary**, not a performance concern. Because a heavy gate makes you want to bypass it, the policy is kept declarative and the execution layer enforces it.
 
@@ -189,7 +189,7 @@ Findings are represented as interconnected nodes.
 - **Exploit**: ValidatedFinding
 - **Knowledge**: Lesson (learned patterns), DeadEnd (failed approaches), TargetProfile
 
-The DeadEnd node is important — recording failed approaches means you don't step onto the same dead end again later.
+The DeadEnd node is important - recording failed approaches means you don't step onto the same dead end again later.
 
 ### 6.2 Provenance Chain
 
@@ -204,15 +204,15 @@ Recon evidence
                  └─ Final report {risk_level, summary}
 ```
 
-Thanks to this chain, every finding is fully traceable back to its original reconnaissance source and intermediate validation steps — a forensic audit is possible.
+Thanks to this chain, every finding is fully traceable back to its original reconnaissance source and intermediate validation steps - a forensic audit is possible.
 
 ## 7. Coordination and Memory
 
-### 7.1 Coordinator — Attack Graph and Capability Registry
+### 7.1 Coordinator - Attack Graph and Capability Registry
 
-Beyond simple sequential execution, the coordinator maintains an **attack graph**. It places discovered surfaces and hypotheses as nodes and edges, and manages "which specialist can take which action right now" with a capability registry. A delegation budget prevents runaway — instead of infinite delegation, it stops and freezes when the budget is exhausted.
+Beyond simple sequential execution, the coordinator maintains an **attack graph**. It places discovered surfaces and hypotheses as nodes and edges, and manages "which specialist can take which action right now" with a capability registry. A delegation budget prevents runaway - instead of infinite delegation, it stops and freezes when the budget is exhausted.
 
-### 7.2 Memory — Dead-Ends and Decomposition
+### 7.2 Memory - Dead-Ends and Decomposition
 
 The memory layer manages failure paths (dead-ends) and task decomposition (decomposer), and recalls similar past situations with embedding-based search. Because it externalizes state to **files/storage outside the model's head**, "what has already been tried" is preserved even when context is compressed.
 
@@ -223,10 +223,10 @@ The memory layer manages failure paths (dead-ends) and task decomposition (decom
 Remove system-internal values from LLM-facing parameters.
 
 ```
-// Pattern to avoid — system noise mixed into LLM input
+// Pattern to avoid - system noise mixed into LLM input
 { target_url: "...", run_id: "uuid...", workspace_path: "/data/..." }
 
-// Correct pattern — clean LLM input
+// Correct pattern - clean LLM input
 { target_url: "...", mode: "normal" }
 
 // System values are injected as a separate context
@@ -276,17 +276,17 @@ The trade-off is clear. Multi-step validation spends more wall-clock time and to
 
 A sophisticated autonomous security assessment needs more than a single capable LLM. The strength of this architecture comes from five things.
 
-1. **Role separation** — each agent has a focused responsibility
-2. **Deterministic judgment** — guardrails, oracle, and RoE monitor enforce invariants at every boundary, putting judgment outside the model
-3. **Provenance integrity** — a complete audit trail
-4. **Graceful degradation** — fallback paths handle adversarial conditions
-5. **Tunable safety** — budgets, timeouts, and isolation block runaway
+1. **Role separation** - each agent has a focused responsibility
+2. **Deterministic judgment** - guardrails, oracle, and RoE monitor enforce invariants at every boundary, putting judgment outside the model
+3. **Provenance integrity** - a complete audit trail
+4. **Graceful degradation** - fallback paths handle adversarial conditions
+5. **Tunable safety** - budgets, timeouts, and isolation block runaway
 
 Generalized, hierarchical delegation, read-only specialists, and **the discipline of externalizing judgment authority into deterministic code** are the heart of this blueprint. It is a reusable pattern for building trustworthy autonomous AI in a domain like security, where the cost of a misjudgment is high.
 
 ## References
 
-- [Harness Design That Pulls LLM Completion Bias Out of the Model](/en/blog/deterministic-completion-gate-harness/) — the principle underlying the confirmation oracle
-- [Dissecting Open-Source Security AI Agents — CAI, PentAGI, OpenManus, CRS](/en/blog/oss-security-ai-agents/) — comparison of similar systems
-- VoltAgent — a multi-agent workflow orchestration framework
+- [Harness Design That Pulls LLM Completion Bias Out of the Model](/en/blog/deterministic-completion-gate-harness/) - the principle underlying the confirmation oracle
+- [Dissecting Open-Source Security AI Agents - CAI, PentAGI, OpenManus, CRS](/en/blog/oss-security-ai-agents/) - comparison of similar systems
+- VoltAgent - a multi-agent workflow orchestration framework
 - OWASP Testing Guide · CVSS v3.1 · KISA Web Vulnerability Assessment Guide

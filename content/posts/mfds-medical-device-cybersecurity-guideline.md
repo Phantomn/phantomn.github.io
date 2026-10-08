@@ -1,5 +1,5 @@
 ---
-title: "Reading the MFDS Medical Device Cybersecurity Guideline — Guidance No. 0995-05"
+title: "Reading the MFDS Medical Device Cybersecurity Guideline - Guidance No. 0995-05"
 date: 2026-07-30T00:00:00.000Z
 excerpt: >-
   An explanation of the MFDS medical device cybersecurity approval/review guideline
@@ -67,7 +67,7 @@ The most important change in this guideline is the **shift in the standard basis
 
 In other words, at the pivot of end-2024 (v04), the backbone of domestic medical device cybersecurity regulation changed from the **general principles of IMDRF (International Medical Device Regulators Forum)** to the **concrete technical standard IEC 62443-4-2.**
 
-The meaning of this shift is large. IMDRF principles were **principle-level descriptions** such as "authentication shall be performed," "integrity shall be ensured." By contrast, IEC 62443-4-2 is a **catalog of concrete technical security requirements** for IACS (Industrial Automation and Control Systems) components. It transplants the security controls required of the control components of critical infrastructure such as nuclear power, power generation, and manufacturing into medical devices — another safety-critical embedded domain.
+The meaning of this shift is large. IMDRF principles were **principle-level descriptions** such as "authentication shall be performed," "integrity shall be ensured." By contrast, IEC 62443-4-2 is a **catalog of concrete technical security requirements** for IACS (Industrial Automation and Control Systems) components. It transplants the security controls required of the control components of critical infrastructure such as nuclear power, power generation, and manufacturing into medical devices - another safety-critical embedded domain.
 
 There is a reason this transplant is natural. **Medical devices and industrial control equipment are, from a security perspective, the same species.** Both (1) act directly on the physical world, (2) prioritize safety above all, (3) are embedded systems with a long lifespan and limited computing resources, and (4) value availability as much as confidentiality. Importing the security framework of IT systems (e.g., general information security controls) as-is misses these characteristics. IEC 62443 was created for these characteristics in the first place, so the mapping is accurate.
 
@@ -106,50 +106,50 @@ The distribution of item counts per category itself reveals the regulation's cen
 
 Now we explain each category from the perspective of IEC 62443.
 
-### 3.1 Identification and Authentication (IA) — 8 items / FR 1
+### 3.1 Identification and Authentication (IA) - 8 items / FR 1
 
 The category that handles "who accesses." It is the medical device version of FR 1 (Identification and Authentication Control).
 
-- **IA-01 User identification/authentication** — Identify and authenticate authorized users (people, devices, processes, services). Excluded if there is no user access interface.
-- **IA-02 Account management** — Account creation, management, and deletion. Consider the risk when shared accounts are used.
-- **IA-03 Identifier management** — A unique identifier per account.
-- **IA-04 Credential management** — **No hardcoded passwords**, a mandatory function to change default account/password, encrypted storage of credentials.
-- **IA-05 Password strength** — A function to set minimum length and complexity policy.
-- **IA-06 Credential feedback** — No plaintext exposure when entering a password (masking).
-- **IA-07 Limit on consecutive login failures** — Lockout/delay after N failures, configurable.
-- **IA-08 System use notification** — Display an unauthorized-access warning before login.
+- **IA-01 User identification/authentication** - Identify and authenticate authorized users (people, devices, processes, services). Excluded if there is no user access interface.
+- **IA-02 Account management** - Account creation, management, and deletion. Consider the risk when shared accounts are used.
+- **IA-03 Identifier management** - A unique identifier per account.
+- **IA-04 Credential management** - **No hardcoded passwords**, a mandatory function to change default account/password, encrypted storage of credentials.
+- **IA-05 Password strength** - A function to set minimum length and complexity policy.
+- **IA-06 Credential feedback** - No plaintext exposure when entering a password (masking).
+- **IA-07 Limit on consecutive login failures** - Lockout/delay after N failures, configurable.
+- **IA-08 System use notification** - Display an unauthorized-access warning before login.
 
 Here, **IA-04 (no hardcoded passwords, changing default credentials)** deserves particular attention. The most common and fatal vulnerability of embedded medical devices is precisely hardcoded credentials and unchangeable default passwords. This item reflects IEC 62443-4-2's CR 1.5 (credential management) directly, codifying the frontline of embedded device security as a regulatory requirement.
 
-### 3.2 Use Control (UC) — 7 items / FR 2 + part of FR 6
+### 3.2 Use Control (UC) - 7 items / FR 2 + part of FR 6
 
 This handles "what an authenticated subject can do" and "how those actions are recorded." Audit logging (part of FR 6) is combined into FR 2 (Use Control).
 
-- **UC-01 Authorization** — Role-Based Access Control (RBAC) based on the **least privilege principle**, with separation of privileges by role.
-- **UC-02 Mobile code control** — Verify authenticity before executing mobile code, allow-list based.
-- **UC-03 Session lock** — Automatic lock and re-authentication after a period of inactivity.
-- **UC-04 Audit record generation** — Record access control, request error, device event, backup/recovery, configuration change, and audit log events. Include timestamp, source, category, type, event ID, and result.
-- **UC-05 Response to audit processing failure** — Prevent loss of essential functions even when audit storage capacity is exceeded.
-- **UC-06 Timestamp** — Date and time on audit records, with **NTP synchronization recommended**.
-- **UC-07 Non-repudiation** — Include user identification information for specific actions.
+- **UC-01 Authorization** - Role-Based Access Control (RBAC) based on the **least privilege principle**, with separation of privileges by role.
+- **UC-02 Mobile code control** - Verify authenticity before executing mobile code, allow-list based.
+- **UC-03 Session lock** - Automatic lock and re-authentication after a period of inactivity.
+- **UC-04 Audit record generation** - Record access control, request error, device event, backup/recovery, configuration change, and audit log events. Include timestamp, source, category, type, event ID, and result.
+- **UC-05 Response to audit processing failure** - Prevent loss of essential functions even when audit storage capacity is exceeded.
+- **UC-06 Timestamp** - Date and time on audit records, with **NTP synchronization recommended**.
+- **UC-07 Non-repudiation** - Include user identification information for specific actions.
 
 UC-01's **least privilege** is the principle that runs through this entire category. Brought in directly from the IEC 62443 concept, it requires implementing the principle of "grant only the minimum necessary privileges" via role-based access control. The audit logging requirements of UC-04~UC-07 are the foundation of post-incident response and forensics; in particular, UC-06's timestamp integrity and UC-07's non-repudiation are conditions for logs to be trusted as legal evidence.
 
-### 3.3 System Integrity (SI) — 11 items / FR 3
+### 3.3 System Integrity (SI) - 11 items / FR 3
 
 The category with the most items, and the heart of medical device security. It guarantees "the device and data have not been tampered with." It corresponds to FR 3 (System Integrity).
 
-- **SI-01 Communication integrity** — Standard cryptographic protocols (e.g., TLS 1.2/1.3), integrity protection in transit.
-- **SI-02 Malware protection** — Block ingress or verify. SaMD also applies to external services/apps.
-- **SI-03 Security function verification** — Procedure to verify security function operation (EICAR test, IDS rule verification, etc.).
-- **SI-04 Software/information integrity check** — Cryptographic hash-based integrity checks on stored data (settings, firmware, configuration).
-- **SI-05 Input validation** — Validate the syntax, length, and content of all inputs on external interfaces. **Out-of-range, SQL injection, XSS, buffer overflow, and malicious packet** validation are mandatory.
-- **SI-06 Predetermined state output on error** — Output to a predefined **Fail-Safe state** when normal operation is impossible.
-- **SI-07 Error handling** — Do not include information usable by an attacker (detailed authentication failure cause, etc.) in error messages.
-- **SI-08 Update** — Patch without affecting essential functions.
-- **SI-09 Update authenticity/integrity verification** — **Code signing and hash verification** before installation, blocking files with abnormal signatures.
-- **SI-10 Physical tamper protection** — Physical locks, security screws, and encapsulation on unnecessary external interfaces. **SaMD excluded.**
-- **SI-11 Boot process integrity** — Verify the integrity of firmware, software, and configuration at boot (Secure Boot). **SaMD excluded.**
+- **SI-01 Communication integrity** - Standard cryptographic protocols (e.g., TLS 1.2/1.3), integrity protection in transit.
+- **SI-02 Malware protection** - Block ingress or verify. SaMD also applies to external services/apps.
+- **SI-03 Security function verification** - Procedure to verify security function operation (EICAR test, IDS rule verification, etc.).
+- **SI-04 Software/information integrity check** - Cryptographic hash-based integrity checks on stored data (settings, firmware, configuration).
+- **SI-05 Input validation** - Validate the syntax, length, and content of all inputs on external interfaces. **Out-of-range, SQL injection, XSS, buffer overflow, and malicious packet** validation are mandatory.
+- **SI-06 Predetermined state output on error** - Output to a predefined **Fail-Safe state** when normal operation is impossible.
+- **SI-07 Error handling** - Do not include information usable by an attacker (detailed authentication failure cause, etc.) in error messages.
+- **SI-08 Update** - Patch without affecting essential functions.
+- **SI-09 Update authenticity/integrity verification** - **Code signing and hash verification** before installation, blocking files with abnormal signatures.
+- **SI-10 Physical tamper protection** - Physical locks, security screws, and encapsulation on unnecessary external interfaces. **SaMD excluded.**
+- **SI-11 Boot process integrity** - Verify the integrity of firmware, software, and configuration at boot (Secure Boot). **SaMD excluded.**
 
 These 11 cover almost the entire spectrum of IEC 62443-4-2 FR 3. We note a few practical points.
 
@@ -159,13 +159,13 @@ These 11 cover almost the entire spectrum of IEC 62443-4-2 FR 3. We note a few p
 
 **SI-09 (update signature verification) and SI-11 (Secure Boot)** are the core of supply chain and firmware attack defense. An update channel without signature verification becomes a path for injecting malicious firmware, and booting without Secure Boot becomes a breeding ground for bootkits. However, these two items and SI-10 (physical tamper protection) are **excluded for SaMD**, because SaMD is pure software not bound to specific hardware, so the concepts of physical tampering and a boot chain do not hold. This exception rule shows the requirements are designed to accurately reflect the characteristics of device types.
 
-### 3.4 Data Confidentiality (DC) — 3 items / FR 4
+### 3.4 Data Confidentiality (DC) - 3 items / FR 4
 
 Prevents the exposure of sensitive information. The item count is small, but each is dense.
 
-- **DC-01 Information confidentiality** — Protect the confidentiality of stored and transmitted information.
-- **DC-02 De-identification of health/medical information** — De-identify (pseudonymize) patient-identifiable information. Only approved users can access the identification key. Excluded if no personally identifiable information is stored.
-- **DC-03 Secure encryption** — Recommended algorithms of **112-bit or higher security strength**. Passwords are one-way hashes including Salt.
+- **DC-01 Information confidentiality** - Protect the confidentiality of stored and transmitted information.
+- **DC-02 De-identification of health/medical information** - De-identify (pseudonymize) patient-identifiable information. Only approved users can access the identification key. Excluded if no personally identifiable information is stored.
+- **DC-03 Secure encryption** - Recommended algorithms of **112-bit or higher security strength**. Passwords are one-way hashes including Salt.
 
 The concreteness of DC-03 stands out. Following KISA's "Guide to the Use of Cryptographic Algorithms and Key Lengths," the guideline presents a **concrete list of recommended algorithms.**
 
@@ -176,23 +176,23 @@ The concreteness of DC-03 stands out. Following KISA's "Guide to the Use of Cryp
 
 Here, a distinctive feature is that domestic standard ciphers (SEED, ARIA, LEA, HIGHT, LSH, HAS-160) are recommended alongside international standards (AES, SHA). As it is a domestic regulation, it includes domestic ciphers but controls algorithm strength via the quantitative criterion of "112-bit or higher security strength." DC-02's de-identification connects to the concept of health/medical information in the "Framework Act on Health and Medical Services," forming an interface with personal data protection regulation.
 
-### 3.5 Timely Response to Events (TRE) — 1 item / FR 6
+### 3.5 Timely Response to Events (TRE) - 1 item / FR 6
 
-- **TRE-01 Restricting unauthorized access to audit logs** — Only authorized users have **read-only** access to audit logs. **There must be no function to modify audit records.**
+- **TRE-01 Restricting unauthorized access to audit logs** - Only authorized users have **read-only** access to audit logs. **There must be no function to modify audit records.**
 
 Though it is a single item, its weight is large. The integrity of audit logs is the last bastion of post-incident forensics. The requirement that "there must be no modification function" means the logs must be append-only, and if this is not observed, all of the audit logging in UC-04~UC-07 becomes meaningless. If you keep a log but an attacker can erase it, it is not a log.
 
-### 3.6 Resource Availability (RA) — 5 items / FR 7
+### 3.6 Resource Availability (RA) - 5 items / FR 7
 
 Guarantees "the device operates when needed." In medical devices, availability is patient safety itself. It corresponds to FR 7.
 
-- **RA-01 DoS prevention** — Maintain essential functions even during DoS. Devices doing real-time control on public networks are obligated to establish DDoS countermeasures.
-- **RA-02 Backup** — A backup function is mandatory, without affecting normal operation. Encrypt sensitive data within backups.
-- **RA-03 Recovery/reconstitution** — Recover to a safe state after interruption or failure, including reinstallation of security patches.
-- **RA-04 Network/security configuration** — Specify the configuration interface in the manual, monitor and control configuration changes.
-- **RA-05 Disable unnecessary functions** — **Disable unnecessary ports, protocols, and services by default**, and verify with a port scanning tool (Zenmap, etc.).
+- **RA-01 DoS prevention** - Maintain essential functions even during DoS. Devices doing real-time control on public networks are obligated to establish DDoS countermeasures.
+- **RA-02 Backup** - A backup function is mandatory, without affecting normal operation. Encrypt sensitive data within backups.
+- **RA-03 Recovery/reconstitution** - Recover to a safe state after interruption or failure, including reinstallation of security patches.
+- **RA-04 Network/security configuration** - Specify the configuration interface in the manual, monitor and control configuration changes.
+- **RA-05 Disable unnecessary functions** - **Disable unnecessary ports, protocols, and services by default**, and verify with a port scanning tool (Zenmap, etc.).
 
-RA-05 regulates the principle of attack surface reduction. Unused ports and services are merely attack entry points, so they should be turned off by default. The concrete verification method of "verify with a port scanning tool" is striking — it does not merely require but also specifies how to confirm. RA-01's "maintain essential functions" meshes with SI-06's Fail-Safe, running through the medical device safety philosophy that even under attack the minimum safety functions must not die.
+RA-05 regulates the principle of attack surface reduction. Unused ports and services are merely attack entry points, so they should be turned off by default. The concrete verification method of "verify with a port scanning tool" is striking - it does not merely require but also specifies how to confirm. RA-01's "maintain essential functions" meshes with SI-06's Fail-Safe, running through the medical device safety philosophy that even under attack the minimum safety functions must not die.
 
 ---
 
@@ -208,7 +208,7 @@ It is not that all 35 requirements are applied unconditionally. The guideline ha
 | Moderate | Temporary/minor injury, medical intervention possibly needed |
 | Low (minor) | Temporary discomfort, reversible |
 
-**② Communication method** — Wired (USB, RS-232, LAN, etc.) vs. wireless (Wi-Fi, BT, NFC, RF). Wireless is easier to access remotely, so its risk is higher.
+**② Communication method** - Wired (USB, RS-232, LAN, etc.) vs. wireless (Wi-Fi, BT, NFC, RF). Wireless is easier to access remotely, so its risk is higher.
 
 **③ Environment of use**
 
@@ -222,9 +222,9 @@ The combination of these three axes determines the risk level, and the intensity
 
 To keep this judgment from being arbitrary, the guideline nails down **three common principles for conducting testing.**
 
-1. **Basic safety first** — Security functions must not impair the device's basic safety and essential performance.
-2. **Use of higher entities permitted** — If the device itself cannot provide a security function, it can be designed to use the security function of a higher system (the hospital IT network). But submission of an appropriateness/validity rationale is mandatory.
-3. **Duty to maintain essential functions** — Even if some functions are lost to an attack, **essential functions must be maintained.**
+1. **Basic safety first** - Security functions must not impair the device's basic safety and essential performance.
+2. **Use of higher entities permitted** - If the device itself cannot provide a security function, it can be designed to use the security function of a higher system (the hospital IT network). But submission of an appropriateness/validity rationale is mandatory.
+3. **Duty to maintain essential functions** - Even if some functions are lost to an attack, **essential functions must be maintained.**
 
 The second principle (use of higher entities) is very important in practice. Reflecting IEC 62443's "system vs. component" perspective, it lets an individual medical device (component) not bear all security alone but leverage security controls at the network (system) level. This provides realistic breathing room for embedded medical devices with limited computing resources.
 
@@ -309,6 +309,6 @@ For developers and regulatory practitioners, we compress the core.
 
 **Fourth, cybersecurity is not a one-time thing but a life cycle activity.** A continuing duty to respond is imposed via post-market management, not just pre-release approval. And an additional verification axis is foreshadowed for AI-equipped devices.
 
-**Fifth, the legal form of the document is "guidance," but its practical enforcement power is considerable.** In particular, digital medical devices have the revised requirements applied immediately from 2025.1.24, so developers of new medical devices must reflect these 35 requirements from the earliest design stage. Approaching cybersecurity as a bolt-on to be attached later will get you stuck at the approval stage — as IEC 62443-4-1 (secure product development life cycle) requires, security must be in from the very start of design.
+**Fifth, the legal form of the document is "guidance," but its practical enforcement power is considerable.** In particular, digital medical devices have the revised requirements applied immediately from 2025.1.24, so developers of new medical devices must reflect these 35 requirements from the earliest design stage. Approaching cybersecurity as a bolt-on to be attached later will get you stuck at the approval stage - as IEC 62443-4-1 (secure product development life cycle) requires, security must be in from the very start of design.
 
 As long as medical devices continue to evolve toward being more connected, more software-driven, and AI-equipped, the cybersecurity requirements this guideline defines will expand. Guidance No. 0995-05 is both the current coordinate of that evolution and a milestone signaling that domestic medical device security regulation has entered the orbit of the international standard IEC 62443.

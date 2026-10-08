@@ -170,7 +170,7 @@ int vuln()
 
 ### Analysis
 
-User input `s` is copied into `format` via `snprintf`, then passed directly to `printf`. This is a classic format string vulnerability — since the attacker controls the format string, arbitrary values can be written to arbitrary addresses.
+User input `s` is copied into `format` via `snprintf`, then passed directly to `printf`. This is a classic format string vulnerability - since the attacker controls the format string, arbitrary values can be written to arbitrary addresses.
 
 The goal is to overwrite `printf`'s GOT entry with the address of `flag()`. The next `printf` call then executes it instead of returning a shell.
 
@@ -306,9 +306,9 @@ void __fastcall __noreturn main(int a1, char **a2, char **a3)
 
 Each "node" is a 16-byte heap chunk: the first 8 bytes hold an integer ID, and the next 8 bytes hold a pointer to an 8-byte internal buffer. The first `strcpy` copies up to 4096 bytes into `v3`'s 8-byte internal buffer, overflowing upward on the heap.
 
-Since `v4`'s 16-byte chunk sits right after `v3`'s internal buffer (8 bytes), the overflow can overwrite `v4`'s fields — in particular, the pointer at `*(v4 + 1)`. The second `strcpy` then writes to whatever address `*(v4 + 1)` now points to, giving us a write-what-where primitive.
+Since `v4`'s 16-byte chunk sits right after `v3`'s internal buffer (8 bytes), the overflow can overwrite `v4`'s fields - in particular, the pointer at `*(v4 + 1)`. The second `strcpy` then writes to whatever address `*(v4 + 1)` now points to, giving us a write-what-where primitive.
 
-The target is `get_flag` — a function that reads and prints the flag. Getting the second write to overwrite a function pointer (or a GOT entry reachable via `exit`) causes `get_flag` to execute.
+The target is `get_flag` - a function that reads and prints the flag. Getting the second write to overwrite a function pointer (or a GOT entry reachable via `exit`) causes `get_flag` to execute.
 
 The tcache allocator in glibc >= 2.26 immediately recycles freed chunks of the same size, so the layout is deterministic in this simple case.
 
@@ -355,7 +355,7 @@ int main(int argc, const char **argv, const char **envp)
 }
 ```
 
-### Stage 1 — bypassing the passcode
+### Stage 1 - bypassing the passcode
 
 `check_passcode` sums five consecutive 32-bit integers starting from the input buffer and compares it to `hashcode = 3235492007`.
 
@@ -366,7 +366,7 @@ data = 0x2691f021  # 647098401
 payload = p32(data) * 4 + p32(data + 2)
 ```
 
-### Stage 2 — ret2libc
+### Stage 2 - ret2libc
 
 Once the passcode check passes, `core()` leaks the runtime address of `printf` via `dlsym`, then reads 100 bytes into a 62-byte buffer (`buf` is at `ebp-0x3E`), allowing a 38-byte overflow.
 
@@ -438,14 +438,14 @@ int __cdecl main(int argc, const char **argv, const char **envp)
   printf("Hey guyssssssssss here you are: %p %p\n", &binsh, &system);
   fgets(s, 128, stdin);
   printf(s);   // format string vulnerability (unused here)
-  gets(s);     // unbounded read — BOF
+  gets(s);     // unbounded read - BOF
   return 0;
 }
 ```
 
 ### Analysis
 
-The binary first hands us two addresses: `&binsh` (a writable global buffer meant to hold the `/bin/sh` string) and `&system` (a pointer to `system()`). Note that `&binsh` isn't a pointer to the string itself — it's the **buffer** that we must first write `/bin/sh` into.
+The binary first hands us two addresses: `&binsh` (a writable global buffer meant to hold the `/bin/sh` string) and `&system` (a pointer to `system()`). Note that `&binsh` isn't a pointer to the string itself - it's the **buffer** that we must first write `/bin/sh` into.
 
 Two-stage exploit:
 1. Use `gets@plt` to write `/bin/sh\x00` into the `binsh` buffer (gadget: `pop ret` to clean up the argument).
@@ -542,7 +542,7 @@ unsigned int __cdecl update_desc(unsigned __int8 a1)
 
 The bounds check in `update_desc` compares the end of the requested write against the metadata pointer minus 4. By carefully allocating chunks of specific sizes, a freed description buffer from one location can be recycled as the metadata chunk of the next allocation (tcache/fastbin reuse). This lets a description write overwrite another location's `*v3` field (the description pointer).
 
-Once the pointer is corrupted, a `display_location` call leaks heap or libc addresses, and a subsequent `update_desc` can write to an arbitrary address — a GOT overwrite or similar technique redirects execution to a shell.
+Once the pointer is corrupted, a `display_location` call leaks heap or libc addresses, and a subsequent `update_desc` can write to an arbitrary address - a GOT overwrite or similar technique redirects execution to a shell.
 
 The exact payload depends on the libc version and the runtime heap layout, but the general primitive chain is: **heap overflow -> pointer corruption -> arbitrary write -> GOT overwrite -> shell**.
 
@@ -552,7 +552,7 @@ The exact payload depends on the libc version and the runtime heap layout, but t
 
 A web challenge. Visiting the site only shows a photo of a robot.
 
-![The "/" challenge page — a robot photo with a hidden flag](/images/writeups/hackctf/slash-hidden-flag.png)
+![The "/" challenge page - a robot photo with a hidden flag](/images/writeups/hackctf/slash-hidden-flag.png)
 
 The challenge is named `/` and hints at a robot photo, so we check `robots.txt`.
 
@@ -569,7 +569,7 @@ Visiting that path (`/robot_flag/`) reveals the flag.
 
 An x64 ret2csu technique challenge. Leak the GOT with `write`, then feed `/bin/sh` and the system address via `read` to get a shell.
 
-![RTC binary — ret2csu using the csu_init/csu_call gadgets](/images/writeups/hackctf/rtc-binary.png)
+![RTC binary - ret2csu using the csu_init/csu_call gadgets](/images/writeups/hackctf/rtc-binary.png)
 
 ```python
 from pwn import *

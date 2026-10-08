@@ -17,8 +17,8 @@ Last channel-policy review: 2026-07-21.
   artifact and the relevant case study.
 - Put the site one click away from GitHub, LinkedIn, X, speaker bios, and research-identity pages
   that actually support an external URL.
-- Use the site's problem-language — differential testing, Ethereum client security, implementation
-  review, and constant-time analysis — consistently in profiles and pitches.
+- Use the site's problem-language - differential testing, Ethereum client security, implementation
+  review, and constant-time analysis - consistently in profiles and pitches.
 
 ### Modify
 
@@ -65,9 +65,9 @@ Suggested X bio:
 Set the X website field to `https://bshastry.github.io/`. On LinkedIn, add these in the Featured
 section if the account tier and current interface expose external-link features:
 
-1. `https://bshastry.github.io/` — evidence-led portfolio
-2. `https://bshastry.github.io/blog/trust-no-single-witness/` — concise testing philosophy
-3. `https://bshastry.github.io/recruiter-brief/` — hiring-team brief
+1. `https://bshastry.github.io/` - evidence-led portfolio
+2. `https://bshastry.github.io/blog/trust-no-single-witness/` - concise testing philosophy
+3. `https://bshastry.github.io/recruiter-brief/` - hiring-team brief
 
 Suggested short speaker bio:
 
@@ -150,7 +150,7 @@ explicit. Avoid turning every technical result into a job-seeking post.
 Send one tailored note, not a bulk pitch:
 
 ```text
-Subject: Possible item — [specific technical result]
+Subject: Possible item - [specific technical result]
 
 I published a first-hand account of [problem] in [system/project].
 The reusable takeaway is [one sentence], backed by [upstream fix/advisory/harness].

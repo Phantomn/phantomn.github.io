@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.8/schema.json
-# 경력기술서 (Career Statement) — portfolio.ts 24개 프로젝트 STAR 반영
+# 경력기술서 (Career Statement) - portfolio.ts 24개 프로젝트 STAR 반영
 # 렌더: rendercv render scripts/cv/career-statement-ko.yaml
 cv:
   name: 홍승표
@@ -18,11 +18,11 @@ cv:
       - "금융권 Web/App 모의해킹부터 OT/ICS(IEC 62443)·IoT·의료기기(FDA) 보안, 사이버 공방 훈련 개발까지 24건 이상의 프로젝트를 수행한 Offensive Security Researcher. LS ELECTRIC 자동화기기 Achilles Communication Certificate Level 2 인증 취득, NATO CCDCOE Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위, Linux Kernel CVE 16건 + IoT CVE 5건 + LLM 추론 엔진 CVE 3건 + FVE 4건 보유."
 
     핵심_역량:
-      - bullet: "금융·공공 전자금융기반시설 Web/App 모의해킹 — 저축은행·캐피탈·증권·보험·제조 등 12개 사이트 수행 (A3 Security)"
-      - bullet: "OT/ICS 보안 — IEC 62443-4-2 Threat Modeling·모의해킹, LS ELECTRIC Achilles Communication Certificate Level 2 인증 취득"
-      - bullet: "IoT 취약점 분석·보안 도구 개발 — 스마트빌딩 IoT 탐지, IoT/CCTV 침해사고 조사 도구, Linux Kernel File System Fuzzer로 CVE 16건 도출"
-      - bullet: "의료기기 보안 — FDA eSTAR 컨설팅 및 Web/App·의료기기 모의해킹, 보안인증(Cybersecurity Controls) 취득 지원"
-      - bullet: "사이버 공방 훈련 개발·운영 — 한국전력 ELECCON, NATO CCDCOE Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위, APEX 2025·2026 Green Team, DFIR 문제 개발"
+      - bullet: "금융·공공 전자금융기반시설 Web/App 모의해킹 - 저축은행·캐피탈·증권·보험·제조 등 12개 사이트 수행 (A3 Security)"
+      - bullet: "OT/ICS 보안 - IEC 62443-4-2 Threat Modeling·모의해킹, LS ELECTRIC Achilles Communication Certificate Level 2 인증 취득"
+      - bullet: "IoT 취약점 분석·보안 도구 개발 - 스마트빌딩 IoT 탐지, IoT/CCTV 침해사고 조사 도구, Linux Kernel File System Fuzzer로 CVE 16건 도출"
+      - bullet: "의료기기 보안 - FDA eSTAR 컨설팅 및 Web/App·의료기기 모의해킹, 보안인증(Cybersecurity Controls) 취득 지원"
+      - bullet: "사이버 공방 훈련 개발·운영 - 한국전력 ELECCON, NATO CCDCOE Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위, APEX 2025·2026 Green Team, DFIR 문제 개발"
 
     경력:
       - company: 코어시큐리티 (CoreSecurity)
@@ -32,10 +32,10 @@ cv:
         end_date: present
         highlights:
           - "[기업] OT/ICS·피지컬 AI 보안, 사이버 교육훈련, 디지털금융범죄 대응 전문 보안기업"
-          - "OT/ICS 보안 — IEC 62443-4-2 Threat Modeling·모의해킹, LS ELECTRIC Achilles Level 2 인증 취득, 자동화 점검 도구 개발"
-          - "IoT 보안 — 스마트빌딩 IoT 취약점 탐지 기술 개발·실증, IoT/CCTV 침해사고 조사 도구 개발"
-          - "의료기기 보안 — FDA eSTAR 컨설팅 및 Web/App·의료기기 모의해킹"
-          - "사이버 공방 훈련 — 한국전력 ELECCON 운영·문제 개발, Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위, APEX 2025·2026 Green Team, DFIR 문제 개발"
+          - "OT/ICS 보안 - IEC 62443-4-2 Threat Modeling·모의해킹, LS ELECTRIC Achilles Level 2 인증 취득, 자동화 점검 도구 개발"
+          - "IoT 보안 - 스마트빌딩 IoT 취약점 탐지 기술 개발·실증, IoT/CCTV 침해사고 조사 도구 개발"
+          - "의료기기 보안 - FDA eSTAR 컨설팅 및 Web/App·의료기기 모의해킹"
+          - "사이버 공방 훈련 - 한국전력 ELECCON 운영·문제 개발, Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위, APEX 2025·2026 Green Team, DFIR 문제 개발"
       - company: A3 Security
         position: 보안기술팀 사원
         location: 서울
@@ -43,7 +43,7 @@ cv:
         end_date: 2021-06
         highlights:
           - "[기업] 국내 최초 정보보안 컨설팅 기업(1999~), 정보보안 프로젝트 2000건 이상 수행, 과기정통부 정보보호 전문서비스 기업"
-          - "금융권·공공기관 전자금융기반시설 모의해킹 12개 사이트 — 고위험 취약점 평균 1~2건/사이트 식별"
+          - "금융권·공공기관 전자금융기반시설 모의해킹 12개 사이트 - 고위험 취약점 평균 1~2건/사이트 식별"
           - "KT 기가지니 AI 스피커, 농협중앙회 RPA, DB손해보험 클레임콜 등 비정형 시스템 보안성 검토"
           - "ISMS/ISO 27001 인증 취득 지원 컨설팅 (코웨이)"
 
@@ -63,7 +63,7 @@ cv:
           - "IEC 62443-4-2 SL1 요구사항 중 통신 기반 자동화가 가능한 항목 선별·도구화"
           - "FR2(사용 제어)·FR3(시스템 무결성)·FR4(데이터 기밀성)·FR7(자원 가용성) 영역 점검 자동화"
           - "점검 대상·결과 관리 웹 UI 및 결과 저장 파이프라인 구축"
-          - "[성과] PLC 제품군 IEC 62443-4-2 통신 기반 요구사항 자동 점검 도구 개발 — 수작업 30일 이상 소요 점검을 1시간 이내로 단축"
+          - "[성과] PLC 제품군 IEC 62443-4-2 통신 기반 요구사항 자동 점검 도구 개발 - 수작업 30일 이상 소요 점검을 1시간 이내로 단축"
           - "기술: Python · FastAPI · TypeScript · React · TailwindCSS · SQLite3"
       - name: "LS ELECTRIC 자동화기기 Threat Modeling 컨설팅"
         date: "2023.03 – 2023.11 · 기여도 40%"
@@ -72,7 +72,7 @@ cv:
           - "System Definition → Function Point Definition → Data Flow Analysis 순 분석, DFD 작성"
           - "STRIDE + DREAD 기반 Threat & Risk Assessment 수행"
           - "주요정보통신기반시설 취약점 분석평가 방법론 기반 모의해킹으로 위협 검증"
-          - "[성과] XGI-CPUZ 위협 4건 이상 도출, 모의해킹으로 검증 완료 — Threat Modeling 및 모의해킹 보고서 산출"
+          - "[성과] XGI-CPUZ 위협 4건 이상 도출, 모의해킹으로 검증 완료 - Threat Modeling 및 모의해킹 보고서 산출"
           - "기술: STRIDE · DREAD · DFD · IEC 62443-4-2"
       - name: "스마트쉽 인프라 취약점 분석·검증 도구 및 보안 기술 개발"
         date: "2024.07 – 2024.11 · 기여도 25%"
@@ -91,7 +91,7 @@ cv:
         highlights:
           - "국내·외 CCTV 40종 대상 침해사고 증거 수집 자동화 도구 설계·구현"
           - "UART 접근·플래시 덤프·binwalk 기반 펌웨어 추출 및 설정 파일·로그 전수 수집"
-          - "[성과] 공공기관 현장 실증 — 40종 장비 침해 흔적 수집 및 분석"
+          - "[성과] 공공기관 현장 실증 - 40종 장비 침해 흔적 수집 및 분석"
           - "기술: Python · C/C++ · UART · binwalk · Firmware Dump · Linux"
       - name: "스마트빌딩 내 IoT 기기 취약점 탐지 기술 개발 및 실증 (1차년도)"
         date: "2021.08 – 2021.12 · 기여도 40%"
@@ -105,7 +105,7 @@ cv:
         date: "2022.01 – 2022.10 · 기여도 40%"
         summary: "1차년도 탐지 기술을 실제 운영 중인 스마트빌딩에 적용해 탐지 정확도를 검증·개선."
         highlights:
-          - "실제 스마트빌딩 대상 실증 — iptime·D-Link·NAS 등 200종 이상 IoT 기기/센서 정보 수집 및 취약점 탐지"
+          - "실제 스마트빌딩 대상 실증 - iptime·D-Link·NAS 등 200종 이상 IoT 기기/센서 정보 수집 및 취약점 탐지"
           - "취약점 정탐/오탐/미탐 식별 및 탐지 식별률 도출, 취약점 DB 최신화"
           - "[성과] 실증 기반 탐지 정확도 개선 조치 도출"
           - "기술: IoT Scanning · CVE/CWE · PoC Validation · CSV/Excel Report"
@@ -140,24 +140,24 @@ cv:
         highlights:
           - "NIST SSDF 기반 FDD 플랫폼 안전한 개발 프로세스 분석·정의 (IEC 62443·FDA·ISO 27001·EU CRA 검토)"
           - "FDD 위협 모델링 기반 실제 위협 식별 및 소스코드 레벨 보안 통제(API 보안) 적용"
-          - "[성과] 실 운영 환경 모의해킹 2회 수행 — 5종 시스템 대상 취약점 10건 탐지·보고"
+          - "[성과] 실 운영 환경 모의해킹 2회 수행 - 5종 시스템 대상 취약점 10건 탐지·보고"
           - "기술: NIST SSDF · Threat Modeling · IEC 62443 · FDA Cybersecurity"
 
     사이버훈련장·CTF 개발:
-      - name: "NATO CCDCOE Locked Shields 2025 — 한국-캐나다 연합 DFIR 블루팀"
+      - name: "NATO CCDCOE Locked Shields 2025 - 한국-캐나다 연합 DFIR 블루팀"
         date: "2025.01 – 2025.04 · 기여도 45%"
         summary: "세계 최대 규모 국제 사이버 방어 훈련 Locked Shields에 한국-캐나다 연합 DFIR 블루팀 참가. 실시간 공격 환경에서 침해 흔적 분석·대응 보고."
         highlights:
           - "실시간 공격 시나리오 하 침해사고 포렌식 분석 및 타임라인 재구성"
-          - "DFIR CTF 과제 수행 — 아티팩트 분석·악성코드 트리아지"
+          - "DFIR CTF 과제 수행 - 아티팩트 분석·악성코드 트리아지"
           - "[성과] Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위"
           - "[성과] Locked Shields 2026 종합 9위(16팀 중)"
           - "[참여] Locked Shields 2026 한국-헝가리 연합 Special System 블루팀"
           - "기술: DFIR · Volatility · Wireshark · Sysmon · YARA"
-      - name: "APEX CTF 2025 — DFIR Network Forensics 문제 개발"
+      - name: "APEX CTF 2025 - DFIR Network Forensics 문제 개발"
         date: "2025.06 – 2025.09 · 기여도 45%"
         highlights:
-          - "DFIR Network Forensics 카테고리 문제 개발 — 실제 침해사고 기반 포렌식 시나리오"
+          - "DFIR Network Forensics 카테고리 문제 개발 - 실제 침해사고 기반 포렌식 시나리오"
           - "[성과] 매년 시나리오 1개 Act(Act당 25문제) 개발, 미주·유럽·인도태평양 등 23개국 방어팀(Blue Team) 참가"
           - "[참여] APEX 2025·2026 Green Team, DFIR 문제 개발"
           - "기술: DFIR · Network Forensics · Wireshark"
@@ -166,7 +166,7 @@ cv:
         summary: "한국전력 실전형 사이버 공방 훈련(ELECCON, 舊 C2021) 4개 연도 연속 참여. 전력망(OT/ICS) 환경 기반 예선 CTF와 본선 공방 시나리오를 매년 설계·개발·보강."
         highlights:
           - "전력망(OT/ICS) 환경 기반 예선 CTF 문제 및 본선 공방 시나리오 설계·개발 (2021·2022·2023·2024 연속)"
-          - "[성과] 전력망 공방 시나리오 기반 훈련 운영 — 매 대회 20팀 참가"
+          - "[성과] 전력망 공방 시나리오 기반 훈련 운영 - 매 대회 20팀 참가"
           - "기술: OT/ICS · SCADA · CTF"
       - name: "24년 실전형 사이버훈련장 훈련과정 운영 (스마트선박 항만)"
         date: "2024.07 – 2024.12 · 기여도 20%"
@@ -182,8 +182,8 @@ cv:
         date: "2020.06 – 2021.06"
         summary: "A3 Security 재직 중 금융권·공공기관 전자금융기반시설 대상 다수 Web/App 모의해킹 및 취약점 분석평가. 정보 유출·2차 공격 가능성 점검 및 개선 방안 제시."
         highlights:
-          - "전자금융기반시설 취약점 분석평가 — 참저축은행, 애큐온캐피탈, 금융투자협회 등 금융권 Web/App 모의해킹"
-          - "금융·보험·제조 시스템 보안성 검토 — SBI저축은행(오픈뱅킹·디지털창구), 현대자동차 HKMC, DB손해보험 클레임콜"
+          - "전자금융기반시설 취약점 분석평가 - 참저축은행, 애큐온캐피탈, 금융투자협회 등 금융권 Web/App 모의해킹"
+          - "금융·보험·제조 시스템 보안성 검토 - SBI저축은행(오픈뱅킹·디지털창구), 현대자동차 HKMC, DB손해보험 클레임콜"
           - "농협중앙회 RPA 소스코드 진단, 대교 통합교육 플랫폼·오토핸즈·UNTAC 등 모의해킹"
           - "[성과] 12개 사이트 모의해킹 수행, 사이트당 고위험 취약점 평균 1~2건 식별 및 개선 방안 제시"
           - "기술: Burp Suite · OWASP Top 10 · Web/App Pentest · Source Code Review"
@@ -204,13 +204,13 @@ cv:
           - "[성과] 사후관리 점검 통과 지원"
 
     취약점 연구:
-      - label: "OS Kernel CVE 16건 — Best of the Best 8기"
+      - label: "OS Kernel CVE 16건 - Best of the Best 8기"
         details: "커스텀 File System Fuzzer 설계·구현으로 Linux Kernel CVE 16건(0-day 포함) 도출. CodeBlue 2019(도쿄)·Hack In The Box 2019(암스테르담) 발표."
-      - label: "IoT CVE 5건 — 개인 연구"
+      - label: "IoT CVE 5건 - 개인 연구"
         details: "임베디드/IoT 장비 취약점 분석. CVE-2024-33788/33789/33791/33792/33793 (CVSS 최대 9.8 CRITICAL)."
-      - label: "LLM CVE 3건 — 개인 연구"
+      - label: "LLM CVE 3건 - 개인 연구"
         details: "llama.cpp 추론 엔진 취약점 분석. CVE-2026-52130/52131/52132 (원격 비인증 DoS 2건 CVSS 7.5, 악성 GGUF 모델 로드 시 abort 1건)."
-      - label: "FVE 4건 — Findthegap 버그바운티"
+      - label: "FVE 4건 - Findthegap 버그바운티"
         details: "버그바운티 플랫폼 대상 웹 취약점 보고 4건 (상세 비공개)."
 
     자격증 · 교육:

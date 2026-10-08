@@ -37,7 +37,7 @@ export default async function RecruiterBriefPage({ params }: Params) {
   const recruiterJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ProfilePage',
-    name: `${personal.name} — Recruiter Brief`,
+    name: `${personal.name} - Recruiter Brief`,
     url: `${SITE_URL}/recruiter-brief/`,
     mainEntity: {
       '@type': 'Person',

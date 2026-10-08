@@ -68,15 +68,15 @@ There are various types of USB data transfer. In DFU, only **control transfer** 
 
 In this mode, each transaction consists of three steps:
 
-- **Setup Stage** — Setup packets are transmitted. It contains the following fields:
-  - `bmRequestType` — Defines the direction, type, and recipient of the request.
-  - `bRequest` — defines the request itself
-  - `wValue`, `wIndex` — interpreted on request
-  - `wLength` — Specifies the length of data transmitted from the Data Stage
-- **Data Stage** — Optional data transfer stage. Depending on the setup packet, data is transmitted in the direction of host → device (OUT) or device → host (IN). Data is transferred in small chunks (0x40 bytes for Apple DFU).
+- **Setup Stage** - Setup packets are transmitted. It contains the following fields:
+  - `bmRequestType` - Defines the direction, type, and recipient of the request.
+  - `bRequest` - defines the request itself
+  - `wValue`, `wIndex` - interpreted on request
+  - `wLength` - Specifies the length of data transmitted from the Data Stage
+- **Data Stage** - Optional data transfer stage. Depending on the setup packet, data is transmitted in the direction of host → device (OUT) or device → host (IN). Data is transferred in small chunks (0x40 bytes for Apple DFU).
   - If the host wants to send more data, send data after the OUT token
   - When the host is ready to receive data from the device, it sends an IN token to the device.
-- **Status Stage** — This is the final stage, where the overall transaction status is reported.
+- **Status Stage** - This is the final stage, where the overall transaction status is reported.
   - For OUT requests: the host sends an IN token and the device responds with a 0-length packet
   - For IN requests: host sends OUT token and length 0 packet
 
@@ -375,14 +375,14 @@ Parameters passed to the call:
 Parameters shared across all three request types:
 
 - `bmRequestType = 0x80`
-  - `0b1XXXXXXX` — Data Stage Direction: Device → Host
-  - `0bX00XXXXX` — Standard request type
-  - `0bXXX00000` — Device is the recipient
-- `bRequest = 6` — GET_DESCRIPTOR
+  - `0b1XXXXXXX` - Data Stage Direction: Device → Host
+  - `0bX00XXXXX` - Standard request type
+  - `0bXXX00000` - Device is the recipient
+- `bRequest = 6` - GET_DESCRIPTOR
 - `wValue = 0x304`
-  - `wValueHigh = 0x3` — Descriptor Type: String (USB_DT_STRING)
-  - `wValueLow = 0x4` — String descriptor index 4 (device serial number)
-- `wIndex = 0x40A` — String language identifier (value is independent of exploit)
+  - `wValueHigh = 0x3` - Descriptor Type: String (USB_DT_STRING)
+  - `wValueLow = 0x4` - String descriptor index 4 (device serial number)
+- `wIndex = 0x40A` - String language identifier (value is independent of exploit)
 
 Request object structure (0x30 byte allocation):
 
@@ -390,8 +390,8 @@ Request object structure (0x30 byte allocation):
 
 The fields of most interest are `callback` and `next`:
 
-- `callback` — Pointer to a function to be called upon completion of the request.
-- `next` — A pointer to the next object of the same type; Used to configure request queue
+- `callback` - Pointer to a function to be called upon completion of the request.
+- `next` - A pointer to the next object of the same type; Used to configure request queue
 
 The main function of `stall` is to execute requests asynchronously with minimal timeout. If you're lucky, the request is canceled at the OS level and remains in the run queue, preventing the transaction from completing. The device continues to receive all scheduled SETUP packets and places them in the run queue as needed.
 
@@ -724,7 +724,7 @@ The interrupt is then masked for atomic execution of the task.
 00000001000003EC: RET
 ```
 
-Set TTBR0_EL1 to `0x1800B0000` — INSECURE_MEMORY address where the exploit payload is stored. Translation descriptors are located at specific offsets in the payload:
+Set TTBR0_EL1 to `0x1800B0000` - INSECURE_MEMORY address where the exploit payload is stored. Translation descriptors are located at specific offsets in the payload:
 
 ```
 0x1800B0400: 0x1000006a5       0x100000000 -> 0x100000000 (rx)
@@ -745,7 +745,7 @@ Set TTBR0_EL1 to `0x1800B0000` — INSECURE_MEMORY address where the exploit pay
 
 The translation table is invalidated to translate addresses according to the new translation table.
 
-#### 5.6. 0x1820B0610 — disable_wxn_arm64
+#### 5.6. 0x1820B0610 - disable_wxn_arm64
 
 ```
 MOV  X1, #0x180000000

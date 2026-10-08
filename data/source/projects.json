@@ -1,7 +1,7 @@
 [
   {
     "id": "achilles-l2",
-    "period": "2024.07 — 2025.03",
+    "period": "2024.07 - 2025.03",
     "category": "ics-ot",
     "contribution": 100,
     "featured": true,
@@ -15,7 +15,7 @@
   },
   {
     "id": "locked-shields",
-    "period": "2025.01 — 2025.04",
+    "period": "2025.01 - 2025.04",
     "category": "cyber-range",
     "contribution": 45,
     "featured": true,
@@ -29,7 +29,7 @@
   },
   {
     "id": "llama-cpp-cve",
-    "period": "2026.07 — 2026.08",
+    "period": "2026.07 - 2026.08",
     "category": "vuln-research",
     "contribution": 100,
     "featured": true,
@@ -57,7 +57,7 @@
   },
   {
     "id": "iot-cctv-forensics",
-    "period": "2022.08 — 2022.12",
+    "period": "2022.08 - 2022.12",
     "category": "iot",
     "contribution": 45,
     "featured": true,
@@ -72,7 +72,7 @@
   },
   {
     "id": "a3-financial-pentest",
-    "period": "2020.06 — 2021.06",
+    "period": "2020.06 - 2021.06",
     "category": "fintech",
     "contribution": 0,
     "featured": false,
@@ -98,7 +98,7 @@
   },
   {
     "id": "smartbuilding-y1",
-    "period": "2021.08 — 2021.12",
+    "period": "2021.08 - 2021.12",
     "category": "iot",
     "contribution": 40,
     "featured": false,
@@ -113,7 +113,7 @@
   },
   {
     "id": "smartbuilding-y2",
-    "period": "2022.01 — 2022.10",
+    "period": "2022.01 - 2022.10",
     "category": "iot",
     "contribution": 40,
     "featured": false,
@@ -126,14 +126,14 @@
   },
   {
     "id": "qud-081871",
-    "period": "2021.08 — 2021.12",
+    "period": "2021.08 - 2021.12",
     "category": "iot",
     "contribution": 40,
     "featured": false
   },
   {
     "id": "ls-threat-modeling",
-    "period": "2023.03 — 2023.11",
+    "period": "2023.03 - 2023.11",
     "category": "ics-ot",
     "contribution": 40,
     "featured": false,
@@ -146,7 +146,7 @@
   },
   {
     "id": "ls-62443-tool",
-    "period": "2025.03 — 2025.11",
+    "period": "2025.03 - 2025.11",
     "category": "ics-ot",
     "contribution": 90,
     "featured": true,
@@ -162,7 +162,7 @@
   },
   {
     "id": "smartship",
-    "period": "2024.07 — 2024.11",
+    "period": "2024.07 - 2024.11",
     "category": "ics-ot",
     "contribution": 25,
     "featured": false,
@@ -177,7 +177,7 @@
   },
   {
     "id": "fda-consulting",
-    "period": "2024.03 — 2024.12",
+    "period": "2024.03 - 2024.12",
     "category": "medical",
     "contribution": 30,
     "featured": false,
@@ -189,7 +189,7 @@
   },
   {
     "id": "medical-controls",
-    "period": "2024.06 — 2025.03",
+    "period": "2024.06 - 2025.03",
     "category": "medical",
     "contribution": 45,
     "featured": false,
@@ -204,7 +204,7 @@
   },
   {
     "id": "k-melloddy",
-    "period": "2024.07 — 2024.12",
+    "period": "2024.07 - 2024.12",
     "category": "medical",
     "contribution": 30,
     "featured": false,
@@ -218,21 +218,21 @@
   },
   {
     "id": "cosmo-mfds",
-    "period": "2025.10 — 2026.12",
+    "period": "2025.10 - 2026.12",
     "category": "medical",
     "contribution": 40,
     "featured": false
   },
   {
     "id": "c2021-eleccon",
-    "period": "2021.05 — 2021.12",
+    "period": "2021.05 - 2021.12",
     "category": "cyber-range",
     "contribution": 30,
     "featured": false
   },
   {
     "id": "cyber-training-upgrade",
-    "period": "2022.07 — 2022.09",
+    "period": "2022.07 - 2022.09",
     "category": "cyber-range",
     "contribution": 40,
     "featured": false,
@@ -244,7 +244,7 @@
   },
   {
     "id": "kepco-eleccon-2023",
-    "period": "2023.06 — 2023.12",
+    "period": "2023.06 - 2023.12",
     "category": "cyber-range",
     "contribution": 30,
     "featured": false,
@@ -256,14 +256,14 @@
   },
   {
     "id": "smartship-port-training",
-    "period": "2024.07 — 2024.12",
+    "period": "2024.07 - 2024.12",
     "category": "cyber-range",
     "contribution": 20,
     "featured": false
   },
   {
     "id": "training-upgrade-2024",
-    "period": "2024.09 — 2025.02",
+    "period": "2024.09 - 2025.02",
     "category": "cyber-range",
     "contribution": 30,
     "featured": false,
@@ -284,7 +284,7 @@
   },
   {
     "id": "apex-2025",
-    "period": "2025.06 — 2025.09",
+    "period": "2025.06 - 2025.09",
     "category": "cyber-range",
     "contribution": 45,
     "featured": false,
@@ -296,7 +296,7 @@
   },
   {
     "id": "apex-2026",
-    "period": "2026.06 — 2026.09",
+    "period": "2026.06 - 2026.09",
     "category": "cyber-range",
     "contribution": 100,
     "featured": true,
@@ -310,7 +310,7 @@
   },
   {
     "id": "hacksium",
-    "period": "2026.06 — 2026.09",
+    "period": "2026.06 - 2026.09",
     "category": "cyber-range",
     "contribution": 70,
     "featured": true,
@@ -331,7 +331,7 @@
   },
   {
     "id": "infinitt-dps",
-    "period": "2024.07 — 2024.09",
+    "period": "2024.07 - 2024.09",
     "category": "consulting",
     "contribution": 70,
     "featured": false,
@@ -345,7 +345,7 @@
   },
   {
     "id": "infosec-consulting",
-    "period": "2024.10 — 2025.01",
+    "period": "2024.10 - 2025.01",
     "category": "consulting",
     "contribution": 25,
     "featured": false

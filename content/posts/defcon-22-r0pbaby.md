@@ -30,7 +30,7 @@ authors:
     FORTIFY:  Enabled
 ```
 
-PIE is enabled, but there's no stack canary. NX is enabled, so we can't run shellcode directly on the stack — we need a ROP chain. Fortunately, the binary provides menu options that expose the libc base address and the address of arbitrary libc symbols.
+PIE is enabled, but there's no stack canary. NX is enabled, so we can't run shellcode directly on the stack - we need a ROP chain. Fortunately, the binary provides menu options that expose the libc base address and the address of arbitrary libc symbols.
 
 ## Running the program
 
@@ -64,9 +64,9 @@ Exiting.
 
 The program opens `libc.so.6` with `dlopen` and exposes three primitives:
 
-- **Option 1** — prints the handle returned by `dlopen`, which is the libc base address.
-- **Option 2** — calls `dlsym` with a user-supplied symbol name and prints the resolved address.
-- **Option 3** — reads up to 1024 bytes into `nptr`, then `memcpy`s it directly onto the stack.
+- **Option 1** - prints the handle returned by `dlopen`, which is the libc base address.
+- **Option 2** - calls `dlsym` with a user-supplied symbol name and prints the resolved address.
+- **Option 3** - reads up to 1024 bytes into `nptr`, then `memcpy`s it directly onto the stack.
 
 ## Source analysis
 
@@ -223,4 +223,4 @@ r0pbaby is a simple introduction to 64-bit ROP. Since the binary deliberately pr
 - A `dlopen` handle == the shared library's load address, usable directly as the base.
 - `dlsym` resolves symbols at runtime, giving exact function addresses without an ASLR bruteforce.
 - In the 64-bit calling convention, the first argument goes in `rdi`; `pop rdi ; ret` is the standard way to set it up.
-- A 16-byte stack alignment is required before calling `system` — misalignment causes glibc's `movaps` instruction to crash.
+- A 16-byte stack alignment is required before calling `system` - misalignment causes glibc's `movaps` instruction to crash.

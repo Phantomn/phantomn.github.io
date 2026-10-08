@@ -1,7 +1,7 @@
 ---
 title: 'Best of the Best Cohort 8: Kernel Exploitation and a Filesystem Fuzzer'
 date: 2019-07-01T00:00:00.000Z
-excerpt: 'A retrospective on my time in Best of the Best (BoB) Cohort 8 — building a filesystem fuzzer, finding 16 CVEs, and speaking at CodeBlue and HITB'
+excerpt: 'A retrospective on my time in Best of the Best (BoB) Cohort 8 - building a filesystem fuzzer, finding 16 CVEs, and speaking at CodeBlue and HITB'
 tags:
   - bob
   - fuzzing
@@ -20,9 +20,9 @@ authors:
 
 ## The Road to BoB
 
-When I first learned about Best of the Best (BoB), I was a sophomore with almost no security knowledge. At the time, the program felt like it was on a pedestal far above me. I knew I needed more preparation, so I decided to wait — I spent two years building my skills on my own before applying to Cohort 8 on the vulnerability analysis track.
+When I first learned about Best of the Best (BoB), I was a sophomore with almost no security knowledge. At the time, the program felt like it was on a pedestal far above me. I knew I needed more preparation, so I decided to wait - I spent two years building my skills on my own before applying to Cohort 8 on the vulnerability analysis track.
 
-My interest in security started simply. Back when the only thing I knew was C, I happened to come across a book, *Learning System Hacking Through Problem Solving on FTZ*. That single book became the starting point of my security study. Debuggers, assembly, all kinds of programming techniques — a flood of things I was seeing for the first time, and things I had to relearn. That was also when I first realized that reverse engineering goes hand in hand with system hacking. I remember arriving at the study room at 9 a.m. and solving problems until midnight, taking only an hour off to eat. The thrill of the moment I popped a shell is still vivid.
+My interest in security started simply. Back when the only thing I knew was C, I happened to come across a book, *Learning System Hacking Through Problem Solving on FTZ*. That single book became the starting point of my security study. Debuggers, assembly, all kinds of programming techniques - a flood of things I was seeing for the first time, and things I had to relearn. That was also when I first realized that reverse engineering goes hand in hand with system hacking. I remember arriving at the study room at 9 a.m. and solving problems until midnight, taking only an hour off to eat. The thrill of the moment I popped a shell is still vivid.
 
 ## Why the Vulnerability Analysis Track
 
@@ -36,13 +36,13 @@ The BoB community itself was also part of the draw. Finding mentors or peers at 
 
 I focused on two main directions during BoB.
 
-**Primary focus: vulnerability analysis — firmware and embedded devices**
+**Primary focus: vulnerability analysis - firmware and embedded devices**
 
 My plan was to start with small devices (routers) and gradually move to bigger targets (TVs, refrigerators). Router vulnerabilities were fascinating to me at first. What began as diving headfirst into bug hunting turned into the field I now want to dig into the deepest.
 
 **Secondary focus: SDR and RF security**
 
-Software-Defined Radio (SDR) was an area where I didn't even know how to detect, capture, or analyze signals. One of my goals was to get advice from mentors and actually demonstrate an RF replay attack myself. I ended up buying equipment somewhat impulsively — and went through plenty of trial and error, including antenna performance that wasn't good enough to properly pick up signals.
+Software-Defined Radio (SDR) was an area where I didn't even know how to detect, capture, or analyze signals. One of my goals was to get advice from mentors and actually demonstrate an RF replay attack myself. I ended up buying equipment somewhat impulsively - and went through plenty of trial and error, including antenna performance that wasn't good enough to properly pick up signals.
 
 I also set myself one rule: **never sacrifice sleep.** The body has to hold up for the mind to function. I watched talented researchers burn out and leave, and I learned that sustainable learning depends on physical and mental health.
 

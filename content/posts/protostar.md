@@ -283,7 +283,7 @@ id
 uid=1000(ubuntu) gid=1000(ubuntu) groups=1000(ubuntu),4(adm),20(dialout),24(cdrom),25(floppy),27(sudo),29(audio),30(dip),44(video),46(plugdev),108(lxd),114(netdev)
 ```
 
-Those addresses correspond to `system()` and `/bin/sh` in libc — a textbook ret2libc attack.
+Those addresses correspond to `system()` and `/bin/sh` in libc - a textbook ret2libc attack.
 
 ---
 
@@ -321,7 +321,7 @@ int main(int argc, char **argv)
 }
 ```
 
-Stack6 blocks return addresses in the `0xbf000000` range (the stack region), preventing a direct jump to shellcode on the stack. The bypass is ret2libc — point the return address at `system()` in libc, which is outside the blocked range.
+Stack6 blocks return addresses in the `0xbf000000` range (the stack region), preventing a direct jump to shellcode on the stack. The bypass is ret2libc - point the return address at `system()` in libc, which is outside the blocked range.
 
 ### Exploit
 
@@ -488,14 +488,14 @@ Entering `"auth "` + a string allocates a chunk of the given size and memsets it
         }
 ```
 
-Entering `login` logs in if `auth->auth` has a value. But only 30 bytes are writable — so how can we put a value into `auth->auth`?
+Entering `login` logs in if `auth->auth` has a value. But only 30 bytes are writable - so how can we put a value into `auth->auth`?
 
 Exploit sequence:
-1. `auth AAAA...` — allocate the auth structure, fill the name field
-2. `service` — allocate an adjacent chunk for service
-3. `reset` — free auth (the pointer is not reset)
-4. `service` — strdup allocates into the freed auth chunk, overwriting `auth->auth`
-5. `login` — succeeds since auth->auth is now non-zero
+1. `auth AAAA...` - allocate the auth structure, fill the name field
+2. `service` - allocate an adjacent chunk for service
+3. `reset` - free auth (the pointer is not reset)
+4. `service` - strdup allocates into the freed auth chunk, overwriting `auth->auth`
+5. `login` - succeeds since auth->auth is now non-zero
 
 ```
 auth AAAAAAAAAAAAAAAAAAAAAAAAA
@@ -567,4 +567,4 @@ struct malloc_chunk {
 };
 ```
 
-![Heap chunk layout — memory layout of the Red/Green/Blue objects before free](/images/writeups/protostar/heap-structure.png)
+![Heap chunk layout - memory layout of the Red/Green/Blue objects before free](/images/writeups/protostar/heap-structure.png)

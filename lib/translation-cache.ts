@@ -51,6 +51,6 @@ export async function setCached(
   try {
     window.localStorage.setItem(makeKey(locale, contentKey, hash), translated);
   } catch {
-    // localStorage full or disabled — silently skip
+    // localStorage full or disabled - silently skip
   }
 }

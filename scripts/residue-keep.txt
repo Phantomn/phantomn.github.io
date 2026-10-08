@@ -33,7 +33,7 @@ Search posts...
 No posts found matching your criteria.
 
 # --- 개발자용 오류·형식 문자열 (lib/blog.ts)
-[blog] "${slug}" has incomplete series frontmatter —
+[blog] "${slug}" has incomplete series frontmatter -
 seriesId, series, and seriesPart are all required. Ignoring series.
 ${minutes} min read
 Part ${m[1]}

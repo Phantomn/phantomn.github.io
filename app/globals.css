@@ -39,7 +39,7 @@
   }
 
   /* Single anchor-offset mechanism: 4rem fixed header + breathing room.
-     Deliberately not scroll-padding on html — that would also offset heading
+     Deliberately not scroll-padding on html - that would also offset heading
      anchors on blog/research pages, which have no fixed header. */
   section[id] {
     scroll-margin-top: 5rem;

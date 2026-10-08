@@ -1,4 +1,4 @@
-# Bhargava Shastry — Portfolio & Blog
+# Bhargava Shastry - Portfolio & Blog
 
 Personal portfolio and security-research blog for Bhargava Shastry, security engineer at the Ethereum Foundation. Built with Next.js 15 (App Router) and deployed as a static site to GitHub Pages at [bshastry.github.io](https://bshastry.github.io).
 
@@ -106,7 +106,7 @@ public/
   pgp-key.asc             Verified OpenPGP public key for sensitive contact
   .well-known/claims.json  Evidence-linked professional claims
   .well-known/claims.schema.json  JSON Schema for the claims document
-  .well-known/security.txt  RFC 9116 vulnerability-report contact (has an Expires date — renew yearly)
+  .well-known/security.txt  RFC 9116 vulnerability-report contact (has an Expires date - renew yearly)
   <year>/.../*.html       Legacy Jekyll article redirects
 
 scripts/

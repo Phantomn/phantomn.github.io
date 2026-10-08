@@ -70,17 +70,17 @@ On x86 the return address is on the stack, but AArch64's `ret` finds the return 
 
 Unlike x86, AArch64's load/store instructions support three modes of offset indexing.
 
-**Direct offset:** `[base, #offset]` — index the offset directly without modifying base
+**Direct offset:** `[base, #offset]` - index the offset directly without modifying base
 ```assembly
 ldr x0, [sp, 0x10]  ; load the value at address sp+0x10 into x0
 ```
 
-**Pre-indexed:** `[base, #offset]!` — same as direct offset, but base + offset is written back into base
+**Pre-indexed:** `[base, #offset]!` - same as direct offset, but base + offset is written back into base
 ```assembly
 ldr x0, [sp, 0x10]! ; load the value at sp+0x10 into x0, then increase sp by 0x10
 ```
 
-**Post-indexed:** `[base], #offset` — use base as is, then write base + offset back into base
+**Post-indexed:** `[base], #offset` - use base as is, then write base + offset back into base
 ```assembly
 ldr x0, [sp], 0x10  ; load the value at sp into x0, then increase sp by 0x10
 ```
@@ -91,7 +91,7 @@ ldr x0, [sp], 0x10  ; load the value at sp into x0, then increase sp by 0x10
 
 **The return address is stored in x30** (also called LR). However, on nested subroutine calls it is preserved on the stack.
 
-**The x29 register (FP — Frame Pointer)** corresponds to x86's ebp. All local variables on the stack are accessed relative to x29, and just like on x86 it holds a pointer to the previous stack frame.
+**The x29 register (FP - Frame Pointer)** corresponds to x86's ebp. All local variables on the stack are accessed relative to x29, and just like on x86 it holds a pointer to the previous stack frame.
 
 There is one interesting difference. On x86, ebp always sits at the bottom of the current stack frame, with the return address located right below it. On AArch64, however, x29 (together with the preserved x30) is stored at the top of the stack, and the local variables sit below it. Compared to x86, the arrangement is reversed.
 
@@ -264,11 +264,11 @@ If this state persists, at the end of gets it pops the preserved x30 and loops b
 
 **AArch64 ROP exploitation is fundamentally different from x86/x64:**
 
-1. **The Link Register (x30) is central** — unlike x86 where the return address is on the stack, x30 must be carefully managed throughout every gadget chain
-2. **The stack frame layout is reversed** — x29 and the preserved x30 are usually stored at the top of the stack, with local variables below them (the opposite of x86)
-3. **Usable gadgets are limited** — most gadgets don't provide controllable x30 manipulation and are therefore useless
-4. **Mastering the calling convention is essential** — you must set the x0~x7 parameters correctly, and controlling x29 often leads indirectly to controlling x0 via a gadget
-5. **A two-stage chain** — space constraints may force you to secure a larger buffer with an initial exploit (via gets) and then write the full ROP chain in a second stage
-6. **Understanding post-indexing is essential** — you must grasp the exact `[sp], #offset` semantics to analyze gadgets
+1. **The Link Register (x30) is central** - unlike x86 where the return address is on the stack, x30 must be carefully managed throughout every gadget chain
+2. **The stack frame layout is reversed** - x29 and the preserved x30 are usually stored at the top of the stack, with local variables below them (the opposite of x86)
+3. **Usable gadgets are limited** - most gadgets don't provide controllable x30 manipulation and are therefore useless
+4. **Mastering the calling convention is essential** - you must set the x0~x7 parameters correctly, and controlling x29 often leads indirectly to controlling x0 via a gadget
+5. **A two-stage chain** - space constraints may force you to secure a larger buffer with an initial exploit (via gets) and then write the full ROP chain in a second stage
+6. **Understanding post-indexing is essential** - you must grasp the exact `[sp], #offset` semantics to analyze gadgets
 
 This CTF challenge is a good illustration that successful AArch64 ROP exploitation requires a deep understanding of the architecture's unique characteristics, especially the Link Register mechanism and the stack layout differences from x86.

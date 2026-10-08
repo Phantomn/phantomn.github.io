@@ -1,5 +1,5 @@
 ---
-title: "Simple C Pattern Analysis — if/for/while/do-while in Assembly"
+title: "Simple C Pattern Analysis - if/for/while/do-while in Assembly"
 date: "2020-12-09"
 excerpt: "Analyzing how C control structures (if-else, for, while, do-while) compile down to x86 assembly"
 tags: ["reversing", "x86", "assembly", "c", "pattern", "beginner"]
@@ -29,7 +29,7 @@ After the function prologue, it reads one input with scanf. Then it moves the da
 
 ![](/images/blog/c-pattern-analysis/untitled%202.png)
 
-I set a breakpoint right before the branch and checked the value — it held 0x4b. I accidentally converted it as a character; in decimal that's 75.
+I set a breakpoint right before the branch and checked the value - it held 0x4b. I accidentally converted it as a character; in decimal that's 75.
 
 ![](/images/blog/c-pattern-analysis/untitled%203.png)
 
@@ -41,7 +41,7 @@ This time it compares against 0x4f again, and if smaller, jumps to main+77.
 
 ![](/images/blog/c-pattern-analysis/untitled%205.png)
 
-It pushes a string, prints it, and the main function ends — this is the else branch.
+It pushes a string, prints it, and the main function ends - this is the else branch.
 
 Without even looking at the else-if branch yet, it appears the branching compares in the order if -> else -> else-if.
 
@@ -123,7 +123,7 @@ Now let's rewrite the program using a while loop.
 
 Internally, while doesn't look all that different.
 
-Set the initial value, compare at the very bottom, process the value in the middle section, print, increment, then compare again — nothing dramatically different.
+Set the initial value, compare at the very bottom, process the value in the middle section, print, increment, then compare again - nothing dramatically different.
 
 Let's hand-trace this one too and then move on to do-while.
 
@@ -149,7 +149,7 @@ Let's do a quick hand-trace and wrap up.
 
 ![](/images/blog/c-pattern-analysis/untitled%2021.png)
 
-Here's the pseudocode — process first, then increment, then jump.
+Here's the pseudocode - process first, then increment, then jump.
 
 This form produces cleaner assembly than the other loop types, but the flow is different, so it's worth remembering them separately.
 
@@ -159,6 +159,6 @@ Let's rewrite it to match the proper form.
 
 When do-while loops are nested, the branch only goes into the inner loop.
 
-So to determine whether two do-while loops are nested, check whether there's more than one increment operation along with a comparison — if both are present, it's likely a multi-level loop.
+So to determine whether two do-while loops are nested, check whether there's more than one increment operation along with a comparison - if both are present, it's likely a multi-level loop.
 
 It looks simple, but actually tracing it by hand taught me a lot. I covered the four patterns if/for/while/do-while here; I'll cover the remaining patterns like switch-case another time.

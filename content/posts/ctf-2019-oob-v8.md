@@ -50,15 +50,15 @@ BUILTIN(ArrayOob){
 
 ### Analyzing the Bug's Behavior
 
-- If `len > 2`, it returns `undefined` — meaning only 0 or 1 extra arguments are allowed.
+- If `len > 2`, it returns `undefined` - meaning only 0 or 1 extra arguments are allowed.
 - The array is cast to a `FixedDoubleArray`, and `length` refers to the array's **current** length (e.g. a 2-element array yields 2).
 - **Read path** (`len == 1`): returns `elements[length]`, one slot **past the end** of the array. This is an off-by-one OOB read.
-- **Write path** (`len == 2`): writes a float value to `elements[length]` — an OOB write at the same offset.
+- **Write path** (`len == 2`): writes a float value to `elements[length]` - an OOB write at the same offset.
 
 ```javascript
 d8> a = [1.1]
 [1.1]
-d8> a.oob()    // reads elements[1] — out of bounds
+d8> a.oob()    // reads elements[1] - out of bounds
 7.2550595796784e-311
 d8> a.oob(0x1337)  // writes elements[1]
 ```
@@ -161,7 +161,7 @@ A V8 Map (also called a hidden class) is a metadata structure holding:
 - The object's dynamic type (String, Uint8Array, JSArray, etc.)
 - The object's size in bytes
 - Property names and their storage locations
-- **Element kind** — whether elements are unboxed doubles or tagged pointers
+- **Element kind** - whether elements are unboxed doubles or tagged pointers
 - A prototype pointer
 
 Arrays with different element kinds have different Maps. A float array (`PACKED_DOUBLE_ELEMENTS`) and an object array (`PACKED_ELEMENTS`) have distinct Maps, and swapping one array's Map for the other's causes V8 to misinterpret its element values.
@@ -170,7 +170,7 @@ Arrays with different element kinds have different Maps. A float array (`PACKED_
 
 ## The addrOf and fakeObj Primitives
 
-### addrOf — Getting the Heap Address of an Arbitrary Object
+### addrOf - Getting the Heap Address of an Arbitrary Object
 
 Elements of a float array are stored as raw doubles. Elements of an object array are tagged heap pointers. If we give an object array a float Map, reading `arr[0]` will interpret the **raw pointer** stored there as a double and return it.
 
@@ -207,7 +207,7 @@ function addrof(in_obj) {
 }
 ```
 
-### fakeObj — Treating an Arbitrary Address as a JS Object
+### fakeObj - Treating an Arbitrary Address as a JS Object
 
 The reverse case: write an address into a float array slot, then give that float array an object Map. Reading `arr[0]` now treats the memory starting at that address as a JS object and returns it.
 
@@ -284,7 +284,7 @@ function arb_write(addr, val) {
 }
 ```
 
-Verification — overwriting `__free_hook` with `system`:
+Verification - overwriting `__free_hook` with `system`:
 
 ```
 pwndbg> p &__free_hook
@@ -341,7 +341,7 @@ function fakeobj(addr) {
 
 ---
 
-## Full Exploit — WASM RWX Page + Shellcode
+## Full Exploit - WASM RWX Page + Shellcode
 
 V8 allocates a **read-write-execute (RWX)** page for compiled WASM code. The exploit proceeds as follows:
 
@@ -485,7 +485,7 @@ Call the WASM export -> shellcode executes
 - Overwriting the `ArrayBuffer` backing store is **the standard pattern for arbitrary writes in V8**. It avoids the instability of writing through a fake object and provides a clean, type-safe interface via `DataView`.
 - A WASM RWX page is a de facto `exec` primitive in V8 exploits. One page is allocated per `WebAssembly.Instance`, and its address can be read with `arb_read` at a fixed offset within the `WasmInstance` structure.
 
-![xcalc shellcode execution result — successful arbitrary code execution via the WASM RWX page](/images/blog/ctf-2019-oob-v8/xcalc-result.png)
+![xcalc shellcode execution result - successful arbitrary code execution via the WASM RWX page](/images/blog/ctf-2019-oob-v8/xcalc-result.png)
 
 ---
 
@@ -497,13 +497,13 @@ Reproducing this exploit requires building a specific version of V8 from source.
 
 To pin the V8 version, first disable Chrome's automatic updates.
 
-**Disable the services** — uncheck `gupdate` and `gupdatem` in `msconfig.msc`.
+**Disable the services** - uncheck `gupdate` and `gupdatem` in `msconfig.msc`.
 
 ![Disabling the Chrome update service (msconfig.msc)](/images/blog/ctf-2019-oob-v8/v8-build-00.png)
 
-**Disable the scheduled tasks** — in `taskschd.msc`, disable `GoogleUpdateTaskMachineCore` and `GoogleUpdateTaskMachineUA`.
+**Disable the scheduled tasks** - in `taskschd.msc`, disable `GoogleUpdateTaskMachineCore` and `GoogleUpdateTaskMachineUA`.
 
-**Rename the updater binary** — rename `C:\Program Files (x86)\Google\Update\GoogleUpdate.exe` to `GoogleUpdate.bak`.
+**Rename the updater binary** - rename `C:\Program Files (x86)\Google\Update\GoogleUpdate.exe` to `GoogleUpdate.bak`.
 
 ![Renaming the Chrome update binary](/images/blog/ctf-2019-oob-v8/v8-build-01.png)
 

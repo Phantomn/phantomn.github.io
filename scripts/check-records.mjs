@@ -12,7 +12,7 @@ const root = new URL("..", import.meta.url).pathname;
 const competitions = JSON.parse(readFileSync(join(root, "data/source/competitions.json"), "utf8"));
 const cves = JSON.parse(readFileSync(join(root, "data/source/cves.json"), "utf8"));
 
-// "정식 번호가 부여된"만 계수 — CVE-UNASSIGNED-... 같은 대기 항목은 제외.
+// "정식 번호가 부여된"만 계수 - CVE-UNASSIGNED-... 같은 대기 항목은 제외.
 const assignedCve = cves.filter((c) => /^CVE-\d{4}-\d{4,}$/.test(c.id)).length;
 const assignedFve = cves.filter((c) => /^FVE-\d{4}-\d+-\d+$/.test(c.id)).length;
 

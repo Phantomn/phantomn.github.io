@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// postbuild 훅에서 실행(pnpm build 뒤 자동) — content/posts/*.md 를 읽어
+// postbuild 훅에서 실행(pnpm build 뒤 자동) - content/posts/*.md 를 읽어
 // out/search-index.json 을 쓴다. href 는 저장하지 않는다: 클라이언트가
 // 현재 로케일로 `/${locale}/blog/${slug}/` 를 조립한다.
 import fs from 'fs'

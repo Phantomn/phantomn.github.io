@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const SITE_URL = 'https://blog.ph4nt0m.xyz'
 export const AUTHOR = 'Seungpyo Hong'
-export const FEED_TITLE = 'Seungpyo Hong — Blog'
+export const FEED_TITLE = 'Seungpyo Hong - Blog'
 export const FEED_DESCRIPTION =
   'Writing on vulnerability research, OT/ICS and IoT security, firmware analysis, fuzzing, and exploitation.'
 

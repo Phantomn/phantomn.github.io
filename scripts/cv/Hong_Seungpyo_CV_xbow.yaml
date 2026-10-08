@@ -13,7 +13,7 @@ cv:
 
   sections:
     summary:
-      - "Offensive Security Researcher with 6 years of hands-on penetration testing and vulnerability research. Derived **24 CVEs** (OS Kernel 16 + IoT 5 + LLM 3) through independent fuzzing and reverse engineering. Built an AI Orchestration Framework that autonomously identifies vulnerabilities on live targets — using IDA Pro, Burp Suite, Frida, and CodeQL orchestrated via MCP + A2A. NATO CCDCOE Locked Shields 2025 overall 6th of 17 (DFIR #1)."
+      - "Offensive Security Researcher with 6 years of hands-on penetration testing and vulnerability research. Derived **24 CVEs** (OS Kernel 16 + IoT 5 + LLM 3) through independent fuzzing and reverse engineering. Built an AI Orchestration Framework that autonomously identifies vulnerabilities on live targets - using IDA Pro, Burp Suite, Frida, and CodeQL orchestrated via MCP + A2A. NATO CCDCOE Locked Shields 2025 overall 6th of 17 (DFIR #1)."
 
     experience:
       - company: CoreSecurity
@@ -22,12 +22,12 @@ cv:
         start_date: 2021-06
         end_date: present
         highlights:
-          - "Triage and validate vulnerabilities across OT/ICS, IoT, and medical device targets — distinguishing exploitable issues from false positives with reproducible PoCs"
-          - "IEC 62443-4-2 Threat Modeling & pentesting — contributed to LS ELECTRIC Achilles Level 2 certification; delivered structured findings to engineering and certification teams"
+          - "Triage and validate vulnerabilities across OT/ICS, IoT, and medical device targets - distinguishing exploitable issues from false positives with reproducible PoCs"
+          - "IEC 62443-4-2 Threat Modeling & pentesting - contributed to LS ELECTRIC Achilles Level 2 certification; delivered structured findings to engineering and certification teams"
           - "Designed and developed automated security assessment tooling for vulnerability detection across smart building IoT infrastructure"
           - "Built AI-driven offensive pipeline (MCP + A2A): orchestrates IDA Pro, Burp Suite, Frida, CodeQL to auto-identify Low–Medium vulnerabilities on live pentest targets"
-          - "ELECCON (KEPCO) 2021–2024: 4-year operation of national OT/ICS red-vs-blue exercise — attack scenario design, PoC development, and blue team evaluation"
-          - "**NATO CCDCOE Locked Shields 2025** (Korea-Canada DFIR blue team) — overall 6th of 17, **DFIR 1st place**"
+          - "ELECCON (KEPCO) 2021–2024: 4-year operation of national OT/ICS red-vs-blue exercise - attack scenario design, PoC development, and blue team evaluation"
+          - "**NATO CCDCOE Locked Shields 2025** (Korea-Canada DFIR blue team) - overall 6th of 17, **DFIR 1st place**"
           - "APEX 2025, 2026 Green Team, DFIR challenge author (May–Sep 2025; 2026)"
 
       - company: A3 Security
@@ -36,10 +36,10 @@ cv:
         start_date: 2020-06
         end_date: 2021-06
         highlights:
-          - "12 web/app penetration tests against financial and public-sector targets — delivered reproducible, severity-ranked findings with PoC evidence to clients"
+          - "12 web/app penetration tests against financial and public-sector targets - delivered reproducible, severity-ranked findings with PoC evidence to clients"
           - "Avg. 1–2 high-risk vulnerabilities per engagement: auth bypass, business logic flaws, privilege escalation"
-          - "Reviewed non-standard targets (KT GiGA Genie IoT, NH RPA, thermal sensors) — adapted methodology to unfamiliar attack surfaces"
-          - "Customer-facing reporting and remediation validation — translated technical findings for engineering and compliance stakeholders"
+          - "Reviewed non-standard targets (KT GiGA Genie IoT, NH RPA, thermal sensors) - adapted methodology to unfamiliar attack surfaces"
+          - "Customer-facing reporting and remediation validation - translated technical findings for engineering and compliance stakeholders"
 
     education:
       - institution: Kongju National University
@@ -50,16 +50,16 @@ cv:
         end_date: 2020-02
 
     vulnerability_research:
-      - label: "OS Kernel CVEs (16) — Best of the Best 8th Cohort, 2019"
+      - label: "OS Kernel CVEs (16) - Best of the Best 8th Cohort, 2019"
         details: "Designed and implemented a custom coverage-guided File System Fuzzer from scratch. Identified, triaged, and reproduced 16 Linux kernel vulnerabilities (0-day + 1-day), including CVSS 7.8 HIGH issues. Delivered PoCs and root cause analysis. Presented at **CodeBlue 2019** (Tokyo) & **Hack In The Box 2019** (Amsterdam). CVE-2019-18885, 19036, 19037, 19039, 19318, 19319, 19377, 19378, 19447, 19448, 19449, 19813, 19814, 19815, 19816, 19927"
 
-      - label: "IoT CVEs (5) — Independent Research, 2024"
+      - label: "IoT CVEs (5) - Independent Research, 2024"
         details: "Reverse-engineered embedded firmware; identified and reproduced vulnerabilities with full PoC chains. CVE-2024-33789 & CVE-2024-33792 (CVSS **9.8 CRITICAL**), CVE-2024-33788 (CVSS 8.0 HIGH), CVE-2024-33791 (CVSS 4.6), CVE-2024-33793 (CVSS 5.3)"
 
-      - label: "LLM Inference Engine CVEs (3) — Independent Research, 2026"
-        details: "Audited llama.cpp's HTTP server and model loader by fuzzing structured inputs (JSON schemas, GGUF files, REST parameters), then hand-tracing each crash to root cause. CVE-2026-52130 (CVSS **7.5 HIGH**, CWE-674): unbounded recursion in json-schema-to-grammar — reproduced 8 MB stack exhaustion at recursion depth 7000+, and separated the vulnerable path (`/completions`) from the non-vulnerable one (`/v1/chat/completions`, which routes through jinja) to scope impact precisely. CVE-2026-52132 (CVSS **7.5 HIGH**, CWE-190): integer overflow from a negative `top_n` on `/rerank`, driving an oversized allocation and remote DoS. CVE-2026-52131 (CVSS 5.5, CWE-617): reachable assertion in `gguf_reader::read` — a crafted GGUF model aborts the process on load. Each finding shipped with a minimal PoC and an upstream patch-level root cause writeup."
+      - label: "LLM Inference Engine CVEs (3) - Independent Research, 2026"
+        details: "Audited llama.cpp's HTTP server and model loader by fuzzing structured inputs (JSON schemas, GGUF files, REST parameters), then hand-tracing each crash to root cause. CVE-2026-52130 (CVSS **7.5 HIGH**, CWE-674): unbounded recursion in json-schema-to-grammar - reproduced 8 MB stack exhaustion at recursion depth 7000+, and separated the vulnerable path (`/completions`) from the non-vulnerable one (`/v1/chat/completions`, which routes through jinja) to scope impact precisely. CVE-2026-52132 (CVSS **7.5 HIGH**, CWE-190): integer overflow from a negative `top_n` on `/rerank`, driving an oversized allocation and remote DoS. CVE-2026-52131 (CVSS 5.5, CWE-617): reachable assertion in `gguf_reader::read` - a crafted GGUF model aborts the process on load. Each finding shipped with a minimal PoC and an upstream patch-level root cause writeup."
 
-      - label: "Bug Bounty — 4 FVEs (FindTheGap)"
+      - label: "Bug Bounty - 4 FVEs (FindTheGap)"
         details: "Black-box web/API testing on live production targets. Four access control and authentication findings: missing authentication permitting account takeover across an entire user base, an unauthorized identity-verification endpoint leaking real names and phone numbers, and unauthenticated APIs enumerable for personal data (CVSS up to **9.8 CRITICAL**; CWE-284, CWE-306, CWE-200). All validated with reproducible request chains and reported through coordinated disclosure. Vendor and technical details withheld under program policy."
 
     projects:
@@ -68,10 +68,10 @@ cv:
         highlights:
           - "Autonomous vulnerability identification pipeline: IDA Pro, Burp Suite, Frida, CodeQL connected via MCP + A2A protocol"
           - "LLM agent triages scan output, separates exploitable findings from noise, generates structured reports"
-          - "Validated on live pentest targets — consistently surfaces Low–Medium findings that manual scans miss"
+          - "Validated on live pentest targets - consistently surfaces Low–Medium findings that manual scans miss"
           - "RAG pipeline (n8n · pgvector) provides real-time context from IEC 62443, ISO 27001, and past exploit patterns"
 
-      - name: "ELECCON — National OT/ICS Cyber Warfare Exercise"
+      - name: "ELECCON - National OT/ICS Cyber Warfare Exercise"
         date: "2021 – 2024"
         highlights:
           - "4-year consecutive design and operation of KEPCO's national red-vs-blue exercise"

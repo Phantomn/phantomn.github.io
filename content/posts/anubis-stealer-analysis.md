@@ -55,11 +55,11 @@ It captures the active desktop screen and saves it as `screen.jpeg`.
 
 The list of data the stealer collects is as follows:
 
-- **FileZilla** — credentials and connection profiles
-- **Desktop files** — files with `txt`, `doc`, `cs`, `cpp`, `dat`, `docx`, `log`, `sql` extensions
-- **Mozilla user data** — from the `AppData\Local\Mozilla` path
+- **FileZilla** - credentials and connection profiles
+- **Desktop files** - files with `txt`, `doc`, `cs`, `cpp`, `dat`, `docx`, `log`, `sql` extensions
+- **Mozilla user data** - from the `AppData\Local\Mozilla` path
 - **Bitcoin wallet** data
-- **Loader** — downloads `https://anubiscode.fun/test/panel/loader.php`, runs it as a hidden process named `svhost.exe`, and transmits the collected data
+- **Loader** - downloads `https://anubiscode.fun/test/panel/loader.php`, runs it as a hidden process named `svhost.exe`, and transmits the collected data
 
 ### 5. Browser Credential Theft
 

@@ -38,10 +38,10 @@ Key vulnerable points:
 
 - The header has two key parameters: `OriginalCompressedSegmentSize` and `Offset/Length`.
 - `Srv2DecompressData` (srv2.sys) allocates a buffer of size `OriginalCompressedSegmentSize + Offset/Length`.
-- There is **no sign check** on the addition of these two values — an attacker can intentionally cause a small buffer to be allocated.
+- There is **no sign check** on the addition of these two values - an attacker can intentionally cause a small buffer to be allocated.
 - Data from `packet + 0x10 + offset` is decompressed into `buffer + offset`.
 - `OriginalCompressedSegmentSize` is passed as the `UncompressedBufferSize` parameter to `SmbCompressionDecompression` (a wrapper around `RtlDecompressBufferEx2`).
-- This routine treats the decompression buffer size as an `unsigned long` — **a negative value gets cast to a large unsigned number**, causing the decompression routine to assume the buffer is far larger than its actual size, resulting in an OOB Write.
+- This routine treats the decompression buffer size as an `unsigned long` - **a negative value gets cast to a large unsigned number**, causing the decompression routine to assume the buffer is far larger than its actual size, resulting in an OOB Write.
 
 Below is a disassembly of the vulnerable function on the server side:
 
@@ -235,11 +235,11 @@ Early builds of Windows 10 1903 also had an additional **Null Dereference bug** 
 
 Before the patch (Null Dereference occurs):
 
-![Before the patch — Null Dereference](/images/blog/smbleed-smbghost/smbleed-nullderef-unpatched.png)
+![Before the patch - Null Dereference](/images/blog/smbleed-smbghost/smbleed-nullderef-unpatched.png)
 
 After the patch (Null Dereference check added):
 
-![After the patch — Null Dereference check](/images/blog/smbleed-smbghost/smbleed-nullderef-patched.png)
+![After the patch - Null Dereference check](/images/blog/smbleed-smbghost/smbleed-nullderef-patched.png)
 
 ---
 
@@ -257,8 +257,8 @@ POC: [ZecOps/CVE-2020-0796-RCE-POC](https://github.com/ZecOps/CVE-2020-0796-RCE-
 
 One or more of the following resolves both SMBleed and SMBGhost:
 
-1. **Apply the Windows update** (recommended) — fully resolves the issue
-2. **Block port 445** — prevents lateral movement
+1. **Apply the Windows update** (recommended) - fully resolves the issue
+2. **Block port 445** - prevents lateral movement
 3. **Isolate the host**
 4. **Disable SMB 3.1.1 compression** (not recommended)
 

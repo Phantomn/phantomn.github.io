@@ -8,7 +8,7 @@ export const dynamic = 'force-static'
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) => getAllSlugs().map((slug) => ({ locale, slug })))
 }
-// Note: intentionally NOT declaring `export const runtime = 'edge'` — see
+// Note: intentionally NOT declaring `export const runtime = 'edge'` - see
 // app/opengraph-image.tsx. `next/og` works at build time in the default
 // Node runtime when the static export target is set.
 
@@ -18,7 +18,7 @@ export const contentType = 'image/png'
 
 export default async function OGImage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  // The image only needs title and date — frontmatter metadata is enough;
+  // The image only needs title and date - frontmatter metadata is enough;
   // running the full markdown pipeline here would triple the build cost.
   const post = getAllPostsMeta().find((p) => p.slug === slug)
   const title = post?.title ?? 'Blog'

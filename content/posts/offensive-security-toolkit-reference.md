@@ -142,7 +142,7 @@ clang -fno-stack-protector -z execstack -o vuln vuln.c
 
 ## Installing BinDiff on Windows (IDA Pro)
 
-BinDiff is a binary comparison plugin for IDA Pro, essential for patch diffing—comparing binaries before and after a patch to locate where a vulnerability was fixed.
+BinDiff is a binary comparison plugin for IDA Pro, essential for patch diffing-comparing binaries before and after a patch to locate where a vulnerability was fixed.
 
 **Prerequisites:**
 - IDA Pro (with Hex-Rays)

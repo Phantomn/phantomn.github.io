@@ -70,7 +70,7 @@ function parseSeries(frontmatter: PostFrontmatter, slug: string): SeriesInfo | u
   if (seriesId == null && series == null && seriesPart == null) return undefined
   if (seriesId == null || series == null || seriesPart == null) {
     console.warn(
-      `[blog] "${slug}" has incomplete series frontmatter — ` +
+      `[blog] "${slug}" has incomplete series frontmatter - ` +
         `seriesId, series, and seriesPart are all required. Ignoring series.`,
     )
     return undefined
@@ -179,7 +179,7 @@ function extractHeadings(contentHtml: string): PostHeading[] {
   return headings
 }
 
-// cache() dedupes the markdown pipeline within a render pass — without it,
+// cache() dedupes the markdown pipeline within a render pass - without it,
 // generateMetadata and the page component each recompile every post at build.
 export const getPostBySlug = cache(async (slug: string): Promise<BlogPost | null> => {
   const parsed = readPostFile(slug)

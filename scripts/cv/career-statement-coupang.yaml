@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.8/schema.json
-# 경력기술서 (Career Statement) — 쿠팡 Staff Security Engineer(Penetration Tester) 맞춤 변형
+# 경력기술서 (Career Statement) - 쿠팡 Staff Security Engineer(Penetration Tester) 맞춤 변형
 # 베이스: career-statement-ko.yaml. 재조정: Web/Mobile/API 펜테스트·레드팀·이커머스 전면.
 # 렌더: rendercv render scripts/cv/career-statement-coupang.yaml
 cv:
@@ -19,11 +19,11 @@ cv:
       - "Web/App·Mobile·API 침투 테스트와 레드팀 훈련을 중심으로 24건 이상의 공격 보안 프로젝트를 수행한 Offensive Security Researcher. 금융·공공 12개 사이트 모의해킹과 의료영상 플랫폼 Web/Mobile 진단을 수행했고, 국내 대형 유통사 프로덕션에서 CVSS 9.8 계정 탈취를 포함한 이커머스 버그바운티를 제보했습니다. NATO Locked Shields·한국전력 ELECCON에서 MITRE ATT&CK 기반 공격 시나리오를 설계했으며, Linux Kernel CVE 16건 + IoT CVE 5건 + LLM 추론 엔진 CVE 3건, Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위 보유."
 
     핵심_역량:
-      - bullet: "Web/App·Mobile·API 모의해킹 — 금융·공공 전자금융기반시설 12개 사이트, 의료영상 플랫폼(Web·Android/iOS), 이커머스 프로덕션 버그바운티(CVSS 9.8 계정 탈취)"
-      - bullet: "레드팀 · 위협 시뮬레이션 — MITRE ATT&CK 기반 공격 시나리오 설계, NATO Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위, 한국전력 ELECCON 4년 운영, APEX 2025·2026 Green Team, DFIR 문제 개발"
-      - bullet: "취약점 연구 · 익스플로잇 — Linux Kernel File System Fuzzer로 CVE 16건 도출(CodeBlue·HITB 발표), IoT CVE 5건, LLM 추론 엔진(llama.cpp) HTTP API CVE 3건, 펌웨어(UART·binwalk) 분석"
-      - bullet: "침투 테스트 자동화 · 도구 개발 — Python 기반 점검 자동화, LLM 취약점 분석 파이프라인(MCP), IoT/CCTV 침해사고 조사 도구"
-      - bullet: "OT/ICS · 임베디드 · 인증 — IEC 62443-4-2 위협 모델링·인증(Achilles Level 2), 의료기기 FDA/eSTAR, 스마트선박 CBS 점검 (도메인 폭)"
+      - bullet: "Web/App·Mobile·API 모의해킹 - 금융·공공 전자금융기반시설 12개 사이트, 의료영상 플랫폼(Web·Android/iOS), 이커머스 프로덕션 버그바운티(CVSS 9.8 계정 탈취)"
+      - bullet: "레드팀 · 위협 시뮬레이션 - MITRE ATT&CK 기반 공격 시나리오 설계, NATO Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위, 한국전력 ELECCON 4년 운영, APEX 2025·2026 Green Team, DFIR 문제 개발"
+      - bullet: "취약점 연구 · 익스플로잇 - Linux Kernel File System Fuzzer로 CVE 16건 도출(CodeBlue·HITB 발표), IoT CVE 5건, LLM 추론 엔진(llama.cpp) HTTP API CVE 3건, 펌웨어(UART·binwalk) 분석"
+      - bullet: "침투 테스트 자동화 · 도구 개발 - Python 기반 점검 자동화, LLM 취약점 분석 파이프라인(MCP), IoT/CCTV 침해사고 조사 도구"
+      - bullet: "OT/ICS · 임베디드 · 인증 - IEC 62443-4-2 위협 모델링·인증(Achilles Level 2), 의료기기 FDA/eSTAR, 스마트선박 CBS 점검 (도메인 폭)"
 
     경력:
       - company: 코어시큐리티 (CoreSecurity)
@@ -32,17 +32,17 @@ cv:
         start_date: 2021-06
         end_date: present
         highlights:
-          - "OT/ICS 보안 — IEC 62443-4-2 Threat Modeling·모의해킹, LS ELECTRIC Achilles Level 2 인증 취득, 자동화 점검 도구 개발"
-          - "IoT 보안 — 스마트빌딩 IoT 취약점 탐지 기술 개발·실증, IoT/CCTV 침해사고 조사 도구 개발"
-          - "의료기기 보안 — FDA eSTAR 컨설팅 및 Web/App·의료기기 모의해킹"
-          - "사이버 공방 훈련 — 한국전력 ELECCON 운영·문제 개발, Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위, APEX 2025·2026 Green Team, DFIR 문제 개발"
+          - "OT/ICS 보안 - IEC 62443-4-2 Threat Modeling·모의해킹, LS ELECTRIC Achilles Level 2 인증 취득, 자동화 점검 도구 개발"
+          - "IoT 보안 - 스마트빌딩 IoT 취약점 탐지 기술 개발·실증, IoT/CCTV 침해사고 조사 도구 개발"
+          - "의료기기 보안 - FDA eSTAR 컨설팅 및 Web/App·의료기기 모의해킹"
+          - "사이버 공방 훈련 - 한국전력 ELECCON 운영·문제 개발, Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위, APEX 2025·2026 Green Team, DFIR 문제 개발"
       - company: A3 Security
         position: 보안기술팀 사원
         location: 서울
         start_date: 2020-06
         end_date: 2021-06
         highlights:
-          - "금융권·공공기관 전자금융기반시설 모의해킹 12개 사이트 — 고위험 취약점 평균 1~2건/사이트 식별"
+          - "금융권·공공기관 전자금융기반시설 모의해킹 12개 사이트 - 고위험 취약점 평균 1~2건/사이트 식별"
           - "KT 기가지니 AI 스피커, 농협중앙회 RPA, DB손해보험 클레임콜 등 비정형 시스템 보안성 검토"
           - "ISMS/ISO 27001 인증 취득 지원 컨설팅 (코웨이)"
 
@@ -90,7 +90,7 @@ cv:
         highlights:
           - "국내·외 CCTV 40종 대상 침해사고 증거 수집 자동화 도구 설계·구현"
           - "UART 접근·플래시 덤프·binwalk 기반 펌웨어 추출 및 설정 파일·로그 전수 수집"
-          - "[성과] 공공기관 현장 실증 — 40종 장비 침해 흔적 수집 및 분석"
+          - "[성과] 공공기관 현장 실증 - 40종 장비 침해 흔적 수집 및 분석"
           - "기술: Python · C/C++ · UART · binwalk · Firmware Dump · Linux"
       - name: "스마트빌딩 내 IoT 기기 취약점 탐지 기술 개발 및 실증 (1차년도)"
         date: "2021.08 – 2021.12 · 기여도 40%"
@@ -104,7 +104,7 @@ cv:
         date: "2022.01 – 2022.10 · 기여도 40%"
         summary: "1차년도 탐지 기술을 실제 운영 중인 스마트빌딩에 적용해 탐지 정확도를 검증·개선."
         highlights:
-          - "실제 스마트빌딩 대상 실증 — 기기·센서·프로토콜 정보 수집 및 취약점 탐지"
+          - "실제 스마트빌딩 대상 실증 - 기기·센서·프로토콜 정보 수집 및 취약점 탐지"
           - "취약점 정탐/오탐/미탐 식별 및 탐지 식별률 도출, 취약점 DB 최신화"
           - "[성과] 실증 기반 탐지 정확도 개선 조치 도출"
           - "기술: IoT Scanning · CVE/CWE · PoC Validation · CSV/Excel Report"
@@ -142,20 +142,20 @@ cv:
           - "기술: NIST SSDF · Threat Modeling · SBOM/VEX · IEC 62443 · FDA Cybersecurity"
 
     사이버훈련장·CTF 개발:
-      - name: "NATO CCDCOE Locked Shields 2025 — 한국-캐나다 연합 DFIR 블루팀"
+      - name: "NATO CCDCOE Locked Shields 2025 - 한국-캐나다 연합 DFIR 블루팀"
         date: "2025.01 – 2025.04 · 기여도 45%"
         summary: "세계 최대 규모 국제 사이버 방어 훈련 Locked Shields에 한국-캐나다 연합 DFIR 블루팀 참가. 실시간 공격 환경에서 침해 흔적 분석·대응 보고."
         highlights:
           - "실시간 공격 시나리오 하 침해사고 포렌식 분석 및 타임라인 재구성"
-          - "DFIR CTF 과제 수행 — 아티팩트 분석·악성코드 트리아지"
+          - "DFIR CTF 과제 수행 - 아티팩트 분석·악성코드 트리아지"
           - "[성과] Locked Shields 2025 종합 6위(17팀 중) · DFIR 1위"
           - "[성과] Locked Shields 2026 종합 9위(16팀 중)"
           - "[참여] Locked Shields 2026 한국-헝가리 연합 Special System 블루팀"
           - "기술: DFIR · Volatility · Wireshark · Sysmon · YARA"
-      - name: "APEX CTF 2025 — DFIR Network Forensics 문제 개발"
+      - name: "APEX CTF 2025 - DFIR Network Forensics 문제 개발"
         date: "2025.06 – 2025.09 · 기여도 45%"
         highlights:
-          - "DFIR Network Forensics 카테고리 문제 개발 — 실제 침해사고 기반 포렌식 시나리오"
+          - "DFIR Network Forensics 카테고리 문제 개발 - 실제 침해사고 기반 포렌식 시나리오"
           - "[참여] APEX 2025, 2026 Green Team, DFIR 문제 개발"
           - "기술: DFIR · Network Forensics · Wireshark"
       - name: "한국전력 실전형 사이버 보안 훈련 시스템 보강 (ELECCON)"
@@ -193,8 +193,8 @@ cv:
         date: "2020.06 – 2021.06"
         summary: "A3 Security 재직 중 금융권·공공기관 전자금융기반시설 대상 다수 Web/App 모의해킹 및 취약점 분석평가. 정보 유출·2차 공격 가능성 점검 및 개선 방안 제시."
         highlights:
-          - "전자금융기반시설 취약점 분석평가 — 참저축은행, 애큐온캐피탈, 금융투자협회 등 금융권 Web/App 모의해킹"
-          - "금융·보험·제조 시스템 보안성 검토 — SBI저축은행(오픈뱅킹·디지털창구), 현대자동차 HKMC, DB손해보험 클레임콜"
+          - "전자금융기반시설 취약점 분석평가 - 참저축은행, 애큐온캐피탈, 금융투자협회 등 금융권 Web/App 모의해킹"
+          - "금융·보험·제조 시스템 보안성 검토 - SBI저축은행(오픈뱅킹·디지털창구), 현대자동차 HKMC, DB손해보험 클레임콜"
           - "농협중앙회 RPA 소스코드 진단, 대교 통합교육 플랫폼·오토핸즈·UNTAC 등 모의해킹"
           - "[성과] 12개 사이트 모의해킹 수행, 사이트당 고위험 취약점 평균 1~2건 식별 및 개선 방안 제시"
           - "기술: Burp Suite · OWASP Top 10 · Web/App Pentest · Source Code Review"
@@ -218,14 +218,14 @@ cv:
           - "정보보안 컨설팅 용역 수행"
 
     취약점 연구:
-      - label: "OS Kernel CVE 16건 — Best of the Best 8기"
+      - label: "OS Kernel CVE 16건 - Best of the Best 8기"
         details: "커스텀 File System Fuzzer 설계·구현으로 Linux Kernel CVE 16건(0-day 포함) 도출. CodeBlue 2019(도쿄)·Hack In The Box 2019(암스테르담) 발표."
-      - label: "IoT CVE 5건 — 개인 연구"
+      - label: "IoT CVE 5건 - 개인 연구"
         details: "임베디드/IoT 장비 취약점 분석. CVE-2024-33788/33789/33791/33792/33793 (CVSS 최대 9.8 CRITICAL)."
-      - label: "LLM CVE 3건 — 개인 연구"
+      - label: "LLM CVE 3건 - 개인 연구"
         details: "llama.cpp 추론 서버 HTTP 엔드포인트 취약점 분석. CVE-2026-52130(/completions 무제어 재귀 DoS, CVSS 7.5)·CVE-2026-52132(/rerank 음수 top_n 정수 오버플로 DoS, CVSS 7.5) 등 원격 비인증 DoS 2건 포함."
-      - label: "프로덕션 웹/API 버그바운티 4건 — 인증·접근통제 결함"
-        details: "국내 대형 유통사 프로덕션 서비스 3건 — 인증 없이 임의 계정 탈취(CVSS 9.8, Broken Access Control), 개인정보 노출 2건(CVSS 7.5). 별개 데이터 플랫폼 1건 — API 무인증 IDOR로 실명 명부·연락처 열람(CVSS 7.5). 소스코드 수준 근본 원인 규명 및 100% 재현. (회사명·상세 비공개)"
+      - label: "프로덕션 웹/API 버그바운티 4건 - 인증·접근통제 결함"
+        details: "국내 대형 유통사 프로덕션 서비스 3건 - 인증 없이 임의 계정 탈취(CVSS 9.8, Broken Access Control), 개인정보 노출 2건(CVSS 7.5). 별개 데이터 플랫폼 1건 - API 무인증 IDOR로 실명 명부·연락처 열람(CVSS 7.5). 소스코드 수준 근본 원인 규명 및 100% 재현. (회사명·상세 비공개)"
 
     자격증 · 교육:
       - bullet: "리눅스 마스터 2급 (KAIT, 2021.07)"

@@ -1,9 +1,9 @@
 ---
-title: Why Legacy ICS Protocols Have No Authentication — The Legacy of 2000s Design Decisions
+title: Why Legacy ICS Protocols Have No Authentication - The Legacy of 2000s Design Decisions
 date: 2026-08-06T00:00:00.000Z
 excerpt: >-
   Many legacy industrial control protocols were designed without authentication or integrity
-  guarantees. This wasn't a mistake — it was a rational choice for the 2000s, premised on an
+  guarantees. This wasn't a mistake - it was a rational choice for the 2000s, premised on an
   air-gapped network, and this post examines how that choice became today's security debt,
   using open protocols (Modbus, DNP3) as examples.
 tags:
@@ -22,7 +22,7 @@ authors:
 
 Many legacy industrial control system (ICS) protocols **lack authentication.** They don't verify who sent a command, don't check whether a message was tampered with in transit, and leave access control to the client (engineering tool) rather than the server (field device). Calling this "the designers didn't know about security" is a lazy diagnosis. What actually happened is that **choices that were rational under the constraints of their era** turned into debt after colliding with twenty years of increasing network connectivity.
 
-This post doesn't analyze any specific vendor protocol. Instead, using **public legacy protocols** like Modbus and DNP3 as examples, it covers four structural flaws shared by legacy ICS protocols — lack of authentication, simple summation checksums, client-side access control, and unauthenticated RTC/configuration writes — examining the design logic behind each and why each is dangerous today.
+This post doesn't analyze any specific vendor protocol. Instead, using **public legacy protocols** like Modbus and DNP3 as examples, it covers four structural flaws shared by legacy ICS protocols - lack of authentication, simple summation checksums, client-side access control, and unauthenticated RTC/configuration writes - examining the design logic behind each and why each is dangerous today.
 
 ---
 
@@ -32,11 +32,11 @@ The threat model of industrial protocols designed between the 1970s and 2000s wa
 
 **First, physical isolation.** Control networks sat inside the factory fence, physically separated by serial cables or dedicated fieldbuses. Accessing the communication link required physically touching that cable. Physical access was effectively authentication. The assumption was that anyone who made it inside the fence was already trusted.
 
-**Second, determinism and latency budget.** Industrial control is real-time. PLC scan cycles operate on the order of milliseconds, and Safety Instrumented Systems (SIS) have even tighter response deadlines. On a 1990s embedded CPU — a few MHz clock, tens of KB of RAM — computing and verifying a cryptographic signature for every message was unaffordable, both in latency and computation budget. One HMAC calculation exceeding the scan cycle breaks the control loop.
+**Second, determinism and latency budget.** Industrial control is real-time. PLC scan cycles operate on the order of milliseconds, and Safety Instrumented Systems (SIS) have even tighter response deadlines. On a 1990s embedded CPU - a few MHz clock, tens of KB of RAM - computing and verifying a cryptographic signature for every message was unaffordable, both in latency and computation budget. One HMAC calculation exceeding the scan cycle breaks the control loop.
 
 **Third, interoperability and lifespan.** Industrial equipment has a designed lifespan of 15 to 30 years. Protocols needed to remain compatible across decades, in environments mixing equipment from multiple vendors. The simpler the protocol, the fewer implementation errors and the easier interoperability. A complex cryptographic negotiation layer was the enemy of interoperability.
 
-Under these three premises, "no authentication" wasn't a flaw — it was an **optimization.** The problem is that the premises collapsed. IT/OT convergence, remote maintenance, cloud SCADA, and smart factories stripped away physical isolation. The premises of the threat model vanished, but the protocol's design decisions remained unchanged. **That's how debt always works — the bill doesn't arrive at the moment of repayment, it arrives when the conditions change.**
+Under these three premises, "no authentication" wasn't a flaw - it was an **optimization.** The problem is that the premises collapsed. IT/OT convergence, remote maintenance, cloud SCADA, and smart factories stripped away physical isolation. The premises of the threat model vanished, but the protocol's design decisions remained unchanged. **That's how debt always works - the bill doesn't arrive at the moment of repayment, it arrives when the conditions change.**
 
 ### Modbus: A Textbook Case
 
@@ -63,11 +63,11 @@ There's a distinction here that must be made:
 | Error detection | Sum checksum, LRC, CRC | **Accidental** bit flips in transit (electrical noise, cable defects) |
 | Integrity assurance | HMAC, digital signature | **Deliberate** tampering (rewriting by an attacker) |
 
-A byte-sum checksum is for error detection. It's designed to catch bits flipped by noise on a poor-quality serial line. It's sufficient for that purpose. But **it provides no defense whatsoever against an attacker.** An attacker can simply modify the payload however they want, then recompute and attach a checksum that matches the modified payload. The checksum calculation rule is public and the computation is trivial. The same is true of CRC — CRC is a keyless public function, so it doesn't prevent modifying a payload and recomputing the CRC.
+A byte-sum checksum is for error detection. It's designed to catch bits flipped by noise on a poor-quality serial line. It's sufficient for that purpose. But **it provides no defense whatsoever against an attacker.** An attacker can simply modify the payload however they want, then recompute and attach a checksum that matches the modified payload. The checksum calculation rule is public and the computation is trivial. The same is true of CRC - CRC is a keyless public function, so it doesn't prevent modifying a payload and recomputing the CRC.
 
 In other words, **"there's a checksum, so integrity is guaranteed" is a category error.** An error-detection code and a message authentication code (MAC) have similar names and occupy the same position in a frame, but their threat models are opposite. One defends against nature, the other against an adversary. When auditing a legacy protocol's frame, confusing the two leads to the false reassurance that "integrity protection is in place."
 
-DNP3's original specification (a protocol widely used in power and water SCADA) was in this state for a long time too. DNP3 has a CRC at the link layer, but that was pure error detection — it didn't guarantee the authenticity of a command. The very fact that **DNP3 Secure Authentication (SA, based on IEEE 1815)** was later added separately to fill this gap is itself evidence that the original protocol lacked authentication. Integrity can be bolted on after the fact, but a layer added that way tends to be exposed to downgrade attacks during backward-compatibility negotiation.
+DNP3's original specification (a protocol widely used in power and water SCADA) was in this state for a long time too. DNP3 has a CRC at the link layer, but that was pure error detection - it didn't guarantee the authenticity of a command. The very fact that **DNP3 Secure Authentication (SA, based on IEEE 1815)** was later added separately to fill this gap is itself evidence that the original protocol lacked authentication. Integrity can be bolted on after the fact, but a layer added that way tends to be exposed to downgrade attacks during backward-compatibility negotiation.
 
 ---
 
@@ -77,7 +77,7 @@ The third flaw is the most subtle, and therefore the most dangerous. In many leg
 
 The typical pattern goes like this: the protocol specification has a rule like "this memory region is read-only" or "this region is write-prohibited." But that rule is **enforced by the engineering tool at the UI/software level.** If a user tries to write to a read-only region through the tool, the tool refuses. But **the field device's firmware, if the write request actually arrives, executes it as-is.** The device assumes "a well-behaved tool wouldn't send this request in the first place," and trusts the client.
 
-This is a direct violation of a security principle: **you must not trust the party on the other side of a trust boundary.** Access control must be enforced by the party that owns the resource — the server. Client-side validation is a convenience feature, not a security feature. An attacker has no obligation to use the vendor's engineering tool. If they read the protocol specification and write a script that constructs frames directly, every rule the client enforced — read-only regions, write-prohibited ranges, blocking dangerous commands — is simply bypassed.
+This is a direct violation of a security principle: **you must not trust the party on the other side of a trust boundary.** Access control must be enforced by the party that owns the resource - the server. Client-side validation is a convenience feature, not a security feature. An attacker has no obligation to use the vendor's engineering tool. If they read the protocol specification and write a script that constructs frames directly, every rule the client enforced - read-only regions, write-prohibited ranges, blocking dangerous commands - is simply bypassed.
 
 Readers familiar with web security will recognize this as **the exact same mistake as a web form that trusts only client-side validation.** An API that validates input with JavaScript but doesn't validate it on the server is bypassed with a single line of `curl`. The same principle applies in ICS. The difference is the weight of the consequence. On the web, data integrity breaks. In OT, a physical process escapes control.
 
@@ -89,7 +89,7 @@ What makes this flaw especially bad is that **it's hard to spot during an audit.
 
 The fourth flaw becomes especially sharp where the previous three combine. Many legacy devices allow **the real-time clock (RTC) and system configuration to be changed via ordinary memory-write commands, without authentication.**
 
-It's not immediately obvious why writing the RTC is a security problem. What's dangerous about setting a clock? The issue is that **the RTC is the source of audit log and event timestamps.** Every event a device logs — a received command, a mode transition, an alarm, a safety trip — is stamped with the RTC's time.
+It's not immediately obvious why writing the RTC is a security problem. What's dangerous about setting a clock? The issue is that **the RTC is the source of audit log and event timestamps.** Every event a device logs - a received command, a mode transition, an alarm, a safety trip - is stamped with the RTC's time.
 
 If an attacker can manipulate the RTC without authentication, the following become possible:
 
@@ -118,9 +118,9 @@ These four flaws are intertwined into a single systemic debt. Summarized:
 
 Here I want to add a lazy senior developer's perspective. **Most of this debt isn't repaid by tearing apart the protocol itself.** Replacing the firmware on every field device with a 15-to-30-year lifespan is usually unrealistic, and attempting it invites bigger risks, such as having to re-obtain safety certification. A realistic repayment happens **at the boundary.**
 
-- **Segmentation** — restore, via network segmentation and data diodes, the original premise of physical isolation. This recreates the conditions the protocol's threat model assumed. It's the cheapest and most reliable repayment.
-- **Protocol-aware gateways/firewalls** — have a boundary gateway enforce the access control the server itself can't. Whitelist things like "this source writing this region with this function code."
-- **Authentication wrapping** — if the protocol itself can't be changed, wrap it in a TLS tunnel or an authentication gateway. If a standardized authentication extension exists, like DNP3-SA, enable it.
-- **Monitoring and time integrity** — even if unauthenticated RTC writes can't be fully blocked, at minimum detect that command, and double up log timestamps against a separate, trustworthy time source (authenticated NTP/PTP).
+- **Segmentation** - restore, via network segmentation and data diodes, the original premise of physical isolation. This recreates the conditions the protocol's threat model assumed. It's the cheapest and most reliable repayment.
+- **Protocol-aware gateways/firewalls** - have a boundary gateway enforce the access control the server itself can't. Whitelist things like "this source writing this region with this function code."
+- **Authentication wrapping** - if the protocol itself can't be changed, wrap it in a TLS tunnel or an authentication gateway. If a standardized authentication extension exists, like DNP3-SA, enable it.
+- **Monitoring and time integrity** - even if unauthenticated RTC writes can't be fully blocked, at minimum detect that command, and double up log timestamps against a separate, trustworthy time source (authenticated NTP/PTP).
 
 The most important lesson lies in the attitude of diagnosis. Concluding "the designers were incompetent" when looking at a legacy ICS protocol's security flaws is not just wrong, it's dangerous. It's wrong because it isn't true, and it's dangerous because that diagnosis leads to the arrogance of **"we're smart enough to just redesign it."** The real lesson is the opposite: **the design decisions we make today, justified with "it's an air-gapped network," "we have no performance budget," or "only our own client will access this," come back twenty years later as exactly the same kind of bill to someone else.** The premises of a threat model eventually collapse. That's when the debt comes due. Legacy ICS protocols are a living case study showing us that bill, right now.

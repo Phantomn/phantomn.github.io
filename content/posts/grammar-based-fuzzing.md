@@ -93,7 +93,7 @@ And2(Or("a","b","c"), Or("x","y","z"), Or("1","2","3"))
 
 - **`And`**: all combinations. Sees even field interactions, but expensive.
 - **`And1`**: uses every value of each field at least once, but doesn't build cross-field combinations. "Shake one field, hold the rest at their defaults."
-- **`And2`**: pairwise combinations. The same idea as the pairwise technique in software testing — it leans on the empirical rule that most bugs come from the interaction of two parameters.
+- **`And2`**: pairwise combinations. The same idea as the pairwise technique in software testing - it leans on the empirical rule that most bugs come from the interaction of two parameters.
 
 This is the decisive advantage of a grammar over a random fuzzer. **You explicitly choose the coverage strategy.** If the combination is excessive, drop to `And1`; if you suspect field interactions, raise it to `And`. You can compute how many PDUs it will generate before running.
 
@@ -118,7 +118,7 @@ The encoding operators handle text/binary, endianness, and addresses.
 | `Range(begin, end[, step])` | Generate range values |
 | `Hex(...)` | Hex string -> byte stream |
 
-If you've used boofuzz, the `s_word`, `s_dword`, `s_size` block primitives will come to mind. The idea is the same — declare a field as a typed block. The difference is choosing the combination strategy explicitly at the operator level.
+If you've used boofuzz, the `s_word`, `s_dword`, `s_size` block primitives will come to mind. The idea is the same - declare a field as a typed block. The difference is choosing the combination strategy explicitly at the operator level.
 
 ## Length fields: Size computes automatically
 
@@ -132,7 +132,7 @@ TestCase{
 }
 ```
 
-`Size(nb16, 2)` means "encode the total size of the fields after index 2 (flag + data) as nb16 and put it here." Whether `data` is 0 bytes or 4 bytes, the length field always reflects the actual size. Shake the payload and the length follows automatically — the very thing a random fuzzer couldn't do.
+`Size(nb16, 2)` means "encode the total size of the fields after index 2 (flag + data) as nb16 and put it here." Whether `data` is 0 bytes or 4 bytes, the length field always reflects the actual size. Shake the payload and the length follows automatically - the very thing a random fuzzer couldn't do.
 
 And if you want to make the length field itself the attack target:
 
@@ -212,7 +212,7 @@ Industrial robustness-testing tools split tests into several types. Two with the
 
 That such tools offer both methods for the same protocol while explicitly stating "Grammar has better coverage than Fuzzer" is no accident. Randomness is cheap but comes with no guarantee; a grammar costs authoring effort but can tell you what it tested.
 
-Here you shouldn't misunderstand the relationship with AFL. AFL's strength is **coverage feedback** — it observes execution paths and keeps alive inputs that open new paths. The grammar's strength is **structural knowledge** — it knows the valid skeleton and varies within it. The two are not opposed but complementary. In fact, the most powerful combination is to build the valid skeleton with a structure-aware generator (grammar/boofuzz-style) and lay coverage feedback on top of it. With source, use AFL's instrumentation; without it, use the target's responses and crashes as signals.
+Here you shouldn't misunderstand the relationship with AFL. AFL's strength is **coverage feedback** - it observes execution paths and keeps alive inputs that open new paths. The grammar's strength is **structural knowledge** - it knows the valid skeleton and varies within it. The two are not opposed but complementary. In fact, the most powerful combination is to build the valid skeleton with a structure-aware generator (grammar/boofuzz-style) and lay coverage feedback on top of it. With source, use AFL's instrumentation; without it, use the target's responses and crashes as signals.
 
 To sum up, the selection criteria are these.
 
@@ -222,11 +222,11 @@ To sum up, the selection criteria are these.
 
 ## Closing
 
-The places a random-mutation fuzzer collapses on structured protocols were three — length fields, checksums, and context-dependent fields. The grammar-based approach breaks through each of these head-on with `Size`/`SizeFuzz`, Lua `disassemble`/`assemble`, and the explicit `And`/`And1`/`And2` combination strategy. The price is the work of describing the protocol structure by hand, but in return you get fuzzing that **can tell you what it tested.**
+The places a random-mutation fuzzer collapses on structured protocols were three - length fields, checksums, and context-dependent fields. The grammar-based approach breaks through each of these head-on with `Size`/`SizeFuzz`, Lua `disassemble`/`assemble`, and the explicit `And`/`And1`/`And2` combination strategy. The price is the work of describing the protocol structure by hand, but in return you get fuzzing that **can tell you what it tested.**
 
 When you meet a protocol where the hit rate dies at checksum validation, before trying to flip bytes even harder, it's worth first considering the side that describes the structure.
 
 ## References
 
-- [Designing a fuzzer for LS Electric PLC protocol analysis](/en/blog/ls-electric-fuzzer-design/) — the black-box protocol fuzzer design that was the starting point of this post
+- [Designing a fuzzer for LS Electric PLC protocol analysis](/en/blog/ls-electric-fuzzer-design/) - the black-box protocol fuzzer design that was the starting point of this post
 </content>

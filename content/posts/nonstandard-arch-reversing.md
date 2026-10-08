@@ -26,17 +26,17 @@ authors:
 
 ## Introduction
 
-x86 and ARM disassemble instantly in any reversing tool you fire up. The problem lies outside that comfort zone. Pull apart automotive ECU firmware and you'll run into architectures that **neither IDA, Ghidra, nor Binary Ninja can read a single line of out of the box**. The VLE variant of PowerPC and Infineon's TriCore are prime examples. Often there isn't even a symbol or a string in sight — just a few megabytes of raw code.
+x86 and ARM disassemble instantly in any reversing tool you fire up. The problem lies outside that comfort zone. Pull apart automotive ECU firmware and you'll run into architectures that **neither IDA, Ghidra, nor Binary Ninja can read a single line of out of the box**. The VLE variant of PowerPC and Infineon's TriCore are prime examples. Often there isn't even a symbol or a string in sight - just a few megabytes of raw code.
 
 This post lays out what to do when a tool doesn't support an architecture. Two things matter here: **(1) understanding the IR-as-common-language structure of RE tools, so you see that "write one architecture plugin and the rest of the analysis infrastructure comes along for free," and (2) how a non-standard calling convention can break data-flow analysis entirely, and how to fix it.** The case studies lean on a public talk (HackingCamp, @d0now_kim / PetoWorks) and open-source implementations.
 
 ## IR: the common language of every RE tool
 
-You might think supporting a new architecture means rewriting the disassembler, decompiler, and symbolic execution engine from scratch — but modern RE frameworks don't work that way, because there's an **Intermediate Representation (IR)** layer in between.
+You might think supporting a new architecture means rewriting the disassembler, decompiler, and symbolic execution engine from scratch - but modern RE frameworks don't work that way, because there's an **Intermediate Representation (IR)** layer in between.
 
 ```
 Per-architecture code (x86, ARM, RISC-V, PPC, MIPS, TriCore, ...)
-        v  [architecture-specific disassembler — handles conversion to IR]
+        v  [architecture-specific disassembler - handles conversion to IR]
     IR (platform-specific)
         v
   +-----------------------------------+
@@ -47,7 +47,7 @@ Per-architecture code (x86, ARM, RISC-V, PPC, MIPS, TriCore, ...)
   +-----------------------------------+
 ```
 
-Only the layer that converts machine code into IR knows anything about the architecture. Everything above it only ever talks to IR. **So supporting a new architecture means writing only an IR converter (a disassembler).** The pseudo-C generator, the data-flow analyzer — all of it gets reused as-is. This is what makes reversing non-standard architectures economically viable.
+Only the layer that converts machine code into IR knows anything about the architecture. Everything above it only ever talks to IR. **So supporting a new architecture means writing only an IR converter (a disassembler).** The pseudo-C generator, the data-flow analyzer - all of it gets reused as-is. This is what makes reversing non-standard architectures economically viable.
 
 Each platform has its own IR, and that choice is effectively a choice of tool ecosystem.
 
@@ -63,11 +63,11 @@ Binary Ninja's BNIL climbs through three tiers.
 ```
 Machine code
     v  Architecture Plugin
-LLIL (Low Level IL)   — close 1:1 mapping to assembly, registers explicit
+LLIL (Low Level IL)   - close 1:1 mapping to assembly, registers explicit
     v  Data-flow Analysis
-MLIL (Mid Level IL)   — SSA form, variable inference
+MLIL (Mid Level IL)   - SSA form, variable inference
     v  Type Propagation
-HLIL (High Level IL)  — close to C pseudocode, types reflected
+HLIL (High Level IL)  - close to C pseudocode, types reflected
 ```
 
 An architecture plugin is only responsible for the bottom tier: machine code -> LLIL. Binary Ninja takes care of MLIL and HLIL above it automatically. That's where the value of a single plugin comes from.
@@ -89,7 +89,7 @@ Let's apply this formula to two architectures.
 
 **PPC-VLE (Power Architecture Variable Length Encoding)** is a PowerPC derivative common in automotive ECUs. As the name says, it mixes 16-bit and 32-bit instructions to boost code density. The problem is that IDA's and Ghidra's default PPC support can't decode this variable-length encoding.
 
-Getting your hands on ECU firmware in the first place is physical work — desoldering the ECU, bypassing firmware protection (case by case), extracting from flash, and identifying the architecture. Once identification comes back as PowerPC (VLE), the formula above kicks in.
+Getting your hands on ECU firmware in the first place is physical work - desoldering the ECU, bypassing firmware protection (case by case), extracting from flash, and identifying the architecture. Once identification comes back as PowerPC (VLE), the formula above kicks in.
 
 The **registers** follow the PowerPC lineage.
 
@@ -127,15 +127,15 @@ Describe each instruction's effect using LLIL operations like `set_reg`, `load`,
 
 There are already several open-source references in this space.
 
-- [Martyx00/PowerPC-VLE-Extension](https://github.com/Martyx00/PowerPC-VLE-Extension) — an early implementation
-- [PetoWorks/binaryninja-power-vle](https://github.com/PetoWorks/binaryninja-power-vle) — built by the speaker himself
-- [Vector35's official PPC support](https://github.com/Vector35/binaryninja-api/tree/dev/arch/powerpc) — later folded into Binary Ninja proper
+- [Martyx00/PowerPC-VLE-Extension](https://github.com/Martyx00/PowerPC-VLE-Extension) - an early implementation
+- [PetoWorks/binaryninja-power-vle](https://github.com/PetoWorks/binaryninja-power-vle) - built by the speaker himself
+- [Vector35's official PPC support](https://github.com/Vector35/binaryninja-api/tree/dev/arch/powerpc) - later folded into Binary Ninja proper
 
 Binary Ninja's official guide ([part1](https://binary.ninja/2020/01/08/guide-to-architecture-plugins-part1.html), [part2](https://binary.ninja/2021/12/09/guide-to-architecture-plugins-part2.html)) covers how to write an architecture plugin in detail.
 
 ## Case 2: TriCore Fast Function Calls
 
-The second case isn't about disassembly at all — it's a problem of **analysis accuracy**. Infineon's **TriCore** is a 32-bit RISC chip for automotive ECUs that supports a calling mechanism ordinary RISC chips don't have: **Fast Function Call (fcall)**. If the tool doesn't know about it, the entire data-flow analysis gets poisoned.
+The second case isn't about disassembly at all - it's a problem of **analysis accuracy**. Infineon's **TriCore** is a 32-bit RISC chip for automotive ECUs that supports a calling mechanism ordinary RISC chips don't have: **Fast Function Call (fcall)**. If the tool doesn't know about it, the entire data-flow analysis gets poisoned.
 
 First, contrast this with a normal calling convention. Here's an ARM example:
 
@@ -184,7 +184,7 @@ fn.clobbered_regs = ['D4', 'D5', 'D6']  # registers this writes
 fn.return_regs    = ['D6']              # D6 is the return value
 ```
 
-Once this information is in place, the data-flow engine tracks set/use relationships correctly, and code that had been wrongly marked as dead comes back to life. The same principle applies in IDA Pro — declaring the clobbered registers via `__spoils` or similar in a function's type declaration makes the Hex-Rays microcode reflect it and recompute the data flow.
+Once this information is in place, the data-flow engine tracks set/use relationships correctly, and code that had been wrongly marked as dead comes back to life. The same principle applies in IDA Pro - declaring the clobbered registers via `__spoils` or similar in a function's type declaration makes the Hex-Rays microcode reflect it and recompute the data flow.
 
 ## Recovering structure from firmware with no symbols
 
@@ -225,17 +225,17 @@ IDA Pro internally uses Hex-Rays microcode as its IR.
 - `infer_types` works backward from the microcode to infer local variable types.
 - Defining a struct via `declare_type` turns field access from `*(a1 + 0x10)` into `request->method`.
 
-Binary Ninja works the same way — types declared at the LLIL level propagate up into MLIL and HLIL. TriCore's clobbered/return register declarations are exactly this mechanism at work — give accurate information at a lower layer, and analysis quality leaps forward at the higher layers. Whether the architecture is standard or not, when decompilation output looks like a mess, the first thing to fix is types and calling convention.
+Binary Ninja works the same way - types declared at the LLIL level propagate up into MLIL and HLIL. TriCore's clobbered/return register declarations are exactly this mechanism at work - give accurate information at a lower layer, and analysis quality leaps forward at the higher layers. Whether the architecture is standard or not, when decompilation output looks like a mess, the first thing to fix is types and calling convention.
 
 ## Closing
 
-An unsupported architecture looks like a wall, but the actual amount of work is confined to a single layer: the IR converter. PPC-VLE was a disassembler problem — determine the variable-length encoding and translate it into LLIL. TriCore was an annotation problem — tell the tool about a non-standard calling convention to bring data-flow analysis back to life. Both take full advantage of the IR structure's benefit: give accurate information at the bottom layer, and the tools above climb up on their own.
+An unsupported architecture looks like a wall, but the actual amount of work is confined to a single layer: the IR converter. PPC-VLE was a disassembler problem - determine the variable-length encoding and translate it into LLIL. TriCore was an annotation problem - tell the tool about a non-standard calling convention to bring data-flow analysis back to life. Both take full advantage of the IR structure's benefit: give accurate information at the bottom layer, and the tools above climb up on their own.
 
 As symbol-less embedded targets like automotive ECUs become more common, stepping outside standard architectures is only going to happen more often. Instead of stopping because the tool can't read it, opening the datasheet and writing a plugin turns out to be the faster path in the end.
 
 ## References
 
-- HackingCamp talk — @d0now_kim (PetoWorks), "Reverse Engineering TriCore and PPC-VLE"
+- HackingCamp talk - @d0now_kim (PetoWorks), "Reverse Engineering TriCore and PPC-VLE"
 - [PetoWorks/binaryninja-power-vle](https://github.com/PetoWorks/binaryninja-power-vle)
 - [Binary Ninja Architecture Plugin Guide part1](https://binary.ninja/2020/01/08/guide-to-architecture-plugins-part1.html) . [part2](https://binary.ninja/2021/12/09/guide-to-architecture-plugins-part2.html)
 </content>

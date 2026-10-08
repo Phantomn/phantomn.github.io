@@ -1,8 +1,8 @@
 /**
  * Splits a post title into a main heading and an optional de-emphasized
- * subtitle, using a spaced em-dash (" — ") as the editorial separator.
+ * subtitle, using a spaced em-dash (" - ") as the editorial separator.
  *
- *   "ARM Exploitation Series — Part 1: Starting from Handray"
+ *   "ARM Exploitation Series - Part 1: Starting from Handray"
  *     -> { main: "ARM Exploitation Series",
  *          part: "Part 1",
  *          subtitle: "Starting from Handray" }
@@ -12,14 +12,14 @@
  */
 export interface TitleParts {
   main: string
-  /** e.g. "Part 1" — present only when the subtitle leads with a part marker. */
+  /** e.g. "Part 1" - present only when the subtitle leads with a part marker. */
   part?: string
   /** Remainder after the part marker, or the whole tail when there's no marker. */
   subtitle?: string
 }
 
-const SEPARATOR = ' — ' // space + em-dash + space
-const PART_PATTERN = /^Part\s+(\d+)\s*[:–—.-]?\s*(.*)$/i
+const SEPARATOR = ' - ' // space + em-dash + space
+const PART_PATTERN = /^Part\s+(\d+)\s*[:–-.-]?\s*(.*)$/i
 
 export function splitTitle(title: string): TitleParts {
   const idx = title.indexOf(SEPARATOR)

@@ -252,7 +252,7 @@ Starting from the `FILE` privilege alone and expanding to the full privileges of
 The full lab environment (build scripts and exploit code) is published in Daesik Bae's (pinebudweiser) repository.
 
 - [pinebudweiser/mariadb-13.1.0-rce-lab](https://github.com/pinebudweiser/mariadb-13.1.0-rce-lab)
-  - Remote chain (10.4.18): [`exploit/10.4.18/`](https://github.com/pinebudweiser/mariadb-13.1.0-rce-lab/tree/main/exploit/10.4.18) — `t16_e2e.py`, `na_frm_rce2_exploit.py`, `target_reliable.py`
+  - Remote chain (10.4.18): [`exploit/10.4.18/`](https://github.com/pinebudweiser/mariadb-13.1.0-rce-lab/tree/main/exploit/10.4.18) - `t16_e2e.py`, `na_frm_rce2_exploit.py`, `target_reliable.py`
   - Local chain (13.1.0): [`exploit/13.1.0/lab_exploit.py`](https://github.com/pinebudweiser/mariadb-13.1.0-rce-lab/blob/main/exploit/13.1.0/lab_exploit.py)
 
 > This is shared after the vendor patch and through a responsible disclosure process (HackerOne disclosure consent, GHSA issuance). If you run a pre-patch version, check the patch status section below and upgrade first.

@@ -2,7 +2,7 @@
 title: 'MS17-010 (EternalBlue): SMBv1 Exploit Analysis'
 date: 2017-03-14T00:00:00.000Z
 excerpt: >-
-  MS17-010 EternalBlue analysis — the SMBv1 buffer overflow exploit used in WannaCry
+  MS17-010 EternalBlue analysis - the SMBv1 buffer overflow exploit used in WannaCry
   and NotPetya, and a packet-level analysis of the Metasploit module
 tags:
   - ms17-010
@@ -83,15 +83,15 @@ run
 
 The exploit traffic was captured with Wireshark (with UDP filtered out). The entire exchange breaks down into several phases.
 
-### Phase 1 — TCP 3-Way Handshake
+### Phase 1 - TCP 3-Way Handshake
 
 A standard TCP SYN / SYN-ACK / ACK to port 445. Interestingly, an SMB request/response exchange occurs within the handshake window before the final ACK that establishes the connection. This appears to be a product of the way the Windows SMB stack pre-negotiates during connection setup.
 
-### Phase 2 — SMB Negotiation
+### Phase 2 - SMB Negotiation
 
 After the TCP handshake, the client sends an `SMB_COM_NEGOTIATE` request containing a list of the SMB dialects it supports. The server responds with the selected dialect and its capabilities, including the `MaxBufferSize` field that the exploit later abuses.
 
-### Phase 3 — Session Setup (NTLM Authentication)
+### Phase 3 - Session Setup (NTLM Authentication)
 
 The client and server perform an NTLM authentication exchange embedded in the SMB `Session Setup AndX` packet.
 
@@ -103,13 +103,13 @@ NTLM uses a Challenge-Response mechanism:
 
 In the EternalBlue exploit, this authentication stage uses a null session (anonymous logon) to reach the vulnerable Trans code path.
 
-### Phase 4 — Tree Connect and Trans Overflow
+### Phase 4 - Tree Connect and Trans Overflow
 
 After authentication, the client issues a `Tree Connect AndX` providing a UNC path to connect to the IPC$ share. The server responds with the service name (`IPC`).
 
 The exploit then sends a large `NT Trans` request of 30,336 bytes, which intentionally exceeds `MaxBufferSize`. The kernel SMB handler `srv.sys` allocates a buffer based on the size field of the initial Trans header, then processes the secondary Trans2 continuation request. The vulnerability is a pool buffer overflow in this secondary processing path: the `TotalDataCount` field of the Trans header controls the allocation size, while the data actually written can exceed it.
 
-### Phase 5 — SMB Echo Probing
+### Phase 5 - SMB Echo Probing
 
 After the initial overflow, the exploit sends a series of `SMB Echo` requests containing the payload `0x41414141...`. This probing stage:
 
@@ -118,17 +118,17 @@ After the initial overflow, the exploit sends a series of `SMB Echo` requests co
 
 ![SMB Echo probe with the 0x41 pattern](/images/blog/ms17-010-analysis/Image.png)
 
-### Phase 6 — Second Negotiate + Shellcode Delivery
+### Phase 6 - Second Negotiate + Shellcode Delivery
 
 A second `SMB Negotiate` exchange begins. OS build information leaks in the server's response, and the module uses it to find the kernel pool spray target.
 
 The second `NT Trans2` packet contains the actual shellcode payload.
 
-### Phase 7 — TCP RST Flood to Port 445
+### Phase 7 - TCP RST Flood to Port 445
 
 A burst of `TCP [RST, ACK]` packets to port 445 follows. This is the exploit's mechanism for grooming the kernel pool. The RST storm frees and reallocates pool chunks to place the shellcode at a predictable address before triggering the overwrite.
 
-### Phase 8 — Push / Shell
+### Phase 8 - Push / Shell
 
 The client sends a `TCP PSH` packet. Inspecting the payload reveals a Windows shellcode stub that spawns `cmd.exe`. Immediately afterward, the connection transitions to a `BROWSER` state (the NetBIOS Browser service), indicating that a reverse shell has been established and the attacker machine is issuing commands.
 
@@ -178,10 +178,10 @@ BROWSER state → RCE established
 
 ## References
 
-1. [Microsoft Windows - Unauthenticated SMB Remote Code Execution Scanner (MS17-010) — Exploit-DB](https://www.exploit-db.com/exploits/41891/)
-2. [FireEye — SMB Exploited: WannaCry Use of EternalBlue](https://www.fireeye.kr/company/press-releases/2017/smb-exploited-wannacry-use-of-eternalblue.html)
-3. [WannaCry Ransomware Global Spread — NpCore](http://www.npcore.com/notice/?uid=177&mod=document#top)
-4. [SMB, I Choose You! PART 01 — BPsec Blog](https://bpsecblog.wordpress.com/2017/07/07/kimchicon_smb_part01/)
-5. [WannaCry Corporate Damage — Boannews](http://www.boannews.com/media/view.asp?idx=54731&page=2&kind=1&search=title&find=wannacry)
+1. [Microsoft Windows - Unauthenticated SMB Remote Code Execution Scanner (MS17-010) - Exploit-DB](https://www.exploit-db.com/exploits/41891/)
+2. [FireEye - SMB Exploited: WannaCry Use of EternalBlue](https://www.fireeye.kr/company/press-releases/2017/smb-exploited-wannacry-use-of-eternalblue.html)
+3. [WannaCry Ransomware Global Spread - NpCore](http://www.npcore.com/notice/?uid=177&mod=document#top)
+4. [SMB, I Choose You! PART 01 - BPsec Blog](https://bpsecblog.wordpress.com/2017/07/07/kimchicon_smb_part01/)
+5. [WannaCry Corporate Damage - Boannews](http://www.boannews.com/media/view.asp?idx=54731&page=2&kind=1&search=title&find=wannacry)
 6. [SMB Protocol Overview](http://oulth.tistory.com/58)
-7. [SMB (Server Message Block) — Coffeenix](http://coffeenix.net/doc/network/SMB_ICMP_UDP(huichang).pdf)
+7. [SMB (Server Message Block) - Coffeenix](http://coffeenix.net/doc/network/SMB_ICMP_UDP(huichang).pdf)

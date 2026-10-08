@@ -16,11 +16,11 @@ authors:
     image: 'https://github.com/Phantomn.png'
 ---
 
-## Buffer Overflow 0 — 150 points
+## Buffer Overflow 0 - 150 points
 
 A challenge that tests understanding of buffer overflow by giving you the source code and binary.
 
-The key is the `sigsegv_handler` function and the main input routine. `sigsegv_handler` is registered as the SIGSEGV signal handler — when a segmentation fault occurs, it prints the flag to stderr instead of a normal crash.
+The key is the `sigsegv_handler` function and the main input routine. `sigsegv_handler` is registered as the SIGSEGV signal handler - when a segmentation fault occurs, it prints the flag to stderr instead of a normal crash.
 
 In other words, intentionally triggering an error prints the flag. Overflow the buffer to cause a segfault.
 
@@ -30,7 +30,7 @@ python -c 'print "A"*200' | ./vuln
 
 ---
 
-## Buffer Overflow 1 — 200 points
+## Buffer Overflow 1 - 200 points
 
 The binary has a `vuln()` function that reads input with `gets()`, and a separate `win()` function that prints the flag. The goal is to overwrite `vuln`'s return address with `win`.
 
@@ -61,7 +61,7 @@ p.interactive()
 
 ---
 
-## Buffer Overflow 2 — 250 points
+## Buffer Overflow 2 - 250 points
 
 Same structure as Buffer Overflow 1, but the `win()` function needs two specific arguments to print the flag:
 
@@ -100,7 +100,7 @@ p.interactive()
 
 ---
 
-## Assembly 0 — 150 points
+## Assembly 0 - 150 points
 
 A challenge that requires guessing the return value from assembly code.
 
@@ -116,7 +116,7 @@ The flag is the decimal representation of the return value when the function is 
 
 ---
 
-## Assembly 1 — 200 points
+## Assembly 1 - 200 points
 
 The second assembly challenge. Just need to find the return value when 0x255 is given as input.
 
@@ -148,13 +148,13 @@ Formatting the return value correctly gives the flag.
 
 ---
 
-## Assembly 2 — 250 points
+## Assembly 2 - 250 points
 
 An exercise in manually tracing a more complex assembly snippet with several register and memory operations. The approach is the same: convert each instruction to C, track register state, and compute the final `eax` value.
 
 ---
 
-## Assembly 3 — 400 points
+## Assembly 3 - 400 points
 
 The `al`/`ah` byte register operations are complex enough that tracing them purely by hand is difficult.
 
@@ -180,7 +180,7 @@ Compile with `-z execstack` to allow stack execution, run it, and read the retur
 
 ---
 
-## Shellcode — 200 points
+## Shellcode - 200 points
 
 The binary reads input into a buffer with `gets()`, then executes that buffer as code:
 
@@ -193,7 +193,7 @@ void vuln() {
 }
 ```
 
-`((void(*)())buf)()` is a cast that makes the buffer directly executable — a classic shellcode injection. Since NX is disabled, shellcode placed in the buffer executes when the function pointer is invoked.
+`((void(*)())buf)()` is a cast that makes the buffer directly executable - a classic shellcode injection. Since NX is disabled, shellcode placed in the buffer executes when the function pointer is invoked.
 
 Standard Linux x86 `/bin/sh` shellcode works here:
 
@@ -209,11 +209,11 @@ p.interactive()
 
 ---
 
-## Leak Me — 200 points
+## Leak Me - 200 points
 
 The binary reads a name with `fgets()` and removes the trailing newline by setting it to null. It then reads a password from a file and validates it against user input.
 
-The vulnerability is in the null-byte removal logic. If the name buffer is filled to capacity, `fgets` places a null terminator at `name[255]`. But the code then does `name[strlen(name) - 1] = '\0'`, which strips that trailing null — leaving the name buffer without a terminator. Afterward, `puts(name)` reads past the buffer boundary into the adjacent `password` array.
+The vulnerability is in the null-byte removal logic. If the name buffer is filled to capacity, `fgets` places a null terminator at `name[255]`. But the code then does `name[strlen(name) - 1] = '\0'`, which strips that trailing null - leaving the name buffer without a terminator. Afterward, `puts(name)` reads past the buffer boundary into the adjacent `password` array.
 
 Stack layout:
 
@@ -231,7 +231,7 @@ p = remote("2018shell2.picoctf.com", PORT)
 # fill the name buffer completely to trigger the null removal bug
 p.sendline("A" * 256)
 
-# read the leaked output — the password sits right after the name in memory
+# read the leaked output - the password sits right after the name in memory
 output = p.recvline()
 leaked_password = output[256:].split('\n')[0]
 print("Leaked password:", leaked_password)

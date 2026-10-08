@@ -50,23 +50,23 @@
       "vuln-research": "Vulnerability Research (CVE/FVE)"
     },
     "competencies": {
-      "fintech": "Web/App penetration testing of financial and public electronic-finance infrastructure — 12 sites across savings banks, capital, securities, insurance, and manufacturing (A3 Security)",
-      "ot": "OT/ICS security — IEC 62443-4-2 based threat modeling and penetration testing; earned the Achilles Communication Certificate Level 2 for LS ELECTRIC automation devices",
-      "iot": "IoT vulnerability analysis and security tooling — smart-building IoT detection technology, IoT/CCTV incident-investigation tools, and 16 CVEs from a Linux kernel file system fuzzer",
-      "llm": "LLM & AI infrastructure security — 3 CVEs from analyzing the llama.cpp inference engine (DoS, reachable assertion, integer overflow), plus MCP-based assessment-automation research",
-      "medical": "Medical device security — FDA eSTAR consulting and Web/App & medical-device penetration testing, plus security certification support",
-      "cyberRange": "Cyber exercises — KEPCO ELECCON challenge development and operation, NATO CCDCOE Locked Shields 2025 and 2026 blue team, and APEX CTF 2025 DFIR challenge development"
+      "fintech": "Web/App penetration testing of financial and public electronic-finance infrastructure - 12 sites across savings banks, capital, securities, insurance, and manufacturing (A3 Security)",
+      "ot": "OT/ICS security - IEC 62443-4-2 based threat modeling and penetration testing; earned the Achilles Communication Certificate Level 2 for LS ELECTRIC automation devices",
+      "iot": "IoT vulnerability analysis and security tooling - smart-building IoT detection technology, IoT/CCTV incident-investigation tools, and 16 CVEs from a Linux kernel file system fuzzer",
+      "llm": "LLM & AI infrastructure security - 3 CVEs from analyzing the llama.cpp inference engine (DoS, reachable assertion, integer overflow), plus MCP-based assessment-automation research",
+      "medical": "Medical device security - FDA eSTAR consulting and Web/App & medical-device penetration testing, plus security certification support",
+      "cyberRange": "Cyber exercises - KEPCO ELECCON challenge development and operation, NATO CCDCOE Locked Shields 2025 and 2026 blue team, and APEX CTF 2025 DFIR challenge development"
     },
     "experience": {
       "coresec": {
         "role": "ICS Security Researcher (Associate Researcher)",
         "company": "CoreSecurity",
         "bullets": {
-          "ot": "OT/ICS security — performed IEC 62443-4-2 based threat modeling and penetration testing.",
+          "ot": "OT/ICS security - performed IEC 62443-4-2 based threat modeling and penetration testing.",
           "achilles": "Earned the Achilles Communication Certificate Level 2 for LS ELECTRIC automation devices and developed an automated assessment tool.",
-          "iot": "IoT security — developed and validated smart-building IoT vulnerability-detection technology and built IoT/CCTV incident-investigation tools.",
-          "medical": "Medical device security — performed FDA eSTAR consulting and Web/App & medical-device penetration testing.",
-          "eleccon": "Cyber range — operated KEPCO ELECCON and developed its challenges.",
+          "iot": "IoT security - developed and validated smart-building IoT vulnerability-detection technology and built IoT/CCTV incident-investigation tools.",
+          "medical": "Medical device security - performed FDA eSTAR consulting and Web/App & medical-device penetration testing.",
+          "eleccon": "Cyber range - operated KEPCO ELECCON and developed its challenges.",
           "lockedShields": "Took part in NATO CCDCOE Locked Shields 2025 and 2026 as a blue-team member, and developed DFIR challenges for APEX CTF 2025."
         }
       },
@@ -84,8 +84,8 @@
       "network": "Network Administrator Level 2 (KAIT, 2024.07)"
     },
     "education": {
-      "kongju": "Kongju National University, Dept. of Computer Engineering (2012.02 — 2020.02)",
-      "cheonan": "Cheonan Commercial High School, Information Processing (2009.03 — 2012.02)"
+      "kongju": "Kongju National University, Dept. of Computer Engineering (2012.02 - 2020.02)",
+      "cheonan": "Cheonan Commercial High School, Information Processing (2009.03 - 2012.02)"
     },
     "sectionsNav": "Jump to section",
     "stats": {

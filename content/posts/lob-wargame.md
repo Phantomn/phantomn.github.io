@@ -2,7 +2,7 @@
 title: 'Lord of Buffer Overflow (LOB) Wargame: Gate -> Iron_golem -> Dark_eyes'
 date: 2019-06-01T00:00:00.000Z
 excerpt: >-
-  Progressing through the LOB (Lord of Buffer Overflow) wargame: Gate (basic BOF), Iron_golem (partial RELRO bypass), Dark_eyes (NX + ASLR) — tracing the evolution of Linux exploitation techniques.
+  Progressing through the LOB (Lord of Buffer Overflow) wargame: Gate (basic BOF), Iron_golem (partial RELRO bypass), Dark_eyes (NX + ASLR) - tracing the evolution of Linux exploitation techniques.
 tags:
   - wargame
   - writeup
@@ -35,7 +35,7 @@ The LOB on Fedora Core 3 introduces meaningful protections compared to earlier e
 
 The key combination is: **NX on both stack and heap** + **ASCII Armor on shared libraries**.
 
-ASCII Armor guarantees that every shared library base address sits below `0x01000000`, meaning the top byte is always `\x00`. If a library address needs to be embedded in the payload, `strcpy` or similar string functions will truncate the copy at that null byte — a direct Return-to-Library (RTL) attack using `system("/bin/sh")` is blocked because the address can't survive a string copy.
+ASCII Armor guarantees that every shared library base address sits below `0x01000000`, meaning the top byte is always `\x00`. If a library address needs to be embedded in the payload, `strcpy` or similar string functions will truncate the copy at that null byte - a direct Return-to-Library (RTL) attack using `system("/bin/sh")` is blocked because the address can't survive a string copy.
 
 The stack is readable and writable, but not executable:
 
@@ -49,7 +49,7 @@ bffeb000-c0000000 rwxp  [stack]   <- no execute bit
 
 ### Source analysis
 
-The iron_golem binary is structurally simple — a `strcpy` into a fixed-size buffer with no length check:
+The iron_golem binary is structurally simple - a `strcpy` into a fixed-size buffer with no length check:
 
 ```c
 char buffer[256];
@@ -77,9 +77,9 @@ The natural approach is to overwrite RET with the address of `system()` in libc.
 
 The solution combines two primitives.
 
-**Fake EBP** leverages the function epilogue. The `leave` instruction executes `mov esp, ebp; pop ebp`, restoring EBP from the current stack. By controlling the value popped into EBP, we can influence where the *next* epilogue's `leave` pivots the stack to — effectively redirecting execution flow through a chosen memory region.
+**Fake EBP** leverages the function epilogue. The `leave` instruction executes `mov esp, ebp; pop ebp`, restoring EBP from the current stack. By controlling the value popped into EBP, we can influence where the *next* epilogue's `leave` pivots the stack to - effectively redirecting execution flow through a chosen memory region.
 
-**GOT dereferencing** works around the ASCII Armor problem. The Global Offset Table (GOT) is mapped within the binary's own address space (around `0x08049xxx`), so it has no null byte issue. The GOT entry for `execl` holds the resolved library address — there's no need to embed that address directly in the payload; simply pointing the instruction pointer at the GOT entry lets the CPU dereference it automatically.
+**GOT dereferencing** works around the ASCII Armor problem. The Global Offset Table (GOT) is mapped within the binary's own address space (around `0x08049xxx`), so it has no null byte issue. The GOT entry for `execl` holds the resolved library address - there's no need to embed that address directly in the payload; simply pointing the instruction pointer at the GOT entry lets the CPU dereference it automatically.
 
 ### Building the exploit
 
@@ -92,7 +92,7 @@ execl GOT entry: 0x804954c  ->  (points to execl in libc)
 
 `execl` also has a prologue (`push ebp; mov ebp, esp`), so jumping straight to its first instruction would overwrite EBP again and break the Fake EBP chain. The fix is to jump to `execl + 3` to skip the prologue.
 
-`execl`'s first argument is read from wherever ESP points after the pivot. Arranging the Fake EBP to land on `0x8049618` (the GOT base) means the resolved `execl` address gets used as the path argument — becoming the filename execl tries to execute.
+`execl`'s first argument is read from wherever ESP points after the pivot. Arranging the Fake EBP to land on `0x8049618` (the GOT base) means the resolved `execl` address gets used as the path argument - becoming the filename execl tries to execute.
 
 We pre-create a file in the working directory named after the byte value stored at that GOT location, `\x01`:
 
@@ -143,7 +143,7 @@ The difficulty with a network exploit is that stdin/stdout are attached to the s
 
 ![Running the dark_eyes binary and reviewing its source](/images/writeups/lob-wargame/death-knight-1.png)
 
-![dark_eyes recv vulnerability — 256 bytes of input into buffer[40]](/images/writeups/lob-wargame/death-knight-2.png)
+![dark_eyes recv vulnerability - 256 bytes of input into buffer[40]](/images/writeups/lob-wargame/death-knight-2.png)
 
 ![Confirming the dark_eyes exploit environment](/images/writeups/lob-wargame/death-knight-3.png)
 
@@ -158,7 +158,7 @@ I used a reverse shell approach:
    Format:  python
    ```
 
-![Generating a reverse shell payload with msfvenom — setting LHOST/LPORT](/images/writeups/lob-wargame/death-knight-4.png)
+![Generating a reverse shell payload with msfvenom - setting LHOST/LPORT](/images/writeups/lob-wargame/death-knight-4.png)
 
 2. Build a buffer overflow payload with the shellcode embedded in a NOP sled and the return address pointing back into the buffer.
 
@@ -172,7 +172,7 @@ I used a reverse shell approach:
 
 4. Send the payload to the victim's port 6666.
 
-![Reverse shell connection established — dark_eyes daemon calls back to the attacker's nc listener](/images/writeups/lob-wargame/death-knight-6.png)
+![Reverse shell connection established - dark_eyes daemon calls back to the attacker's nc listener](/images/writeups/lob-wargame/death-knight-6.png)
 
 ![Shell obtained successfully](/images/writeups/lob-wargame/death-knight-7.png)
 
@@ -186,7 +186,7 @@ The shellcode instructs the victim to call back to the attacker's IP and port, a
 
 ### Why ASCII Armor doesn't block this
 
-The primary concern here isn't ASCII Armor but NX. Since the exploit uses a shellcode payload instead of RTL, the shellcode needs to be placed in executable memory. But if both the stack and heap are non-executable, this approach should fail — there's nowhere writable+executable to place the shellcode.
+The primary concern here isn't ASCII Armor but NX. Since the exploit uses a shellcode payload instead of RTL, the shellcode needs to be placed in executable memory. But if both the stack and heap are non-executable, this approach should fail - there's nowhere writable+executable to place the shellcode.
 
 On this FC3 environment, the `mmap`ed regions used for libraries aren't universally marked non-executable. Some builds leave an available window. If NX were enforced everywhere, the correct approach would be switching to a full ROP chain, which is covered in the next level of LOB.
 
@@ -197,4 +197,4 @@ On this FC3 environment, the `mmap`ed regions used for libraries aren't universa
 | Gate -> Iron_golem | Fake EBP + GOT-based execl | ASCII Armor (NX + null bytes in library addresses) |
 | Iron_golem -> Dark_eyes | Remote BOF + reverse shellcode | Network socket I/O, outbound firewall |
 
-This progression shows how each added protection forces a technique upgrade. In this environment, NX alone isn't enough to stop a determined attacker — NX needs to be combined with full ASLR (covering both libraries and the binary) to make ROP impractical without an information leak.
+This progression shows how each added protection forces a technique upgrade. In this environment, NX alone isn't enough to stop a determined attacker - NX needs to be combined with full ASLR (covering both libraries and the binary) to make ROP impractical without an information leak.

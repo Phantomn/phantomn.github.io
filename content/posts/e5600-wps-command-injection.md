@@ -1,7 +1,7 @@
 ---
 title: E5600 Router WPS PIN Command Injection
 date: 2021-01-01T00:00:00.000Z
-excerpt: A command injection vulnerability found in the WPS PIN handling of the E5600 router — authenticated remote code execution via a crafted WPS PIN parameter
+excerpt: A command injection vulnerability found in the WPS PIN handling of the E5600 router - authenticated remote code execution via a crafted WPS PIN parameter
 tags:
   - iot
   - router

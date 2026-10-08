@@ -255,11 +255,11 @@ less exploits/exploit.metasploit.log
 
 Research building on FIRMADYNE:
 
-- **FirmAE** — extends FIRMADYNE's emulation with more aggressive compatibility heuristics, improving the network inference success rate.
-- **Firm-AFL** — combines AFL greybox fuzzing with process emulation for higher throughput.
-- **FIRM-COV** — optimized process emulation aimed at higher code coverage.
-- **IOTFUZZER** — drops emulation entirely and fuzzes firmware through the companion mobile app.
-- **Snipuzz** — blackbox fuzzing through message snippet inference, without source code or emulation.
+- **FirmAE** - extends FIRMADYNE's emulation with more aggressive compatibility heuristics, improving the network inference success rate.
+- **Firm-AFL** - combines AFL greybox fuzzing with process emulation for higher throughput.
+- **FIRM-COV** - optimized process emulation aimed at higher code coverage.
+- **IOTFUZZER** - drops emulation entirely and fuzzes firmware through the companion mobile app.
+- **Snipuzz** - blackbox fuzzing through message snippet inference, without source code or emulation.
 
 ---
 

@@ -10,7 +10,7 @@ export default async function Contact() {
   return (
     <section id="contact" className="border-t border-line py-24 md:py-28">
       <div className="container-max section-padding">
-        <p className="eyebrow mb-4">08 — {t('eyebrow')}</p>
+        <p className="eyebrow mb-4">08 - {t('eyebrow')}</p>
         <h2 className="section-title">{t('title')}</h2>
         <p className="mt-4 max-w-3xl text-lg leading-relaxed text-muted">{t('intro')}</p>
 

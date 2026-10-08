@@ -44,7 +44,7 @@ angr itself is composed of several sub-projects, each of which can be used indep
 
 ## What Is Symbolic Execution?
 
-In ordinary program execution, every variable has a concrete value. Symbolic execution replaces unknown input values with *symbolic variables* — mathematical unknowns — and tracks the constraints placed on those unknowns at each branch. An SMT solver (angr uses Z3 internally) then computes the concrete input values needed to reach a particular path.
+In ordinary program execution, every variable has a concrete value. Symbolic execution replaces unknown input values with *symbolic variables* - mathematical unknowns - and tracks the constraints placed on those unknowns at each branch. An SMT solver (angr uses Z3 internally) then computes the concrete input values needed to reach a particular path.
 
 Consider the following example code:
 
@@ -66,19 +66,19 @@ void main() {
 
 Letting `x` be χ and `y` be λ, the engine derives three execution paths:
 
-1. `(χ * 2) ≠ 1000` — exits quietly
-2. `(χ * 2) = 1000` and `λ ≤ 1000` — prints "Wrong!"
-3. `(χ * 2) = 1000` and `λ > 1000` — prints "Nice!"
+1. `(χ * 2) ≠ 1000` - exits quietly
+2. `(χ * 2) = 1000` and `λ ≤ 1000` - prints "Wrong!"
+3. `(χ * 2) = 1000` and `λ > 1000` - prints "Nice!"
 
 To reach "Nice!", angr poses this question to Z3: find χ, λ satisfying `χ * 2 = 1000` and `λ > 1000`. The solver immediately returns `x = 500, y = 1001`.
 
 ### Known Limitations
 
-**Path explosion** — the number of execution paths grows exponentially as the number of branches increases. A program with many loops or complex conditions can generate millions of states. Mitigations include heuristic-based exploration, parallel processing of independent paths, and path merging.
+**Path explosion** - the number of execution paths grows exponentially as the number of branches increases. A program with many loops or complex conditions can generate millions of states. Mitigations include heuristic-based exploration, parallel processing of independent paths, and path merging.
 
-**Program-dependent usefulness** — symbolic execution is strong for programs that take different paths depending on the input. If most inputs use the same path, per-input testing may be more economical.
+**Program-dependent usefulness** - symbolic execution is strong for programs that take different paths depending on the input. If most inputs use the same path, per-input testing may be more economical.
 
-**Interaction with the environment** — if the environment cannot accurately model system calls, signal reception, external I/O, etc., consistency problems can arise.
+**Interaction with the environment** - if the environment cannot accurately model system calls, signal reception, external I/O, etc., consistency problems can arise.
 
 ## Installation
 
@@ -231,8 +231,8 @@ print(data)
 
 With angr, you only need to find two addresses in the disassembly:
 
-- `0x804867d` — the "Good Job" branch
-- `0x804866b` — the "Try again" branch
+- `0x804867d` - the "Good Job" branch
+- `0x804866b` - the "Try again" branch
 
 ```python
 import angr
@@ -277,7 +277,7 @@ Key point: you only need to know the addresses of the success output and the fai
 
 ## Challenge 01: angr_avoid
 
-This binary is so large that IDA Pro flatly refuses to analyze it fully — hundreds of duplicate blocks that look as if they were hand-cloned. angr can handle it, but you have to choose the `avoid` set carefully.
+This binary is so large that IDA Pro flatly refuses to analyze it fully - hundreds of duplicate blocks that look as if they were hand-cloned. angr can handle it, but you have to choose the `avoid` set carefully.
 
 ### First attempt: a single bad address
 
@@ -304,7 +304,7 @@ if __name__ == '__main__':
     main()
 ```
 
-This code returns `b'HUPBBPHP'`, but the binary rejects it with "Try again." A single `avoid` address is not enough — the binary has a separate `avoid_me` function that leads to a dead end.
+This code returns `b'HUPBBPHP'`, but the binary rejects it with "Try again." A single `avoid` address is not enough - the binary has a separate `avoid_me` function that leads to a dead end.
 
 ### Second attempt: adding avoid_me
 
@@ -313,7 +313,7 @@ good = 0x80485b5
 bad  = [0x80485a8, 0x80485f7]
 ```
 
-Result: `no solution found`. Still not right — the `find` address needs fixing too. The binary checks the password at a different comparison point than initially assumed.
+Result: `no solution found`. Still not right - the `find` address needs fixing too. The binary checks the password at a different comparison point than initially assumed.
 
 ### The working solution
 

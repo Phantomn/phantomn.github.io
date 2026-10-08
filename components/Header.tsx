@@ -36,7 +36,7 @@ const iconLinkClass = (size: string) =>
   `focus-ring inline-flex ${size} items-center justify-center rounded-md text-muted transition-colors hover:text-fg`
 
 // Scroll-spy tracks every homepage section, including ones without a nav
-// item (home, writing) — otherwise the previous section's link would stay
+// item (home, writing) - otherwise the previous section's link would stay
 // highlighted while the user scrolls through them.
 const sectionIds = [
   'home',

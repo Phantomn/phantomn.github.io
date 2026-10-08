@@ -218,14 +218,14 @@ Let's hand-trace the assembly to work out the stack layout.
 ```
 
 Step-by-step analysis:
-1. `stp x29, x30, [sp, #-32]!` — save x29 (FP) and x30 (LR) at `[sp]` and `[sp+8]`, then `sp -= 32` (function prologue)
-2. `mov x29, sp` — set the frame pointer
-3. `str w0, [x29, #28]` — save argc
-4. `str x1, [x29, #16]` — save argv
-5. `bl 0x4006e0` — branch-and-link to `vulnerable`; store the return address (`0x400738`) in x30 (LR)
-6. `mov w0, #0x0` — set the return value
-7. `ldp x29, x30, [sp], #32` — restore x29 and x30 from the stack, then `sp += 32`
-8. `ret` — jump to x30
+1. `stp x29, x30, [sp, #-32]!` - save x29 (FP) and x30 (LR) at `[sp]` and `[sp+8]`, then `sp -= 32` (function prologue)
+2. `mov x29, sp` - set the frame pointer
+3. `str w0, [x29, #28]` - save argc
+4. `str x1, [x29, #16]` - save argv
+5. `bl 0x4006e0` - branch-and-link to `vulnerable`; store the return address (`0x400738`) in x30 (LR)
+6. `mov w0, #0x0` - set the return value
+7. `ldp x29, x30, [sp], #32` - restore x29 and x30 from the stack, then `sp += 32`
+8. `ret` - jump to x30
 
 **Disassembly of the vulnerable function:**
 
@@ -250,9 +250,9 @@ Step-by-step analysis:
 ```
 
 Key observations:
-- `stp x29, x30, [sp, #-144]!` — save x29 and x30 at the top of a 144-byte stack frame
-- `add x0, x29, #0x10` — `buffer` is located at `x29 + 0x10`
-- `read(0, buffer, 0x100)` — reads 256 bytes into a 128-byte buffer (overflow possible)
+- `stp x29, x30, [sp, #-144]!` - save x29 and x30 at the top of a 144-byte stack frame
+- `add x0, x29, #0x10` - `buffer` is located at `x29 + 0x10`
+- `read(0, buffer, 0x100)` - reads 256 bytes into a 128-byte buffer (overflow possible)
 - the epilogue `ldp x29, x30, [sp], #144` restores x29 and x30 from the stack, then `ret` jumps to x30
 
 Key insight: **the saved x30 (LR) is located at `sp + 8` in the vulnerable frame** (right after the saved x29). The buffer starts at `x29 + 0x10`.
@@ -446,8 +446,8 @@ mov_x0_x24_blr_x25:  mov x0, x24; blr x25;
 ```
 
 **Chain flow:**
-1. Jump to `ldp_x24_x25_x30_ret` — load x24, x25 from `[sp + 0x38]` and load a new x30 from the stack
-2. Set x30 to `mov_x0_x24_blr_x25` — this is where `ret` lands
+1. Jump to `ldp_x24_x25_x30_ret` - load x24, x25 from `[sp + 0x38]` and load a new x30 from the stack
+2. Set x30 to `mov_x0_x24_blr_x25` - this is where `ret` lands
 3. `mov_x0_x24_blr_x25` sets x0 to x24 (`&"/bin/sh"`) and calls x25 (`system`)
 
 **Payload layout:**
@@ -507,7 +507,7 @@ The key differences that confuse someone from an x86-64 exploitation background 
 | When it's saved to the stack | only when there are nested calls | always saves FP and LR together via the prologue `stp x29, x30, [sp, #-N]!` |
 | ret instruction | pops RIP from the stack | jumps to X30 |
 | Overflow target | directly overwrite the return address on the stack | overwrite the saved X30 at a known stack offset |
-| Gadget chaining | `pop rdi; ret` style | `ldp x0, x1, [sp], #N; ret` style — one gadget handles multiple registers |
+| Gadget chaining | `pop rdi; ret` style | `ldp x0, x1, [sp], #N; ret` style - one gadget handles multiple registers |
 
 The debugging approach shown in challenge 03 is essential for AArch64 exploitation. You attach GDB by adding the `-g` flag to `qemu-aarch64-static`, and you have to directly observe how the `ldp` epilogue shuffles registers before the final `ret`.
 

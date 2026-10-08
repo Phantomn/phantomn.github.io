@@ -23,7 +23,7 @@ authors:
 
 **Samples**: Two 32-bit PE binaries (Sample1, Sample2)  
 **Tools**: IDA Pro, x32dbg, HxD  
-**Identification**: Ryuk ransomware — Hermes variant (per ESTsecurity blog)
+**Identification**: Ryuk ransomware - Hermes variant (per ESTsecurity blog)
 
 ---
 
@@ -58,7 +58,7 @@ It retrieves the OS major version via `GetVersionEx`. If `dwMajorVersion == 5` (
 
 ![Calling GetVersionEx + GetWindowsDirectory](/images/blog/ryuk-ransomware-static-analysis/analysis-01.png)
 
-![dwMajorVersion branch — C:\Users\Public\ is chosen on Vista and above](/images/blog/ryuk-ransomware-static-analysis/analysis-02.png)
+![dwMajorVersion branch - C:\Users\Public\ is chosen on Vista and above](/images/blog/ryuk-ransomware-static-analysis/analysis-02.png)
 
 ![C:\Users\Public\ memcpy branch](/images/blog/ryuk-ransomware-static-analysis/analysis-03.png)
 
@@ -93,13 +93,13 @@ FreeLibrary(k32);
 
 ![Loading kernel32.dll and obtaining the address of IsWow64Process](/images/blog/ryuk-ransomware-static-analysis/analysis-06.png)
 
-It checks for WOW64 (a 32-bit process on a 64-bit OS) to select which embedded PE format to use — PE32 on a 32-bit environment, PE32+ on a 64-bit environment.
+It checks for WOW64 (a 32-bit process on a 64-bit OS) to select which embedded PE format to use - PE32 on a 32-bit environment, PE32+ on a 64-bit environment.
 
 ![Freeing kernel32, then branching on the 64-bit PE+ header](/images/blog/ryuk-ransomware-static-analysis/analysis-07.png)
 
 **4. Drop the embedded payload**
 
-The selected PE header bytes are written to the randomly named file via `WriteFile`. This pattern — embedding a PE inside a PE and extracting it at runtime — is a typical trait of multi-stage droppers.
+The selected PE header bytes are written to the randomly named file via `WriteFile`. This pattern - embedding a PE inside a PE and extracting it at runtime - is a typical trait of multi-stage droppers.
 
 **5. Execute the payload**
 
@@ -121,7 +121,7 @@ The embedded binary dropped by Sample1 is responsible for **persistence** and **
 
 ### Registry Run Key Persistence
 
-![Sleep, then command-line parsing — payload startup](/images/blog/ryuk-ransomware-static-analysis/analysis-09.png)
+![Sleep, then command-line parsing - payload startup](/images/blog/ryuk-ransomware-static-analysis/analysis-09.png)
 
 ![Splitting and freeing the command line](/images/blog/ryuk-ransomware-static-analysis/analysis-10.png)
 
@@ -139,7 +139,7 @@ C:\Windows\System32\cmd.exe /C REG ADD
 /f
 ```
 
-![Registering Run key persistence with the REG ADD command — executed via ShellExecute](/images/blog/ryuk-ransomware-static-analysis/analysis-14.png)
+![Registering Run key persistence with the REG ADD command - executed via ShellExecute](/images/blog/ryuk-ransomware-static-analysis/analysis-14.png)
 
 It registers itself to the Run key under the name `svchos`, disguised to resemble the legitimate `svchost.exe` process.
 
@@ -147,7 +147,7 @@ It registers itself to the Run key under the name `svchos`, disguised to resembl
 
 ![Adjusting thread privileges via TokenHandle, then heap execute and free](/images/blog/ryuk-ransomware-static-analysis/analysis-15.png)
 
-![Core process injection logic — a complex code region](/images/blog/ryuk-ransomware-static-analysis/analysis-16.png)
+![Core process injection logic - a complex code region](/images/blog/ryuk-ransomware-static-analysis/analysis-16.png)
 
 ```cpp
 // Enumerate all running processes
@@ -168,7 +168,7 @@ This is a standard process injection technique using `VirtualAllocEx` / `WritePr
 
 Sample2 is the actual ransomware component. An IP address was exposed inside the binary, and cross-referencing it against threat intelligence confirmed it as **Ryuk**. ESTsecurity classifies this as a **Hermes ransomware variant**.
 
-![Sample2 binary — exposed IP address and Ryuk string](/images/blog/ryuk-ransomware-static-analysis/analysis-18.png)
+![Sample2 binary - exposed IP address and Ryuk string](/images/blog/ryuk-ransomware-static-analysis/analysis-18.png)
 
 ### Initialization
 
@@ -178,15 +178,15 @@ Sample2 is the actual ransomware component. An IP address was exposed inside the
 // Leaves no entries in the static import table, evading AV detection
 ```
 
-![sub_403FB0 — DLL loading and dynamic import resolution via GetProcAddress](/images/blog/ryuk-ransomware-static-analysis/analysis-19.png)
+![sub_403FB0 - DLL loading and dynamic import resolution via GetProcAddress](/images/blog/ryuk-ransomware-static-analysis/analysis-19.png)
 
-The initialization routine resolves API addresses dynamically — a common anti-analysis technique that complicates static analysis.
+The initialization routine resolves API addresses dynamically - a common anti-analysis technique that complicates static analysis.
 
 ### Hindering Analysis via Early Exit
 
 ```cpp
 // Creates a batch file and a winlogon.exe artifact
-// Calls exit() — forces early termination on the first run
+// Calls exit() - forces early termination on the first run
 ```
 
 ![Creating a batch file + winlogon.exe, then forcing exit() termination](/images/blog/ryuk-ransomware-static-analysis/analysis-20.png)
@@ -195,9 +195,9 @@ On the first run, it completes its setup and exits immediately. The actual encry
 
 ### Encryption Routine
 
-![Encryption routine 1 — the first encryption function](/images/blog/ryuk-ransomware-static-analysis/analysis-21.png)
+![Encryption routine 1 - the first encryption function](/images/blog/ryuk-ransomware-static-analysis/analysis-21.png)
 
-![Encryption routine 2 — file data processing](/images/blog/ryuk-ransomware-static-analysis/analysis-22.png)
+![Encryption routine 2 - file data processing](/images/blog/ryuk-ransomware-static-analysis/analysis-22.png)
 
 ```cpp
 // XOR-based byte generation:
@@ -218,7 +218,7 @@ ShellExecute(NULL, "open", "cmd.exe",
     NULL, SW_HIDE);
 ```
 
-![Running vssadmin Delete Shadows /all /quiet — deleting backups](/images/blog/ryuk-ransomware-static-analysis/analysis-24.png)
+![Running vssadmin Delete Shadows /all /quiet - deleting backups](/images/blog/ryuk-ransomware-static-analysis/analysis-24.png)
 
 It deletes all volume shadow copies via `vssadmin Delete Shadows /all /quiet`, with the goal of blocking file recovery through Windows backups. I learned while researching this command that all backup files are deleted upon execution. This is a signature behavior of many ransomware families, including Ryuk/Hermes.
 
@@ -229,7 +229,7 @@ It deletes all volume shadow copies via `vssadmin Delete Shadows /all /quiet`, w
 // Displays the README on the user's desktop
 ```
 
-![Creating a link to RukeREADME.txt — dropping the ransom note](/images/blog/ryuk-ransomware-static-analysis/analysis-25.png)
+![Creating a link to RukeREADME.txt - dropping the ransom note](/images/blog/ryuk-ransomware-static-analysis/analysis-25.png)
 
 ---
 
@@ -253,5 +253,5 @@ The two samples operate cooperatively. Sample1 prepares the environment and drop
 
 ## References
 
-- [ESTsecurity — Hermes Ransomware Analysis](https://blog.alyac.co.kr/)
-- [FireEye — RYUK Ransomware Technical Analysis](https://www.fireeye.com/blog/threat-research/2019/01/a-nasty-trick-from-credential-theft-malware-to-business-disruption.html)
+- [ESTsecurity - Hermes Ransomware Analysis](https://blog.alyac.co.kr/)
+- [FireEye - RYUK Ransomware Technical Analysis](https://www.fireeye.com/blog/threat-research/2019/01/a-nasty-trick-from-credential-theft-malware-to-business-disruption.html)

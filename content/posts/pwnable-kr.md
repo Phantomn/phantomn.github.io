@@ -1,5 +1,5 @@
 ---
-title: 'Pwnable.kr — leg, passcode, horcruxes Writeup'
+title: 'Pwnable.kr - leg, passcode, horcruxes Writeup'
 date: 2019-05-23T00:00:00.000Z
 excerpt: >-
   Solving pwnable.kr challenges: ARM PC computation quirks (leg), a GOT overwrite via scanf (passcode), and building a ROP chain (horcruxes).
@@ -293,7 +293,7 @@ if(fd=open("/home/mistake/password",O_RDONLY,0400) < 0){
 
 An **operator precedence** issue. The `<` comparison operator binds tighter than the `=` assignment operator, so `open()`'s return value gets compared against `0` first, and that comparison result (0 or 1) is what gets assigned to `fd`.
 
-That means `fd` ends up being the comparison result, not an actual file descriptor, and it's `0`. With `fd=0`, `read(fd, pw_buf, PW_LEN)` reads from stdin instead — so we can put whatever value we want into `pw_buf` ourselves.
+That means `fd` ends up being the comparison result, not an actual file descriptor, and it's `0`. With `fd=0`, `read(fd, pw_buf, PW_LEN)` reads from stdin instead - so we can put whatever value we want into `pw_buf` ourselves.
 
 Then `pw_buf2` is also read in and XORed with key 1. We just need `pw_buf` and `pw_buf2` to match under the XOR-1 relation. For example, if we put `0000000000` into `pw_buf`, then `pw_buf2` needs to become `0000000000` after XOR 1 is applied, so we should input `1111111111`.
 
@@ -391,7 +391,7 @@ The correct way to use `scanf` is to pass a pointer:
 scanf("%d", &passcode1);  // correct usage
 ```
 
-Without the `&` operator, `scanf` treats the variable's own value as a memory address and writes to that address — this becomes an arbitrary write primitive.
+Without the `&` operator, `scanf` treats the variable's own value as a memory address and writes to that address - this becomes an arbitrary write primitive.
 
 ### Exploit strategy
 
@@ -436,7 +436,7 @@ Build a ROP chain that calls each horcrux function in sequence:
 3. Send a ROP chain payload chaining together the addresses of horcrux functions a through g in order.
 4. Once the accumulated XP from each function call matches the target, we get the flag.
 
-*(The full exploit script itself isn't included in this write-up — the above is a summary of the approach.)*
+*(The full exploit script itself isn't included in this write-up - the above is a summary of the approach.)*
 
 **ROP (Return-Oriented Programming) concept:**
 - Leverages existing code sequences (gadgets) that end in a `ret` instruction
@@ -702,9 +702,9 @@ The first UAF (Use-After-Free) challenge I'd ever encountered.
 - CASE 2: allocate a new object (Alloc)
 - CASE 3: Free
 
-I picked up a good analysis technique this time — putting the disassembly right in the source as comments to make the analysis clearer.
+I picked up a good analysis technique this time - putting the disassembly right in the source as comments to make the analysis clearer.
 
-How do we reuse a heap chunk once it's freed? Freeing and then immediately using it causes an error. It needs to go Free -> Alloc -> Use in that order — but what do we need to allocate to end up calling `give_shell`?
+How do we reuse a heap chunk once it's freed? Freeing and then immediately using it causes an error. It needs to go Free -> Alloc -> Use in that order - but what do we need to allocate to end up calling `give_shell`?
 
 The virtual methods used in this challenge get placed in a vtable, so tampering with the start of the vtable to redirect to `give_shell` does the trick.
 

@@ -1,5 +1,5 @@
 ---
-title: "Simple Program Analysis — An Introduction to x86 Assembly"
+title: "Simple Program Analysis - An Introduction to x86 Assembly"
 date: "2020-12-09"
 excerpt: "Understanding x86 assembly patterns by debugging Hello World, addition, and calculator programs with GDB"
 tags: ["reversing", "x86", "assembly", "gdb", "beginner"]

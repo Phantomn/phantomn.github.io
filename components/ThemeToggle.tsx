@@ -28,7 +28,7 @@ export default function ThemeToggle({ className = 'h-10 w-10' }: { className?: s
     try {
       localStorage.setItem('theme', next ? 'dark' : 'light')
     } catch {
-      // localStorage unavailable — toggle still applies for this session
+      // localStorage unavailable - toggle still applies for this session
     }
     setIsDark(next)
   }

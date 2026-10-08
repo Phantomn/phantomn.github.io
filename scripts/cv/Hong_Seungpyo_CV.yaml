@@ -22,13 +22,13 @@ cv:
         start_date: 2021-06
         end_date: present
         highlights:
-          - "IEC 62443-4-2 Threat Modeling & pentesting — contributed to LS ELECTRIC Achilles Level 2 certification"
+          - "IEC 62443-4-2 Threat Modeling & pentesting - contributed to LS ELECTRIC Achilles Level 2 certification"
           - "FDA eSTAR security consulting & medical device penetration testing"
           - "Smart building IoT vulnerability detection tool development & field deployment"
           - "ELECCON (KEPCO cyber warfare exercise) 2021–2024: 4-year operations & challenge development"
-          - "**NATO CCDCOE Locked Shields 2025** (Korea-Canada DFIR blue team) — overall 6th of 17, **DFIR 1st place**"
+          - "**NATO CCDCOE Locked Shields 2025** (Korea-Canada DFIR blue team) - overall 6th of 17, **DFIR 1st place**"
           - "APEX 2025, 2026 Green Team, DFIR challenge development (May–Sep 2025; 2026)"
-          - "**NATO CCDCOE Locked Shields 2026** (Korea-Hungary Special System blue team) — overall 9th of 16"
+          - "**NATO CCDCOE Locked Shields 2026** (Korea-Hungary Special System blue team) - overall 9th of 16"
 
       - company: A3 Security
         position: Web/App Pentester
@@ -36,7 +36,7 @@ cv:
         start_date: 2020-06
         end_date: 2021-06
         highlights:
-          - "12 financial/public-sector electronic finance infrastructure pentests — avg. 1–2 high-risk findings per site"
+          - "12 financial/public-sector electronic finance infrastructure pentests - avg. 1–2 high-risk findings per site"
           - "Non-standard system reviews: KT GiGA Genie AI speaker, NH RPA, IoT thermal sensor"
           - "ISMS/ISO 27001 certification consulting (Coway)"
           - "Clients: Cham Savings Bank, Acuon Capital, SBI Savings Bank, Hyundai HKMC"
@@ -56,16 +56,16 @@ cv:
         end_date: 2012-02
 
     vulnerability_research:
-      - label: "OS Kernel CVEs (16) — Best of the Best 8th Cohort"
+      - label: "OS Kernel CVEs (16) - Best of the Best 8th Cohort"
         details: "Designed & implemented a custom File System Fuzzer; derived 16 CVEs (0-day + 1-day) from Linux kernel. Presented at **CodeBlue 2019** (Tokyo) & **Hack In The Box 2019** (Amsterdam). CVE-2019-18885, 19036, 19037, 19039, 19318, 19319, 19377, 19378, 19447, 19448, 19449, 19813, 19814, 19815, 19816, 19927"
 
-      - label: "IoT CVEs (5) — Independent Research"
+      - label: "IoT CVEs (5) - Independent Research"
         details: "Embedded/IoT device vulnerability analysis. CVE-2024-33788 (CVSS 8.0 HIGH), CVE-2024-33789 (CVSS 9.8 CRITICAL), CVE-2024-33791 (CVSS 4.6 MEDIUM), CVE-2024-33792 (CVSS 9.8 CRITICAL), CVE-2024-33793 (CVSS 5.3 MEDIUM)"
 
-      - label: "LLM CVEs (3) — Independent Research"
+      - label: "LLM CVEs (3) - Independent Research"
         details: "LLM inference engine (llama.cpp) vulnerability analysis. CVE-2026-52130 (CVSS 7.5 HIGH, CWE-674 uncontrolled recursion DoS in json-schema-to-grammar), CVE-2026-52132 (CVSS 7.5 HIGH, CWE-190 integer overflow DoS via /rerank negative top_n), CVE-2026-52131 (CVSS 5.5 MEDIUM, CWE-617 reachable assertion in gguf_reader::read on malicious model load)"
 
-      - label: "Bug Bounty — 4 FVEs (FindTheGap)"
+      - label: "Bug Bounty - 4 FVEs (FindTheGap)"
         details: "Access control and authentication flaws reported through a private bug bounty program: missing authentication enabling account takeover, unauthorized identity-verification data exposure, and unauthenticated API access leaking personal data (CVSS up to 9.8 CRITICAL; CWE-284, CWE-306, CWE-200). Target and technical details withheld under disclosure policy."
 
     projects:
@@ -76,7 +76,7 @@ cv:
           - "LLM-driven pipeline auto-identifies Low–Medium vulnerabilities on live pentest targets"
           - "RAG pipeline (n8n · pgvector) indexes IEC 62443, ISO 27001 standards for contextual lookup"
 
-      - name: "ELECCON — KEPCO Cyber Warfare Exercise"
+      - name: "ELECCON - KEPCO Cyber Warfare Exercise"
         date: "2021 – 2024"
         highlights:
           - "4-year consecutive operation of Korea's premier OT/ICS red-vs-blue exercise"

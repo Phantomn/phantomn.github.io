@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.8/schema.json
-# Career Statement (English) — mirrors career-statement-ko.yaml, same 24 projects.
+# Career Statement (English) - mirrors career-statement-ko.yaml, same 24 projects.
 # Render: rendercv render scripts/cv/career-statement-en.yaml
 cv:
   name: Seungpyo Hong
@@ -18,11 +18,11 @@ cv:
       - "Offensive Security Researcher with 24+ delivered projects spanning financial-sector Web/App penetration testing, OT/ICS (IEC 62443), IoT and medical-device (FDA) security, and cyber-defence exercise development. Achilles Communication Certificate Level 2 for an LS ELECTRIC automation device; NATO CCDCOE Locked Shields 2025 overall 6th of 17 and DFIR track 1st; 16 Linux kernel CVEs, 5 IoT CVEs, 3 LLM inference-engine CVEs, and 4 FVEs."
 
     Core Competencies:
-      - bullet: "Financial and public electronic-finance Web/App penetration testing — 12 sites across savings banks, capital, securities, insurance, and manufacturing (A3 Security)"
-      - bullet: "OT/ICS security — IEC 62443-4-2 threat modeling and penetration testing; Achilles Communication Certificate Level 2 for an LS ELECTRIC device"
-      - bullet: "IoT vulnerability analysis and security tooling — smart-building IoT detection, IoT/CCTV incident-response tooling, and 16 CVEs from a Linux kernel filesystem fuzzer"
-      - bullet: "Medical-device security — FDA eSTAR consulting, Web/App and device penetration testing, and Cybersecurity Controls certification support"
-      - bullet: "Cyber-defence exercise development and operation — KEPCO ELECCON, NATO CCDCOE Locked Shields 2025 (overall 6th of 17, DFIR 1st), APEX 2025/2026 Green Team, DFIR challenge development"
+      - bullet: "Financial and public electronic-finance Web/App penetration testing - 12 sites across savings banks, capital, securities, insurance, and manufacturing (A3 Security)"
+      - bullet: "OT/ICS security - IEC 62443-4-2 threat modeling and penetration testing; Achilles Communication Certificate Level 2 for an LS ELECTRIC device"
+      - bullet: "IoT vulnerability analysis and security tooling - smart-building IoT detection, IoT/CCTV incident-response tooling, and 16 CVEs from a Linux kernel filesystem fuzzer"
+      - bullet: "Medical-device security - FDA eSTAR consulting, Web/App and device penetration testing, and Cybersecurity Controls certification support"
+      - bullet: "Cyber-defence exercise development and operation - KEPCO ELECCON, NATO CCDCOE Locked Shields 2025 (overall 6th of 17, DFIR 1st), APEX 2025/2026 Green Team, DFIR challenge development"
 
     Experience:
       - company: CoreSecurity
@@ -32,10 +32,10 @@ cv:
         end_date: present
         highlights:
           - "[Company] Specialist security firm in OT/ICS and physical-AI security, cyber training, and digital financial-crime response"
-          - "OT/ICS security — IEC 62443-4-2 threat modeling and penetration testing, Achilles Level 2 certification, and automated assessment tooling"
-          - "IoT security — smart-building IoT vulnerability-detection technology and its field validation; IoT/CCTV incident-response tooling"
-          - "Medical-device security — FDA eSTAR consulting and Web/App and device penetration testing"
-          - "Cyber-defence exercises — KEPCO ELECCON operation and challenge development; Locked Shields 2025 (overall 6th of 17, DFIR 1st); APEX 2025/2026 Green Team, DFIR challenge development"
+          - "OT/ICS security - IEC 62443-4-2 threat modeling and penetration testing, Achilles Level 2 certification, and automated assessment tooling"
+          - "IoT security - smart-building IoT vulnerability-detection technology and its field validation; IoT/CCTV incident-response tooling"
+          - "Medical-device security - FDA eSTAR consulting and Web/App and device penetration testing"
+          - "Cyber-defence exercises - KEPCO ELECCON operation and challenge development; Locked Shields 2025 (overall 6th of 17, DFIR 1st); APEX 2025/2026 Green Team, DFIR challenge development"
       - company: A3 Security
         position: Staff, Security Technology Team
         location: Seoul
@@ -43,8 +43,8 @@ cv:
         end_date: 2021-06
         highlights:
           - "[Company] Korea's first information-security consultancy (since 1999); 2,000+ security projects delivered; MSIT-designated information-protection specialized service company"
-          - "Penetration testing of 12 financial and public electronic-finance sites — 1–2 high-severity findings per site on average"
-          - "Security review of non-standard systems — KT GiGA Genie AI speaker, NongHyup RPA, DB Insurance claim-call"
+          - "Penetration testing of 12 financial and public electronic-finance sites - 1–2 high-severity findings per site on average"
+          - "Security review of non-standard systems - KT GiGA Genie AI speaker, NongHyup RPA, DB Insurance claim-call"
           - "ISMS / ISO 27001 certification support consulting (Coway)"
 
     OT/ICS Security (IEC 62443):
@@ -63,7 +63,7 @@ cv:
           - "Selected and tooled the IEC 62443-4-2 SL1 requirements that can be automated over the network"
           - "Automated checks across FR2 (use control), FR3 (system integrity), FR4 (data confidentiality), and FR7 (resource availability)"
           - "Built a web UI for target/result management and a result-storage pipeline"
-          - "[Result] Automated communication-based IEC 62443-4-2 assessment tool for the PLC line — cut an assessment taking 30+ days of manual work to under 1 hour"
+          - "[Result] Automated communication-based IEC 62443-4-2 assessment tool for the PLC line - cut an assessment taking 30+ days of manual work to under 1 hour"
           - "Tools: Python · FastAPI · TypeScript · React · TailwindCSS · SQLite3"
       - name: "LS ELECTRIC automation-device threat-modeling consulting"
         date: "2023.03 – 2023.11 · Contribution 40%"
@@ -72,7 +72,7 @@ cv:
           - "System Definition → Function Point Definition → Data Flow Analysis, with DFDs produced"
           - "STRIDE + DREAD threat and risk assessment"
           - "Threat validation via penetration testing based on the national critical-infrastructure vulnerability-assessment methodology"
-          - "[Result] Surfaced 4+ threats for XGI-CPUZ and validated them via penetration testing — threat-modeling and penetration-testing reports delivered"
+          - "[Result] Surfaced 4+ threats for XGI-CPUZ and validated them via penetration testing - threat-modeling and penetration-testing reports delivered"
           - "Tools: STRIDE · DREAD · DFD · IEC 62443-4-2"
       - name: "Smart-ship infrastructure vulnerability-analysis tooling and security technology"
         date: "2024.07 – 2024.11 · Contribution 25%"
@@ -91,7 +91,7 @@ cv:
         highlights:
           - "Designed and built an automated incident-evidence-collection tool for 40 domestic and foreign CCTV models"
           - "UART access, flash dumping, and binwalk-based firmware extraction with full collection of configuration files and logs"
-          - "[Result] Field validation at a public agency — collected and analyzed compromise artifacts across 40 device models"
+          - "[Result] Field validation at a public agency - collected and analyzed compromise artifacts across 40 device models"
           - "Tools: Python · C/C++ · UART · binwalk · Firmware Dump · Linux"
       - name: "Smart-building IoT vulnerability-detection technology and field validation (Year 1)"
         date: "2021.08 – 2021.12 · Contribution 40%"
@@ -105,7 +105,7 @@ cv:
         date: "2022.01 – 2022.10 · Contribution 40%"
         summary: "Applied Year 1 detection technology to an operating smart building to validate and improve detection accuracy."
         highlights:
-          - "Field validation against a real smart building — collected data from 200+ IoT devices/sensors (ipTIME, D-Link, NAS, and others) and detected vulnerabilities"
+          - "Field validation against a real smart building - collected data from 200+ IoT devices/sensors (ipTIME, D-Link, NAS, and others) and detected vulnerabilities"
           - "Identified true/false/missed positives, derived detection rates, and updated the vulnerability DB"
           - "[Result] Derived accuracy-improvement actions from the field validation"
           - "Tools: IoT Scanning · CVE/CWE · PoC Validation · CSV/Excel Report"
@@ -140,24 +140,24 @@ cv:
         highlights:
           - "Analyzed and defined an NIST SSDF-based secure development process for the FDD platform (reviewing IEC 62443, FDA, ISO 27001, EU CRA)"
           - "Identified real threats via FDD threat modeling and applied source-level security controls (API security)"
-          - "[Result] Ran two production-environment penetration tests — detected and reported 10 vulnerabilities across 5 systems"
+          - "[Result] Ran two production-environment penetration tests - detected and reported 10 vulnerabilities across 5 systems"
           - "Tools: NIST SSDF · Threat Modeling · IEC 62443 · FDA Cybersecurity"
 
     Cyber Range & CTF Development:
-      - name: "NATO CCDCOE Locked Shields 2025 — Korea-Canada joint DFIR blue team"
+      - name: "NATO CCDCOE Locked Shields 2025 - Korea-Canada joint DFIR blue team"
         date: "2025.01 – 2025.04 · Contribution 45%"
         summary: "Competed in Locked Shields, the world's largest international cyber-defence exercise, on the Korea-Canada joint DFIR blue team. Analyzed compromise artifacts and reported response under live attack."
         highlights:
           - "Incident forensic analysis and timeline reconstruction under live attack scenarios"
-          - "DFIR CTF tasks — artifact analysis and malware triage"
+          - "DFIR CTF tasks - artifact analysis and malware triage"
           - "[Result] Locked Shields 2025 overall 6th of 17 · DFIR track 1st"
           - "[Result] Locked Shields 2026 overall 9th of 16"
           - "[Participated] Locked Shields 2026 Korea-Hungary joint Special System blue team"
           - "Tools: DFIR · Volatility · Wireshark · Sysmon · YARA"
-      - name: "APEX CTF 2025 — DFIR network-forensics challenge development"
+      - name: "APEX CTF 2025 - DFIR network-forensics challenge development"
         date: "2025.06 – 2025.09 · Contribution 45%"
         highlights:
-          - "Developed DFIR network-forensics challenges — forensic scenarios based on real incidents"
+          - "Developed DFIR network-forensics challenges - forensic scenarios based on real incidents"
           - "[Result] Developed one scenario Act per year (25 challenges per Act); drew blue teams from 23 countries across the Americas, Europe, and Indo-Pacific"
           - "[Participated] APEX 2025/2026 Green Team, DFIR challenge development"
           - "Tools: DFIR · Network Forensics · Wireshark"
@@ -166,7 +166,7 @@ cv:
         summary: "Four consecutive years on KEPCO's practical cyber attack/defence exercise (ELECCON, formerly C2021). Designed, built, and enhanced power-grid (OT/ICS) qualifier CTF and finals attack/defence scenarios each year."
         highlights:
           - "Designed and built power-grid (OT/ICS) qualifier CTF challenges and finals attack/defence scenarios (2021, 2022, 2023, 2024 consecutively)"
-          - "[Result] Operated power-grid attack/defence scenario training — 20 teams per competition"
+          - "[Result] Operated power-grid attack/defence scenario training - 20 teams per competition"
           - "Tools: OT/ICS · SCADA · CTF"
       - name: "2024 practical cyber-range course operation (smart-ship port)"
         date: "2024.07 – 2024.12 · Contribution 20%"
@@ -182,8 +182,8 @@ cv:
         date: "2020.06 – 2021.06"
         summary: "Multiple Web/App penetration tests and vulnerability assessments of financial and public electronic-finance infrastructure while at A3 Security. Checked for information leakage and follow-on attack paths and proposed remediations."
         highlights:
-          - "Electronic-finance vulnerability assessment — Web/App penetration testing across financial sites (Cham Savings Bank, Acuon Capital, KOFIA, and others)"
-          - "Security review of financial/insurance/manufacturing systems — SBI Savings Bank (open banking, digital branch), Hyundai Motor HKMC, DB Insurance claim-call"
+          - "Electronic-finance vulnerability assessment - Web/App penetration testing across financial sites (Cham Savings Bank, Acuon Capital, KOFIA, and others)"
+          - "Security review of financial/insurance/manufacturing systems - SBI Savings Bank (open banking, digital branch), Hyundai Motor HKMC, DB Insurance claim-call"
           - "NongHyup RPA source-code review; penetration testing of Daekyo integrated-education platform, Autohands, UNTAC, and others"
           - "[Result] 12 sites tested, 1–2 high-severity findings per site on average, with remediations proposed"
           - "Tools: Burp Suite · OWASP Top 10 · Web/App Pentest · Source Code Review"
@@ -204,13 +204,13 @@ cv:
           - "[Result] Supported passing the surveillance audit"
 
     Vulnerability Research:
-      - label: "16 OS kernel CVEs — Best of the Best 8th"
+      - label: "16 OS kernel CVEs - Best of the Best 8th"
         details: "Designed and built a custom filesystem fuzzer that surfaced 16 Linux kernel CVEs (including 0-days). Presented at CodeBlue 2019 (Tokyo) and Hack In The Box 2019 (Amsterdam)."
-      - label: "5 IoT CVEs — independent research"
+      - label: "5 IoT CVEs - independent research"
         details: "Embedded/IoT device vulnerability analysis. CVE-2024-33788/33789/33791/33792/33793 (up to CVSS 9.8 CRITICAL)."
-      - label: "3 LLM CVEs — independent research"
+      - label: "3 LLM CVEs - independent research"
         details: "llama.cpp inference-engine vulnerability analysis. CVE-2026-52130/52131/52132 (two remote unauthenticated DoS at CVSS 7.5; one abort on loading a malicious GGUF model)."
-      - label: "4 FVEs — Findthegap bug bounty"
+      - label: "4 FVEs - Findthegap bug bounty"
         details: "Four web-vulnerability reports against a bug-bounty platform (details undisclosed)."
 
     Certifications & Education:

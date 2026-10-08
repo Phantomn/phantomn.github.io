@@ -1,5 +1,5 @@
 ---
-title: 'Plaid CTF 2013 — ropasaurusrex Writeup'
+title: 'Plaid CTF 2013 - ropasaurusrex Writeup'
 date: 2013-04-01T00:00:00.000Z
 excerpt: >-
   A classic Plaid CTF 2013 challenge: a ret2libc / ROP chain exploit against a 32-bit Linux binary.

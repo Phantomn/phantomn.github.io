@@ -1,5 +1,5 @@
 ---
-title: Beyond RAG — 8 RAG Variants and Agent Memory Design
+title: Beyond RAG - 8 RAG Variants and Agent Memory Design
 date: 2026-08-01T00:00:00.000Z
 excerpt: >-
   Starting from Naive RAG's 7 limitations, this post compares 8 variants including
@@ -21,7 +21,7 @@ authors:
 
 ## TL;DR
 
-Naive RAG (question -> retrieve -> generate) runs into seven limitations in practice. Attempts to overcome them spawned many variants such as Graph RAG, RAPTOR, and Agentic RAG, but **as of 2025 the answer is not a single silver bullet — it's a hybrid combination tailored to the domain**.
+Naive RAG (question -> retrieve -> generate) runs into seven limitations in practice. Attempts to overcome them spawned many variants such as Graph RAG, RAPTOR, and Agentic RAG, but **as of 2025 the answer is not a single silver bullet - it's a hybrid combination tailored to the domain**.
 
 Three core claims first.
 
@@ -37,10 +37,10 @@ Three core claims first.
 
 RAG (Retrieval-Augmented Generation) is a technique where an LLM first retrieves relevant information from an external knowledge base and injects it as context before answering. Traditional RAG operates in four stages.
 
-1. **Ingestion** — split documents into chunks and convert them into vector embeddings
-2. **Storage** — store the embeddings in a vector DB
-3. **Retrieval** — embed the query as well, then search for similar chunks by cosine similarity
-4. **Generation** — inject the retrieved chunks into the LLM as context
+1. **Ingestion** - split documents into chunks and convert them into vector embeddings
+2. **Storage** - store the embeddings in a vector DB
+3. **Retrieval** - embed the query as well, then search for similar chunks by cosine similarity
+4. **Generation** - inject the retrieved chunks into the LLM as context
 
 The reason to use RAG comes from the trade-off with fine-tuning. If you need up-to-date information, private internal documents, or real-time data, RAG is the right fit; if the goal is learning a specific style or domain language pattern, fine-tuning is the right fit. RAG is cheap (vector DB + retrieval), updates instantly just by adding documents, and carries low hallucination risk since it's grounded in source documents.
 
@@ -49,13 +49,13 @@ The reason to use RAG comes from the trade-off with fine-tuning. If you need up-
 Naive RAG breaks down at the following seven points.
 
 ```
-1. No relationships    — chunks are independent, can't be linked to each other
-2. Context loss        — chunking destroys surrounding context
-3. Single retrieval    — one retrieval pass isn't enough for complex questions
-4. Middle omission     — Lost in the Middle (ignores info in the middle of long context)
-5. No abstraction      — only fine-grained chunks exist, no overall summary
-6. No time awareness   — can't distinguish recency of information
-7. No contradiction handling — can't judge between conflicting information
+1. No relationships    - chunks are independent, can't be linked to each other
+2. Context loss        - chunking destroys surrounding context
+3. Single retrieval    - one retrieval pass isn't enough for complex questions
+4. Middle omission     - Lost in the Middle (ignores info in the middle of long context)
+5. No abstraction      - only fine-grained chunks exist, no overall summary
+6. No time awareness   - can't distinguish recency of information
+7. No contradiction handling - can't judge between conflicting information
 ```
 
 There are also structural limitations of the vector DB itself: infrastructure burden (vector DB + embedding model + API), context loss at chunk boundaries, "similarity != relevance" (cosine similarity doesn't always capture actual semantic relevance), being a black box (hard for humans to directly inspect/audit the store), and re-indexing overhead.
@@ -82,7 +82,7 @@ Advanced RAG optimizes both before and after retrieval.
 
 **Post-Retrieval.** Reranking (reorder by relevance), Filtering (remove low-relevance documents), Compression (extract only the essentials from long documents).
 
-On top of this, Anthropic's **Contextual Retrieval** improves the indexing stage — a method of adding context to each chunk.
+On top of this, Anthropic's **Contextual Retrieval** improves the indexing stage - a method of adding context to each chunk.
 
 ```
 Original: "Company revenue grew 3%"
@@ -116,29 +116,29 @@ Separate from the three-generation evolution, there are 8 variants based on stru
 
 Let's look at a few in detail.
 
-**Graph RAG** — uses a knowledge graph instead of vectors. By explicitly representing entities and relationships like `[Kim Cheolsu] --belongs to--> [Security Team] --led by--> [Park Younghee]`, it's strong at relational reasoning and multi-hop questions.
+**Graph RAG** - uses a knowledge graph instead of vectors. By explicitly representing entities and relationships like `[Kim Cheolsu] --belongs to--> [Security Team] --led by--> [Park Younghee]`, it's strong at relational reasoning and multi-hop questions.
 
-**Self-RAG** — the LLM judges for itself "is retrieval needed?", "is this relevant?", "is there evidence?" to reduce hallucination.
+**Self-RAG** - the LLM judges for itself "is retrieval needed?", "is this relevant?", "is there evidence?" to reduce hallucination.
 
-**Corrective RAG (CRAG)** — an evaluator judges the retrieval result: use it if accurate, re-retrieve if ambiguous, fall back to web search if wrong.
+**Corrective RAG (CRAG)** - an evaluator judges the retrieval result: use it if accurate, re-retrieve if ambiguous, fall back to web search if wrong.
 
-**Adaptive RAG** — automatically selects a strategy based on question complexity. Simple questions go to the LLM alone, moderate ones to Single RAG, complex ones to Multi-hop + Self-RAG.
+**Adaptive RAG** - automatically selects a strategy based on question complexity. Simple questions go to the LLM alone, moderate ones to Single RAG, complex ones to Multi-hop + Self-RAG.
 
-**RAG-Fusion** — expands the question into multiple variants, retrieves for each, then merges the results. "Python async" -> split into "asyncio", "concurrent.futures", "threading vs async" searches, unified via Reciprocal Rank Fusion.
+**RAG-Fusion** - expands the question into multiple variants, retrieves for each, then merges the results. "Python async" -> split into "asyncio", "concurrent.futures", "threading vs async" searches, unified via Reciprocal Rank Fusion.
 
-**RAPTOR** — summarizes documents as a tree. In the `[whole] -> [section] -> [chunk]` hierarchy, details come from the leaves and overviews come from the root.
+**RAPTOR** - summarizes documents as a tree. In the `[whole] -> [section] -> [chunk]` hierarchy, details come from the leaves and overviews come from the root.
 
 ---
 
-## 4. Beyond RAG — 6 Approaches That Overcome the Limitations
+## 4. Beyond RAG - 6 Approaches That Overcome the Limitations
 
 Here are six approaches that directly target the seven limitations above, along with their performance and cost.
 
-### 1. Graph RAG — Making relationships explicit
+### 1. Graph RAG - Making relationships explicit
 
 Extracts entities and relationships from documents to build a graph, pre-summarizes community clusters, and retrieves based on relationships. It gives roughly a 20% improvement on multi-hop questions and clear evidence provenance, but construction cost is high and real-time updates are difficult.
 
-### 2. CAG (Cache-Augmented) — Removing retrieval
+### 2. CAG (Cache-Augmented) - Removing retrieval
 
 Eliminates retrieval entirely. The entire knowledge base is loaded into a cache up front, and the LLM generates directly from it.
 
@@ -149,19 +149,19 @@ CAG = spreading every book out on your desk (no retrieval)
 
 Retrieval errors disappear, caching cuts cost by 90%, and responses are very fast. The downside: knowledge size is capped at roughly 1M tokens, and real-time updates aren't possible.
 
-### 3. RAPTOR — Multi-level abstraction
+### 3. RAPTOR - Multi-level abstraction
 
 The tree-summarization structure covered earlier. Gives roughly a 20% improvement on complex reasoning, but tree construction cost and difficulty with dynamic updates are drawbacks.
 
-### 4. RAG-Fusion — Multiple queries
+### 4. RAG-Fusion - Multiple queries
 
 Recall improves by roughly 40% and implementation is simple, but the number of searches increases, and the actual gain after reranking is only about 5-10%.
 
-### 5. Long Context — Skipping RAG altogether
+### 5. Long Context - Skipping RAG altogether
 
 Instead of chunking and retrieving from a million tokens, everything is put directly into context. The architecture is simple and there are no retrieval errors, but cost scales with token count and the Lost in the Middle problem remains.
 
-### 6. Agentic RAG — Autonomous strategy
+### 6. Agentic RAG - Autonomous strategy
 
 The third generation described earlier. Flexible, auto-recovers from errors, and can use multiple tools, but it's slow, costly, and complex to implement.
 
@@ -178,21 +178,21 @@ Need best performance?        -> Combine them (Hybrid)
 There is no silver bullet. The optimal 2025 strategy is a hybrid tailored to domain characteristics.
 
 ```
-[1] Agentic Layer     — "Is retrieval needed? Which method?"
-[2] Retrieval Layer   — Vector (semantic) + BM25 (keyword) + GraphRAG (relational)
-[3] Integration Layer — Reciprocal Rank Fusion + Reranking
-[4] Generation Layer  — CAG for fixed knowledge / Long Context for long documents / RAPTOR for complex reasoning
+[1] Agentic Layer     - "Is retrieval needed? Which method?"
+[2] Retrieval Layer   - Vector (semantic) + BM25 (keyword) + GraphRAG (relational)
+[3] Integration Layer - Reciprocal Rank Fusion + Reranking
+[4] Generation Layer  - CAG for fixed knowledge / Long Context for long documents / RAPTOR for complex reasoning
 ```
 
 ---
 
-## 5. Practical Retrieval Design — Embeddings, Chunking, Hybrid Search
+## 5. Practical Retrieval Design - Embeddings, Chunking, Hybrid Search
 
 Beyond choosing a variant, running an actual pipeline requires getting three decisions right: embedding dimensionality, chunking, and hybrid search. As an example, this section uses a domain with deep semantic layering, such as standards documents (e.g. IEC 62443-4-2).
 
 ### Choosing embedding dimensionality
 
-An embedding vector represents text meaning as coordinates in a high-dimensional space. The dimension count is "the capacity of the space available to store meaning." When dimensionality is too low, **Semantic Collision** occurs — the representation space runs out of room, so distinct meanings end up sharing the same dimensions. For example, the vectors for "malware prevention EDR 3.2" and "malware prevention HDR 3.2" can become too close, causing unrelated clauses to be retrieved together.
+An embedding vector represents text meaning as coordinates in a high-dimensional space. The dimension count is "the capacity of the space available to store meaning." When dimensionality is too low, **Semantic Collision** occurs - the representation space runs out of room, so distinct meanings end up sharing the same dimensions. For example, the vectors for "malware prevention EDR 3.2" and "malware prevention HDR 3.2" can become too close, causing unrelated clauses to be retrieved together.
 
 | Item | 1536 dimensions | 3072 dimensions |
 |------|----------|----------|
@@ -236,11 +236,11 @@ Vector alone tends to encode "502 / 500 / 504" as similar, or make "EDR 3.2" vs 
 The full pipeline looks like this.
 
 ```
-1. Query normalization    — standardize terminology (e.g. spelling variants of "malware")
-2. BM25 first-pass filter — narrow candidates by number/abbreviation/keyword
-3. Vector top-k search    — semantic candidates (k = 7)
-4. Metadata filtering     — filter by type/FR/topic metadata
-5. Cross-Encoder ReRank   — fine-tune final ordering among candidates
+1. Query normalization    - standardize terminology (e.g. spelling variants of "malware")
+2. BM25 first-pass filter - narrow candidates by number/abbreviation/keyword
+3. Vector top-k search    - semantic candidates (k = 7)
+4. Metadata filtering     - filter by type/FR/topic metadata
+5. Cross-Encoder ReRank   - fine-tune final ordering among candidates
 6. Only the selected chunks are passed to the LLM as context
 ```
 
@@ -250,7 +250,7 @@ Cross-Encoder Reranking is the core of the two-stage retrieval. The first-stage 
 
 > "An LLM can state a fake answer when the correct document is missing, but noise can be cleaned up by the LLM."
 
-This single sentence determines RAG design priorities. Recall@k (the probability the correct answer is included within top-k) comes first, and Precision@k (the proportion of top-k that's actually relevant) is secondary. If the correct document isn't retrieved, the LLM hallucinates without grounding — but noise can be filtered out by the LLM.
+This single sentence determines RAG design priorities. Recall@k (the probability the correct answer is included within top-k) comes first, and Precision@k (the proportion of top-k that's actually relevant) is secondary. If the correct document isn't retrieved, the LLM hallucinates without grounding - but noise can be filtered out by the LLM.
 
 ### Why Self-Healing is necessary
 
@@ -267,7 +267,7 @@ Agent pipelines have many steps. Even at a 95% success rate per step, with 20 st
 
 ---
 
-## 6. RAG vs Memory — External Knowledge vs Personal Experience
+## 6. RAG vs Memory - External Knowledge vs Personal Experience
 
 Finally, let's distinguish **Memory**, which is often confused with RAG. Memory is an Agent's ability to store and recall information.
 
@@ -285,7 +285,7 @@ Memory maps onto the human memory system.
 | Working memory | Short-term | the task at hand right now | context window / task tracking |
 | Episodic memory | Mid-term (Episodic) | "it failed last time" | record of past experience |
 | Semantic memory | Long-term (Semantic) | "commit messages should be in Korean" | learned rules |
-| Procedural memory | — | "how to make a commit" | Skills |
+| Procedural memory | - | "how to make a commit" | Skills |
 
 Short-term memory via the context window is fastest but size-limited; mid-term persists across conversations and is referenced in later ones; long-term is permanent and applies to every conversation.
 
@@ -300,7 +300,7 @@ Short-term memory via the context window is fastest but size-limited; mid-term p
 | Retrieval | direct read | similarity search |
 | Analogy | a diary, a medical chart | a library, a textbook |
 
-The doctor analogy makes this clear. RAG answers "what's the general treatment for this symptom?" using medical textbooks and paper databases; Memory recalls "this patient is allergic to penicillin" from this specific patient's chart. Both are information, but they differ in nature — you don't put a textbook into a medical chart, or vice versa.
+The doctor analogy makes this clear. RAG answers "what's the general treatment for this symptom?" using medical textbooks and paper databases; Memory recalls "this patient is allergic to penicillin" from this specific patient's chart. Both are information, but they differ in nature - you don't put a textbook into a medical chart, or vice versa.
 
 The practical distinction is simple too: if it's useful to everyone and there's a lot of it, it's RAG (shared knowledge, vector search); if only you need to know it and it's just the essentials, it's Memory (personal experience, file read).
 
@@ -327,5 +327,5 @@ Going beyond RAG doesn't mean abandoning vector search. It means precisely diagn
 
 - Original RAG paper: Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks (NeurIPS 2020, arXiv 2005.11401)
 - REALM (PMLR 2020), Dense Passage Retrieval (EMNLP 2020)
-- Anthropic — Contextual Retrieval
+- Anthropic - Contextual Retrieval
 - Frameworks: LangChain, LlamaIndex, Unstructured
