@@ -19,7 +19,7 @@ export interface TitleParts {
 }
 
 const SEPARATOR = ' - ' // space + em-dash + space
-const PART_PATTERN = /^Part\s+(\d+)\s*[:–-.-]?\s*(.*)$/i
+const PART_PATTERN = /^Part\s+(\d+)\s*[:–\-.-]?\s*(.*)$/i
 
 export function splitTitle(title: string): TitleParts {
   const idx = title.indexOf(SEPARATOR)
