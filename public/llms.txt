@@ -4,7 +4,7 @@
 
 This is Seungpyo Hong's personal portfolio and research archive. Views published here are his own and do not represent his employer or any client.
 
-Public evidence includes 24 CVE records with assigned identifiers (groups: Database, LLM, Web, IoT, Kernel), of which 16 Linux kernel filesystem CVEs come from a five-person Best of the Best (BoB) team project rather than sole authorship; plus 4 masked platform disclosures without public identifiers, 29 delivered projects, and 5 cyber-defence exercise records. The strongest exercise result is Locked Shields 2025: #6 overall (of 17 teams) · DFIR #1.
+Public evidence includes 25 CVE records with assigned identifiers (groups: Database, LLM, Web, IoT, Kernel), of which 16 Linux kernel filesystem CVEs come from a five-person Best of the Best (BoB) team project rather than sole authorship; plus 4 masked platform disclosures without public identifiers, 29 delivered projects, and 5 cyber-defence exercise records. The strongest exercise result is Locked Shields 2025: #6 overall (of 17 teams) · DFIR #1.
 
 Counts on this page are generated from the site's own data files at build time. Exercise scoreboards and client engagements are not public, so those entries are first-party assertions.
 

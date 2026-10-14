@@ -43,7 +43,7 @@ export const disclosureGroups: DisclosureGroup[] = [
     "description": "1 disclosures in the Database group.",
     "cves": [
       {
-        "id": "CVE-UNASSIGNED-MDEV-40571",
+        "id": "CVE-2026-107821",
         "summary": "MariaDB .frm parsing OOB read leads to vtable hijacking RCE",
         "category": "Logic / denial of service",
         "cwe": "CWE-1285",
@@ -330,9 +330,9 @@ const countBy = (category: DisclosureCategory) =>
   allCveDisclosures.filter((item) => item.category === category).length
 
 export const disclosureSummary = {
-  cves: 24,
+  cves: 25,
   fves: 4,
-  pending: 1,
+  pending: 0,
   projects: 5,
   memoryCorruption: countBy('Memory corruption'),
   outOfBoundsReads: countBy('Out-of-bounds read'),

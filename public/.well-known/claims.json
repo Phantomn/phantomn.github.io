@@ -2,8 +2,8 @@
   "$schema": "https://blog.ph4nt0m.xyz/.well-known/claims.schema.json",
   "id": "https://blog.ph4nt0m.xyz/.well-known/claims.json",
   "version": "1.0.0",
-  "issuedAt": "2026-09-28T00:00:00Z",
-  "validUntil": "2027-09-28T00:00:00Z",
+  "issuedAt": "2026-10-14T00:00:00Z",
+  "validUntil": "2027-10-14T00:00:00Z",
   "purpose": [
     "candidate-screening",
     "agent-discovery",
@@ -58,7 +58,7 @@
           "first-party-assertion",
           "primary-source"
         ],
-        "reviewedAt": "2026-09-28"
+        "reviewedAt": "2026-10-14"
       }
     },
     {
@@ -83,7 +83,7 @@
         "basis": [
           "first-party-assertion"
         ],
-        "reviewedAt": "2026-09-28"
+        "reviewedAt": "2026-10-14"
       }
     },
     {
@@ -116,19 +116,19 @@
         "basis": [
           "first-party-assertion"
         ],
-        "reviewedAt": "2026-09-28"
+        "reviewedAt": "2026-10-14"
       }
     },
     {
       "id": "https://blog.ph4nt0m.xyz/.well-known/claims.json#published-cves",
       "type": "TrackRecordClaim",
-      "statement": "The findings ledger lists 24 CVE records with assigned identifiers, grouped as Database, LLM, Web, IoT, Kernel. Of these, 16 Linux kernel filesystem CVEs were found as part of a Best of the Best (BoB) team project, not as sole author.",
+      "statement": "The findings ledger lists 25 CVE records with assigned identifiers, grouped as Database, LLM, Web, IoT, Kernel. Of these, 16 Linux kernel filesystem CVEs were found as part of a Best of the Best (BoB) team project, not as sole author.",
       "predicate": "https://schema.org/numberOfItems",
       "object": {
         "type": "Number",
-        "value": 24,
+        "value": 25,
         "unit": "CVE records with assigned identifiers",
-        "qualifier": "Counted from this site's own ledger. 16 of these are Linux kernel filesystem CVEs from a five-person BoB team project (a ported JANUS fuzzer), where the subject was one contributor. 4 further findings are masked platform disclosures (FVE) and 1 awaits an identifier. Verify each identifier through the linked registry."
+        "qualifier": "Counted from this site's own ledger. 16 of these are Linux kernel filesystem CVEs from a five-person BoB team project (a ported JANUS fuzzer), where the subject was one contributor. 4 further findings are masked platform disclosures (FVE) and 0 awaits an identifier. Verify each identifier through the linked registry."
       },
       "status": "active",
       "evidence": [
@@ -155,7 +155,7 @@
           "primary-source",
           "independent-source"
         ],
-        "reviewedAt": "2026-09-28"
+        "reviewedAt": "2026-10-14"
       }
     },
     {
@@ -181,7 +181,7 @@
         "basis": [
           "first-party-assertion"
         ],
-        "reviewedAt": "2026-09-28"
+        "reviewedAt": "2026-10-14"
       }
     },
     {
@@ -219,7 +219,7 @@
           "first-party-assertion",
           "primary-source"
         ],
-        "reviewedAt": "2026-09-28"
+        "reviewedAt": "2026-10-14"
       }
     }
   ],

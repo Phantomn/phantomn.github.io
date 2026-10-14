@@ -309,11 +309,11 @@
   ],
   "findings": [
     {
-      "title": "CVE-UNASSIGNED-MDEV-40571",
+      "title": "CVE-2026-107821",
       "description": "MariaDB .frm parsing OOB read leads to vtable hijacking RCE",
       "project": "Database",
-      "type": "Pending",
-      "date": "2026-09-07",
+      "type": "CVE",
+      "date": "2026-10-09",
       "url": "/blog/mariadb-frm-oob-read-vtable-hijack-rce/"
     },
     {

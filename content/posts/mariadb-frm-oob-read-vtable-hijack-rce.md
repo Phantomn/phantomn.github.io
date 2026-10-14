@@ -34,7 +34,7 @@ The target is MariaDB's `.frm` file (table metadata) parser. A missing upper-bou
 - **Public advisory**: [GHSA-c4gx-34mg-95q5](https://github.com/MariaDB/server/security/advisories/GHSA-c4gx-34mg-95q5)
 - **PoC / lab environment**: [pinebudweiser/mariadb-13.1.0-rce-lab](https://github.com/pinebudweiser/mariadb-13.1.0-rce-lab)
 - **Severity**: High, CVSS 3.1 8.8 (HackerOne) / 8.0 (GHSA)
-- **CVE**: Unassigned at the time of writing (MariaDB filed the request; assignment pending)
+- **CVE**: [CVE-2026-107821](https://nvd.nist.gov/vuln/detail/CVE-2026-107821) (published 2026-10-09; fixed in 10.6.28, 10.11.19, 11.4.13, 11.8.9, 12.3.3, 13.0.2)
 
 ---
 
@@ -269,6 +269,7 @@ The full lab environment (build scripts and exploit code) is published in Daesik
 | 2026-08-14 | MDEV-40571 referenced publicly in the 10.6.28 release notes; asked about CVE assignment |
 | 2026-09-07 | Marked Resolved |
 | 2026-09-08 | Report Disclosed |
+| 2026-10-09 | CVE-2026-107821 published (NVD) |
 
 ---
 
