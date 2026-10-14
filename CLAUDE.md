@@ -93,3 +93,7 @@ next-intl 사용, **en 이 유일한 저작 소스**다. ko 등 다른 로케일
   난다. build 전에는 dev 서버를 먼저 끈다.
 - 생성기 산출물(`data/portfolio.json`, `lib/disclosures.ts`, `public/.well-known/*`, `public/llms.txt`,
   `public/pgp-key.asc`)을 직접 편집하지 않는다 - `data/source/*.json` 을 고치고 생성기를 다시 돌린다.
+- `pnpm cv:pdf` 는 추적하지 않는 PDF(`resume-xbow` 등)도 `public/docs` 에 만든다. 커밋할 때 `git add public/docs/*.pdf`
+  같은 글롭 대신 파일을 지정하고, 푸시 전에 `git diff --cached --name-status` 로 확인한다.
+- CVE 번호를 받으면 `data/source/cves.json` 의 `CVE-UNASSIGNED-*` id 를 실제 번호로 바꾼다(생성기가 id 문자열로 대기/확정을
+  구분). 확정 건수가 바뀌므로 `scripts/cv/*.yaml` 의 건수 문구를 고치고 `pnpm check:records` 로 대조한다.

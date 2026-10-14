@@ -113,3 +113,6 @@ docs/superpowers/
 test-results/
 .eslintcache
 /Obsidian
+
+# 배포 제외 PDF (pnpm cv:pdf 가 만들지만 추적하지 않는다)
+/public/docs/resume-xbow.pdf
