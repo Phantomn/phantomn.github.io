@@ -83,7 +83,7 @@ next-intl 사용, **en 이 유일한 저작 소스**다. ko 등 다른 로케일
   -> `check:claims`/`check:pgp` -> cosign으로 `claims.json` 서명/검증(Phantomn identity) -> `pnpm build`
   -> `check:links` -> GitHub Pages 업로드. PR에서는 배포 단계 없이 CI만 돈다.
 - 커스텀 도메인은 `public/CNAME` = `blog.ph4nt0m.xyz`.
-- 패키지 매니저는 **pnpm@11.2.2**(`packageManager` 필드로 고정). `package-lock.json` 없음.
+- 패키지 매니저는 **pnpm**(버전은 `package.json` 의 `packageManager` 필드가 고정). `package-lock.json` 없음.
 - 커밋 전에 `git diff --cached --name-status` 로 스테이징 목록을 확인한다(무관한 삭제가 딸려
   들어간 사고 이력이 있다).
 
